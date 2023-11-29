@@ -60,10 +60,11 @@ plugins:
 author:
   name   : "Graphcore Research"
   avatar : "/assets/images/gc-symbol-pink.png"
-  bio    : "Advancing the field of AI, by characterising and re-thinking the computational requirements of machine intelligence."
+    #bio    : "Advancing the field of AI, by characterising and re-thinking the computational requirements of machine intelligence."
+  bio    : "Short bio about the research team..."
   links:
     - label: "Graphcore Website"
-      icon: "fas fa-fw fa-link"
+      icon: "fas fa-fw fa-microchip"
       url: "https://www.graphcore.ai/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -72,7 +73,7 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
     - label: "Our Papers"
-      icon: "fas fa-fw fa-link"
+      icon: "fas fa-fw fa-pencil-square-o"
       url: "https://www.graphcore.ai/resources/research-papers"
 
 footer:
@@ -84,7 +85,7 @@ footer:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
     - label: "Our Papers"
-      icon: "fas fa-fw fa-link"
+      icon: "fas fa-fw fa-pencil-square-o"
       url: "https://www.graphcore.ai/resources/research-papers"
 
 defaults:
