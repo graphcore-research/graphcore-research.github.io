@@ -1,5 +1,5 @@
 main:
   - title: "Papers of the Month"
-    url: /potm/
+    url: /posts/
   - title: "About"
     url: /about/

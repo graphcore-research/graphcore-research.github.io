@@ -88,10 +88,10 @@ footer:
       url: "https://www.graphcore.ai/resources/research-papers"
 
 defaults:
-  # _potm
+  # _posts
   - scope:
       path: ""
-      type: potm
+      type: posts
     values:
       layout: single
       author_profile: true
