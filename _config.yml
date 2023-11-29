@@ -73,7 +73,7 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
     - label: "Our Papers"
-      icon: "fas fa-fw fa-pencil-square-o"
+      icon: "fas fa-fw fa-book"
       url: "https://www.graphcore.ai/resources/research-papers"
 
 footer:
@@ -85,7 +85,7 @@ footer:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
     - label: "Our Papers"
-      icon: "fas fa-fw fa-pencil-square-o"
+      icon: "fas fa-fw fa-book"
       url: "https://www.graphcore.ai/resources/research-papers"
 
 defaults:
