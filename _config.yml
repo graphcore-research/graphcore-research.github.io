@@ -53,7 +53,6 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
-  - jekyll-feed
   - jemoji
   - jekyll-include-cache
 
@@ -72,7 +71,7 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
     - label: "Our Papers"
-      icon: "fab fa-fw fa-link"
+      icon: "fas fa-fw fa-link"
       url: "https://www.graphcore.ai/resources/research-papers"
 
 footer:
