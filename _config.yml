@@ -59,7 +59,7 @@ plugins:
 
 author:
   name   : "Graphcore Research"
-  avatar : "/assets/images/gc-symbol-pink.jpg"
+  avatar : "/assets/images/gc-symbol-pink.png"
   bio    : "Advancing the field of AI, by characterising and re-thinking the computational requirements of machine intelligence."
   links:
     - label: "Graphcore Website"
