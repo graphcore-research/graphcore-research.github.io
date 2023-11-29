@@ -21,6 +21,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 # twitter_username: username
 github_username: graphcore-research
+repository: graphcore-research/draft-potm
 minimal_mistakes_skin: default
 search: true
 
@@ -63,7 +64,7 @@ author:
     #bio    : "Advancing the field of AI, by characterising and re-thinking the computational requirements of machine intelligence."
   bio    : "Short bio about the research team..."
   links:
-    - label: "Graphcore Website"
+    - label: "Graphcore"
       icon: "fas fa-fw fa-microchip"
       url: "https://www.graphcore.ai/"
     - label: "Twitter"
