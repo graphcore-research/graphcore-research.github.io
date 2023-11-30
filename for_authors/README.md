@@ -2,10 +2,10 @@
 
 ## What to do & how to submit
 
-For now, just send me a zip of a folder like `example_upload` (will move to a PR-based
+For now, just send me a zip of a folder like `example_upload/` (will move to a PR-based
 system once we've settled on a process).
 
-This should contain a single markdown file named `paper_summary.md`, with local images.
+This should contain a single markdown file named `paper_summary.md`, along with the required images.
 For reference, see `paper_summary_template.md`.
 
 ## Notes
@@ -23,8 +23,7 @@ No requirement to say a lot if the paper doesn't warrant it.
 - If you're not writing bullet-points, try to write proper prose (doesn't need to flow
 wonderfully, but we're aiming for a consistent style across summaries - see example).
 
-- Be aware that images will be scaled to the width of the text column, so very short
-images may look too small, and very wide ones too tall (though generally don't worry).
+- Be aware that images will be scaled to the width of the text column, so narrow images may look very large.
 
 - User-added image captions should be below plots and written in italics.
 
