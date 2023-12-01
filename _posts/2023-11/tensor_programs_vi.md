@@ -12,7 +12,7 @@ There is a multiplier for each residual branch before adding to its input, which
 proportional to the square root of L (where L is the depth). Formally, with a constant a
 independent from L:
 
-![image]({{image_dir}}/tensor_programs_vi/equation_1.png)
+$$x^l = x^{l-1} + \frac{a}{\sqrt{L}} \cdot g^l(x^{l-1}; W^l).$$
 
 They also set the learning rate of Wl
 so that the update of Wl during training is proportional to

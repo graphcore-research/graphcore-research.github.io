@@ -1,5 +1,5 @@
 ---
-title: "October: Blockwise Transformers and Reasoning on Knowledge Graphs"
+title: "October Papers: Blockwise Transformers and Reasoning on Knowledge Graphs"
 date: 2023-10-03T15:34:30-04:00
 categories:
   - papers-of-the-month

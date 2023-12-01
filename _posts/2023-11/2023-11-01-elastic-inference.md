@@ -1,11 +1,12 @@
 ---
-title: "November: Elastic Inference and Shrinking Formats"
+title: "November Papers: Elastic Inference and Shrinking Formats"
 date: 2023-11-01T15:34:30-04:00
 categories:
   - papers-of-the-month
 tags:
   - inference
   - number-formats
+usemathjax: true
 ---
 
 November saw several interesting papers on the use of low-precision number formats for
