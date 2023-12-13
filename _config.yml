@@ -21,7 +21,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   The official Graphcore Research blog.
 # twitter_username: username
 github_username: graphcore-research
-repository: graphcore-research/draft-potm
+repository: graphcore-research/blog
 minimal_mistakes_skin: default
 # search: true
 
