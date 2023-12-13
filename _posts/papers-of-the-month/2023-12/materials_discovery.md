@@ -2,13 +2,8 @@
 
 The paper presents a strategy to efficiently explore the space of possible inorganic crystals, employing Graph Neural Networks (GNNs) to filter candidate structures for further expensive computational modelling using Density Functional Theory (DFT). By incorporating the new properties predicted using DFT back into the training set and periodically retraining the GNN, the authors describe an active learning approach that bootstraps their discovery process.
 
-{% assign figure_1e = image_dir | append: "/materials_discovery/figure_1e.png" %}
-{% include
-    figure image_path=figure_1e
-    alt="Plot of OoD MAE against training set size, showing GNoME benefiting from increasing the dataset size"
-    caption="Figure 1e. GNoME (Graph Networks for Materials Exploration) demonstrates emergent generalization when tested on out-of-domain inputs from random structure search. Improvements exhibit a power law with increasing data, indicating progress towards a universal
-energy model."
-%}
+![Plot of OoD MAE against training set size, showing GNoME benefiting from increasing the dataset size]({{image_dir}}/materials_discovery/figure_1e.png)
+<figcaption>Figure 1e. GNoME (Graph Networks for Materials Exploration) demonstrates emergent generalization when tested on out-of-domain inputs from random structure search. Improvements exhibit a power law with increasing data, indicating progress towards a universal energy model.</figcaption>
 
 ### Background
 
@@ -20,14 +15,10 @@ For breadth of search, the authors employ two frameworks for candidate generatio
 
 **The Structural Pipeline:** Here new candidates are formed by modifying existing crystals, prioritising discovery and incorporating symmetry-aware partial substitutions to efficiently enable incomplete replacements. Candidates are filtered using the GNoME models, and employ a deep ensemble strategy to quantify uncertainty.
 
-**The Compositional Pipeline:** Compositional models predict stability without structural information (just using the chemical formula). After filtering using GNoME models, randomised structures are evaluated using Ab Initio Random Structure Search (AIRSS)
+**The Compositional Pipeline:** Compositional models predict stability without structural information (just using the chemical formula). After filtering using GNoME models, randomised structures are evaluated using Ab Initio Random Structure Search (AIRSS).
 
-{% assign figure_1a = image_dir | append: "/materials_discovery/figure_1a.png" %}
-{% include
-    figure image_path=figure_1a
-    alt="A process diagram showing GNNs employed to select candidates for DFT, and results fed back to the GNN"
-    caption="Figure 1a. The active learning approach, employing two candidate-generation frameworks."
-%}
+![A process diagram showing GNNs employed to select candidates for DFT, and results fed back to the GNN]({{image_dir}}/materials_discovery/figure_1a.png)
+<figcaption>Figure 1a. The active learning approach, employing two candidate-generation frameworks.</figcaption>
 
 The GNoME models are message-passing networks which take one-hot embedded elements as nodes and predict the total energy of a crystal. In Structural models, there is a node per atom, and edges are added to the graph between any two nodes that are closer than an interatomic cut-off distance. However, for Compositional models, there is one node per element present, and the relative frequency of each element is encoded by scaling the magnitude of the embeddings. An edge is added between every node, so these GNNs begin to look a bit like a Transformer operating on the chemical formula.
 
