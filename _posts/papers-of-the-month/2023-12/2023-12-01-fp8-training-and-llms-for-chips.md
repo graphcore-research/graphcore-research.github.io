@@ -39,11 +39,15 @@ _Houwen Peng, Kan Wu, Yixuan Wei, et al. (Microsoft Azure and Microsoft Research
 
 {% include_relative fp8_lm.md %}
 
+**Full paper:** [FP8-LM: Training FP8 Large Language Models](https://arxiv.org/abs/2310.18313){:target="_blank"}
+
 ## [ChipNeMo: Domain-Adapted LLMs for Chip Design](https://arxiv.org/abs/2311.00176){:target="_blank"}
 
 _Mingjie Liu, Teodor-Dumitru Ene, Robert Kirby, Chris Cheng, Nathaniel Pinckney, Rongjian Liang, et al. (Nvidia)_
 
 {% include_relative chipnemo.md %}
+
+**Full paper:** [ChipNeMo: Domain-Adapted LLMs for Chip Design](https://arxiv.org/abs/2311.00176){:target="_blank"}
 
 ## [Simplifying Transformer Blocks](https://arxiv.org/abs/2311.01906){:target="_blank"}
 
@@ -51,11 +55,15 @@ _Bobby He, Thomas Hofmann (ETH Zurich)_
 
 {% include_relative simplifying_transformer_blocks.md %}
 
+**Full paper:** [Simplifying Transformer Blocks](https://arxiv.org/abs/2311.01906){:target="_blank"}
+
 ## [Scaling Deep Learning for Materials Discovery](https://www.nature.com/articles/s41586-023-06735-9){:target="_blank"}
 
 _Amil Merchant, Simon Batzner, Samuel S. Schoenholz, Muratahan Aykol, Gowoon Cheon & Ekin Dogus Cubuk_ (Google DeepMind)
 
 {% include_relative materials_discovery.md %}
+
+**Full paper:** [Scaling Deep Learning for Materials Discovery](https://www.nature.com/articles/s41586-023-06735-9){:target="_blank"}
 
 ---
 
