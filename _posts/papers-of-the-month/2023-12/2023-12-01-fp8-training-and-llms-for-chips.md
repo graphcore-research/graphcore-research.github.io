@@ -15,19 +15,18 @@ toc_label: "Papers"
 toc_icon: "book"
 ---
 
-The last month saw developments in the space of efficient transformer
-models, as well as some innovative applications of ML, from chip design to materials
-discovery.
+The last month saw impressive developments in the space of efficient transformers
+and applied ML, from chip design to materials discovery.
 
-Researchers at Microsoft showed that FP8 could be used in more parts of LLM training
-that had previously been demonstrated, and work from ETH Zurich suggested a new,
-simplified way of designing transformer-like models.
+Researchers at Microsoft showed that FP8 could be used in parts of the LLM training
+process that until now had been kept in higher-precision, and work from ETH Zurich
+suggested a simplified way of designing transformer-like models.
 
 In terms of applications, Nvidia have trained up an impressive model to assist their
 engineers on chip design. This is a neat feedback loop: their chip-design has been
 making LLMs better for years, and now their LLMs are making chip-design better. DeepMind
 also have impressive results showing that GNNs can be used in the discovery of new
-inorganic crystals—a key building block of many modern technologies.
+inorganic crystals — a key building block of many modern technologies.
 
 Here's a summary of some of our favourite papers over the last month:
 
