@@ -1,16 +1,16 @@
 ### The key idea
 
-The authors show that you can use FP8 weights, gradients, optimizer states, and distributed training without loss of accuracy or new hyperparameters. This is great, because it reduces the memory overhead of training, as well as the bandwidth costs.
+The authors show that you can use FP8 weights, gradients, optimizer states and distributed training without loss of accuracy or new hyperparameters. This is great because it reduces the memory overhead of training, as well as the bandwidth costs.
 
-They train up to 175B GPT models on H100s, with a 64% speedup over BF16. Pretty impressive, and a bit faster than Nvidia’s Transformer Engine.
+They train up to 175B GPT models on H100s, with a 64% speed-up over BF16. Pretty impressive, and a bit faster than Nvidia’s Transformer Engine.
 
 ![A plot with Model Size (B) on the x-axis and Number of GPUs on the y-axis. Two lines showing BF16 and FP8. BF16 requires more GPUs for a given model size vs FP8 (curve underneath).]({{image_dir}}/fp8_lm/figure_1.png)
 
 ### Background
 
-The fact that LLMs can be trained “in FP8” has been [well established](https://arxiv.org/abs/2206.02915){:target="_blank"}, but what does this mean? In reality, all FP8 training is _mixed-precision_ as putting all tensors in 8-bits degrades the model. The simplest and most common approach is just to cast linear layers to FP8, gaining the benefit of improved FLOP/s assuming you have hardware with accelerated FP8 arithmetic.
+The fact that LLMs can be trained “in FP8” has been [well established](https://arxiv.org/abs/2206.02915){:target="_blank"}, but what does this mean? In reality, all FP8 training is _mixed-precision_ as putting all tensors in FP8 degrades the model. The simplest and most common approach is just to cast linear layers to FP8, gaining the benefit of improved FLOP/s assuming you have hardware with accelerated FP8 arithmetic.
 
-However this misses out on a second benefit - reduced memory and bandwidth costs if we can also store/load values in FP8. It’s less clear from previous literature what else you can put in 8 bits without things degrading.
+However this misses out on a second benefit - reduced memory and bandwidth costs if we can also store/load values in FP8. It’s less clear from previous literature what else you can put in FP8 without things degrading.
 
 ### Their method
 
@@ -32,7 +32,7 @@ They suggest that the following mix of FP16/8 is viable without degradation:
 
 ![Image showing 2 bytes for master weights, 1 for gradients, 1+2 for Adam states.]({{image_dir}}/fp8_lm/fp8_optim.png)
 
-I think the previous assumption was that the best you could do was (2 + 1 + 2 + 4) here - so intriguing to know that the Adam moment states may be able to go smaller. This is their storage format, it’s not clear what formats are used in the update computation.
+I think the previous assumption was that the best you could do was (2 + 1 + 2 + 4) here - so intriguing to know that the Adam moment states may be able to go smaller. This is their storage format; it’s not clear what formats are used in the update computation.
 
 ### Results
 
@@ -44,6 +44,6 @@ In terms of throughput they only beat TE at the large-scale (due to comms being 
 
 Key to all of this of course is their assertion that these efficiency savings don’t degrade the model. Looking at the loss curves and downstream performance, this seems to hold up:
 
-![Table showing that their FP8 implementation has better throughput and lower memory usage than BF16 (by far) and FP8 with transformer engine (by less) across model sizes.]({{image_dir}}/fp8_lm/table_5.png){:style="padding-left:100px; padding-right:100px"}
+![Table showing that their FP8 implementation has better throughput and lower memory usage than BF16 (by far) and FP8 with transformer engine (by less) across model sizes.]({{image_dir}}/fp8_lm/table_5.png){:style="padding-left:50px; padding-right:50px"}
 
 Overall, their claim to be the best FP8 solution seems justified. I imagine many organisations with FP8 hardware will adopt a trick or two from this paper - especially as they provide a PyTorch implementation.

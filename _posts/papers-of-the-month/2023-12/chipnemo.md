@@ -2,7 +2,7 @@
 
 The authors describe the practical application of an LLM to assist engineers working on chip design at NVIDIA. They explore the importance of domain adaptation, scale and retrieval augmentation to achieve good performance in three applications: an engineering assistant chatbot, electronic design automation (EDA) script generation and bug summarisation.
 
-![diagram of the ChipNeMo training flow, 1) pretraining, producing foundation models (LLaMA2), 2) domain-adaptive pretraining, producing ChipNeMo foundation models, and supervised fine-tuning, producing ChipNeMo chat models]({{image_dir}}/chipnemo/fig1.png)
+![diagram of the ChipNeMo training flow, 1) pretraining, producing foundation models (LLaMA2), 2) domain-adaptive pretraining, producing ChipNeMo foundation models, and supervised fine-tuning, producing ChipNeMo chat models]({{image_dir}}/chipnemo/fig1.png){:style="padding-left:50px; padding-right:50px"}
 
 ### Their method
 
@@ -12,7 +12,7 @@ ChipNeMo takes a pretrained generalist LLM such as LLaMA2, then adapts & fine-tu
 
 Results show the utility of domain adaptation and retrieval in boosting task performance, allowing a much smaller domain-adapted model to often outperform a large generalist model.
 
-![Chip design domain benchmarks for LLaMA2 versus ChipNeMo, both 7b and 13b, showing best performance across the board for ChipNeMo-13b, while ChipNeMo-7b outperforms LLaMA2-13b on some tasks]({{image_dir}}/chipnemo/fig6a.png)
+![Chip design domain benchmarks for LLaMA2 versus ChipNeMo, both 7b and 13b, showing best performance across the board for ChipNeMo-13b, while ChipNeMo-7b outperforms LLaMA2-13b on some tasks]({{image_dir}}/chipnemo/fig6a.png){:style="padding-left:50px; padding-right:50px"}
 
 Some interesting points:
  - The benefit of domain-adaptation is task-dependent, e.g. for Python coding the larger generalist model (LLaMA2-70b-chat) outperforms ChipNeMo-13b, but vice versa for TCL coding.

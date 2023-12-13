@@ -8,11 +8,11 @@ The authors propose several simplifications to the conventional transformer bloc
 
 ### Their method
 
-The authors utilise signal propagation theory as well as empirical evidence to motivate the proposed architectual changes. Notably, they observed:
+The authors utilise signal propagation theory as well as empirical evidence to motivate the proposed architectural changes. Notably, they observed:
 
 * Skip connections can be safely removed from the attention and MLP layers without affecting training performance, as long as they are appropriately compensated by changes to weight initialisations.
 * Fixing the skip connection issues allowed the authors to remove the value and projection matmuls from the attention layers altogether without further degradation.
-* Normalisation layers implicitly downweight residual branches: as this is achieved in the first two steps, they can also be removed. However, the authors note that leaving the normalisation layers led to a slight improvement in training loss.
+* Normalisation layers implicitly down-weight residual branches: as this is achieved in the first two steps, they can also be removed. However, the authors note that leaving the normalisation layers led to a slight improvement in training loss.
 
 ### Results
 
