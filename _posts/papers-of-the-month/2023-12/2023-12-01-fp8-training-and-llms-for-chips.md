@@ -15,7 +15,7 @@ toc_label: "Papers"
 toc_icon: "book"
 ---
 
-The last month saw interesting developments in the space of efficient transformer
+The last month saw developments in the space of efficient transformer
 models, as well as some innovative applications of ML, from chip design to materials
 discovery.
 
