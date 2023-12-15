@@ -10,7 +10,7 @@ tags:
 potm_year: 2023
 potm_month: 12
 paper_order: 2
-image_dir: "/assets/images/posts/2023-12/potm/simplifying_transformer_blocks"
+image_dir: "/assets/images/posts/2023-12/potm/simplifying_transformer_blocks/"
 review_author: "Luka Ribar"
 hidden: true
 ---
@@ -21,7 +21,7 @@ hidden: true
 
 The authors propose several simplifications to the conventional transformer blocks with no loss in training speed, parallelising attention and MLP layers while fully removing skip connections, value and projection parameters, as well as normalisation layers.
 
-![image]({{page.image_dir}}/figure_1.png)
+![image]({{ page.image_dir | append: "figure_1.png" | relative_url }})
 
 ### Their method
 
@@ -33,7 +33,7 @@ The authors utilise signal propagation theory as well as empirical evidence to m
 
 ### Results
 
-![image]({{page.image_dir}}/figure_5_7.png)
+![image]({{ page.image_dir | append: "figure_5_7.png" | relative_url }})
 
 The authors tested the simplified transformer architecture on both decoder-only model training (Figure 5) and encoder-only training (Figure 7). In both cases, they find that their architecture (SAS/SAS-P) is able to reach baseline performance, while providing ~15% throughput boost.
 

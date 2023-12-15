@@ -17,6 +17,7 @@ title: Graphcore Research Blog
 name: Graphcore Ltd
 locale: "en-GB"
 email: research@graphcore.ai
+baseurl: "/blog"
 description: >- # this means to ignore newlines until "baseurl:"
   The official Graphcore Research blog.
 # twitter_username: username
