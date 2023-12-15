@@ -1,0 +1,12 @@
+{% assign posts = site.posts | where_exp: "item", "item.potm_month == page.potm_month" | where_exp: "item",
+"item.potm_year == page.potm_year" | where_exp: "item", "item.category != 'papers-of-the-month'" | sort: "paper_order"
+%}
+
+<p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-users" aria-hidden="true"></i> Reviews by:</strong>
+    <span itemprop="keywords">
+        {% for post in posts %}
+            {{ post.review_author }}{% unless forloop.last %}<span class="sep">, </span>{%endunless %}
+        {% endfor %}
+    </span>
+</p>
