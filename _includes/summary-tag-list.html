@@ -10,17 +10,21 @@
 {% assign posts = site.posts | where_exp: "item", "item.potm_month == page.potm_month" | where_exp: "item",
 "item.potm_year == page.potm_year" | where_exp: "item", "item.category != 'papers-of-the-month'" | sort: "paper_order"
 %}
+{% assign tags = posts | map: 'tags' %}
+{% assign flattened_tags = '' | split: '' %}
+{% for tag_array in tags %}
+    {% assign flattened_tags = flattened_tags | concat: tag_array %}
+{% endfor %}
+{% assign filtered_tags = flattened_tags | uniq %}
 
 <p class="page__taxonomy">
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].tags_label | default:
         "Tags:" }} </strong>
     <span itemprop="keywords">
-        {% for post in posts %}
-            {% for tag_word in post.tags %}
-                <a href="{{ tag_word | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}"
-                    class="page__taxonomy-item p-category" rel="tag">{{ tag_word }}</a>{% unless forloop.last %}<span class="sep">
-                </span>{% endunless %}
-            {% endfor %}
+        {% for tag in filtered_tags %}
+            <a href="{{ tag_word | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}"
+                class="page__taxonomy-item p-category" rel="tag">{{ tag }}</a>{% unless forloop.last %}<span class="sep">
+            </span>{% endunless %}
         {% endfor %}
     </span>
 </p>
