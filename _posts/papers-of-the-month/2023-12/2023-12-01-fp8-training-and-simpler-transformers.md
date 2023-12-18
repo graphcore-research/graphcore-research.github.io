@@ -22,8 +22,9 @@ suggested a simplified way of designing transformer-like models.
 
 In terms of applications, DeepMind have impressive results showing that GNNs can be used
 in the discovery of new inorganic crystals — a key building block of many modern
-technologies. Nvidia have also trained up an impressive model to assist their
-engineers on chip design. This is a neat feedback loop: their chip-design has been
-making LLMs better for years, and now their LLMs are making chip-design better.
+technologies. Nvidia have also trained up a model to assist their
+engineers on chip design. This is a neat feedback loop: their chip design has
+facilitated better LLMs, and now their LLMs could facilitate better chip design.
+How useful this will be in practice remains to be seen.
 
 {% include paper-summaries.md %}
