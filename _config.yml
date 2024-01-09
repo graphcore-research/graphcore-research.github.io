@@ -17,12 +17,12 @@ title: Graphcore Research Blog
 name: Graphcore Ltd
 locale: "en-GB"
 email: research@graphcore.ai
-baseurl: "/blog"
+baseurl: "/"
 description: >- # this means to ignore newlines until "baseurl:"
   The official Graphcore Research blog.
 # twitter_username: username
 github_username: graphcore-research
-repository: graphcore-research/blog
+repository: graphcore-research/graphcore-research.github.io
 minimal_mistakes_skin: default
 # search: true
 
@@ -62,8 +62,7 @@ plugins:
 author:
   name   : "Graphcore Research"
   avatar : "/assets/images/gc-symbol-pink.png"
-    #bio    : "Advancing the field of AI, by characterising and re-thinking the computational requirements of machine intelligence."
-  bio    : "Short bio about the research team..."
+  bio    : "Our research team’s mission is to follow and contribute to the advancement of AI research, aiming to characterize the computational requirements of Machine Intelligence."
   links:
     - label: "Graphcore"
       icon: "fas fa-fw fa-microchip"
