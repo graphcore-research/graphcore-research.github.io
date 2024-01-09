@@ -14,16 +14,17 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Graphcore Research Blog
+name: Graphcore Ltd
+locale: "en-GB"
 email: research@graphcore.ai
+baseurl: "/blog"
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  The official Graphcore Research blog.
 # twitter_username: username
 github_username: graphcore-research
-repository: graphcore-research/draft-potm
+repository: graphcore-research/blog
 minimal_mistakes_skin: default
-search: true
+# search: true
 
 # Build settings
 markdown: kramdown
@@ -67,9 +68,9 @@ author:
     - label: "Graphcore"
       icon: "fas fa-fw fa-microchip"
       url: "https://www.graphcore.ai/"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+    # - label: "Twitter"
+    #   icon: "fab fa-fw fa-twitter-square"
+    #   url: "https://twitter.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
@@ -79,9 +80,9 @@ author:
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+    # - label: "Twitter"
+    #   icon: "fab fa-fw fa-twitter-square"
+    #   url: "https://twitter.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
@@ -98,9 +99,11 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
+      words_per_minute: 150
       comments: true
       share: true
       related: true
+      usemathjax: true
   # _pages
   - scope:
       path: "_pages"

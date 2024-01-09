@@ -4,5 +4,52 @@
 @import "minimal-mistakes";
 
 .page__content {
-    font-size: 0.8em; // change to whatever
+    font-size: 16px;
+}
+
+@media (min-width: 80em) {
+    .page {
+        float: right;
+        width: calc(100% - 300px);
+        padding-right: 200px;
+    }
+}
+
+h2 {
+    margin-top: 1.5em;
+    font-size: 1.6em;
+}
+
+figcaption {
+    font-size: 1em;
+    padding-bottom: 1em;
+}
+
+.toc__menu {
+    font-size: 0.8em
+}
+
+.toc .nav__title {
+    font-size: 1em;
+}
+
+.toc__menu li ul {
+    display: none
+}
+
+.page__content .paper__taxonomy {
+    font-size: 0.95em;
+    margin-top: 0.5em;
+}
+
+.page__taxonomy-item {
+    padding: 2px 10px;
+}
+
+.page__meta .page__taxonomy {
+    margin-bottom: 0.5em;
+}
+
+.page__taxonomy .sep {
+   display: inline;
 }

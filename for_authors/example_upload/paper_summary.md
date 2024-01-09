@@ -4,7 +4,7 @@ The authors demonstrate a method for training LLMs using 1-bit linear layers. In
 
 This work is only considering quantization aware training (QAT), not post-training quantization (PTQ).
 
-![image](figure_1.png)
+![A specific and succinct sentence or two describing the figure 1 (alt text). Valuable for seo and accessibility.](figure_1.png)
 
 ### Their method
 
@@ -12,7 +12,7 @@ In terms of implementation, the approach is following previous lower precision p
 
 The method can be used together with other acceleration methods for LLMs, such as PagedAttention, FlashAttention, and speculative decoding.
 
-![image](figure_2.png)
+![A specific and succinct sentence or two describing the figure 2 (alt text). Valuable for seo and accessibility.](figure_2.png)
 _Diagram showing how a standard transformer is modified to use 1-bit linear layers._
 
 ### Results
@@ -20,7 +20,7 @@ _Diagram showing how a standard transformer is modified to use 1-bit linear laye
 Results are promising, showing that despite the reduction in terms of accuracy, it could be an order of magnitude more efficient that FP16 and FP8 on hardware.
 They compare against all the relevant alternative methods, across a reasonable range of tasks.
 
-![image](table_3.png)
+![A specific and succinct sentence or two describing table 3 (alt text). Valuable for seo and accessibility.](table_3.png)
 
 ### Takeaways
 

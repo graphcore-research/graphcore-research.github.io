@@ -1,5 +1,7 @@
 main:
   - title: "Papers of the Month"
+    url: /papers-of-the-month/
+  - title: "Posts"
     url: /posts/
-  - title: "About"
+  - title: "About Us"
     url: /about/
