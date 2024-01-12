@@ -1,6 +1,7 @@
 ---
 title: "December Papers: FP8 Training & Simpler Transformers"
 header.teaser: /assets/images/posts/2023-12/potm/chipnemo/fig1.png
+header.og_image: /assets/images/posts/2023-12/potm/chipnemo/fig1.png
 
 date: 2023-12-01T01:34:30-04:00
 potm_year: 2023
