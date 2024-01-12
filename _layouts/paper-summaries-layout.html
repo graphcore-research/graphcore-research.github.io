@@ -18,6 +18,11 @@ layout: default
   {% endunless %}
 {% endif %}
 
+{% assign nonHiddenPosts = site.posts | where_exp: "item", "item.hidden != true" | sort: "date" %}
+{% assign nonHiddenRelatedPosts = site.related_posts | where_exp: "item", "item.hidden != true" | sort: "date" %}
+
+{% assign page.header.og_image = page.header.teaser %}
+
 <div id="main" role="main">
   {% include sidebar.html %}
 
