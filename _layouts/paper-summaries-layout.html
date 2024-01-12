@@ -19,7 +19,10 @@ layout: default
 {% endif %}
 
 {% assign nonHiddenPosts = site.posts | where_exp: "item", "item.hidden != true" | sort: "date" %}
-{% assign nonHiddenRelatedPosts = site.related_posts | where_exp: "item", "item.hidden != true" | sort: "date" %}
+{% assign nonHiddenRelatedPosts = site.related_posts | where_exp: "item", "item.hidden != true" %}
+{% if nonHiddenRelatedPosts.size > 0 %}
+  {% assign nonHiddenRelatedPosts = nonHiddenRelatedPosts | sort: "date" %}
+{% endif %}
 
 {% assign page.header.og_image = page.header.teaser %}
 
