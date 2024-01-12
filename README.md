@@ -35,7 +35,9 @@ Guidance for _Papers of the Month_ authors can be found at
 
 ## TODO
 
-- [ ] Create twitter account and add to repo
-- [ ] Create newsletter and add link(s) here
+- [x] Improve about page
+- [x] Fix odd links
 - [ ] Add [seo, social sharing, analytics](https://mmistakes.github.io/minimal-mistakes/docs/- nfiguration/#seo-social-sharing-and-analytics-settings)
 - [ ] Add Giscus comments (requires open-source repo)
+- [ ] Create twitter account and add to repo
+- [ ] Create newsletter and add link(s) here
