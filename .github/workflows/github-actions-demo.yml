@@ -3,7 +3,7 @@ run-name: public-mirror
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   to_public:
     runs-on: ubuntu-latest
