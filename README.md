@@ -36,4 +36,4 @@ Guidance for _Papers of the Month_ authors can be found at
 ## TODO
 
 - [ ] Create twitter account and add to repo
-- [ ] Create newsletter and add link(s) here
+- [ ] Create newsletter and add link(s) here.
