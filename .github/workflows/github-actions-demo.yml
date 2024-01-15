@@ -16,4 +16,4 @@ jobs:
           target_repo_url:
             git@github.com:graphcore-research/graphcore-research.github.io.git
           ssh_private_key:                              # <-- use 'secrets' to pass credential information.
-            ${{ secrets.GITHUB_SSH_PRIVATE_KEY }}
+            ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
