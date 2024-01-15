@@ -1,4 +1,5 @@
-name: Public Mirror
+name: public-mirror
+run-name: public-mirror
 on:
   push:
     branches:
