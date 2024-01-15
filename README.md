@@ -33,7 +33,11 @@ automatically trigger the site to update.
 Guidance for _Papers of the Month_ authors can be found at
 [for_authors/README.md](for_authors/README.md).
 
-## TODO
+## License
 
-- [ ] Create twitter account and add to repo
-- [ ] Create newsletter and add link(s) here.
+Copyright (c) 2024 Graphcore Ltd. Licensed under the MIT License.
+
+The blog is built using [Minimal Mistakes](https://github.com/mmistakes/minimal-mistakes)
+(MIT) via the
+[remote theme starter](https://github.com/mmistakes/mm-github-pages-starter).
+Minimal Mistakes itself is built on [Jekyll](https://jekyllrb.com/) (MIT).
