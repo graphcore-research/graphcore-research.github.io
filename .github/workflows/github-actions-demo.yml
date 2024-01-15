@@ -1,5 +1,4 @@
 name: Public Mirror
-run-name: ${{ github.actor }}: public mirror 
 on:
   push:
     branches:
