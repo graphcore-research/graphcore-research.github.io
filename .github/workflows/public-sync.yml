@@ -1,0 +1,23 @@
+name: public-sync
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Private Repo
+        uses: actions/checkout@v4
+        with:
+          repository: graphcore-research/graphcore-research.github.io-internal
+          ref: main
+          token: ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
+      - name: Push to Public Repo
+        run: |
+          git remote add public https://github.com/graphcore-research/graphcore-research.github.io.git
+          git push public main
+        env:
+          GH_TOKEN: ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
