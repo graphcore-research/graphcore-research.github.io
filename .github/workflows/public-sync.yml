@@ -14,7 +14,6 @@ jobs:
         with:
           repository: graphcore-research/graphcore-research.github.io-internal
           ref: main
-          token: ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
       - name: Push to Public Repo
         run: |
           git remote add public https://github.com/graphcore-research/graphcore-research.github.io.git
