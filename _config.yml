@@ -1,3 +1,6 @@
+# Copyright (c) 2024 Graphcore Ltd. All rights reserved.
+# Modified from minimal-mistakes/_config.yml
+
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
@@ -122,7 +125,7 @@ analytics:
   provider: "google-gtag"
   google:
     tracking_id: "G-QCZ6T9KWHQ"
-    anonymize_ip: false # default
+    anonymize_ip: true
 
 comments:
   provider: "giscus"

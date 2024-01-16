@@ -53,3 +53,22 @@ figcaption {
 .page__taxonomy .sep {
    display: inline;
 }
+
+.page__footer {
+    margin-bottom: 1.1em;
+}
+
+#analytics-cookie {
+    padding-top: 0.3em;
+    background-color: #e6e6e6;
+    text-align: center;
+    font-size: 0.75em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#analytics-cookie .btn {
+    display: inline-block;
+    font-size: 1em;
+}

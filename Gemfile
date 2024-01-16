@@ -1,3 +1,6 @@
+# Copyright (c) 2024 Graphcore Ltd. All rights reserved.
+# Taken from minimal-mistakes/Gemfile
+
 source "https://rubygems.org"
 
 gem "github-pages", group: :jekyll_plugins

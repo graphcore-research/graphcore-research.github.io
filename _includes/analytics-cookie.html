@@ -1,0 +1,64 @@
+<!-- written via info from the following blogs:
+    https://shantoroy.com/jekyll/google-analytics-in-jekyll-minimal-mistakes-blog-theme/
+    https://upengareri.github.io/analytics_for_github_website/
+    https://littlebigtech.net/posts/setting-up-cookie-compliance-for-google-analytics-on-a-jekyll-site/
+-->
+
+<div id="analytics-cookie">
+    <span>We would like to use cookies to enable google analytics. All data is anonymized and will not be shared.</span>
+    <a id="accept" class="btn btn-primary btn-sm">Approve</a>
+    <a id="deny" class="btn btn-primary btn-sm">Deny</a>
+</div>
+<script>
+    var cookie_split = document.cookie.split(';');
+    var option = null;
+    for (var i = 0; i < cookie_split.length; i++) {
+        var c = cookie_split[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1, c.length);
+        }
+        if (c.indexOf("option=") == 0) {
+            option = c.substring("option=".length, c.length);
+        }
+    }
+
+    if (option == 'true') {
+
+        var script = document.createElement('script');
+        script.onload = function () {
+            // See https://developers.google.com/tag-platform/tag-manager/datalayer
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-QCZ6T9KWHQ', { 'anonymize_ip': true });
+        };
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ";
+        document.head.appendChild(script);
+
+    } else if (option != 'false') {
+        document.getElementById('analytics-cookie').style.display = 'block';
+    }
+
+    function createCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    document.getElementById('accept').addEventListener("click", function () {
+        createCookie('option', 'true', 31);
+        document.getElementById('analytics-cookie').style.display = 'none';
+        location.reload();
+    });
+
+    document.getElementById('deny').addEventListener("click", function () {
+        createCookie('option', 'false', 31);
+        document.getElementById('analytics-cookie').style.display = 'none';
+        location.reload();
+    });
+
+</script>
