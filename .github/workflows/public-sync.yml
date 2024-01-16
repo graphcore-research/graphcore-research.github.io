@@ -25,5 +25,5 @@ jobs:
       - name: Push to Public Repo
         run: |
           git remote add public git@github.com:graphcore-research/graphcore-research.github.io.git
-          git remote -v
+          git pull
           git push public main
