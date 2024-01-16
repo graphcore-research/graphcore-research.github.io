@@ -8,7 +8,15 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
     steps:
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
       - name: Checkout Private Repo
         uses: actions/checkout@v4
         with:
@@ -16,8 +24,5 @@ jobs:
           ref: main
       - name: Push to Public Repo
         run: |
-          git config --global user.email "charlieb@graphcore.ai"
-          git config --global user.name "Charlie Blake"
-          git config --global credential.helper cache
-          git remote add public https://${{secrets.BLOG_MIRROR_SSH_PRIVATE_KEY}}@github.com/graphcore-research/graphcore-research.github.io.git
+          git remote add public git@github.com:graphcore-research/graphcore-research.github.io.git
           git push public main
