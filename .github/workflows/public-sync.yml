@@ -16,7 +16,8 @@ jobs:
           ref: main
       - name: Push to Public Repo
         run: |
-          git remote add public https://github.com/graphcore-research/graphcore-research.github.io.git
+          git config --global user.email "charlieb@graphcore.ai"
+          git config --global user.name "Charlie Blake"
+          git config --global credential.helper cache
+          git remote add public https://${{secrets.BLOG_MIRROR_SSH_PRIVATE_KEY}}@github.com/graphcore-research/graphcore-research.github.io.git
           git push public main
-        env:
-          GH_TOKEN: ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
