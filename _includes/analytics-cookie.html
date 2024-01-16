@@ -11,19 +11,19 @@
 </div>
 <script>
     var cookie_split = document.cookie.split(';');
-    var option = null;
+    var tracking_preference = null;
     for (var i = 0; i < cookie_split.length; i++) {
         var c = cookie_split[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1, c.length);
         }
-        if (c.indexOf("option=") == 0) {
-            option = c.substring("option=".length, c.length);
+        if (c.indexOf("tracking-preference=") == 0) {
+            tracking_preference = c.substring("tracking-preference=".length, c.length);
         }
     }
 
-    if (option == 'true') {
-
+    if (tracking_preference == 'accept') {
+        console.log("tracking_preference == 'accept'")
         var script = document.createElement('script');
         script.onload = function () {
             // See https://developers.google.com/tag-platform/tag-manager/datalayer
@@ -35,8 +35,11 @@
         script.src = "https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ";
         document.head.appendChild(script);
 
-    } else if (option != 'false') {
+    } else if (tracking_preference == null) {
+        console.log("tracking_preference == 'null'")
         document.getElementById('analytics-cookie').style.display = 'block';
+    } else {
+        console.log("tracking_preference == ".concat("'", tracking_preference, "'"))
     }
 
     function createCookie(name, value, days) {
@@ -50,15 +53,13 @@
     }
 
     document.getElementById('accept').addEventListener("click", function () {
-        createCookie('option', 'true', 31);
+        createCookie('tracking-preference', 'accept', 31);
         document.getElementById('analytics-cookie').style.display = 'none';
-        location.reload();
     });
 
     document.getElementById('deny').addEventListener("click", function () {
-        createCookie('option', 'false', 31);
+        createCookie('tracking-preference', 'deny', 31);
         document.getElementById('analytics-cookie').style.display = 'none';
-        location.reload();
     });
 
 </script>
