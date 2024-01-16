@@ -24,6 +24,7 @@
 
     if (tracking_preference == 'accept') {
         console.log("tracking_preference == 'accept'")
+        document.getElementById('analytics-cookie').style.display = 'none';
         var script = document.createElement('script');
         script.onload = function () {
             // See https://developers.google.com/tag-platform/tag-manager/datalayer
@@ -55,11 +56,13 @@
     document.getElementById('accept').addEventListener("click", function () {
         createCookie('tracking-preference', 'accept', 31);
         document.getElementById('analytics-cookie').style.display = 'none';
+        location.reload();
     });
 
     document.getElementById('deny').addEventListener("click", function () {
         createCookie('tracking-preference', 'deny', 31);
         document.getElementById('analytics-cookie').style.display = 'none';
+        location.reload();
     });
 
 </script>
