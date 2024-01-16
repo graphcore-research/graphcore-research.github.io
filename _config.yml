@@ -121,11 +121,7 @@ tag_archive:
   type: liquid
   path: /tags/
 
-analytics:
-  provider: "google-gtag"
-  google:
-    tracking_id: "G-QCZ6T9KWHQ"
-    anonymize_ip: true
+google_analytics: "G-QCZ6T9KWHQ"
 
 comments:
   provider: "giscus"
