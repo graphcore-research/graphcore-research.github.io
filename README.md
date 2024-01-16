@@ -1,5 +1,7 @@
 # Graphcore Research Blog
 
+Link: [graphcore-research.github.io](https://graphcore-research.github.io/)
+
 ## Running locally
 
 To run locally, execute:
@@ -32,6 +34,16 @@ automatically trigger the site to update.
 
 Guidance for _Papers of the Month_ authors can be found at
 [for_authors/README.md](for_authors/README.md).
+
+## Deploying
+
+To deploy from the internal repo to the public one, set up:
+
+```
+git remote add public git@github-personal:graphcore-research/graphcore-research.github.io.git
+```
+
+then run `git push public main`.
 
 ## License
 
