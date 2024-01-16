@@ -39,8 +39,9 @@
     } else if (tracking_preference == null) {
         console.log("tracking_preference == 'null'")
         document.getElementById('analytics-cookie').style.display = 'block';
-    } else {
-        console.log("tracking_preference == ".concat("'", tracking_preference, "'"))
+    } else if (tracking_preference == 'deny') {
+        console.log("tracking_preference == 'deny'")
+        document.getElementById('analytics-cookie').style.display = 'none';
     }
 
     function createCookie(name, value, days) {
