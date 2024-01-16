@@ -125,7 +125,7 @@ analytics:
   provider: "google-gtag"
   google:
     tracking_id: "G-QCZ6T9KWHQ"
-    anonymize_ip: false # default
+    anonymize_ip: true
 
 comments:
   provider: "giscus"
