@@ -8,12 +8,6 @@ jobs:
   to_public:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: pixta-dev/repository-mirroring-action@v1
-        with:
-          target_repo_url:
-            git@github.com:graphcore-research/graphcore-research.github.io.git
-          ssh_private_key:                              # <-- use 'secrets' to pass credential information.
-            ${{ secrets.BLOG_MIRROR_SSH_PRIVATE_KEY }}
+      - name: push to public
+        run: |
+          git remote add public git@github-personal:graphcore-research/graphcore-research.github.io.git
