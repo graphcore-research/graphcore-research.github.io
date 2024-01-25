@@ -6,8 +6,7 @@ Add images where appropriate throughout. This section should always
 have at least 1 key figure though.
 
 ![A specific and succinct sentence or two describing the figure 1 (alt text). Valuable for seo and accessibility.](example_upload/figure_1.png)
-
-**Figure 2b.** _User-captions (if you don't want to include the paper's own caption) should always be below the image and in italics, with a bold caption._
+<figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
 
 ### [optional] Background
 
