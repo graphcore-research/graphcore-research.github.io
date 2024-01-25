@@ -24,7 +24,7 @@ During training, it is wasteful to spend time computing low magnitude or high v
 
 An obvious method for low magnitude gradients would be to compute the loss for all of the elements in your batch and select only the proportion $p$ with the largest values to compute gradients for. For a fixed size dataset we would get a $1-(1+2p)/3$ reduction in FLOPs, e.g., throwing away $1/2$ of your samples results in a $1/3$ decrease in FLOPs. This kind of approach is good at eliminating "easy" examples, it is not so good at eliminating unhelpful noisy examples. 
 
-More sophisticated approaches try to formalise a *learnability* criterion to select examples that are neither too easy nor too hard (noisy) to predict.
+More sophisticated approaches try to formalise a *learnability* criterion to select examples that are neither too easy nor too hard (noisy) to predict, e.g., (reproducible holdout loss selection)[https://arxiv.org/abs/2206.07137]
 
 ![Learnability Criterion]({{page.image_dir | append: "EQN-Learnability.png" | relative_url}})
 
@@ -40,7 +40,22 @@ The authors propose using a small model and maintaining two sets of weights for 
 
 At this point a trade-off emerges. A smaller scoring model eliminates fewer examples, but introduces smaller overheads to training. 
 
-![Amortisation of training costs]({{page.image_dir | append: "FIG-Amortisation.png" | relative_url}})
+![Amortisation of training costs]({{page.image_dir | append: "FIG-Amortisation.png" | relative_url}})  
 
 ### Results
 
+Their experiments are benchmarked against training ViT-L (304M params) on JFT (300M labelled images) for image classification or ViT-B (86M params) on the ALIGN dataset (1.8B image-text pairs) for multimodal image-text alignment.
+
+With ViT-Tiny (5.6M params) as their reference model, they manage to obtain a consistent 25% reduction in training FLOPs on to achieve the same downstream task accuracy when pre-trained on JFT ahead of time.
+
+![Active learning scaling law]({{page.image_dir | append: "FIG-Scaling-Law.png" | relative_url}})  
+
+For image-text alignment, where large scale datasets are typically much noisier, they manage to obtain 48% speedup (not clear if this is total FLOPs or training iterations) to target zero-shot accuracy on Imagenet-1k when pre-training their reference model on a smaller, cleaner multimodal dataset.
+
+![Multimodal results]({{page.image_dir | append: "TAB-Ref-Transfer.png" | relative_url}})
+
+Impressive! Although, their numbers for zero-shot accuracy on ImageNet look a bit low for ViT-B trained on a 1.8B dataset (compare with [OpenCLIP](https://arxiv.org/abs/2212.07143)).
+
+### Takeaways
+
+The FLOP reductions are encouraging. The technique is worth considering when training even larger models on larger, noisier web-scale datasets. I do wonder how difficult it will be to realise these FLOP or iteration reductions as wall-clock speed-ups, especially when needing to configure a cluster to support this kind of multi-scale workloads.
