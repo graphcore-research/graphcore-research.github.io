@@ -30,12 +30,17 @@ More sophisticated approaches try to formalise a *learnability* criterion to sel
 
 With the score defining an example as "learnable" if the model being trained has high loss for the example and a "well-trained" reference model has low loss.
 
-Crucially, when accounting for the cost of training and inference for the reference model current approaches aren't able to offer a net reduction in training costs.
+When accounting for the cost of training and inference for the reference model, current approaches aren't able to offer a net reduction in training costs.
 
 ### Method
 
 ![Learnability Criterion]({{page.image_dir | append: "ALG-Policy.png" | relative_url}})
 
-The authors propose using a small model and maintaining two sets of weights for it: reference "well-trained" weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.  
+The authors propose using a small model and maintaining two sets of weights for it: reference "well-trained" weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.
+
+At this point a trade-off emerges. A smaller scoring model eliminates fewer examples, but introduces smaller overheads to training. 
+
+![Amortisation of training costs]({{page.image_dir | append: "FIG-Amortisation.png" | relative_url}})
+
 ### Results
 
