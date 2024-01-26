@@ -65,32 +65,38 @@ plugins:
 author:
   name   : "Graphcore Research"
   avatar : "/assets/images/gc-symbol-pink.png"
-  bio    : "Our research team’s mission is to follow and contribute to the advancement of AI research, aiming to characterize the computational requirements of Machine Intelligence."
+  bio    : "Our mission is to follow and contribute to the advancement of AI research, aiming to characterise the computational requirements of machine intelligence."
   links:
     - label: "Graphcore"
       icon: "fas fa-fw fa-microchip"
       url: "https://www.graphcore.ai/"
-    # - label: "Twitter"
-    #   icon: "fab fa-fw fa-twitter-square"
-    #   url: "https://twitter.com/"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/GCResearchTeam"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
+    - label: "Subscribe"
+      icon: "fas fa-fw fa-envelope"
+      url: "https://www.graphcore.ai/graphcore-research-newsletter-1"
     - label: "Our Papers"
       icon: "fas fa-fw fa-book"
       url: "https://www.graphcore.ai/resources/research-papers"
 
 footer:
   links:
-    # - label: "Twitter"
-    #   icon: "fab fa-fw fa-twitter-square"
-    #   url: "https://twitter.com/"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/GCResearchTeam"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/graphcore-research"
     - label: "Our Papers"
       icon: "fas fa-fw fa-book"
       url: "https://www.graphcore.ai/resources/research-papers"
+    - label: "Subscribe"
+      icon: "fas fa-fw fa-envelope"
+      url: "https://www.graphcore.ai/graphcore-research-newsletter-1"
 
 defaults:
   # _posts
