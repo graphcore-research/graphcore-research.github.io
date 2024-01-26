@@ -79,6 +79,9 @@ author:
     - label: "Our Papers"
       icon: "fas fa-fw fa-book"
       url: "https://www.graphcore.ai/resources/research-papers"
+    - label: "Subscribe"
+      icon: "fas fa-fw fa-envelope"
+      url: "https://www.graphcore.ai/graphcore-research-newsletter-1"
 
 footer:
   links:
@@ -91,6 +94,9 @@ footer:
     - label: "Our Papers"
       icon: "fas fa-fw fa-book"
       url: "https://www.graphcore.ai/resources/research-papers"
+    - label: "Subscribe"
+      icon: "fas fa-fw fa-envelope"
+      url: "https://www.graphcore.ai/graphcore-research-newsletter-1"
 
 defaults:
   # _posts
