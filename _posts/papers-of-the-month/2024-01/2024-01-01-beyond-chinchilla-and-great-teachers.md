@@ -9,6 +9,7 @@ potm_month: 1
 layout: paper-summaries-layout
 category: "papers-of-the-month"
 toc: true
+toc_sticky: true
 toc_label: "Papers"
 toc_icon: "book"
 ---
