@@ -32,6 +32,8 @@ Classic geometry proofs extensively rely on auxiliary constructions (e.g. drawin
 
 To generate a dataset of synthetic geometric proofs, a set $P$ of theorem premises is randomly sampled and then passed to a deduction engine, which infers new statements from them using its forward deduction rules. This generates a directed graph of inferences; any node $N$ can then be seen as the conclusion of a series of logical steps represented by its dependency subgraph $G(N)$, which can be traced back to a subset $P(N) \subset P$, the minimal set of premises necessary to reach the conclusion. The triple $(P(N)$, $N$, $G(N))$ is a synthetic example of a theorem, in the form (premises, conclusion, proof). The key step is then to identify auxiliary constructions among the premises $P(N)$: they are the premises that involve geometric constructions that are not necessary to state the conclusion $N$ (while being necessary to prove it!) For this reason, these premises are moved from $P(N)$ to the proof $G(N)$.
 
+![Synthetic dataset generation ]({{ page.image_dir | append: "synthetic.png" | relative_url }})
+
 **AlphaGeometry**
 
 A transformer-based language model is trained from scratch on the serialized strings '$P(N)$-$N$-$G(N)$', learning to generate a proof conditioned on premises and conclusion. Since auxiliary constructions have been moved to $G(N)$, the model crucially learns to perform them as intermediate steps in the proof.
