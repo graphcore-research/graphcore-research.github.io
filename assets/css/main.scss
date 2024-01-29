@@ -72,3 +72,10 @@ figcaption {
     display: inline-block;
     font-size: 1em;
 }
+
+.constrained_img {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: auto;
+}
