@@ -18,7 +18,7 @@ hidden: true
 
 The central premise is that the architecture of diffusion models should be modified to ensure training signals are stable and predictable. They show that this leads to a significant improvement in the quality of generated images.
 
-<img class="constrained_img" src="/assets/images/posts/2024-01/potm/diffusion_dynamics/figure_1.png" alt="A plot showing the quality of image generation using this technique versus existing methods from the literature. They get significantly better scores than existing methods, and do so using fewer flops-per-evaluation.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A plot showing the quality of image generation using this technique versus existing methods from the literature. They get significantly better scores than existing methods, and do so using fewer flops-per-evaluation.">
 
 In addition, the paper introduces a second innovation: _post-hoc EMA_. To get the best
 final diffusion model it's typical to take the exponential-moving-average (EMA) of
@@ -49,6 +49,6 @@ They take this a step further in config E by permanently normalising the weights
 
 In addition, their exponential-moving-average (EMA) trick also makes a big difference to the final performance. Their method works by taking intermediate moving-averages and linearly combining them after training, to approximate arbitrary-weight schedules:
 
-<img class="constrained_img" src="/assets/images/posts/2024-01/potm/diffusion_dynamics/figure_5a.png" alt="A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'figure_5a.png' | relative_url }}" alt="A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.">
 
 It's clear that getting the schedule just right is important, and also hard to predict ahead-of-time. Until now the only option has been an expensive sweep, doing full training runs with different weightings. This innovation now makes the job of constructing the EMA substantially cheaper and easier — a big win for the community.

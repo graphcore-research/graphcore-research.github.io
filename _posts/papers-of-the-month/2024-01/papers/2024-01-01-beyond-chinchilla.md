@@ -21,7 +21,7 @@ The authors modify the scaling laws from the [Chinchilla paper](https://arxiv.or
 The key conclusion they draw from their analysis is:
 > LLM practitioners expecting significant demand ($\sim 10^9$ inference requests) should train models substantially smaller and longer than Chinchilla-optimal.
 
-<img class="constrained_img" src="/assets/images/posts/2024-01/potm/beyond_chinchilla/figure_1b.png" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the compute-optimal model size shrinks relative to Chinchilla.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1b.png' | relative_url }}" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the compute-optimal model size shrinks relative to Chinchilla.">
 <figcaption>Figure 1(b). The new scaling laws account for the number of inference tokens. As inference demand grows one should train increasingly smaller models than Chinchilla recommends.</figcaption>
 
 ### Background
@@ -50,7 +50,7 @@ In this paper the authors modify the Chinchilla scaling laws to account for infe
 
 This formula reduces the total compute (training + inference) required, relative to the original Chinchilla rules:
 
-<img class="constrained_img" src="/assets/images/posts/2024-01/potm/beyond_chinchilla/figure_1a.png" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the cost of the Chinchilla scaling law is increasingly more than those suggested here.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1a.png' | relative_url }}" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the cost of the Chinchilla scaling law is increasingly more than those suggested here.">
 
 This is an improvement, but there's still a considerable gap between this and the "real world" costs of running such a model. The above doesn't account for:
 
