@@ -8,7 +8,7 @@ tags:
   - inference
 potm_year: 2024
 potm_month: 1
-paper_order: 1
+paper_order: 2
 image_dir: "/assets/images/posts/2024-01/potm/beyond_chinchilla/"
 review_author: "Charlie Blake"
 hidden: true

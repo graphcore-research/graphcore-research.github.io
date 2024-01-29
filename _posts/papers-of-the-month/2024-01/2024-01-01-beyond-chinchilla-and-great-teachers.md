@@ -14,6 +14,4 @@ toc_label: "Papers"
 toc_icon: "book"
 ---
 
-TODO: intro blurb
-
 {% include paper-summaries.md %}

@@ -9,8 +9,9 @@ tags:
     - synthetic-data
 potm_year: 2024
 potm_month: 1
-paper_order: 1
+paper_order: 4
 image_dir: "/assets/images/posts/2024-01/potm/olympiad_geometry/"
+review_author: "Alberto Cattaneo"
 hidden: true
 --- 
 
