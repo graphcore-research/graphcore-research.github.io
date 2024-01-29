@@ -6,7 +6,7 @@ paper_link: "https://arxiv.org/abs/2311.01906"
 tags:
   - transformers
   - LLMs
-  - signal-propagation
+  - training-dynamics
 potm_year: 2023
 potm_month: 12
 paper_order: 2
