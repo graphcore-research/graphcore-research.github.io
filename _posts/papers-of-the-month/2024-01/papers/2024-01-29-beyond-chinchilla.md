@@ -27,7 +27,7 @@ The key conclusion they draw from their analysis is:
 
 ### Background
 
-In 2020 OpenAI kicked-off a trend of deriving so-called "scaling laws" for transformers, in their paper [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). They identified a mathematical relationship between the pretraining loss and each of: model size, dataset size and amount of compute.
+In 2020 OpenAI kicked off a trend of deriving so-called "scaling laws" for transformers, in their paper [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). They identified a mathematical relationship between the pretraining loss and each of: model size, dataset size and amount of compute.
 
 This was a highly influential paper; used to justify the size of their enormous 175B-parameter GPT-3 model and set a precedent that other 100B+ LLMs would follow in the next couple of years. Their conclusion:
 
@@ -61,8 +61,8 @@ This is an improvement, but there's still a considerable gap between this and th
 3. Quantisation for inference
 4. Different inference hardware
 
-To address these points, the authors introduce a second _cost-optimal_ formula, which accounts for the costs, hardware utilisation and number of tokens at different stages. This makes the model much more realistic, and gets closer to the approach adopted by Llama.
+To address these points, the authors introduce a second _cost-optimal_ formula, which accounts for the costs, hardware utilisation and number of tokens at different stages. This makes the model much more realistic and gets closer to the approach adopted by Llama.
 
 ### Takeaways
 
-Of course, one can never know ahead-of-time how many requests a model will be used for, so there are limits to this approach. It also doesn't account for some practical benefits of smaller models (easier to fit on a single chip, lower latency). Nevertheless, this is still a much-improved model of the real-world costs of practical LLM use. 
+Of course, one can never know ahead of time how many requests a model will be used for, so there are limits to this approach. It also doesn't account for some practical benefits of smaller models (easier to fit on a single chip, lower latency). Nevertheless, this is still a much-improved model of the real-world costs of practical LLM use. 

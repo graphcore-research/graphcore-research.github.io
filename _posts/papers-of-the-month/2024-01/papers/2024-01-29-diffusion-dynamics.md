@@ -17,11 +17,11 @@ hidden: true
 
 ### The key idea
 
-The central premise is that the architecture of diffusion models should be modified to ensure training signals are stable and predictable. They show that this leads to a significant improvement in the quality of generated images.
+The architecture of diffusion models should be modified to ensure training signals are stable and predictable. This leads to a significant improvement in the quality of generated images.
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A plot showing the quality of image generation using this technique versus existing methods from the literature. They get significantly better scores than existing methods, and do so using fewer flops-per-evaluation.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A plot showing the quality of image generation using this technique versus existing methods from the literature. They get significantly better scores than existing methods and do so using fewer flops-per-evaluation.">
 
-In addition, the paper introduces a second innovation: _post-hoc EMA_. To get the best
+The paper also introduces a second innovation: _post-hoc EMA_. To get the best
 final diffusion model it's typical to take the exponential-moving-average (EMA) of
 the weights of the model throughout training. This "EMA version" of the model is usually
 something you build up during training, giving you one chance to get the right exponential weighting. The authors introduce a neat trick to re-construct _any_ desired EMA weighting after training.
@@ -32,9 +32,9 @@ Training large diffusion models is often challenging due to inherently noisy tra
 
 > To learn efficiently in such a noisy training environment, the network should ideally have a predictable and even response to parameter updates.
 
-Almost all current ML models fail to satisfy this. They postulate that this limits the performance of some models because of complex interactions between training dynamics and hyperparameters / architecture.
+Almost all current ML models fail to satisfy this. They suggest that this limits the performance of some models because of complex interactions between training dynamics and hyperparameters / architecture.
 
-To address this, they modify their network with the aim of ensuring constant magnitudes of activations, weights and updates in expectation. This is almost identical to the objective set out in Graphcore Research's own [unit scaling paper](https://arxiv.org/abs/2303.11257). A key difference here, is that whereas unit scaling only satisfies this criterion at the beginning of training, they aim to maintain it more strictly throughout.
+To address this, they modify their network to ensure constant magnitudes of activations, weights and updates in expectation. This is almost identical to the objective set out in Graphcore Research's own [unit scaling paper](https://arxiv.org/abs/2303.11257). A key difference here is that whereas unit scaling only satisfies this criterion at the beginning of training, they aim to maintain it more strictly throughout.
 
 Their implementation proceeds through a series of steps (or "configs") which they test / ablate at each stage. This is a great feature of the paper — we can see how useful each change is, justifying the many different tweaks they introduce.
 
@@ -52,4 +52,4 @@ In addition, their exponential-moving-average (EMA) trick also makes a big diffe
 
 <img class="constrained_img" src="{{ page.image_dir | append: 'figure_5a.png' | relative_url }}" alt="A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.">
 
-It's clear that getting the schedule just right is important, and also hard to predict ahead-of-time. Until now the only option has been an expensive sweep, doing full training runs with different weightings. This innovation now makes the job of constructing the EMA substantially cheaper and easier — a big win for the community.
+It's clear that getting the schedule just right is important, and also hard to predict ahead of time. Until now the only option has been an expensive sweep, doing full training runs with different weightings. This innovation now makes the job of constructing the EMA substantially cheaper and easier — a big win for the community.

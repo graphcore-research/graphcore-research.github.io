@@ -22,9 +22,9 @@ Co-training a small model with a large model is an efficient strategy for filter
 
 ### Background
 
-During training, it is wasteful to spend time computing low magnitude or high variance gradients that will contribute little to a weight update after averaging and accumulating. How do you go about detecting such examples?
+During training, it is wasteful to spend time computing low-magnitude or high variance gradients that will contribute little to a weight update after averaging and accumulating. How do you go about detecting such examples?
 
-An obvious method for low magnitude gradients would be to compute the loss for all of the elements in your batch and select only the proportion $p$ with the largest values to compute gradients for. For a fixed size dataset we would get a $1-(1+2p)/3$ reduction in FLOPs, e.g., throwing away $1/2$ of your samples results in a $1/3$ decrease in FLOPs. This kind of approach is good at eliminating "easy" examples, it is not so good at eliminating unhelpful noisy examples. 
+An obvious method for low-magnitude gradients would be to compute the loss for all of the elements in your batch and select only the proportion $p$ with the largest values to compute gradients for. For a fixed-size dataset we would get a $1-(1+2p)/3$ reduction in FLOPs, e.g., throwing away $1/2$ of your samples results in a $1/3$ decrease in FLOPs. This kind of approach is good at eliminating "easy" examples, it is not so good at eliminating unhelpful noisy examples. 
 
 More sophisticated approaches try to formalise a *learnability* criterion to select examples that are neither too easy nor too hard (noisy) to predict, e.g., [reproducible holdout loss selection](https://arxiv.org/abs/2206.07137):
 
@@ -48,13 +48,13 @@ By balancing this trade-off, significant reductions in the overall training cost
 
 ### Results
 
-Their experiments are benchmarked against training ViT-L (304M params) on JFT (300M labelled images) for image classification or ViT-B (86M params) on the ALIGN dataset (1.8B image-text pairs) for multimodal image-text alignment.
+Their experiments are benchmarked against training ViT-L (304M params) on JFT (300M labeled images) for image classification or ViT-B (86M params) on the ALIGN dataset (1.8B image-text pairs) for multimodal image-text alignment.
 
-With ViT-Tiny (5.6M params) as their reference model, they manage to obtain a consistent 25% reduction in training FLOPs on to achieve the same downstream task accuracy when pre-trained on JFT ahead of time.
+With ViT-Tiny (5.6M params) as their reference model, they manage to obtain a consistent 25% reduction in training FLOPs to achieve the same downstream task accuracy when pre-trained on JFT ahead of time.
 
 ![Active learning scaling law]({{page.image_dir | append: "FIG-Scaling-Law.png" | relative_url}})  
 
-For image-text alignment, where large scale datasets are typically much noisier, they manage to obtain 48% speedup (not clear if this is total FLOPs or training iterations) to target zero-shot accuracy on Imagenet-1k when pre-training their reference model on a smaller, cleaner multimodal dataset.
+For image-text alignment, where large-scale datasets are typically much noisier, they manage to obtain 48% speedup (not clear if this is total FLOPs or training iterations) to target zero-shot accuracy on Imagenet-1k when pre-training their reference model on a smaller, cleaner multimodal dataset.
 
 ![Multimodal results]({{page.image_dir | append: "TAB-Ref-Transfer.png" | relative_url}})
 
