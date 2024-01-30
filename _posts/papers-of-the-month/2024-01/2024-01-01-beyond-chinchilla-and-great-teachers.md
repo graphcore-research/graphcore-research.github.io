@@ -1,5 +1,5 @@
 ---
-title: "January Papers: Beyond Chinchilla & Great Teachers"
+title: "January Papers: Great Teachers & Beyond Chinchilla"
 header.teaser: /assets/images/posts/2024-01/potm/beyond_chinchilla/figure_1a.png
 
 date: 2024-01-01T01:34:30-04:00

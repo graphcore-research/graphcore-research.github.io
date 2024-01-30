@@ -1,6 +1,6 @@
 ---
 title: "Solving olympiad geometry without human demonstrations"
-paper_authors: "Trieu H. Trinh, Yuhuai Wu, Quoc V. Le, He He, Thang Luong"
+paper_authors: "Trieu H. Trinh, Yuhuai Wu, Quoc V. Le, He He and Thang Luong"
 orgs: "Google DeepMind, New York University"
 paper_link: "https://www.nature.com/articles/s41586-023-06747-5"
 tags:
