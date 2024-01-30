@@ -5,6 +5,7 @@ orgs: "Nvidia, Aalto University"
 paper_link: "https://arxiv.org/abs/2312.02696"
 tags:
   - training-dynamics
+  - computer-vision
   - diffusion
 potm_year: 2024
 potm_month: 1

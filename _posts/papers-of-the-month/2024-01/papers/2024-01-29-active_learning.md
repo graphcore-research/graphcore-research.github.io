@@ -5,7 +5,8 @@ orgs: "Google DeepMind, UCL"
 paper_link: "https://arxiv.org/abs/2312.05328"
 tags:
     - active-learning
-    - multi-modal
+    - multi-modality
+    - computer-vision
     - efficient-training
 potm_year: 2024
 potm_month: 1

@@ -6,6 +6,7 @@ paper_link: "https://arxiv.org/abs/2401.00448"
 tags:
   - scaling-laws
   - inference
+  - LLMs
 potm_year: 2024
 potm_month: 1
 paper_order: 2
