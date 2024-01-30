@@ -2,11 +2,14 @@
 "item.potm_year == page.potm_year" | where_exp: "item", "item.category != 'papers-of-the-month'" | sort: "paper_order"
 %}
 
+{% assign review_authors = posts | map: 'review_author' %}
+{% assign review_authors = review_authors | uniq %}
+
 <p class="page__taxonomy">
     <strong><i class="fas fa-fw fa-users" aria-hidden="true"></i> Reviews by:</strong>
     <span itemprop="keywords">
-        {% for post in posts %}
-            {{ post.review_author }}{% unless forloop.last %}<span class="sep">, </span>{%endunless %}
+        {% for author in review_authors %}
+            {{ author }}{% unless forloop.last %}<span class="sep">, </span>{%endunless %}
         {% endfor %}
     </span>
 </p>
