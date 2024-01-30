@@ -23,7 +23,7 @@ ML approaches to mathematical theorem proving are bottlenecked by the scarcity o
 
 Classic geometry proofs extensively rely on auxiliary constructions (e.g. drawing the bisector of an angle or constructing the midpoint of a line segment), on top of the constructions explicitly provided in the statement of the theorem. Symbolic deduction engines for automated theorem proving are based on hard-coded search heuristic and struggle with auxiliary constructions, which effectively introduce an infinite number of branching points in the search tree. While LLMs, on their own, perform poorly on theorem proving (with GPT-4 having a 0% solve rate on the set of geometry problems used for benchmarking in the paper), they have shown promise in generating exogenous proof terms, such as geometric auxiliary constructions, that can be used to restrict the search space of deduction engines. However, the difficulties and costs of translating human proofs into machine-verifiable formats strongly limit the amount of data available to train or fine-tune deep-learning models. 
 
-### Method
+### Their method
 
 **Synthetic dataset of theorem proofs**
 

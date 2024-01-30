@@ -34,7 +34,7 @@ With the score defining an example as "learnable" if the model being trained has
 
 When accounting for the cost of training and inference for the reference model, current approaches aren't able to offer a net reduction in training costs.
 
-### Method
+### Their method
 
 The authors propose using a small model alongside the large model, and maintaining two sets of weights for it: pretrained reference weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated cheaply with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.
 
