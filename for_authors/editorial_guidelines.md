@@ -18,4 +18,4 @@ Editor's checklist:
 - [ ] Check plots width-scale properly / general mobile rendering (see `.constrained_img` css class)
 - [ ] Make sure it looks ok on temporary version of public mirror, at https://graphcore-research.github.io/graphcore-research.github.io-internal/
 - [ ] Double check nothing sensitive has been mentioned
-- [ ] Spellcheck final document
+- [ ] Spellcheck final document (https://www.grammarly.com/spell-checker)
