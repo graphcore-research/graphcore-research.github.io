@@ -30,19 +30,21 @@ More sophisticated approaches try to formalise a *learnability* criterion to sel
 
 <img class="constrained_img" src="{{ page.image_dir | append: 'EQN-Learnability.png' | relative_url }}" alt="Equation for reproducible holdout loss selection, aka the 'learnability criterion'.">
 
-With the score defining an example as "learnable" if the model being trained has high loss for the example and a "well-trained" reference model has low loss.
+With the score defining an example as "learnable" if the model being trained has high loss for the example and a pretrained reference model has low loss.
 
 When accounting for the cost of training and inference for the reference model, current approaches aren't able to offer a net reduction in training costs.
 
 ### Method
 
-The authors propose using a small model and maintaining two sets of weights for it: reference "well-trained" weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.
+The authors propose using a small model alongside the large model, and maintaining two sets of weights for it: pretrained reference weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated cheaply with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.
 
 <img class="constrained_img" src="{{ page.image_dir | append: 'ALG-Policy.png' | relative_url }}" alt="Algorithm for ClassAct/ActiveCLIP, showing how the active learning sampling works in practice.">
 
-At this point a trade-off emerges. A smaller scoring model eliminates fewer examples, but introduces smaller overheads to training. 
+At this point a trade-off emerges. A larger scoring model is more effective at eliminating low-quality examples, but introduces greater overheads to training. 
 
-![Amortisation of training costs]({{page.image_dir | append: "FIG-Amortisation.png" | relative_url}})  
+![Amortisation of training costs]({{page.image_dir | append: "FIG-Amortisation.png" | relative_url}})
+
+By balancing this trade-off, significant reductions in the overall training cost are possible.
 
 ### Results
 
