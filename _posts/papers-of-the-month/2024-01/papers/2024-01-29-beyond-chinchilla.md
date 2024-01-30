@@ -20,7 +20,7 @@ hidden: true
 The authors modify the scaling laws from the [Chinchilla paper](https://arxiv.org/abs/2203.15556) to account for the additional cost of running inference on a model once it's been trained. That's the rationale behind models like [Llama](https://arxiv.org/abs/2307.09288) training on a huge number of tokens — this paper now provides a mathematical justification.
 
 The key conclusion they draw from their analysis is:
-> LLM practitioners expecting significant demand ($\sim 10^9$ inference requests) should train models substantially smaller and longer than Chinchilla-optimal.
+> LLM practitioners expecting significant demand (~$10^9$ inference requests) should train models substantially smaller and longer than Chinchilla-optimal.
 
 <img class="constrained_img" src="{{ page.image_dir | append: 'figure_1b.png' | relative_url }}" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the compute-optimal model size shrinks relative to Chinchilla.">
 <figcaption>Figure 1(b). The new scaling laws account for the number of inference tokens. As inference demand grows one should train increasingly smaller models than Chinchilla recommends.</figcaption>
@@ -33,7 +33,7 @@ This was a highly influential paper; used to justify the size of their enormous 
 
 > optimally compute-efficient training involves training very large models on a relatively modest amount of data.
 
-Unfortunately, their analysis was flawed. In 2022 DeepMind released [their Chinchilla model, in a paper](https://arxiv.org/abs/2203.15556) rightly suggesting you should train smaller models on more data than OpenAI had claimed.
+Unfortunately, their analysis was flawed. In 2022 DeepMind released their Chinchilla model, [in a paper](https://arxiv.org/abs/2203.15556) rightly suggesting you should train smaller models on more data than OpenAI had claimed.
 
 But this wasn't the end of the story. Meta's recent [Llama](https://arxiv.org/abs/2307.09288) models are trained with an even lower params-to-tokens ratio than Chinchilla. Versus GPT-3, the smallest Llama 2 model uses 25x fewer parameters, but over 6x more data.
 
@@ -62,5 +62,7 @@ This is an improvement, but there's still a considerable gap between this and th
 4. Different inference hardware
 
 To address these points, the authors introduce a second _cost-optimal_ formula, which accounts for the costs, hardware utilisation and number of tokens at different stages. This makes the model much more realistic, and gets closer to the approach adopted by Llama.
+
+### Takeaways
 
 Of course, one can never know ahead-of-time how many requests a model will be used for, so there are limits to this approach. It also doesn't account for some practical benefits of smaller models (easier to fit on a single chip, lower latency). Nevertheless, this is still a much-improved model of the real-world costs of practical LLM use. 
