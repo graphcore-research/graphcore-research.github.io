@@ -51,7 +51,8 @@ In this paper the authors modify the Chinchilla scaling laws to account for infe
 
 This formula reduces the total compute (training + inference) required, relative to the original Chinchilla rules:
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1a.png' | relative_url }}" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the cost of the Chinchilla scaling law is increasingly more than those suggested here.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'figure_1a.png' | relative_url }}" alt="A plot demonstrating that as pretraining loss and inference tokens increase, the cost of the Chinchilla scaling law increases relative to the authors' new law">
+<figcaption>Figure 1(a). As inference demand grows the total cost of the Chinchilla scaling law increases relative to the authors' new law.</figcaption>
 
 This is an improvement, but there's still a considerable gap between this and the "real world" costs of running such a model. The above doesn't account for:
 
