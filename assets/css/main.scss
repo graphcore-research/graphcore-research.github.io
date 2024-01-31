@@ -73,6 +73,7 @@ figcaption {
     font-size: 1em;
 }
 
+
 .constrained_img {
     width: 100%;
     max-width: 500px;
@@ -83,3 +84,51 @@ figcaption {
 .page__meta a:hover {
     color: #1f2021;
 }
+
+.author__avatar img {
+    border-radius: 0;
+    border: none;
+}
+
+.fa-envelope {
+    color: #ff6f79 !important;
+}
+
+.subscribe-btn-wrapper {
+    font-size: 16px;
+    margin-top: 1em;
+}
+
+.subscribe-btn-wrapper .subscribe-btn {
+    max-width: 320px;
+    display: block;
+    font-family: "Graphik-Medium", sans-serif;
+    padding: 10px 15px;
+    background: #ff6f79;
+    color: #ffffff;
+    opacity: 75%;
+    transition: opacity 0.2s ease-in-out;
+    text-decoration: none !important;
+    border-radius: 4px;
+}
+
+.subscribe-btn-wrapper .subscribe-btn:hover {
+    text-decoration: none !important;
+    opacity: 100%;
+}
+
+.subscribe-btn-wrapper:after {
+    content: '→';
+    color: #ffffff;
+    position: relative;
+    font-size: 1.3em;
+    transition: left ease-out .3s;
+    left: 5em;
+    bottom: 38px;
+    pointer-events: none;
+}
+
+.subscribe-btn-wrapper:hover:after {
+    left: 5.2em;
+}
+
