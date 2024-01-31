@@ -73,6 +73,18 @@ figcaption {
     font-size: 1em;
 }
 
+
+.constrained_img {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: auto;
+}
+
+.page__meta a:hover {
+    color: #1f2021;
+}
+
 .author__avatar img {
     border-radius: 0;
     border: none;
@@ -119,3 +131,4 @@ figcaption {
 .subscribe-btn-wrapper:hover:after {
     left: 5.2em;
 }
+
