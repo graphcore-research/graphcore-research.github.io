@@ -9,7 +9,8 @@
     <strong><i class="fas fa-fw fa-users" aria-hidden="true"></i> Reviews by:</strong>
     <span itemprop="keywords">
         {% for author in review_authors %}
-            {{ author }}{% unless forloop.last %}<span class="sep">, </span>{%endunless %}
+        <a href="{{ author.link }}" rel="nofollow noreferrer" target="_blank">{{ author.name }}{% unless forloop.last %}</a><span class="sep">, </span>{%
+        endunless %}
         {% endfor %}
     </span>
 </p>

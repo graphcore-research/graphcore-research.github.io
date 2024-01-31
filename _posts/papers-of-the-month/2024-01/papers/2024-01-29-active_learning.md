@@ -12,7 +12,9 @@ potm_year: 2024
 potm_month: 1
 paper_order: 1
 image_dir: "/assets/images/posts/2024-01/potm/active_learning/"
-review_author: "Luke Prince"
+review_author:
+    name: "Luke Prince"
+    link: "https://www.linkedin.com/in/lyprince/"
 hidden: true
 --- 
 

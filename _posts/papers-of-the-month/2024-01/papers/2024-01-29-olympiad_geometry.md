@@ -11,7 +11,9 @@ potm_year: 2024
 potm_month: 1
 paper_order: 4
 image_dir: "/assets/images/posts/2024-01/potm/olympiad_geometry/"
-review_author: "Alberto Cattaneo"
+review_author:
+  name: "Alberto Cattaneo"
+  link: "http://www.linkedin.com/in/albertocattaneo91"
 hidden: true
 --- 
 

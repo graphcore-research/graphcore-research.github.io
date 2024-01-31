@@ -11,7 +11,9 @@ potm_year: 2024
 potm_month: 1
 paper_order: 3
 image_dir: "/assets/images/posts/2024-01/potm/diffusion_dynamics/"
-review_author: "Charlie Blake (x2)"
+review_author:
+  name: "Charlie Blake (x2)"
+  link: "https://twitter.com/thecharlieblake"
 hidden: true
 ---
 
