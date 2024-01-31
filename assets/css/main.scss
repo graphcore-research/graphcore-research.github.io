@@ -145,3 +145,16 @@ figcaption {
     left: 5.2em;
 }
 
+@media (min-width: 80em) {
+    .sidebar__right.sticky {
+        width: 235px;
+        margin-right: -235px;
+    }
+}
+
+@media (min-width: 90em) {
+    .sidebar__right.sticky {
+        width: 300px;
+        margin-right: -300px;
+    }
+}
