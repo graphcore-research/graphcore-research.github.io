@@ -62,4 +62,4 @@ Impressive! Although, their numbers for zero-shot accuracy on ImageNet look a bi
 
 ### Takeaways
 
-The FLOP reductions are encouraging. The technique is worth considering when training even larger models on larger, noisier web-scale datasets. I do wonder how difficult it will be to realise these FLOP or iteration reductions as wall-clock speed-ups, especially when needing to configure a cluster to support this kind of multi-scale workloads.
+The FLOP reductions are encouraging. The technique is worth considering when training even larger models on larger, noisier web-scale datasets. It remains to be seen how difficult it will be to realise these FLOP or iteration reductions as wall-clock speed-ups, especially when needing to configure a cluster to support this kind of multi-scale workloads.
