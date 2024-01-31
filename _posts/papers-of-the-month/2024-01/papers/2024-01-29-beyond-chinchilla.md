@@ -35,7 +35,7 @@ This was a highly influential paper; used to justify the size of their enormous 
 
 > optimally compute-efficient training involves training very large models on a relatively modest amount of data.
 
-Unfortunately, their analysis was flawed. In 2022 DeepMind released their Chinchilla model, [in a paper](https://arxiv.org/abs/2203.15556) rightly suggesting you should train smaller models on more data than OpenAI had claimed.
+In 2022 DeepMind released their Chinchilla model, [in a paper](https://arxiv.org/abs/2203.15556) that revised OpenAI's scaling laws, rightly suggesting you should train smaller models on more data than originally claimed.
 
 But this wasn't the end of the story. Meta's recent [Llama](https://arxiv.org/abs/2307.09288) models are trained with an even lower params-to-tokens ratio than Chinchilla. Versus GPT-3, the smallest Llama 2 model uses 25x fewer parameters, but over 6x more data.
 

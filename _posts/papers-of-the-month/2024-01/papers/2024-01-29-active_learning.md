@@ -32,13 +32,13 @@ More sophisticated approaches try to formalise a *learnability* criterion to sel
 
 <img class="constrained_img" src="{{ page.image_dir | append: 'EQN-Learnability.png' | relative_url }}" alt="Equation for reproducible holdout loss selection, aka the 'learnability criterion'.">
 
-With the score defining an example as "learnable" if the model being trained has high loss for the example and a pretrained reference model has low loss.
+with the score defining an example as "learnable" if the model being trained has high loss for the example and a pretrained reference model has low loss.
 
 When accounting for the cost of training and inference for the reference model, current approaches aren't able to offer a net reduction in training costs.
 
 ### Their method
 
-The authors propose using a small model alongside the large model, and maintaining two sets of weights for it: pretrained reference weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated cheaply with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.
+The authors propose using a small model alongside the large model, and maintaining two sets of weights for the small model: pretrained reference weights $\theta_r$ and online "co-trained" weights $\theta_o$. The learnability score calculated cheaply with these two sets of weights on the full batch is used to select a subset of the batch for training the larger learner model $\theta_l$.
 
 <img class="constrained_img" src="{{ page.image_dir | append: 'ALG-Policy.png' | relative_url }}" alt="Algorithm for ClassAct/ActiveCLIP, showing how the active learning sampling works in practice.">
 
