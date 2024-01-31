@@ -73,10 +73,23 @@ figcaption {
     font-size: 1em;
 }
 
+.constrained_img_small {
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: auto;
+}
 
 .constrained_img {
     width: 100%;
     max-width: 500px;
+    display: block;
+    margin: auto;
+}
+
+.constrained_img_large {
+    width: 100%;
+    max-width: 600px;
     display: block;
     margin: auto;
 }

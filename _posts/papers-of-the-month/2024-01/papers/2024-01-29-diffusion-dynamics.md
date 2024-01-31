@@ -44,7 +44,7 @@ Their implementation proceeds through a series of steps (or "configs") which the
 
 Their results for each config are as follows:
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'table_1.png' | relative_url }}" alt="A table showing the FID score of each training configuration. Each innovation lowers the FID score, starting at 8.00 and ending at 2.56.">
+<img class="constrained_img_large" src="{{ page.image_dir | append: 'table_1.png' | relative_url }}" alt="A table showing the FID score of each training configuration. Each innovation lowers the FID score, starting at 8.00 and ending at 2.56.">
 
 A few details of these configs are worth highlighting. Config D preserves activation magnitudes by dividing weights by their norm in the forward pass. Because of this, the initialisation-scale of the weights doesn't matter and they can get away with using unit-initialisation.
 
@@ -52,6 +52,6 @@ They take this a step further in config E by permanently normalising the weights
 
 In addition, their exponential-moving-average (EMA) trick also makes a big difference to the final performance. Their method works by taking intermediate moving-averages and linearly combining them after training, to approximate arbitrary-weight schedules:
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'figure_5a.png' | relative_url }}" alt="A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.">
+<img class="constrained_img_small" src="{{ page.image_dir | append: 'figure_5a.png' | relative_url }}" alt="A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.">
 
 It's clear that getting the schedule just right is important, and also hard to predict ahead of time. Until now the only option has been an expensive sweep, doing full training runs with different weightings. This innovation now makes the job of constructing the EMA substantially cheaper and easier — a big win for the community.
