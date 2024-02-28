@@ -1,5 +1,7 @@
 ---
 title: "January Papers: Great Teachers & Beyond Chinchilla"
+header.image: /assets/images/posts/2024-01/potm/beyond_chinchilla/figure_1b.png
+header.og_image: /assets/images/posts/2024-01/potm/beyond_chinchilla/figure_1b.png
 header.teaser: /assets/images/posts/2024-01/potm/beyond_chinchilla/figure_1b.png
 
 date: 2024-01-29T01:34:30-04:00
@@ -12,6 +14,7 @@ toc: true
 toc_sticky: true
 toc_label: "Papers"
 toc_icon: "book"
+author.twitter: "GCResearchTeam"
 ---
 
 For the research community, 2023 was dominated by large transformers and the associated challenges with training, tuning and deploying them.
