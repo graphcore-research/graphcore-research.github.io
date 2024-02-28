@@ -5,7 +5,6 @@ orgs: "Cornell University"
 paper_link: "https://arxiv.org/abs/2402.04396"
 tags:
     - efficient-inference
-    - efficient-training
     - quantization
 potm_year: 2024
 potm_month: 2
