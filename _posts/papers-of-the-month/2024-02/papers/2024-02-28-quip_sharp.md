@@ -5,9 +5,8 @@ orgs: "Cornell University"
 paper_link: "https://arxiv.org/abs/2402.04396"
 tags:
     - efficient-inference
-    - vector-quantization
-    - 
     - efficient-training
+    - quantization
 potm_year: 2024
 potm_month: 2
 paper_order: 1
@@ -22,15 +21,18 @@ hidden: true
 
 Enable extreme compression by transforming weights to something less heavy-tailed before quantising with a set of spherical (rather than grid-like) codes!
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'FIG-Scheme.png' | relative_url }}" alt="High level scheme for QuIP#: Hadamard transform reduces heavy-tailed-ness, post transformed weights rounded to points on lattice.">
+<img src="{{ page.image_dir | append: 'FIG-Scheme.png' | relative_url }}" alt="High level scheme for QuIP#: Hadamard transform reduces heavy-tailed-ness, post transformed weights rounded to points on lattice.">
 
 ### Background
 
-LLM token generation is memory-bandwidth bound, i.e., limited by the rate at which model state can be read. This means that any reduction in #GB to store model weights and KV cache can increase #tokens/sec.
+LLM token generation is memory-bandwidth bound, i.e. limited by the rate at which model state can be read. This means that any reduction in #GB to store model weights and KV cache can increase #tokens/sec.
 
-[Widely adopted LLM compression techniques typically stop at 4-bits](https://arxiv.org/abs/2212.09720) since this hits a sweet spot with 1) very little degradation in downstream task performance and 2) element-wise codecs that are straightforward to parallelise and optimise on modern hardware.
+Widely adopted [LLM compression techniques](https://arxiv.org/abs/2212.09720) typically stop at 4-bits since this hits a sweet spot with
 
-One reason these techniques struggle to quantise to fewer bits is that the tails of LLM weights and activations distributions affecting the majority of computation becomes increasingly susceptible to quantisation error. To address this, the authors previously proposed [QuIP](https://arxiv.org/abs/2307.13304) in which weights are transformed to have a less heavy-tailed distribution. Here they present two key improvements to QuIP.
+1. very little degradation in downstream task performance
+2. element-wise codecs that are straightforward to parallelise and optimise on modern hardware.
+
+One reason these techniques struggle to quantise to fewer bits is that the tails of LLM weights and activations distributions affecting the majority of computation become increasingly susceptible to quantisation error. To address this, the authors previously proposed [QuIP](https://arxiv.org/abs/2307.13304) in which weights are transformed to have a less heavy-tailed distribution. Here they present two key improvements to QuIP.
 
 ### Their method
 
@@ -54,15 +56,15 @@ QuIP# improves both the method for generating $U$ and $V$ and the quantisation a
 
 Compressing to 3-bits introduces very little degradation in perplexity compared to an FP16 baseline. So much so that it looks like the trade-off of using a slightly larger model compressed to fewer bits is worthwhile.
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'TBL-perplexity-2048.png' | relative_url }}" alt="Perplexity at ctx length 2048.">
+<img src="{{ page.image_dir | append: 'TBL-perplexity-2048.png' | relative_url }}" alt="Perplexity at ctx length 2048.">
 
 It's worth noting that the perplexity gains over AQLM are only realised if you use both the lattice codebook and finetune. 
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'TBL-perplexity-4096.png' | relative_url }}" alt="Perplexity at ctx length 4096.">
+<img class="constrained_img_small" src="{{ page.image_dir | append: 'TBL-perplexity-4096.png' | relative_url }}" alt="Perplexity at ctx length 4096.">
 
 As is often the case, low perplexity doesn't always translate to better zero-shot performance on typical QA tasks, although it looks as though QuIP# stands up well in many cases.
 
-<img class="constrained_img" src="{{ page.image_dir | append: 'TBL-zero-shot.png' | relative_url }}" alt="Zero shot QA performance.">
+<img src="{{ page.image_dir | append: 'TBL-zero-shot.png' | relative_url }}" alt="Zero shot QA performance.">
 
 In terms of practical speed-ups that can be gained from using this, a lot seems to depend on how efficiently the Randomized Hadamard transform and lookups into the E8-lattice can be implemented. Both are memory bandwidth bound operations, but might also be difficult to achieve peak bandwidth. Notably, the authors don't publish #tokens/sec for their eye-catching 3-bit compression scenario, only 2- and 4-bit. 
 
