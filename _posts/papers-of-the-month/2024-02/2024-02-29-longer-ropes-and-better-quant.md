@@ -18,10 +18,8 @@ toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
 
-Improving LLM inference is a key research topic at the moment and something we're particularly interested in at Graphcore because of its implications for hardware. February saw several developments in this area, focussing on both the efficiency and capabilities of LLM inference.
+Improving LLM inference is a key research topic at the moment, and something we're particularly interested in at Graphcore because of its hardware implications. February saw several developments in this area, focussing on both the efficiency and capabilities of LLM inference.
 
-Microsoft contributed two of this month's papers, with the first showing a method of extrapolating to long sequences, and the second an approach to storing 6-bit weights. In this vein, researchers from Cornell go further and push the limits of quantisation to as few as 3 bits for inference.
-
-Researchers from Apple instead find efficiency gains by accessing full model weights less often, through their new speculative streaming method — an improvement over the popular speculative decoding technique.
+Microsoft contributed two of this month's papers, with the first showing a method of extrapolating to long sequences, and the second an approach to storing 6-bit weights. Researchers from Cornell University have gone further and pushed the limits of quantisation to as few as 3 bits for inference. Apple also introduced their new speculative streaming method, which makes efficiency gains by asking the model to predict multiple future tokens, improving over the popular speculative decoding technique.
 
 {% include paper-summaries.md %}
