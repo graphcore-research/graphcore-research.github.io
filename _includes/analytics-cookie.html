@@ -12,6 +12,25 @@
     <a id="deny" class="btn btn-primary btn-sm">Deny</a>
 </div>
 <script>
+    function delete_all_cookies(condition) {
+        var cookies = document.cookie.split("; ");
+        for (var c = 0; c < cookies.length; c++) {
+            var d = window.location.hostname.split(".");
+            while (d.length > 0) {
+                var cookie_name = cookies[c].split(";")[0].split("=")[0];
+                if (condition(cookie_name)) {
+                    var cookieBase = encodeURIComponent(cookie_name) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path=';
+                    var p = location.pathname.split('/');
+                    document.cookie = cookieBase + '/';
+                    while (p.length > 0) {
+                        document.cookie = cookieBase + p.join('/');
+                        p.pop();
+                    };
+                }
+                d.shift();
+            }
+        }
+    }
 
     function get_tracking_preference() {
         var cookie_split = document.cookie.split(';');
@@ -31,26 +50,12 @@
     tracking_preference = get_tracking_preference()
 
     if (tracking_preference == "deny") {
-        // Clear cookies that aren't tracking-preference
-        const cookies = document.cookie.split(";");
-        console.log(cookies)
-        for (let i = 0; i < cookies.length; i++) {
-            console.log(i)
-            const c = cookies[i];
-            const p = c.indexOf("=");
-            console.log("qq" + c.substr(0, p))
-            if (c.substr(0, p).trim() != "tracking-preference") {
-                console.log("qd" + c.substr(0, p))
-                const name = p > -1 ? c.substr(0, p) : c;
-                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-            }
-        }
+        delete_all_cookies((name) => { return name.trim() != "tracking-preference" });
     } else if (tracking_preference != 'deny') {
         var script = document.createElement('script');
         script.onload = function () {
             if (get_tracking_preference() != 'deny') {
                 // See https://developers.google.com/tag-platform/tag-manager/datalayer
-                console.log("gtag: G-QCZ6T9KWHQ")
                 window.dataLayer = window.dataLayer || [];
                 function gtag() { dataLayer.push(arguments); }
                 gtag('js', new Date());
@@ -82,20 +87,9 @@
     });
 
     document.getElementById('deny').addEventListener("click", function () {
-        // Clear cookies
-        const cookies = document.cookie.split(";");
-        console.log(cookies)
-        for (let i = 0; i < cookies.length; i++) {
-            console.log(i)
-            const c = cookies[i];
-            const p = c.indexOf("=");
-            const name = p > -1 ? c.substr(0, p) : c;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-        }
-        // Add one to stop tracking 
+        delete_all_cookies((name) => true);
         createCookie('tracking-preference', 'deny', 31);
         document.getElementById('analytics-cookie').style.display = 'none';
-
         window.dataLayer.push(function () {
             this.reset();
         })
