@@ -23,7 +23,9 @@ email: research@graphcore.ai
 baseurl: "/"
 description: >- # this means to ignore newlines until "baseurl:"
   The official Graphcore Research blog.
-# twitter_username: username
+twitter:
+  username: "GCResearchTeam"
+og_image: "/assets/images/gc-symbol-pink-padded.png"
 github_username: graphcore-research
 repository: graphcore-research/graphcore-research.github.io
 minimal_mistakes_skin: default
