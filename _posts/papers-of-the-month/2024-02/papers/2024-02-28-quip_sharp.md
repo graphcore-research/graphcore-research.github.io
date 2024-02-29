@@ -8,7 +8,7 @@ tags:
     - quantisation
 potm_year: 2024
 potm_month: 2
-paper_order: 3
+paper_order: 2
 image_dir: "/assets/images/posts/2024-02/potm/quip_sharp/"
 review_author:
     name: "Luke Prince"
