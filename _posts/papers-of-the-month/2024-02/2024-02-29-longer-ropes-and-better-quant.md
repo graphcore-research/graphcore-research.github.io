@@ -1,9 +1,9 @@
 ---
 title: "February Papers: Longer RoPEs & Better Quantisation"
 header:
-    teaser: /assets/images/posts/2024-02/potm/longrope/figure_2_trimmed.png
-    image: /assets/images/posts/2024-02/potm/longrope/figure_2_trimmed.png
-    og_image: /assets/images/posts/2024-02/potm/longrope/figure_2_trimmed.png
+    teaser: /assets/images/posts/2024-02/potm/twitter_card.png
+    image: /assets/images/posts/2024-02/potm/twitter_card.png
+    og_image: /assets/images/posts/2024-02/potm/twitter_card.png
 
 date: 2024-02-29T01:34:30-04:00
 potm_year: 2024
