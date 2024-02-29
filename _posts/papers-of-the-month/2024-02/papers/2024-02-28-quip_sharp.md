@@ -5,10 +5,10 @@ orgs: "Cornell University"
 paper_link: "https://arxiv.org/abs/2402.04396"
 tags:
     - efficient-inference
-    - quantization
+    - quantisation
 potm_year: 2024
 potm_month: 2
-paper_order: 1
+paper_order: 3
 image_dir: "/assets/images/posts/2024-02/potm/quip_sharp/"
 review_author:
     name: "Luke Prince"

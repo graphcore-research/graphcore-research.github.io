@@ -9,7 +9,7 @@ tags:
   - LLMs
 potm_year: 2024
 potm_month: 2
-paper_order: 1
+paper_order: 2
 image_dir: "/assets/images/posts/2024-02/potm/speculative_streaming/"
 review_author:
   name: "Charlie Blake"
