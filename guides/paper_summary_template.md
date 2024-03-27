@@ -29,7 +29,7 @@ A few sentences outlining why the paper is interesting...
 Add images where appropriate throughout. This section should always
 have at least 1 key figure though.
 
-*Please use high-res images (zoom in for those screenshots!) The editor will *
+*Please use high-res images (zoom in for those screenshots!)*
 
 ![A specific and succinct sentence or two describing the figure 1 (alt text). Valuable for seo and accessibility.](example_upload/figure_1.png)
 <figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
