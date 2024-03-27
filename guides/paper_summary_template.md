@@ -1,9 +1,35 @@
+---
+title: "<Full Paper Title>"
+paper_authors: "<Forename Surname, et al.' or 'Forename Surname, Forename Surname and Forename Surname.' (max 3 unless >3 first authors)>"
+orgs: "<name of org>"
+paper_link: "https://arxiv.org/abs/<...>"
+tags:
+    - efficient-inference
+    - quantisation  # Use https://graphcore-research.github.io/tags/ as reference
+potm_year: <YYYY>
+potm_month: <M>
+paper_order: 1  # Editor will decide
+image_dir: "/assets/images/posts/<YYYY-MM>/potm/<short_paper_name>/"
+review_author:
+    name: "<Your Name>"
+    link: "<e.g. twitter or linkedin url>"
+hidden: true
+---
+
+[200 words is a rough guide for the length of a summary.
+Feel free to go a fair bit over or under if needs be.
+The editor will fix any issues with images being rendered too wide/narrow etc.
+See README for how to view locally if you wish to (not required. Contact CB if this
+is broken for you.)]
+
 ### The key idea
 
 A few sentences outlining why the paper is interesting...
 
 Add images where appropriate throughout. This section should always
 have at least 1 key figure though.
+
+*Please use high-res images (zoom in for those screenshots!) The editor will *
 
 ![A specific and succinct sentence or two describing the figure 1 (alt text). Valuable for seo and accessibility.](example_upload/figure_1.png)
 <figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>

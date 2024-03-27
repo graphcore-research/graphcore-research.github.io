@@ -16,6 +16,7 @@ gem install jekyll bundler
 bundle exec jekyll serve
 ```
 
+(please contact CB if this doesn't work for you.)
 
 ## Editing
 
@@ -32,8 +33,8 @@ automatically trigger the site to update.
 
 ## Papers of the Month
 
-Guidance for _Papers of the Month_ authors can be found at
-[for_authors/README.md](for_authors/README.md).
+All guidance for _Papers of the Month_ authors can be found in the summary template at
+[for_authors/README.md](guides/paper_summary_template.md).
 
 ## Deploying
 
