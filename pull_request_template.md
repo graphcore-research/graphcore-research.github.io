@@ -5,7 +5,7 @@ For _Papers of the Month_ summaries, there are two types of PR:
 
 Each has its own checklist, which must be met before merging.
 
-Author's should ensure these criteria are satisfied, but it is the _editor's job_ to tick them off before accepting the PR:
+Author's should make an effort to satisfy these criteria (though anything that requires the page to be rendered can be left to the editor), but it is the _editor's job_ to tick them off before accepting the PR:
 
 ## Summary PR Checklist
 
