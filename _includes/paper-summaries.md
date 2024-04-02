@@ -1,4 +1,4 @@
-Here's a summary of some of our favourite papers over the last month:
+Here's our summary of this month's chosen papers:
 
 {% assign posts = site.posts | where_exp: "item", "item.potm_month == page.potm_month" | where_exp: "item", "item.potm_year == page.potm_year" | where_exp: "item", "item.category != 'papers-of-the-month'" | sort: "paper_order" %}
 

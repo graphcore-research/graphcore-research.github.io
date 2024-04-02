@@ -9,7 +9,7 @@ tags:
     - LLMs
 potm_year: 2024
 potm_month: 3
-paper_order: 1
+paper_order: 4
 image_dir: "/assets/images/posts/2024-03/potm/massive-activations/"
 review_author:
     name: "Charlie Blake"

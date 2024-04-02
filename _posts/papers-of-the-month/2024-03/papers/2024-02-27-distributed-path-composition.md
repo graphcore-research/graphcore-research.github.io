@@ -9,7 +9,7 @@ tags:
     - mixture-of-experts
 potm_year: 2024
 potm_month: 3
-paper_order: 1  # Editor will decide
+paper_order: 3
 image_dir: "/assets/images/posts/2024-03/potm/dipaco/"
 review_author:
     name: "Luke Prince"
@@ -42,7 +42,7 @@ This paper introduces a recipe for training models under this constraint.
 2. Initialise and shard a base model into modules width- and depth-wise (modules and levels respectively)
 3. Assign end-to-end path through modules to each worker. Ideally all paths should be assigned, but this is unrealistic with large number of shards as $\textrm{\#paths} = \prod_i^{\textrm{\#levels}}\textrm{\#modules}_i$. This results in some modules being assigned to multiple paths.
 4. Locally optimise each path for a $\tau$ training steps.
-5. Average module updates across paths to estimate global gradient and globally optimize
+5. Average module updates across paths to estimate global gradient and globally optimise
 6. Repeat 4. and 5 for $T$ steps.
 
 ### Results
@@ -61,4 +61,4 @@ They argue that the remaining performance gap can be closed by re-sharding the d
 
 ### Takeaways
 
-An interesting proof-of-concept for how large scale distributed training may look in future based on the assumption that the cost of communication outweighs the cost of compute. However, this approach may be somewhat premature given advances in long distance networking lowering the cost of communication sufficiently that dense training at large enough scales is feasible. 
+An interesting proof-of-concept for how large-scale distributed training may look in future based on the assumption that the cost of communication outweighs the cost of compute. However, this approach may be somewhat premature given advances in long distance networking lowering the cost of communication sufficiently that dense training at large enough scales is feasible. 

@@ -10,7 +10,7 @@ tags:
     - fine-tuning
 potm_year: 2024
 potm_month: 3
-paper_order: 2  # Editor will decide
+paper_order: 5
 image_dir: "/assets/images/posts/2024-03/potm/g-retriever/"
 review_author:
     name: "Daniel Justus"
