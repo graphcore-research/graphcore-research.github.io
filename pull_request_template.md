@@ -3,7 +3,9 @@ For _Papers of the Month_ summaries, there are two types of PR:
 1. **Summary PRs:** individual paper summaries on their own branch (`pom-YYYY-MM-<short-name-of-paper>`), to be merged into monthly branch.
 2. **Monthly PRs:** a group of paper summaries on a monthly branch (`pom-YYYY-MM`), to be merged into `main`.
 
-Each has its own checklist, which must be met before merging. Please check off all items for the relevant PR type:
+Each has its own checklist, which must be met before merging.
+
+Author's should ensure these criteria are satisfied, but it is the _editor's job_ to tick them off before accepting the PR:
 
 ## Summary PR Checklist
 
