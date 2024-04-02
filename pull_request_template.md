@@ -23,6 +23,7 @@ Author's should make an effort to satisfy these criteria (though anything that r
 
 ## Monthly PR Checklist
 
+- [ ] Implement chosen ordering of papers
 - [ ] Add title do front matter & file name
 - [ ] Write intro blurb
 - [ ] Add twitter card image to `/assets/images/posts/YYYY-MM/potm/twitter_card.png`
