@@ -1,7 +1,7 @@
 ---
 title: "DiPaCo: Distributed Path Composition"
 paper_authors: "Arthur Douillard, Qixuan Feng, Andrei A. Rusu, et al."
-orgs: "Google Deepmind"
+orgs: "Google DeepMind"
 paper_link: "https://arxiv.org/abs/2403.10616"
 tags:
     - distributed-training
@@ -21,7 +21,7 @@ hidden: true
 
 If the bottleneck to scaling training is communication rather than FLOPs, a recipe that blends together mixture-of-experts models and local optimisation to create a more modular model sort of works. 
 
-<img src="{{ page.image_dir | append: 'FIG-Scheme.png' | relative_url }}" alt="DiPaCo offers a recipe for training with resources distributed across low bandwidth channels">
+<img class="constrained_img" src="{{ page.image_dir | append: 'FIG-Scheme.png' | relative_url }}" alt="DiPaCo offers a recipe for training with resources distributed across low bandwidth channels">
 <figcaption>A modular network distributed across many regions, where each path is optimised for different tasks or modalities. Shared components between paths are synchronised infrequently.</figcaption>
 
 ### Background
@@ -36,7 +36,7 @@ This paper introduces a recipe for training models under this constraint.
 
 ### Their method
 
-<img src="{{ page.image_dir | append: 'FIG-Shards.png' | relative_url }}" alt="Sharding strategy for DiPaCo">
+<img src="{{ page.image_dir | append: 'FIG-Paths.png' | relative_url }}" alt="Sharding strategy for DiPaCo">
 
 1. Shard dataset across workers ahead-of-time using k-means cluster assignments of embeddings from first 32 tokens of the sequence.
 2. Initialise and shard a base model into modules width- and depth-wise (modules and levels respectively)
@@ -57,7 +57,7 @@ Trying a bunch of different configurations, DiPaCo lies somewhere between these 
 
 They argue that the remaining performance gap can be closed by re-sharding the dataset across workers every 64 tokens during inference. This would surely mean KV caches would need to be recomputed for each re-shard, so this is unlikely to be workable in practice.
 
-<img src="{{ page.image_dir | append: 'TBL-Eval.png' | relative_url }}" alt="Resharding datasets closes perplexity gap">
+<img class="constrained_img_small" src="{{ page.image_dir | append: 'TBL-Eval.png' | relative_url }}" alt="Resharding datasets closes perplexity gap">
 
 ### Takeaways
 
