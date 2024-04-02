@@ -6,7 +6,7 @@ paper_link: "https://arxiv.org/abs/2402.07630"
 tags:
     - LLMs
     - GNNs
-    - retrieval augmented generation
+    - retrieval-augmented-generation
     - fine-tuning
 potm_year: 2024
 potm_month: 3
@@ -46,12 +46,15 @@ The authors propose a four-step method for performing RAG over a graph $G = (V,E
 
 By adding a prize for edges the information carried by relevant edges is considered as well:
 
+<div>
 $$
     \mathop{\operatorname{argmax}}_{S \subseteq G \textrm{ connected}} \sum_{n\in V_S}\underbrace{\textrm{prize}(n)}_\textrm{node value} + \sum_{e\in E_S}\underbrace{(\textrm{prize}(e) - c)}_{\substack{\textrm{edge value less a}\\ \textrm{constant edge cost}}}
 $$
+</div>
 
 where 
 
+<div>
 $$
     prize(x) = 
     \begin{cases}
@@ -59,6 +62,7 @@ $$
         0, &\textrm{else}
     \end{cases}
 $$
+</div>
 
 is the value of the top-k nodes and edges based on their ranking.
 
@@ -69,7 +73,7 @@ is the value of the top-k nodes and edges based on their ranking.
 
 The authors use the pretrained 7 billion parameter LLama2 as LLM to compare three model configurations across different datasets:
 * Prompting a frozen LLM with the textual representation of the subgraph ("Inference-Only"). 
-* Comparing of task-specific [prompt tuning](https://arxiv.org/abs/2104.08691) to prompting with the learned graph embedding. In both cases the LLM receives the plain text representation of the subgraph. 
+* Comparing task-specific [prompt tuning](https://arxiv.org/abs/2104.08691) to prompting with the learned graph embedding. In both cases the LLM receives the plain text representation of the subgraph. 
 * Fine-tuning the LLM to the specific tasks using [Low Rank Adaptation (LoRA)](https://arxiv.org/abs/2106.09685) with and without using the subgraph embeddings.
 
 <img class="constrained_img_large"  src="{{ page.image_dir | append: 'G-Retriever_Tab3.png' | relative_url }}" alt="Performance comparison of G-Retriever across ExplaGraphs, SceneGraphs, and WebQSP datasets">
