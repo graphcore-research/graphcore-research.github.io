@@ -145,6 +145,21 @@ figcaption {
     left: 5.2em;
 }
 
+.page table {
+    display: table;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page summary {
+    font-weight: bold;
+    font-size: 90%;
+    color: #777;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+}
+
 @media (min-width: 80em) {
     .sidebar__right.sticky {
         width: 235px;
