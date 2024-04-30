@@ -1,0 +1,9 @@
+{% assign author = page.author | default: page.authors[0] | default: site.author %}
+{% assign author = site.data.authors[author] | default: author %}
+
+<p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-users" aria-hidden="true"></i> Written by:</strong>
+    <span itemprop="keywords">
+        <a href="{{ author.links[0].url }}" rel="nofollow noreferrer" target="_blank">{{ author.name }}
+    </span>
+</p>

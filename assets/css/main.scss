@@ -98,11 +98,6 @@ figcaption {
     color: #1f2021;
 }
 
-.author__avatar img {
-    border-radius: 0;
-    border: none;
-}
-
 .fa-envelope {
     color: #ff6f79 !important;
 }
@@ -143,6 +138,21 @@ figcaption {
 
 .subscribe-btn-wrapper:hover:after {
     left: 5.2em;
+}
+
+.page table {
+    display: table;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page summary {
+    font-weight: bold;
+    font-size: 90%;
+    color: #777;
+    margin-bottom: 0.5em;
+    cursor: pointer;
 }
 
 @media (min-width: 80em) {
