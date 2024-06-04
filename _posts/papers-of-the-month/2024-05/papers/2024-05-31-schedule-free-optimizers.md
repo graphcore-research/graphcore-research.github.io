@@ -26,10 +26,7 @@ Deep learning practitioners use often use two key hacks to make optimisation of 
 
 Here the authors propose a principled approach to adapt commonly used optimisers to avoid the need for either of these hacks with no overhead.
 
-*Please use high-res images (zoom in for those screenshots!)*
-
-<img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A specific and succinct sentence or two describing the figure (alt text). Valuable for seo and accessibility.">
-<figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
+<img src="{{ page.image_dir | append: 'FIG-Polyak-vs-Primal.png' | relative_url }}" alt="Schedule-free optimizers combine Polyak (divergent) and Primal (slow) averaging to improve on scheduled optimizers">
 
 ### Their method
 
@@ -77,7 +74,9 @@ Two other changes appear to be less theoretically motivated: using $y_t$ for dec
 
 ### Results
 
-The authors test schedule-free optimiser on a battery of different small models of different types (Transformers, RNNs, CNNs, Recommenders), different datasets and objective functions, In each case they show comparable convergence as carefully tuned learning rate schedules, with faster training dynamics in many cases.
+The authors test schedule-free optimiser on a battery of different small models of different types (Transformers, RNNs, CNNs, GNNs, Recommenders), different datasets and objective functions, In each case they show comparable convergence as carefully tuned learning rate schedules, with faster training dynamics in many cases.
+
+<img src="{{ page.image_dir | append: 'FIG-Results.png' | relative_url }}" alt="Experiments across a wide range of architectures, datasets, and objective functions shows general applicability of schedule-free optimizers to a range of small-scale problems.">
 
 ### Takeaways
 
