@@ -1,11 +1,11 @@
 ---
 title: "The Road Less Scheduled"
-paper_authors: "Aaron Defazio, Xingyu (Alice) Yang, et al.>"
-orgs: "Meta"
+paper_authors: "Aaron Defazio, Xingyu (Alice) Yang, et al."
+orgs: "FAIR at Meta"
 paper_link: "https://arxiv.org/abs/2405.15682"
 tags:
     - optimization
-    - training
+    - training-dynamics
     - learning-rate-schedules  # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2024
 potm_month: 05

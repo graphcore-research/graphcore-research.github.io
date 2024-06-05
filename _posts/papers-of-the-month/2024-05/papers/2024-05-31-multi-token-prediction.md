@@ -5,7 +5,8 @@ orgs: "FAIR at Meta"
 paper_link: "https://arxiv.org/abs/2404.19737"
 tags:
     - LLMs
-    - training-efficiency
+    - efficient-training
+    - efficient-inference
 potm_year: 2024
 potm_month: 5
 paper_order: 3  # Editor will decide
