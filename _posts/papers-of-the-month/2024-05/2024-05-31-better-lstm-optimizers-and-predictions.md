@@ -24,6 +24,6 @@ The first paper, xLSTM, is a long-awaited deep dive into Sepp Hochreiter's new, 
 
 We then take a look at Schedule-Free optimizers from a team at FAIR. The authors propose a new class of optimizers that require no finicky learning rate scheduling. By replacing gradient momentum terms in standard optimizers with parameter averages, the authors show faster convergence than scheduled optimizers on a wide battery of small-scale deep learning tasks.
 
-A further paper from FAIR extends the standard pretraining task for large language models from next token prediction, to multi token prediction. This particularly seems to improve performance for larger models and offers a natural choice of model to use for speculative sampling during inference. 
+A further paper from FAIR extends the standard pretraining setup for large language models from next-token to multi-token prediction. This particularly seems to improve performance for larger models and offers a natural choice of model to use for speculative sampling to accelerate inference. 
 
 {% include paper-summaries.md %}
