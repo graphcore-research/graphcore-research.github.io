@@ -24,7 +24,7 @@ Deep learning practitioners use often use two key hacks to make optimisation of 
 1. Learning rate schedules
 2. Weight averaging for evaluation.
 
-Here the authors propose a principled approach to adapt commonly used optimisers to avoid the need for either of these hacks with no overhead.
+Here the authors propose a principled approach that replaces estimates of first-order gradient moments with an averaged parameter state to adapt commonly used optimisers to avoid the need for either of these hacks with no overhead.
 
 <img src="{{ page.image_dir | append: 'FIG-Polyak-vs-Primal.png' | relative_url }}" alt="Schedule-free optimizers combine Polyak (divergent) and Primal (slow) averaging to improve on scheduled optimizers">
 
@@ -57,8 +57,8 @@ We compute:
 | **8:** $x_{t+1} = (1 - \alpha_t \gamma_t \lambda)x_t - \gamma_t\alpha_t \hat{z}_t/(\sqrt{\hat{v}_t} + \epsilon)$ | **8:** $x_{t+1} = (1 - c_{t+1})x_t - c_{t+1}z_{t+1}$                                       |
 
 Let's go through line by line:
-* **Initialisation**: Standard scheduled AdamW initialises gradient moment variables $z$ and $v$ at $0$. Schedule-free AdamW stores the second gradient moment variable $v$, and $z$ now represents a raw parameter state, and is initialised to be the same as the averaged parameter state $x_t$
-* **Optimizer state updates (Lines 1-4)**: Standard scheduled AdamW computes gradients given current parameter state $x_t$ (Line 1) and update moments as an exponential moving average with temperatures $\beta_1$ and $\beta_2$ (Lines 2-3), and correct bias (Line 4). Schedule-free AdamW  first computes an interpolation $y_t$ between the non-averaged $z_t$ and averaged $x_t$ parameter state (Line 1). We then compute gradients at this interpolated point (Line 2) and update the second moment (Line 3), and correct biases (Line 4).
+* **Initialisation**: Standard scheduled AdamW initialises gradient moment variables $z$ and $v$ at $0$. Schedule-free AdamW stores the second gradient moment variable $v$, and $z$ now represents a raw un-averaged parameter state, and is initialised to be the same as an averaged parameter state $x_t$
+* **Optimizer state updates (Lines 1-4)**: Standard scheduled AdamW computes gradients given current parameter state $x_t$ (Line 1) and update moments as an exponential moving average with temperatures $\beta_1$ and $\beta_2$ (Lines 2-3), and correct moment estimation bias (Line 4). Schedule-free AdamW  first computes an interpolation $y_t$ between the raw $z_t$ and averaged $x_t$ parameter state (Line 1). We then compute gradients at this interpolated point (Line 2) and update the second moment (Line 3), and correct moment estimation bias (Line 4).
 * **Parameter state updates (Lines 5-8)**: Scheduled AdamW first determines learning rate coefficients given warmup and decay schedule (Lines 5-7), before applying the standard update rule using moments $z_t, $v_t$  with weight decayed from $x_t$ (Line 8). Schedule-free AdamW likewise applies a warmup to the learning rate (Line 5), then updates the non-averaged parameter state $z_t$ using gradient estimate $g_t$, second moment $v_t$, and decays from interpolated weights $y_t$ (Line 6). We then update our weighted average of parameters $x_t$ with weights computed to discount parameters during warmup (Lines 7-8).
 
 **What motivates these changes?**
