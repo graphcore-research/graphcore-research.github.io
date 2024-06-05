@@ -51,7 +51,7 @@ We compute:
 | **2:** $z_t = (1 - \beta_1)z_{t-1} + \beta_1g_t$                                                                 | **2:** $g_t = \nabla f(y_t)$                                                               |
 | **3:** $v_t = (1 - \beta_2) v_{t-1} + \beta_2g_t^2$                                                              | **3:** $v_t = (1 - \beta_2) v_{t-1} + \beta_2g_t^2$                                        |
 | **4:** $\hat{z}_t = z_t/(1 - \beta_1^t)$, $\hat{v}_t = v_t/(1 - \beta_2^t)$                                      | **4:** $\hat{v}_t = v_t/(1 - \beta_2^t)$                                                   |
-| **5:** $\gamma_t = \gamma \:\textrm{min}(1, t/T_{warmup})$                                                       | **5:** $\gamma_t = \gamma \:\textrm{min}(1, t/T_{warmup})$                                 |
+| **5:** $\gamma_t = \gamma \textrm{min}(1, t/T_{warmup})$                                                         | **5:** $\gamma_t = \gamma \textrm{min}(1, t/T_{warmup})$                                   |
 | **6:**                                                                                                           | **6:** $z_{t+1} = z_t - \gamma_t g_t/(\sqrt{\hat{v}_t} + \epsilon) - \gamma_t \lambda y_t$ |
 | **7:** $\alpha_t = \textrm{schedule}(t)$                                                                         | **7:** $c_{t+1} = \gamma_t^2 / \sum^t_{i=1}{\gamma_i^2}$                                   |
 | **8:** $x_{t+1} = (1 - \alpha_t \gamma_t \lambda)x_t - \gamma_t\alpha_t \hat{z}_t/(\sqrt{\hat{v}_t} + \epsilon)$ | **8:** $x_{t+1} = (1 - c_{t+1})x_t - c_{t+1}z_{t+1}$                                       |
