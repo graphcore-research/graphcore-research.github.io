@@ -1,5 +1,5 @@
 ---
-title: "<Full Paper Title>"
+title: "The Road Less Scheduled"
 paper_authors: "Aaron Defazio, Xingyu (Alice) Yang, et al.>"
 orgs: "Meta"
 paper_link: "https://arxiv.org/abs/2405.15682"
@@ -7,10 +7,10 @@ tags:
     - optimization
     - training
     - learning-rate-schedules  # Use https://graphcore-research.github.io/tags/ as reference
-potm_year: <2024>
-potm_month: <05>
-paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts/2024-05/potm/<short_paper_name>/"
+potm_year: 2024
+potm_month: 05
+paper_order: 2  # Editor will decide
+image_dir: "/assets/images/posts/2024-05/potm/schedule-free-optimizers/"
 review_author:
     name: "Luke Prince"
     link: "https://www.linkedin.com/in/lyprince/"
@@ -59,7 +59,7 @@ We compute:
 Let's go through line by line:
 * **Initialisation**: Standard scheduled AdamW initialises gradient moment variables $z$ and $v$ at $0$. Schedule-free AdamW stores the second gradient moment variable $v$, and $z$ now represents a raw un-averaged parameter state, and is initialised to be the same as an averaged parameter state $x_t$
 * **Optimizer state updates (Lines 1-4)**: Standard scheduled AdamW computes gradients given current parameter state $x_t$ (Line 1) and update moments as an exponential moving average with temperatures $\beta_1$ and $\beta_2$ (Lines 2-3), and correct moment estimation bias (Line 4). Schedule-free AdamW  first computes an interpolation $y_t$ between the raw $z_t$ and averaged $x_t$ parameter state (Line 1). We then compute gradients at this interpolated point (Line 2) and update the second moment (Line 3), and correct moment estimation bias (Line 4).
-* **Parameter state updates (Lines 5-8)**: Scheduled AdamW first determines learning rate coefficients given warmup and decay schedule (Lines 5-7), before applying the standard update rule using moments $z_t, $v_t$  with weight decayed from $x_t$ (Line 8). Schedule-free AdamW likewise applies a warmup to the learning rate (Line 5), then updates the non-averaged parameter state $z_t$ using gradient estimate $g_t$, second moment $v_t$, and decays from interpolated weights $y_t$ (Line 6). We then update our weighted average of parameters $x_t$ with weights computed to discount parameters during warmup (Lines 7-8).
+* **Parameter state updates (Lines 5-8)**: Scheduled AdamW first determines learning rate coefficients given warmup and decay schedule (Lines 5-7), before applying the standard update rule using moments $z_t$, $v_t$  with weight decayed from $x_t$ (Line 8). Schedule-free AdamW likewise applies a warmup to the learning rate (Line 5), then updates the non-averaged parameter state $z_t$ using gradient estimate $g_t$, second moment $v_t$, and decays from interpolated weights $y_t$ (Line 6). We then update our weighted average of parameters $x_t$ with weights computed to discount parameters during warmup (Lines 7-8).
 
 **What motivates these changes?**
 
