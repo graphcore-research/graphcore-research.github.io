@@ -19,7 +19,7 @@ hidden: true
 
 ### The key idea
 
-Large language models are usually trained using the next-token prediction loss. The authors propose training the model to predict *multiple* tokens at a time instead, while still generating a single token at a time at inference as usual. By training models up to 13B parameter in size, they show that this can lead to models with better performance, particularly at coding tasks.
+Large language models are usually trained using the next-token prediction loss. The authors propose training the model to predict *multiple* tokens at a time instead, while still generating a single token at a time at inference as usual. By training models up to 13B parameters in size, they show that this can lead to models with better performance, particularly at coding tasks.
 
 
 <img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="Overview of multi-token prediction.">

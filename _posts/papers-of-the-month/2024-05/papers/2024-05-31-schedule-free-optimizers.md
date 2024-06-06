@@ -19,7 +19,7 @@ hidden: true
 
 ### The key idea
 
-Deep learning practitioners use often use two key hacks to make optimisation of deep neural networks work in practise:
+Deep learning practitioners use often use two key hacks to make optimisation of deep neural networks work in practice:
 
 1. Learning rate schedules
 2. Weight averaging for evaluation.
