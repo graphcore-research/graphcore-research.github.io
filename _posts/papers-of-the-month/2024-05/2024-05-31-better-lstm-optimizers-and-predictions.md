@@ -18,7 +18,7 @@ toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
 
-May is always a eventful time of year for ML researchers, with final ICML paper decisions and ICLR taking place in early May, and NeurIPS submission deadlines closing the month. As ever, arxiv submissions continue to grow!
+May is always an eventful time of year for ML researchers, with final ICML paper decisions and ICLR taking place in early May, and NeurIPS submission deadlines closing the month. As ever, arXiv submissions continue to grow!
 
 This month we take a look at three papers exploring new techniques to challenge the mainstream large-scale pretraining setup: transformers trained with next-token prediction optimized with Adam/AdamW.
 
