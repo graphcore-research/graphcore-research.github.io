@@ -45,13 +45,13 @@ meaning they can scale with width and sparsity. In this way they can make their 
 
 Based on the fact they can scale width and sparsity simultaneously, they show the effect under this sparsity setup of keeping the number of non-sparse parameters fixed, and scaling the number of total parameters in combination with sparsity:
 
-<img src="{{ page.image_dir | append: 'figure_9.png' | relative_url }}" alt=".">
+<img src="{{ page.image_dir | append: 'figure_9.png' | relative_url }}" alt="Demonstration that SµPar ensures stable optimal learning rate in Iso-Parameter sparse + wide scaling.">
 
 This is a neat result. The LR is much more stable, and there are clear gains to be had from increased sparsity (with a constant memory footprint).
 
 The only negative here really is that the benefit is not particularly substantial. They plot the final validation loss for their full LLM training runs at different densities and even for the agressive 1/128 sparsity the gain is relatively modest:
 
-<img class="constrained_img_small" src="{{ page.image_dir | append: 'figure_3.png' | relative_url }}" alt=".">
+<img class="constrained_img_small" src="{{ page.image_dir | append: 'figure_3.png' | relative_url }}" alt="For LLMs, SµPar forms the Pareto frontier loss across sparsity levels, with no HP tuning required.">
 
 ### Takeaways
 
