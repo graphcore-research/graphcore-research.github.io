@@ -27,7 +27,7 @@ Transformers rely on Position Encoding (PE) to inject information about the posi
 
 PE introduces learnable position embeddings $\mathbf{e}\_{i,j}$ into the attention block
 <div>$$ \mathbf{o}_i =  \sum_{j < i} \textrm{Softmax}(\mathbf{q}_i^T (\mathbf{k}_j + \mathbf{e}_{i,j})) \mathbf{v}_j$$</div>
-with $\mathbf{e}\_{i,j} = \mathbf{e}[i]$ for Absolute PE, or $\mathbf{e}\_{i,j} = \mathbf{e}[i - j]$ in the case of Relative PE. A clear limitation of this setup is that positions are always measured in terms of tokens, which - depending on the task - might not be the best unit of measure. For instance, state-of-the-art LLMs (like GPT4) are observed to often fail at simple counting tasks that require them to attend only to tokens or words within specific chunks of text, like sentences of paragraphs, that can have highly-variable lengths.
+with $\mathbf{e}\_{i,j} = \mathbf{e}[i]$ for Absolute PE, or $\mathbf{e}\_{i,j} = \mathbf{e}[i - j]$ in the case of Relative PE. A clear limitation of this setup is that positions are always measured in terms of tokens, which - depending on the task - might not be the best unit of measure. For instance, state-of-the-art LLMs (like GPT4) are observed to often fail at simple counting tasks that require them to attend only to tokens or words within specific chunks of text, like sentences or paragraphs, that can have highly variable lengths.
 
 ### Their method
 
