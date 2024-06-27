@@ -19,7 +19,7 @@ hidden: true
 
 ### The key idea
 
-Transformers rely on Position Encoding (PE) to inject information about the position of tokens in a sequence into the attention block, which by construction is order-invariant. This paper proposes *Contextual Position Encoding* (CoPE), a flexible, context-aware technique for measuring positional distances at higher abstraction levels than just counting tokens, improving performance on language modelling and addressing common failures of state-of-the-art LLMs in counting-based tasks.
+Transformers rely on Position Encoding (PE) to inject information about the position of tokens in a sequence into the attention block, which by construction is order-invariant. This paper proposes *Contextual Position Encoding* (CoPE), a flexible, context-aware technique for measuring positional distances at higher abstraction levels than just counting tokens, improving performance on language modelling and addressing common failures of LLMs in counting-based tasks.
 
 <img src="{{ page.image_dir | append: 'cope_overview.png' | relative_url }}" alt="CoPE compute contextualized positions, which are not limited to use tokens as unit of measure">
 
