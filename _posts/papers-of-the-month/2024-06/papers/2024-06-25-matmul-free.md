@@ -9,7 +9,7 @@ tags:
     - quantisation
 potm_year: 2024
 potm_month: 6
-paper_order: 1
+paper_order: 4
 image_dir: "/assets/images/posts/2024-06/potm/matmul-free/"
 review_author:
     name: "Douglas Orr"

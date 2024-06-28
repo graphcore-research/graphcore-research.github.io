@@ -9,7 +9,7 @@ tags:
     - transformers
 potm_year: 2024
 potm_month: 6
-paper_order: 1  # Editor will decide
+paper_order: 3
 image_dir: "/assets/images/posts/2024-06/potm/cope-encoding/"
 review_author:
     name: "Alberto Cattaneo"

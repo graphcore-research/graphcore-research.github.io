@@ -9,7 +9,7 @@ tags:
     - mup
 potm_year: 2024
 potm_month: 6
-paper_order: 1
+paper_order: 2
 image_dir: "/assets/images/posts/2024-06/potm/sparse-mup/"
 review_author:
     name: "Charlie Blake"
