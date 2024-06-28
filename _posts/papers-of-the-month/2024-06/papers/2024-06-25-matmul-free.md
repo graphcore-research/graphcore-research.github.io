@@ -1,6 +1,6 @@
 ---
 title: "Scalable MatMul-free Language Modeling"
-paper_authors: "Zhu Rui-Jie, et al."
+paper_authors: "Rui-Jie Zhu, et al."
 orgs: "University of California Santa Cruz, Soochow University, University of California Davis, LuxiTech"
 paper_link: "https://arxiv.org/abs/2406.02528"
 tags:
