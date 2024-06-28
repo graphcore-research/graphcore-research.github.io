@@ -42,14 +42,14 @@ Relative PE can be seen as the limit case where all $g\_{i,t} = 1$. More general
 
 ### Results
 
-CoPE is tested on a variety of artificial tasks (like selective copying/counting and the [Flip-Flop task](https://arxiv.org/abs/2306.00946)) where standard PE methods perform poorly. For all of them, CoPE yields strong improvements and better generalization to out-of-distribution data.
+CoPE is tested on a variety of artificial tasks (like selective copying/counting and the [Flip-Flop task](https://arxiv.org/abs/2306.00946)) where standard PE methods perform poorly. For all of them, CoPE yields strong improvements and better generalisation to out-of-distribution data.
 
 <img src="{{ page.image_dir | append: 'cope_results.png' | relative_url }}" alt="CoPE experimental results">
 
-Moreover, CoPE improves in perplexity over Relative PE for language and code modelling with small Transformers (20M-100M parameters), also showing better generalization to longer contexts than the ones seen in training.
+Moreover, CoPE improves in perplexity over Relative PE for language and code modelling with small Transformers (20M-100M parameters), also showing better generalisation to longer contexts than the ones seen in training.
 
 <img src="{{ page.image_dir | append: 'cope_ppl.png' | relative_url }}" alt="CoPE experimental results on longer contexts">
 
 ### Takeaways
 
-Despite the limited scale of experiments, the results show a promising step in the direction of making the reasoning and abstraction abilities of Transformers even more flexible. It will be interesting to see how CoPE performs on larger models and quantify the trade-off between performance gains and additional computation costs on real-world downstream tasks.
+Despite the limited scale of experiments, the results show a promising step in the direction of making the reasoning and abstraction abilities of Transformers even more flexible. It will be interesting to see how CoPE performs on larger models, and quantify the trade-off between performance gains and additional computation costs on real-world downstream tasks.
