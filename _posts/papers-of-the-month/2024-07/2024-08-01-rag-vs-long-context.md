@@ -44,38 +44,20 @@ An emergent behaviour in LLMs is in-context learning, in which models can retrie
 
 ### Their method
 
-The authors benchmarked both LC and RAG approaches on a variety of NLP tasks and state-of-the-art LLMs, including Gemini-1.5-Pro, GPT-4O and GPT-3.5-Turbo, which support context lengths of 1M, 128k and 16k tokens respectively. The results found that in general, LC outperforms RAG, except when using datasets from $`\infty`$Bench (where RAG outperforms LC for GPT-3.5-Turbo, likely due to the model's limited context window). These results differ from previous work comparing the two strategies, but the authors argue this is due to the stronger LLMs and longer contexts used in their experiments.
+The authors benchmarked both LC and RAG approaches on a variety of NLP tasks and state-of-the-art LLMs, including Gemini-1.5-Pro, GPT-4O and GPT-3.5-Turbo, which support context lengths of 1M, 128k and 16k tokens respectively. The results found that in general, LC outperforms RAG, except when using datasets from $`\infty`$Bench (where RAG outperforms LC for GPT-3.5-Turbo, likely due to the model's limited context window). These results differ from previous work comparing the two strategies, but the authors argue this is due to their use of stronger LLMs and longer contexts in their experiments.
 
+One observation they noted was that for for 60% of queries, RAG and LC generate the same prediction (ignoring whether the prediction is correct or not):
 
+<img src="{{ page.image_dir | append: 'prediction-distribution.png' | relative_url }}" alt="Most of the time, RAG and LC generate the same predictions.">
+<figcaption>Figure 2. Distribution of the difference of prediction scores between RAG and LC (computed w.r.t. groundtruth labels). RAG and LC predictions are highly identical, for both correct and incorrect ones.</figcaption>
 
-Latex can be included in the standard way, either inline: $R=\sum _{t=0}^{\infty }\gamma ^{t}r_{t}$
+Given that RAG is much cheaper than LC (due to the quadratic complexity of attention), the authors propose a simple method called Self-Route: first check if the LLM with RAG-retrieved context can successfully answer the question, using the given provided context. If the query is deemed answerable then the RAG prediction is taken as the final answer. Otherwise, the second step is called, in which the full context is provided to the long context model to obtain the final prediction. Practically, the only changes to the RAG implementation is that the LLM is given the option to declice answering with the prompt "Write unanswerable if the query can not be answered based on the provided text".
 
-Or as a block:
-
-<div>
-$$
-Q_{t+1}^{A}(s_{t},a_{t})=Q_{t}^{A}(s_{t},a_{t})+\alpha _{t}(s_{t},a_{t})\left(r_{t}+\gamma Q_{t}^{B}\left(s_{t+1},\mathop {\operatorname {arg~max} } _{a}Q_{t}^{A}(s_{t+1},a)\right)-Q_{t}^{A}(s_{t},a_{t})\right).
-$$
-</div>
-
-Code can also be included in the standard way:
-
-```
-import popart
-
-builder = popart.Builder()
-
-# Build a simple graph
-i1 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-i2 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-
-o = builder.aiOnnx.add([i1, i2])
-```
 
 ### Results
 
-...
+The results show that the proposed Self-Route method can obtain performance comprable to long context LLM prompting, but with a considerably reduced cost at inference time. Furthermore, Self-Route can attain better performance than RAG when retrieving fewer documents, as seen below.
 
-### [optional] Takeaways
+<img src="{{ page.image_dir | append: 'top-k-ablation.png' | relative_url }}" alt="The author's Self-Route method can outperform RAG with fewer retrieved documents.">
+<figcaption>Figure 3. Trade-off curves between (a) model performance and (b) token percentage as a function of k.</figcaption>
 
-...
