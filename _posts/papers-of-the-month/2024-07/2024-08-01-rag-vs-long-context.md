@@ -13,8 +13,8 @@ potm_month: 7
 paper_order: 1  # Editor will decide
 image_dir: "/assets/images/posts/2024-07/potm/rag-vs-long-context/"
 review_author:
-    name: "<Your Name>"
-    link: "<e.g. twitter or linkedin url>"
+    name: "Luke Hudlass-Galley"
+    link: "https://www.linkedin.com/in/lukehudlassgalley"
 hidden: true
 ---
 
@@ -33,14 +33,20 @@ have at least 1 key figure though.
 
 *Please use high-res images (zoom in for those screenshots!)*
 
-<img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A specific and succinct sentence or two describing the figure (alt text). Valuable for seo and accessibility.">
-<figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
+This paper from Google DeepMind attempts to answer the question of which is better - long context LLMs (LC) or retrieval augmented generation (RAG)? They find that for state-of-the-art LLMs that LC outperforms RAG, albeit at a larger computational cost due to the quadratic complexity of attention. However, they find that for most queries, both RAG and LC generate identical predictions. Motivated by this observation, the authors propose a method to route queries to RAG or LC, reducing the cost of inference while maintaining task performance comparable to LC.
 
-### [optional] Background
+<img src="{{ page.image_dir | append: 'method-comparison.png' | relative_url }}" alt="For several state-of-the-art LLMs, long context outperforms RAG, but routing between the two methods can attain similar performance with a fraction of the cost.">
+<figcaption>Figure 1. While long-context LLMs (LC) surpass RAG in long-context understanding, RAG is significantly more cost-efficient. Our approach, SELF-ROUTE, combining RAG and LC, achieves comparable performance to LC at a much lower cost.</figcaption>
 
-If necessary, a short intro to background matierial needed to understand the method
+### Background
+
+An emergent behaviour in LLMs is in-context learning, in which models can retrieve and learn from information present in its context. This behaviour allows models to learn from new information not seen in its training data, without requiring fine-tuning. However, the attention operation present in LLMs has a cost that scales quadaratically with the length of the sequence, and therefore increasing the amount of context may lead to slower performance. Retrieval Augmented Generation (RAG) can alleviate some of this cost by only retrieving a subset of relevant documents/information, which is added to the prompt before the inference process begins. This permits shorter, cheaper sequence lengths, but does not allow the model to see all avaialable context during inference, and relies on a quality retrieval method to ensure that the relevant documents have been retrieved.
 
 ### Their method
+
+The authors benchmarked both LC and RAG approaches on a variety of NLP tasks and state-of-the-art LLMs, including Gemini-1.5-Pro, GPT-4O and GPT-3.5-Turbo, which support context lengths of 1M, 128k and 16k tokens respectively. The results found that in general, LC outperforms RAG, except when using datasets from $`\infty`$Bench (where RAG outperforms LC for GPT-3.5-Turbo, likely due to the model's limited context window). These results differ from previous work comparing the two strategies, but the authors argue this is due to the stronger LLMs and longer contexts used in their experiments.
+
+
 
 Latex can be included in the standard way, either inline: $R=\sum _{t=0}^{\infty }\gamma ^{t}r_{t}$
 
