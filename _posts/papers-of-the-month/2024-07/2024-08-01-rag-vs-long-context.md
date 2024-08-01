@@ -11,7 +11,7 @@ tags:
 potm_year: 2024
 potm_month: 7
 paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts/<YYYY-MM>/potm/<short_paper_name>/"
+image_dir: "/assets/images/posts/2024-07/potm/rag-vs-long-context/"
 review_author:
     name: "<Your Name>"
     link: "<e.g. twitter or linkedin url>"
