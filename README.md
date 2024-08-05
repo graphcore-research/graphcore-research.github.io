@@ -2,6 +2,13 @@
 
 Link: [graphcore-research.github.io](https://graphcore-research.github.io/)
 
+## Running in a VSCode devcontainer (recommended)
+
+ - (Install Docker.)
+ - Open the folder inside a devcontainer "Rebuild and Reopen in Container".
+ - Run `bundle install`
+ - Run `bundle exec jekyll serve`
+
 ## Running locally
 
 To run locally, execute:
