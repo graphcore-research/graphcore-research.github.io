@@ -25,13 +25,13 @@ Scaling laws (e.g. Kaplan, Chinchilla) have proved enormously useful in showing 
 
 ### Their method
 
-The authors use three complimentary approaches in the paper. Firstly they use an IsoFLOP analysis wherein a series of models with varying vocabulary parameters were trained with fixed FLOPs and fixed non-vocab parameters. Observing the vocav size at mimimum loss for each FLOP budget allowed them to fit power laws for vocab size and non-vocab parameters. 
+The authors use three complementary approaches in the paper. Firstly they use an IsoFLOP analysis wherein a series of models with varying vocabulary parameters were trained with fixed FLOPs and fixed non-vocab parameters. Observing the vocab size at minimum loss for each FLOP budget allowed them to fit power laws for vocab size and non-vocab parameters. 
 
 <img src="{{ page.image_dir | append: 'approach_1.png' | relative_url }}" alt="Fitting results from apprach 1. Power laws are fitted for FLOPs vs non-vocab parameters, vocab parameters and training characters respectively.">
 
-THe second approach uses a derivative based method wherein a formula is derived for flops based on a derived formula for FLOPs based on both vocabulary and non-vocabulary parameters as well as training tokens. Then by finding the minimum of this function with respect to vocabulary (V) they can estimate the optimal V under the assumption that it can achieve a certain loss. This feels like quite a strong assumption but nonetheless the results match closely with those from approaches 1 and 3. 
+The second approach uses a derivative based method wherein a formula is derived for flops based on a derived formula for FLOPs based on both vocabulary and non-vocabulary parameters as well as training tokens. Then by finding the minimum of this function with respect to vocabulary (V), they can estimate the optimal V under the assumption that it can achieve a certain loss. This feels like quite a strong assumption nonetheless the results match closely with those from approaches 1 and 3. 
 
-Finally a third approach uses a parametric vocabulary dependent loss formula: 
+Finally, a third approach uses a parametric vocabulary dependent loss formula: 
 
 $ L_u = -E + \frac{A_1}{N_{nv}^{\alpha_{1}}}+\frac{A_2}{N_{v}^{\alpha_{2}}}+\frac{B}{D^{\beta}} $
 
@@ -47,6 +47,6 @@ The authors show their predictions in action by training 3B parameter models wit
 
 <img src="{{ page.image_dir | append: 'table_2.png' | relative_url }}" alt="A table showing the performance of a 2.87B parameter model on a range of benchmarks. By amending the vocab size to their predicted optimum they show an improvement across all benchmarks shown.">
 
-The overall takeaway is that according to their analysis most public LLMs are underparameterised for their vocabulary and that when scaling up model size, vocab size ought to be increased too but at a slower rate than the other parameters. 
+The overall takeaway is that according to their analysis, most public LLMs are underparameterised for their vocabulary and that when scaling up model size, vocab size ought to be increased too but at a slower rate than the other parameters. 
 
 
