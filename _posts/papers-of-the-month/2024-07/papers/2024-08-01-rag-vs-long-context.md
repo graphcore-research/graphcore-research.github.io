@@ -10,7 +10,7 @@ tags:
     - long-context
 potm_year: 2024
 potm_month: 7
-paper_order: 1  # Editor will decide
+paper_order: 4  # Editor will decide
 image_dir: "/assets/images/posts/2024-07/potm/rag-vs-long-context/"
 review_author:
     name: "Luke Hudlass-Galley"
@@ -18,22 +18,10 @@ review_author:
 hidden: true
 ---
 
-[200 words is a rough guide for the length of a summary.
-Feel free to go a fair bit over or under if needs be.
-The editor will fix any issues with images being rendered too wide/narrow etc.
-See README for how to view locally if you wish to (not required. Contact CB if this
-is broken for you.)]
 
 ### The key idea
 
-A few sentences outlining why the paper is interesting...
-
-Add images where appropriate throughout. This section should always
-have at least 1 key figure though.
-
-*Please use high-res images (zoom in for those screenshots!)*
-
-This paper from Google DeepMind attempts to answer the question of which is better - long context LLMs (LC) or retrieval augmented generation (RAG)? They find that for state-of-the-art LLMs that LC outperforms RAG, albeit at a larger computational cost due to the quadratic complexity of attention. However, they find that for most queries, both RAG and LC generate identical predictions. Motivated by this observation, the authors propose a method to route queries to RAG or LC, reducing the cost of inference while maintaining task performance comparable to LC.
+This paper from Google DeepMind attempts to answer the question of which is better - long context LLMs (LC) or retrieval augmented generation (RAG)? For state-of-the-art LLMs they find that LC outperforms RAG, albeit at a larger computational cost due to the quadratic complexity of attention. However, they find that for most queries, both RAG and LC generate identical predictions. Motivated by this observation, the authors propose a method to route queries to RAG or LC, reducing the cost of inference while maintaining task performance comparable to LC.
 
 <img src="{{ page.image_dir | append: 'method-comparison.png' | relative_url }}" alt="For several state-of-the-art LLMs, long context outperforms RAG, but routing between the two methods can attain similar performance with a fraction of the cost.">
 <figcaption>Figure 1. While long-context LLMs (LC) surpass RAG in long-context understanding, RAG is significantly more cost-efficient. Our approach, SELF-ROUTE, combining RAG and LC, achieves comparable performance to LC at a much lower cost.</figcaption>
@@ -46,7 +34,7 @@ An emergent behaviour in LLMs is in-context learning, in which models can retrie
 
 The authors benchmarked both LC and RAG approaches on a variety of NLP tasks and state-of-the-art LLMs, including Gemini-1.5-Pro, GPT-4O and GPT-3.5-Turbo, which support context lengths of 1M, 128k and 16k tokens respectively. The results found that in general, LC outperforms RAG, except when using datasets from $`\infty`$Bench (where RAG outperforms LC for GPT-3.5-Turbo, likely due to the model's limited context window). These results differ from previous work comparing the two strategies, but the authors argue this is due to their use of stronger LLMs and longer contexts in their experiments.
 
-One observation they noted was that for for 60% of queries, RAG and LC generate the same prediction (ignoring whether the prediction is correct or not):
+One observation they noted was that for 60% of queries, RAG and LC generate the same prediction (ignoring whether the prediction is correct or not):
 
 <img src="{{ page.image_dir | append: 'prediction-distribution.png' | relative_url }}" alt="Most of the time, RAG and LC generate the same predictions.">
 <figcaption>Figure 2. Distribution of the difference of prediction scores between RAG and LC (computed w.r.t. groundtruth labels). RAG and LC predictions are highly identical, for both correct and incorrect ones.</figcaption>
@@ -56,7 +44,7 @@ Given that RAG is much cheaper than LC (due to the quadratic complexity of atten
 
 ### Results
 
-The results show that the proposed Self-Route method can obtain performance comprable to long context LLM prompting, but with a considerably reduced cost at inference time. Furthermore, Self-Route can attain better performance than RAG when retrieving fewer documents, as seen below.
+The results show that the proposed Self-Route method can obtain performance comparable to long context LLM prompting, but with a considerably reduced cost at inference time. Furthermore, Self-Route can attain better performance than RAG when retrieving fewer documents, as seen below.
 
 <img src="{{ page.image_dir | append: 'top-k-ablation.png' | relative_url }}" alt="The author's Self-Route method can outperform RAG with fewer retrieved documents.">
 <figcaption>Figure 3. Trade-off curves between (a) model performance and (b) token percentage as a function of k.</figcaption>
