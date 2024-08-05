@@ -48,9 +48,9 @@ The key properties of a parametrisation are $A \cdot B$, since this defines the 
 | Readout | {STP, NTK} | $1/\sqrt{n}$ | $1/n$ | $1/\sqrt{n}$ |
 | Readout | {muP, MFP} | $1/n$ | $1/n$ | $1/\sqrt{n}$ |
 
-The two classes {STP, NTK} and {muP, MFP} therefore differ in their readout initialisation, with the muP class claiming that this should be smaller than the STP class, as the model scales. This is because muP assumes alignment _between the initial readout parameter values and the change in the readout layer input_, over training.
+The two classes {STP, NTK} and {muP, MFP} therefore differ in their readout initialisation, with the muP class claiming that this should be smaller than the STP class, as the model scales. This is because muP assumes alignment _between the initial readout parameter values and the change in the readout layer input_ (i.e. the term $W'^{(0)} \Delta z$, where $z$ is the input to the readout layer), over training.
 
-Considering another form of alignment, the authors explore two extremes of the alignment _between parameter updates and layer inputs_: "full alignment" which says $\|\Delta W z\|$ scales like $n \cdot \|\Delta W\| \cdot \|z\|$ and "no alignment" which says it scales like $\sqrt{n} \cdot \|\Delta W\| \cdot \|z\|$.
+Considering another form of alignment, the authors explore two extremes of the alignment _between parameter updates and layer inputs_: "full alignment" which says $\|\Delta W' z\|$ scales like $n \cdot \|\Delta W'\| \cdot \|z\|$ and "no alignment" which says it scales like $\sqrt{n} \cdot \|\Delta W'\| \cdot \|z\|$.
 
 From the table above (and Table 1), assuming no alignment implies larger learning rates than full alignment, as model width is increased.
 
@@ -66,7 +66,7 @@ Compare this with the **no alignment** assumption, which doesn't give good trans
 
 <img src="{{ page.image_dir | append: 'figureE1-adam-noalign-transfer.png' | relative_url }}" alt="Learning rate transfer over width for Adam for each of the four parametrisations when assuming no alignment, showing poor transfer - the base LR should be reduced for large model sizes.">
 
-However, their results when introducing parameter scaling (Appendix L), where the update is multiplied by the parameter magnitude, show a more mixed picture. In this case, reasonable transfer is achieved with either full alignment or no alignment scaling.
+However, their results when introducing parameter scaling (Appendix L), where the update is multiplied by the parameter magnitude, show a mixed picture. In this case, reasonable transfer is achieved with either full alignment or no alignment scaling.
 
 The experiments treat parametrisations separately, even though the theory has shown an equivalence in two classes. Since the authors identified that the Adam epsilon parameter is important (while it doesn't factor into the scaling assumptions), they tried various schemes for fixing it, including a novel scheme where $m/\sqrt{v + \epsilon}$ is replaced with `atan2(m, sqrt(v))`. All schemes worked, fixing the visible scaling regression for NTK and MFP. They also made the results for two classes of (STP, NTK) and (muP, MFP) line up, which is very satisfying:
 
@@ -80,4 +80,4 @@ The comprehensive experiments show that many factors can influence transfer resu
 
 ### Addendum
 
-It's impossible for me to avoid a comparison with our own experience of adapting muP in [u-μP (Blake and Eichenberg, et al.)](https://arxiv.org/abs/2407.17465), which shares the muP class w.r.t. readout scaling, but introduces a $1/\sqrt{n}$ scale to the embedding LR, unlike all of the schemes above. It is quite similar to MFP from this work, but unit-scaled μP avoids the poor gradient scaling that MFP experiences, by allowing gradients to be scaled independently from activations. Otherwise, our work pursued a different approach, removing the base width and coupled hyperparameters of muP.
+It's impossible for me to avoid a comparison with our own experience of adapting muP in [u-μP (Blake and Eichenberg, et al.)](https://arxiv.org/abs/2407.17465), which shares the muP class w.r.t. readout scaling, but introduces a $1/\sqrt{n}$ scale to the embedding LR, unlike all of the schemes above. It is quite similar to MFP from this work, but unit-scaled μP avoids the poor gradient scaling that MFP experiences, by allowing gradients to be scaled independently from activations. Otherwise, our work pursued a different objective, removing the base width and coupled hyperparameters of muP.
