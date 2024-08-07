@@ -1,3 +1,23 @@
+Douglas Orr:
+  name: "Douglas Orr"
+  bio: "Research Team Lead at Graphcore"
+  avatar: "/assets/images/author_images/douglas_orr_bio.png"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/DouglasOrr"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/douglas-orr-b3335984"
+    - label: "Personal Blog"
+      icon: "fas fa-fw fa-link"
+      url: "https://douglasorr.github.io"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/douglasahorr"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:douglaso@graphcore.ai"
 Luke Hudlass-Galley:
   name: "Luke Hudlass-Galley"
   bio: "Research Scientist at Graphcore"
