@@ -20,7 +20,7 @@ image_dir: "/assets/images/posts/2024-08/how_to_scale/"
 author: Douglas Orr
 ---
 
-My colleagues and I always get excited when, every once in a while, deep learning research throws up a fun little maths problem. Our recent work on [u-μP](https://arxiv.org/abs/2407.17465) does just this, and in a reasonably systematic way, since we need to work out how to compensate for changes in scale (standard deviation) through deep learning ops. In this post and the [accompanying notebook](https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale.ipynb), we explore this problem.
+My colleagues and I always get excited when, every once in a while, deep learning research throws up a fun little maths problem. Our recent work on [u-μP](https://arxiv.org/abs/2407.17465) does just this, and in a reasonably systematic way, since we need to work out how to compensate for changes in scale (standard deviation) through deep learning ops. In this post and the [accompanying notebook](https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale_op.ipynb), we explore this problem.
 
 Our lofty goal? To put multipliers in the forward and backward passes of the hardtanh nonlinearity to make it look like this:
 
@@ -49,7 +49,7 @@ def hardtanh(x: Tensor, mult: float = 1.0,
 
 Most excitingly, we'll learn where those mysterious `sqrt(Z)` and `sqrt(Z + (1 - Z) / mult**2 - sqrt(2/pi) / mult * exp(-1/2 / mult**2))` factors come from.
 
-_This post will remain somewhat high-level; to dive in to the detail, see our [accompanying notebook](https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale.ipynb)._
+_This post will remain somewhat high-level; to dive in to the detail, see our [accompanying notebook](https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale_op.ipynb)._
 
 ## Warmup - Empirical scaling
 
@@ -85,7 +85,7 @@ $ \mathrm{P}(Y=y) = \begin{cases} \frac{1-Z}{2}\, \delta(y - \alpha^{-1}) + \fra
 
 where $Z = \mathrm{erf}(\sqrt{\frac{1}{2}}\, \alpha^{-1})$ is the probability that $X$ falls in the range $[-\alpha^{-1}, \alpha^{-1}]$, $\delta(\cdot)$ is the Dirac delta function and $\varphi(\cdot)$ is the Gaussian pdf (note that the $Z$ normaliser for a truncated Gaussian cancels exactly with the mixture weight).
 
-Following through the maths for $\mathrm{Var}(Y)$ (see [notebook](https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale.ipynb) for details), we get the output standard deviation or **forward scale**:
+Following through the maths for $\mathrm{Var}(Y)$ (see [notebook](https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale_op.ipynb) for details), we get the output standard deviation or **forward scale**:
 
 $\sigma_Y = \sqrt{\alpha^{-2} + (1 - \alpha^{-2})\,\mathrm{erf}(\sqrt{\frac{1}{2}}\, \alpha^{-1}) - \sqrt{\frac{2}{\pi}}\, \alpha^{-1}\, e^{-\frac{1}{2}\alpha^{-2}}}$
 
