@@ -29,6 +29,8 @@ Our lofty goal? To put multipliers in the forward and backward passes of the har
 
 Which might look quite like a regular `hardtanh(x) = clip(x, -1, 1)`, but the eagle-eyed reader will notice it doesn't saturate at ±1. And crucially, the output standard deviation (and RMS) ≈ 1.
 
+Why do we want this? It turns out that this _unit scale_ property can lead to more stable training if applied throughout the model (it's all in the paper). But to get there we first have to figure out how to set these scaling factors.
+
 We'll learn how to write code that looks like this (assuming of course that you want to write code that looks like this):
 
 ```python
