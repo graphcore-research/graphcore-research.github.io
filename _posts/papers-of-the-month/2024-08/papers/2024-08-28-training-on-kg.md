@@ -33,7 +33,7 @@ To have full control over the information that the language model digests during
 <img class="constrained_img_large" src="{{ page.image_dir | append: 'kg-dataset.png' | relative_url }}" alt="Training a language model on a Knowledge Graph">
 
 In this constrained setting, the occurrence of hallucinations can be analysed for different model scales, dataset fractions, and training durations. Furthermore, the performance of hallucination detectors can be measured for two different detection tasks:
-* sentence: Given the original (subject, predicate) pain and the predicted object, the detector judges if the object is hallucinated.
+* sentence: Given the original (subject, predicate) pair and the predicted object, the detector judges if the object is hallucinated.
 * token: Given the embedding of a token from the LM, the detector judges whether it is hallucinated.
 
 
