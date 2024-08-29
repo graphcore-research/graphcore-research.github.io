@@ -2,7 +2,7 @@
 title: "Training Language Models on the Knowledge Graph: Insights on Hallucinations and Their Detectability"
 paper_authors: "Jiri Hron, et al."
 orgs: "Google DeepMind"
-paper_link: "https://arxiv.org/abs/2402.07630"
+paper_link: "https://arxiv.org/abs/2408.07852"
 tags:
     - LLMs
     - hallucinations
@@ -28,7 +28,7 @@ Since LLMs are typically trained on vast amounts of data with unclear informatio
 
 ### Their method
 
-To have full control over the information that the language model digests during training, the authors train decoder-only Transformers of different sizes to predict the object of triples of a Knowledge Graph. This approach guarantees that a model prediction can unequivocally be identified as correct or hallucination, depending on whether the prediction is indeed an object of (subject, predicate, ?) in the knowledge graph.
+To have full control over the information that the language model digests during training, the authors train decoder-only Transformers of different sizes to predict the object of triples of a knowledge graph. This approach guarantees that a model prediction can unequivocally be identified as correct or hallucination, depending on whether the prediction is indeed an object of (subject, predicate, ?) in the knowledge graph.
 
 <img class="constrained_img_large" src="{{ page.image_dir | append: 'kg-dataset.png' | relative_url }}" alt="Training a language model on a Knowledge Graph">
 
