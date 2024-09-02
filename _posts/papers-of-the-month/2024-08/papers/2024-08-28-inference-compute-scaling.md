@@ -32,7 +32,7 @@ The authors consider how to reallocate compute along two axes:
 
 <img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Revision-Example.png' | relative_url }}" alt="Example of model generating multiple revisions that guide towards a correct answer">
 
-2. Improving model output verifier with a reward model used to score each generation step in beam search decoding. They use beam search with lookahead as a means to parameterise a fixed compute budget, since number of beams (independent parallel searches), beam width (parallel search with a shared history), and lookahead steps (rollout of search path to evaluate beam at current step) can all be used to scale compute at inference time with many parallel and sequential executions of the model.
+2) Improving the model output verifier with a reward model used to score each generation step in beam search decoding. They use beam search with lookahead as a means to parameterise a fixed compute budget, since number of beams (independent parallel searches), beam width (parallel search with a shared history), and lookahead steps (rollout of search path to evaluate beam at current step) can all be used to scale compute at inference time with many parallel and sequential executions of the model.
 
 <img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Verifier-Schema.png' | relative_url }}" alt="Defining search space to accept/reject generated outputs by learned verifier using beam search with lookahead">
 
