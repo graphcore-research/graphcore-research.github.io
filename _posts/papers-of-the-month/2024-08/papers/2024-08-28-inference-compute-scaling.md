@@ -38,7 +38,7 @@ The authors consider how to reallocate compute along two axes:
 
 **Example**:
 
-<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Verifier-Example.png | relative_url }}" alt="At each step the reward model returns a score that guides search amongst possible outputs">
+<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Verifier-Example.png' | relative_url }}" alt="At each step the reward model returns a score that guides search amongst possible outputs">
 
 They evaluate each of these approaches independently on high school maths problems (MATH benchmark) binned into 5 separate difficulty brackets based on accuracy rate of a base LLM (PaLM-2).
 
