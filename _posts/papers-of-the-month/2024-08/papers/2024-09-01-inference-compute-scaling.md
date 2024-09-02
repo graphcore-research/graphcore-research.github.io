@@ -1,7 +1,7 @@
 ---
 title: "Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters"
 paper_authors: "Snell et al."
-orgs: "Berkeley, Google Deepmind"
+orgs: "Berkeley, Google DeepMind"
 paper_link: "https://arxiv.org/abs/2408.03314"
 tags:
     - efficient-inference
