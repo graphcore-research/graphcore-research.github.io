@@ -8,7 +8,7 @@ tags:
     - LLMs
 potm_year: 2024
 potm_month: 8
-paper_order: 1  # Editor will decide
+paper_order: 2  # Editor will decide
 image_dir: "/assets/images/posts/2024-08/potm/inference-compute-scaling/"
 review_author:
     name: "Luke Prince"

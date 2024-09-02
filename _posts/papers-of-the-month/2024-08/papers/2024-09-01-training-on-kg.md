@@ -8,7 +8,7 @@ tags:
     - hallucinations
 potm_year: 2024
 potm_month: 8
-paper_order: 1  # Editor will decide
+paper_order: 3  # Editor will decide
 image_dir: "/assets/images/posts/2024-08/potm/training-on-kg/"
 review_author:
     name: "Daniel Justus"
