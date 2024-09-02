@@ -52,7 +52,7 @@ For improving verifiers with a learned reward model + beam search, they find tha
 
 Balancing across these findings to produce a compute-optimal strategy picking the best settings for each compute budget, they show a 4x improvement at lower compute budgets, although this appears to saturate. Interestingly, using estimated rather than "actual" difficulty to pick strategy doesn't appear to harm accuracy much at all.
 
-<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Verifier-Optimal.png | relative_url }}" alt="Learned verifiers can maintain accuracy with 4x less compute in the compute optimal regime">
+<img class="constrained_img_small" src="{{ page.image_dir | append: 'FIG-Verifier-Optimal.png' | relative_url }}" alt="Learned verifiers can maintain accuracy with 4x less compute in the compute optimal regime">
 
 For improving the proposal distribution with sequential revisions they need to find the right balance between spinning up independent sequences of revisions in parallel, and increasing the length of the revision chain. They show that as compute budget increases, more compute should be allocated to generating sequential revisions. Indeed it looks like there might be an easily saturated benefit from generating multiple revision chains (expanding search space), but that the greatest improvement comes from following a chain further down the path (refining search path). Additionally, easy questions seem to benefit more from revisions, but harder questions benefit from a bit more coverage of search space.
 
