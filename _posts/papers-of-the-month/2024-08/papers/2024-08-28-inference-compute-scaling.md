@@ -26,7 +26,7 @@ The authors consider how to reallocate compute along two axes:
 
 1) Modifying the proposal distribution by augmenting context with additional tokens. To tie this to model compute (rather than independent sources of additional tokens like retrieval), they study **self-critique**, in which models augment their context with a sequence of incorrect answers to guide themselves towards the correct answer. This requires a bit of fine-tuning, using sequences of incorrect answers followed by correct answers as training data. At inference time, models may generate a correct answer in the middle of the sequence, so they pool all outputs for generating a final answer (e.g., take majority).
 
-<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Revision-Schema.png | relative_url }}" alt="Schematic for how revisions can be generated in parallel or in sequence">
+<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Revision-Schema.png' | relative_url }}" alt="Schematic for how revisions can be generated in parallel or in sequence">
 
 **Example**:
 
