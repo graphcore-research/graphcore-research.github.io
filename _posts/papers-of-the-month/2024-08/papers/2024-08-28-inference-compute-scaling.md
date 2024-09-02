@@ -56,7 +56,7 @@ Balancing across these findings to produce a compute-optimal strategy picking th
 
 For improving the proposal distribution with sequential revisions they need to find the right balance between spinning up independent sequences of revisions in parallel, and increasing the length of the revision chain. They show that as compute budget increases, more compute should be allocated to generating sequential revisions. Indeed it looks like there might be an easily saturated benefit from generating multiple revision chains (expanding search space), but that the greatest improvement comes from following a chain further down the path (refining search path). Additionally, easy questions seem to benefit more from revisions, but harder questions benefit from a bit more coverage of search space.
 
-<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Revision-Sweep.png | relative_url }}" alt="Increasing chain of sequential revisions appears to offer most of the gain as you increase compute budget, although difficult problems do gain some benefit from evaluating parallel chains">
+<img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Revision-Sweep.png' | relative_url }}" alt="Increasing chain of sequential revisions appears to offer most of the gain as you increase compute budget, although difficult problems do gain some benefit from evaluating parallel chains">
 
 
 Once again they propose a compute-optimal strategy choosing the best settings for each budget and question difficulty. This time it appears that accuracy continues improving as budget increases.
