@@ -2,9 +2,9 @@
 title: "Speeding up LLM inference using SparQ Attention & llama.cpp"
 date: 2024-09-08T01:00:00-00:00
 header:
-    teaser: /assets/images/posts/2024-09/sparq-llama-cpp/sparq-speedup.png
-    image: /assets/images/posts/2024-09/sparq-llama-cpp/sparq-speedup.png
-    og_image: /assets/images/posts/2024-09/sparq-llama-cpp/sparq-speedup.png
+    teaser: /assets/images/posts/2024-09/llama-cpp-sparq/sparq-speedup.png
+    image: /assets/images/posts/2024-09/llama-cpp-sparq/sparq-speedup.png
+    og_image: /assets/images/posts/2024-09/llama-cpp-sparq/sparq-speedup.png
 
 layout: single
 category: "posts"
@@ -18,7 +18,7 @@ toc: true
 toc_sticky: true
 toc_label: "SparQ Attention & llama.cpp"
 toc_icon: "book"
-image_dir: "/assets/images/posts/2024-09/sparq-llama-cpp/"
+image_dir: "/assets/images/posts/2024-09/llama-cpp-sparq/"
 author: Luka Ribar
 ---
 
