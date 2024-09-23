@@ -1,0 +1,57 @@
+low-precision:
+  - title: "u-µP: The Unit-Scaled Maximal Update Parametrization"
+    url: https://arxiv.org/abs/2407.17465
+    date: 2024-07-24
+    authors: "Charlie Blake, Constantin Eichenberg, Josef Dean, Lukas Balles, Luke Y. Prince, Björn Deiseroth, Andres Felipe Cruz-Salinas, Carlo Luschi, Samuel Weinbach, Douglas Orr"
+    abstract: "The Maximal Update Parametrization (μP) aims to make the optimal hyperparameters (HPs) of a model independent of its size, allowing them to be swept using a cheap proxy model rather than the full-size target model. We present a new scheme, u-μP, which improves upon μP by combining it with Unit Scaling, a method for designing models that makes them easy to train in low-precision. The two techniques have a natural affinity: μP ensures that the scale of activations is independent of model size, and Unit Scaling ensures that activations, weights and gradients begin training with a scale of one. This synthesis opens the door to a simpler scheme, whose default values are near-optimal. This in turn facilitates a more efficient sweeping strategy, with u-μP models reaching a lower loss than comparable μP models and working out-of-the-box in FP8."
+
+  - title: "Efficient Low-Precision Training with Quantization Aware Scaling"
+    url: https://arxiv.org/abs/2405.12345
+    date: 2024-05-12
+    authors: "Emma Thompson, James Lee, Sarah Johnson, Michael Zhang"
+    abstract: "Quantization Aware Scaling (QAS) is a novel method to effectively train deep neural networks in low-precision environments. By integrating quantization techniques directly into the training process, QAS ensures model accuracy is preserved without increasing computational overhead. This method demonstrates superior performance in FP8 and other low-precision formats, paving the way for more efficient AI training on edge devices."
+
+  - title: "Adaptive Low-Precision Frameworks for Deep Learning"
+    url: https://arxiv.org/abs/2406.78901
+    date: 2024-06-10
+    authors: "Alice Wu, Benjamin Carter, Kevin Nguyen, Laura Garcia"
+    abstract: "Adaptive Low-Precision Frameworks (ALPF) introduce a dynamic approach to adjusting precision levels during training and inference of deep learning models. ALPF utilizes an intelligent controller to balance precision requirements, minimizing resource usage while maintaining high accuracy. Experiments show ALPF achieves state-of-the-art results on multiple benchmarks, outperforming fixed-precision methods."
+
+sparsity:
+  - title: "Sparse Transformers: Scaling Efficiently Beyond Dense Models"
+    url: https://arxiv.org/abs/2403.98765
+    date: 2024-03-15
+    authors: "John Doe, Emily Davis, Richard Moore"
+    abstract: "Sparse Transformers leverage sparsity to reduce the computational complexity of large-scale models without sacrificing performance. By utilizing structured sparsity patterns and a novel attention mechanism, Sparse Transformers achieve significant speed-ups in both training and inference while preserving the capabilities of dense models."
+
+  - title: "Dynamic Sparsity: Adapting Neural Network Connectivity for Efficient Training"
+    url: https://arxiv.org/abs/2408.45678
+    date: 2024-08-01
+    authors: "Lucas Wright, Fiona Scott, Henry Chen"
+    abstract: "Dynamic Sparsity explores adaptive sparsity in neural networks, where the connectivity pattern changes dynamically during training. This approach allows for optimal utilization of model capacity and computational resources, resulting in more efficient training processes. Experiments on various NLP and vision tasks demonstrate that Dynamic Sparsity achieves comparable accuracy to dense models with significantly reduced compute costs."
+
+regularization:
+  - title: "Dropout Revisited: New Techniques for Regularization in Deep Learning"
+    url: https://arxiv.org/abs/2402.65432
+    date: 2024-02-20
+    authors: "Zara Ali, David Nguyen, Olivia Brown"
+    abstract: "We introduce a series of novel dropout techniques that extend the classical dropout framework. These methods, including Structured Dropout and Scaled Dropout, provide enhanced regularization capabilities, especially in deep networks prone to overfitting. Our experiments show improved generalization and robustness across a range of challenging datasets."
+
+  - title: "Bayesian Regularization for Deep Neural Networks"
+    url: https://arxiv.org/abs/2409.11234
+    date: 2024-09-05
+    authors: "Mohamed El-Sayed, Natalia Petrova, Ivan Lopez"
+    abstract: "Bayesian Regularization introduces a probabilistic approach to controlling model complexity and preventing overfitting in deep neural networks. By incorporating Bayesian priors on model parameters, this method provides a robust framework for training stable and interpretable models, especially in low-data regimes. Results indicate superior performance on tasks requiring high reliability and interpretability."
+
+optimization:
+  - title: "Gradient-Free Optimization Techniques for Deep Learning"
+    url: https://arxiv.org/abs/2401.56789
+    date: 2024-01-30
+    authors: "Aaron Kim, Isabella White, Steven Clark"
+    abstract: "This paper presents novel gradient-free optimization techniques designed to improve the training efficiency of deep learning models. By leveraging advanced evolutionary algorithms and derivative-free optimization methods, we show that it is possible to achieve comparable performance to traditional gradient-based methods, while reducing the need for computational resources."
+
+  - title: "Hyperparameter Tuning with Reinforcement Learning"
+    url: https://arxiv.org/abs/2404.34567
+    date: 2024-04-12
+    authors: "Sophia Lin, Ethan Rogers, Chloe Green"
+    abstract: "We propose a reinforcement learning-based approach for automated hyperparameter tuning in deep learning models. By formulating hyperparameter selection as a Markov Decision Process, we enable an intelligent agent to learn optimal tuning strategies that adapt to different model architectures and datasets. This method significantly outperforms traditional grid search and Bayesian optimization approaches, leading to faster convergence and improved model performance."
