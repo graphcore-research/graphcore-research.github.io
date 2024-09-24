@@ -1,57 +1,205 @@
-low-precision:
+# 1. Find the right category
+# 2. Prepend to the category list
+#    - The display order is the order in this file
+#    - Follow the existing pattern: link to arXiv /abs, "Author Name, Author Name", etc.
+
+# Template:
+
+  # - title: ""
+  #   url:
+  #   date:
+  #   authors: ""
+  #   abstract: ""
+  #   published: ""
+
+"Low Precision":
+
   - title: "u-µP: The Unit-Scaled Maximal Update Parametrization"
     url: https://arxiv.org/abs/2407.17465
     date: 2024-07-24
     authors: "Charlie Blake, Constantin Eichenberg, Josef Dean, Lukas Balles, Luke Y. Prince, Björn Deiseroth, Andres Felipe Cruz-Salinas, Carlo Luschi, Samuel Weinbach, Douglas Orr"
     abstract: "The Maximal Update Parametrization (μP) aims to make the optimal hyperparameters (HPs) of a model independent of its size, allowing them to be swept using a cheap proxy model rather than the full-size target model. We present a new scheme, u-μP, which improves upon μP by combining it with Unit Scaling, a method for designing models that makes them easy to train in low-precision. The two techniques have a natural affinity: μP ensures that the scale of activations is independent of model size, and Unit Scaling ensures that activations, weights and gradients begin training with a scale of one. This synthesis opens the door to a simpler scheme, whose default values are near-optimal. This in turn facilitates a more efficient sweeping strategy, with u-μP models reaching a lower loss than comparable μP models and working out-of-the-box in FP8."
+    published: "ICML'24 Workshop on Advancing Neural Network Training (WANT): Computational Efficiency, Scalability, and Resource Optimization"
 
-  - title: "Efficient Low-Precision Training with Quantization Aware Scaling"
-    url: https://arxiv.org/abs/2405.12345
-    date: 2024-05-12
-    authors: "Emma Thompson, James Lee, Sarah Johnson, Michael Zhang"
-    abstract: "Quantization Aware Scaling (QAS) is a novel method to effectively train deep neural networks in low-precision environments. By integrating quantization techniques directly into the training process, QAS ensures model accuracy is preserved without increasing computational overhead. This method demonstrates superior performance in FP8 and other low-precision formats, paving the way for more efficient AI training on edge devices."
+  - title: "Scalify: scale propagation for efficient low-precision LLM training"
+    url: https://arxiv.org/abs/2407.17353
+    date: 2024-07-24
+    authors: "Paul Balança, Sam Hosegood, Carlo Luschi, Andrew Fitzgibbon"
+    abstract: "Low-precision formats such as float8 have been introduced in machine learning accelerated hardware to improve computational efficiency for large language models training and inference. Nevertheless, adoption by the ML community has been slowed down by the complex, and sometimes brittle, techniques required to match higher precision training accuracy. In this work, we present Scalify, a end-to-end scale propagation paradigm for computational graphs, generalizing and formalizing existing tensor scaling methods. Experiment results show that Scalify supports out-of-the-box float8 matrix multiplication and gradients representation, as well as float16 optimizer state storage. Our JAX implementation of Scalify is open-sourced at https://github.com/graphcore-research/jax-scalify."
+    published: "ICML'24 Workshop on Advancing Neural Network Training (WANT): Computational Efficiency, Scalability, and Resource Optimization"
 
-  - title: "Adaptive Low-Precision Frameworks for Deep Learning"
-    url: https://arxiv.org/abs/2406.78901
-    date: 2024-06-10
-    authors: "Alice Wu, Benjamin Carter, Kevin Nguyen, Laura Garcia"
-    abstract: "Adaptive Low-Precision Frameworks (ALPF) introduce a dynamic approach to adjusting precision levels during training and inference of deep learning models. ALPF utilizes an intelligent controller to balance precision requirements, minimizing resource usage while maintaining high accuracy. Experiments show ALPF achieves state-of-the-art results on multiple benchmarks, outperforming fixed-precision methods."
+  - title: "Training and inference of large language models using 8-bit floating point"
+    url: https://arxiv.org/abs/2309.17224
+    date: 2023-09-29
+    authors: "Sergio P. Perez, Yan Zhang, James Briggs, Charlie Blake, Josh Levy-Kramer, Paul Balanca, Carlo Luschi, Stephen Barlow, Andrew William Fitzgibbon"
+    abstract: "FP8 formats are gaining popularity to boost the computational efficiency for training and inference of large deep learning models. Their main challenge is that a careful choice of scaling is needed to prevent degradation due to the reduced dynamic range compared to higher-precision formats. Although there exists ample literature about selecting such scalings for INT formats, this critical aspect has yet to be addressed for FP8. This paper presents a methodology to select the scalings for FP8 linear layers, based on dynamically updating per-tensor scales for the weights, gradients and activations. We apply this methodology to train and validate large language models of the type of GPT and Llama 2 using FP8, for model sizes ranging from 111M to 70B. To facilitate the understanding of the FP8 dynamics, our results are accompanied by plots of the per-tensor scale distribution for weights, activations and gradients during both training and inference."
+    published: "ICML'23 Workshop on Advancing Neural Network Training (WANT): Computational Efficiency, Scalability, and Resource Optimization"
 
-sparsity:
-  - title: "Sparse Transformers: Scaling Efficiently Beyond Dense Models"
-    url: https://arxiv.org/abs/2403.98765
-    date: 2024-03-15
-    authors: "John Doe, Emily Davis, Richard Moore"
-    abstract: "Sparse Transformers leverage sparsity to reduce the computational complexity of large-scale models without sacrificing performance. By utilizing structured sparsity patterns and a novel attention mechanism, Sparse Transformers achieve significant speed-ups in both training and inference while preserving the capabilities of dense models."
+  - title: "Unit Scaling: Out-of-the-Box Low-Precision Training"
+    url: https://arxiv.org/abs/2303.11257
+    date: 2023-03-20
+    authors: "Charlie Blake, Douglas Orr, Carlo Luschi"
+    abstract: "We present unit scaling, a paradigm for designing deep learning models that simplifies the use of low-precision number formats. Training in FP16 or the recently proposed FP8 formats offers substantial efficiency gains, but can lack sufficient range for out-of-the-box training. Unit scaling addresses this by introducing a principled approach to model numerics: seeking unit variance of all weights, activations and gradients at initialisation. Unlike alternative methods, this approach neither requires multiple training runs to find a suitable scale nor has significant computational overhead. We demonstrate the efficacy of unit scaling across a range of models and optimisers. We further show that existing models can be adapted to be unit-scaled, training BERT-Large in FP16 and then FP8 with no degradation in accuracy."
+    published: "Proceedings of the 40th International Conference on Machine Learning"
 
-  - title: "Dynamic Sparsity: Adapting Neural Network Connectivity for Efficient Training"
-    url: https://arxiv.org/abs/2408.45678
-    date: 2024-08-01
-    authors: "Lucas Wright, Fiona Scott, Henry Chen"
-    abstract: "Dynamic Sparsity explores adaptive sparsity in neural networks, where the connectivity pattern changes dynamically during training. This approach allows for optimal utilization of model capacity and computational resources, resulting in more efficient training processes. Experiments on various NLP and vision tasks demonstrate that Dynamic Sparsity achieves comparable accuracy to dense models with significantly reduced compute costs."
+  - title: "8-bit Numerical Formats for Deep Neural Networks"
+    url: https://arxiv.org/abs/2206.02915
+    date: 2022-06-06
+    authors: "Badreddine Noune, Philip Jones, Daniel Justus, Dominic Masters, Carlo Luschi"
+    abstract: "Given the current trend of increasing size and complexity of machine learning architectures, it has become of critical importance to identify new approaches to improve the computational efficiency of model training. In this context, we address the advantages of floating-point over fixed-point representation, and present an in-depth study on the use of 8-bit floating-point number formats for activations, weights, and gradients for both training and inference. We explore the effect of different bit-widths for exponents and significands and different exponent biases. The experimental results demonstrate that a suitable choice of these low-precision formats enables faster training and reduced power consumption without any degradation in accuracy for a range of deep learning models for image classification and language processing."
+    published: "arXiv Preprint"
 
-regularization:
-  - title: "Dropout Revisited: New Techniques for Regularization in Deep Learning"
-    url: https://arxiv.org/abs/2402.65432
-    date: 2024-02-20
-    authors: "Zara Ali, David Nguyen, Olivia Brown"
-    abstract: "We introduce a series of novel dropout techniques that extend the classical dropout framework. These methods, including Structured Dropout and Scaled Dropout, provide enhanced regularization capabilities, especially in deep networks prone to overfitting. Our experiments show improved generalization and robustness across a range of challenging datasets."
+"Sparsity":
 
-  - title: "Bayesian Regularization for Deep Neural Networks"
-    url: https://arxiv.org/abs/2409.11234
-    date: 2024-09-05
-    authors: "Mohamed El-Sayed, Natalia Petrova, Ivan Lopez"
-    abstract: "Bayesian Regularization introduces a probabilistic approach to controlling model complexity and preventing overfitting in deep neural networks. By incorporating Bayesian priors on model parameters, this method provides a robust framework for training stable and interpretable models, especially in low-data regimes. Results indicate superior performance on tasks requiring high reliability and interpretability."
+  - title: "SparQ Attention: Bandwidth-Efficient LLM Inference"
+    url: https://arxiv.org/abs/2312.04985
+    date: 2023-12-08
+    authors: "Luka Ribar, Ivan Chelombiev, Luke Hudlass-Galley, Charlie Blake, Carlo Luschi, Douglas Orr"
+    abstract: "The computational difficulties of large language model (LLM) inference remain a significant obstacle to their widespread deployment. The need for many applications to support long input sequences and process them in large batches typically causes token-generation to be bottlenecked by data transfer. For this reason, we introduce SparQ Attention, a technique for increasing the inference throughput of LLMs by utilising memory bandwidth more efficiently within the attention layers, through selective fetching of the cached history. Our proposed technique can be applied directly to off-the-shelf LLMs during inference, without requiring any modification to the pre-training setup or additional fine-tuning. We show that SparQ Attention brings up to 8x savings in attention data transfers without substantial drops in accuracy, by evaluating Llama 2 and 3, Mistral, Gemma and Pythia models on a wide range of downstream tasks."
+    published: "Proceedings of the 41st International Conference on Machine Learning"
 
-optimization:
-  - title: "Gradient-Free Optimization Techniques for Deep Learning"
-    url: https://arxiv.org/abs/2401.56789
-    date: 2024-01-30
-    authors: "Aaron Kim, Isabella White, Steven Clark"
-    abstract: "This paper presents novel gradient-free optimization techniques designed to improve the training efficiency of deep learning models. By leveraging advanced evolutionary algorithms and derivative-free optimization methods, we show that it is possible to achieve comparable performance to traditional gradient-based methods, while reducing the need for computational resources."
+  - title: "Harnessing Manycore Processors with Distributed Memory for Accelerated Training of Sparse and Recurrent Models"
+    url: https://arxiv.org/abs/2311.04386
+    date: 2023-11-07
+    authors: "Jan Finkbeiner, Thomas Gmeinder, Mark Pupilli, Alexander Titterton, Emre Neftci"
+    abstract: "Current AI training infrastructure is dominated by single instruction multiple data (SIMD) and systolic array architectures, such as Graphics Processing Units (GPUs) and Tensor Processing Units (TPUs), that excel at accelerating parallel workloads and dense vector matrix multiplications. Potentially more efficient neural network models utilizing sparsity and recurrence cannot leverage the full power of SIMD processor and are thus at a severe disadvantage compared to today's prominent parallel architectures like Transformers and CNNs, thereby hindering the path towards more sustainable AI. To overcome this limitation, we explore sparse and recurrent model training on a massively parallel multiple instruction multiple data (MIMD) architecture with distributed local memory. We implement a training routine based on backpropagation through time (BPTT) for the brain-inspired class of Spiking Neural Networks (SNNs) that feature binary sparse activations. We observe a massive advantage in using sparse activation tensors with a MIMD processor, the Intelligence Processing Unit (IPU) compared to GPUs. On training workloads, our results demonstrate 5-10x throughput gains compared to A100 GPUs and up to 38x gains for higher levels of activation sparsity, without a significant slowdown in training convergence or reduction in final model performance. Furthermore, our results show highly promising trends for both single and multi IPU configurations as we scale up to larger model sizes. Our work paves the way towards more efficient, non-standard models via AI training hardware beyond GPUs, and competitive large scale SNN models."
+    published: "Proceedings of the 38th AAAI Conference on Artificial Intelligence"
 
-  - title: "Hyperparameter Tuning with Reinforcement Learning"
-    url: https://arxiv.org/abs/2404.34567
-    date: 2024-04-12
-    authors: "Sophia Lin, Ethan Rogers, Chloe Green"
-    abstract: "We propose a reinforcement learning-based approach for automated hyperparameter tuning in deep learning models. By formulating hyperparameter selection as a Markov Decision Process, we enable an intelligent agent to learn optimal tuning strategies that adapt to different model architectures and datasets. This method significantly outperforms traditional grid search and Bayesian optimization approaches, leading to faster convergence and improved model performance."
+  - title: "PopSparse: Accelerated block sparse matrix multiplication on IPU"
+    url: https://arxiv.org/abs/2303.16999
+    date: 2023-03-29
+    authors: "Zhiyi Li, Douglas Orr, Valeriu Ohan, Godfrey Da costa, Tom Murray, Adam Sanders, Deniz Beker, Dominic Masters"
+    abstract: "Reducing the computational cost of running large scale neural networks using sparsity has attracted great attention in the deep learning community. While much success has been achieved in reducing FLOP and parameter counts while maintaining acceptable task performance, achieving actual speed improvements has typically been much more difficult, particularly on general purpose accelerators (GPAs) such as NVIDIA GPUs using low precision number formats. In this work we introduce PopSparse, a library that enables fast sparse operations on Graphcore IPUs by leveraging both the unique hardware characteristics of IPUs as well as any block structure defined in the data. We target two different types of sparsity: static, where the sparsity pattern is fixed at compile-time; and dynamic, where it can change each time the model is run. We present benchmark results for matrix multiplication for both of these modes on IPU with a range of block sizes, matrix sizes and densities. Results indicate that the PopSparse implementations are faster than dense matrix multiplications on IPU at a range of sparsity levels with large matrix size and block size. Furthermore, static sparsity in general outperforms dynamic sparsity. While previous work on GPAs has shown speedups only for very high sparsity (typically 99% and above), the present work demonstrates that our static sparse implementation outperforms equivalent dense calculations in FP16 at lower sparsity (around 90%). IPU code is available to view and run at ipu.dev/sparsity-benchmarks, GPU code will be made available shortly."
+    published: "ICLR'23 Workshop on Sparsity in Neural Networks: On practical limitations and tradeoffs between sustainability and efficiency"
+
+  - title: "Towards Structured Dynamic Sparse Pre-Training of BERT"
+    url: https://www.graphcore.ai/hubfs/assets/pdf/snn_workshop_paper.pdf
+    date: 2024-01-29
+    authors: "Anastasia S. D. Dietrich, Frithjof Gressmann, Douglas Orr, Ivan Chelombiev, Daniel Justus, Carlo Luschi"
+    abstract: "Identifying algorithms for computational efficient unsupervised training of large language models is an important and active area of research. In this work, we develop and study a straightforward, dynamic always-sparse pre-training approach for BERT language modeling, which leverages periodic compression steps based on magnitude pruning followed by random parameter re-allocation. This approach enables us to achieve Pareto improvements in terms of the number of floating-point operations (FLOPs) over statically sparse and dense models across a broad spectrum of network sizes. Furthermore, we demonstrate that training remains FLOP-efficient when using coarse-grained block sparsity, making it particularly promising for efficient execution on modern hardware accelerators."
+    published: "Sparsity in Neural Networks Workshop, 2021"
+
+  - title: "GroupBERT: Enhanced Transformer Architecture with Efficient Grouped Structures"
+    url: https://arxiv.org/abs/2106.05822
+    date: 2021-06-10
+    authors: "Ivan Chelombiev, Daniel Justus, Douglas Orr, Anastasia Dietrich, Frithjof Gressmann, Alexandros Koliousis, Carlo Luschi"
+    abstract: "Attention based language models have become a critical component in state-of-the-art natural language processing systems. However, these models have significant computational requirements, due to long training times, dense operations and large parameter count. In this work we demonstrate a set of modifications to the structure of a Transformer layer, producing a more efficient architecture. First, we add a convolutional module to complement the self-attention module, decoupling the learning of local and global interactions. Secondly, we rely on grouped transformations to reduce the computational cost of dense feed-forward layers and convolutions, while preserving the expressivity of the model. We apply the resulting architecture to language representation learning and demonstrate its superior performance compared to BERT models of different scales. We further highlight its improved efficiency, both in terms of floating-point operations (FLOPs) and time-to-train."
+    published: "ICML'22 Workshop on Hardware Aware Efficient Training (HAET)"
+
+  - title: "Improving Neural Network Training in Low Dimensional Random Bases"
+    url: https://arxiv.org/abs/2011.04720
+    date: 2020-11-09
+    authors: "Frithjof Gressmann, Zach Eaton-Rosen, Carlo Luschi"
+    abstract: "Stochastic Gradient Descent (SGD) has proven to be remarkably effective in optimizing deep neural networks that employ ever-larger numbers of parameters. Yet, improving the efficiency of large-scale optimization remains a vital and highly active area of research. Recent work has shown that deep neural networks can be optimized in randomly-projected subspaces of much smaller dimensionality than their native parameter space. While such training is promising for more efficient and scalable optimization schemes, its practical application is limited by inferior optimization performance. Here, we improve on recent random subspace approaches as follows: Firstly, we show that keeping the random projection fixed throughout training is detrimental to optimization. We propose re-drawing the random subspace at each step, which yields significantly better performance. We realize further improvements by applying independent projections to different parts of the network, making the approximation more efficient as network dimensionality grows. To implement these experiments, we leverage hardware-accelerated pseudo-random number generation to construct the random projections on-demand at every optimization step, allowing us to distribute the computation of independent random directions across multiple workers with shared random seeds. This yields significant reductions in memory and is up to 10 times faster for the workloads in question."
+    published: "Proceedings of the 34th Conference on Neural Information Processing Systems"
+
+"Graph Neural Networks":
+
+  - title: "The Role of Graph Topology in the Performance of Biomedical Knowledge Graph Completion Models"
+    url: https://www.arxiv.org/abs/2409.04103
+    date: 2024-09-06
+    authors: "Alberto Cattaneo, Stephen Bonner, Thomas Martynec, Carlo Luschi, Ian P Barrett, Daniel Justus"
+    abstract: "Knowledge Graph Completion has been increasingly adopted as a useful method for several tasks in biomedical research, like drug repurposing or drug-target identification. To that end, a variety of datasets and Knowledge Graph Embedding models has been proposed over the years. However, little is known about the properties that render a dataset useful for a given task and, even though theoretical properties of Knowledge Graph Embedding models are well understood, their practical utility in this field remains controversial. We conduct a comprehensive investigation into the topological properties of publicly available biomedical Knowledge Graphs and establish links to the accuracy observed in real-world applications. By releasing all model predictions and a new suite of analysis tools we invite the community to build upon our work and continue improving the understanding of these crucial applications."
+    published: "ICML'24 Workshop on Machine Learning for Life and Material Science: From Theory to Industry applications"
+
+  - title: "MiniMol: A Parameter-Efficient Foundation Model for Molecular Learning"
+    url: https://arxiv.org/abs/2404.14986
+    date: 2024-04-23
+    authors: "Kerstin Kläser, Błażej Banaszewski, Samuel Maddrell-Mander, Callum McLean, Luis Müller, Ali Parviz, Shenyang Huang, Andrew Fitzgibbon"
+    abstract: "In biological tasks, data is rarely plentiful as it is generated from hard-to-gather measurements. Therefore, pre-training foundation models on large quantities of available data and then transfer to low-data downstream tasks is a promising direction. However, how to design effective foundation models for molecular learning remains an open question, with existing approaches typically focusing on models with large parameter capacities. In this work, we propose MiniMol, a foundational model for molecular learning with 10 million parameters. MiniMol is pre-trained on a mix of roughly 3300 sparsely defined graph- and node-level tasks of both quantum and biological nature. The pre-training dataset includes approximately 6 million molecules and 500 million labels. To demonstrate the generalizability of MiniMol across tasks, we evaluate it on downstream tasks from the Therapeutic Data Commons (TDC) ADMET group showing significant improvements over the prior state-of-the-art foundation model across 17 tasks. MiniMol will be a public and open-sourced model for future research."
+    published: "ICML'24 Workshop on Accessible and Efficient Foundation Models for Biological Discovery"
+
+  - title: "Towards Foundational Models for Molecular Learning on Large-Scale Multi-Task Datasets"
+    url: https://arxiv.org/abs/2310.04292
+    date: 2023-10-06
+    authors: "Dominique Beaini, Shenyang Huang, Joao Alex Cunha, Zhiyi Li, Gabriela Moisescu-Pareja, Oleksandr Dymov, Samuel Maddrell-Mander, Callum McLean, Frederik Wenkel, Luis Müller, Jama Hussein Mohamud, Ali Parviz, Michael Craig, Michał Koziarski, Jiarui Lu, Zhaocheng Zhu, Cristian Gabellini, Kerstin Klaser, Josef Dean, Cas Wognum, Maciej Sypetkowski, Guillaume Rabusseau, Reihaneh Rabbany, Jian Tang, Christopher Morris, Ioannis Koutis, Mirco Ravanelli, Guy Wolf, Prudencio Tossou, Hadrien Mary, Therence Bois, Andrew Fitzgibbon, Błażej Banaszewski, Chad Martin, Dominic Masters"
+    abstract: "Recently, pre-trained foundation models have enabled significant advancements in multiple fields. In molecular machine learning, however, where datasets are often hand-curated, and hence typically small, the lack of datasets with labeled features, and codebases to manage those datasets, has hindered the development of foundation models. In this work, we present seven novel datasets categorized by size into three distinct categories: ToyMix, LargeMix and UltraLarge. These datasets push the boundaries in both the scale and the diversity of supervised labels for molecular learning. They cover nearly 100 million molecules and over 3000 sparsely defined tasks, totaling more than 13 billion individual labels of both quantum and biological nature. In comparison, our datasets contain 300 times more data points than the widely used OGB-LSC PCQM4Mv2 dataset, and 13 times more than the quantum-only QM1B dataset. In addition, to support the development of foundational models based on our proposed datasets, we present the Graphium graph machine learning library which simplifies the process of building and training molecular machine learning models for multi-task and multi-level molecular datasets. Finally, we present a range of baseline results as a starting point of multi-task and multi-level training on these datasets. Empirically, we observe that performance on low-resource biological datasets show improvement by also training on large amounts of quantum data. This indicates that there may be potential in multi-task and multi-level training of a foundation model and fine-tuning it to resource-constrained downstream tasks."
+    published: "Proceedings of the 12th International Conference on Learning Representations"
+
+  - title: "GPS++: Reviving the Art of Message Passing for Molecular Property Prediction"
+    url: https://arxiv.org/abs/2302.02947
+    date: 2023-02-06
+    authors: "Dominic Masters, Josef Dean, Kerstin Klaser, Zhiyi Li, Sam Maddrell-Mander, Adam Sanders, Hatem Helal, Deniz Beker, Andrew Fitzgibbon, Shenyang Huang, Ladislav Rampášek, Dominique Beaini"
+    abstract: "We present GPS++, a hybrid Message Passing Neural Network / Graph Transformer model for molecular property prediction. Our model integrates a well-tuned local message passing component and biased global attention with other key ideas from prior literature to achieve state-of-the-art results on large-scale molecular dataset PCQM4Mv2. Through a thorough ablation study we highlight the impact of individual components and find that nearly all of the model's performance can be maintained without any use of global self-attention, showing that message passing is still a competitive approach for 3D molecular property prediction despite the recent dominance of graph transformers. We also find that our approach is significantly more accurate than prior art when 3D positional information is not available."
+    published: "Transactions on Machine Learning Research"
+
+  - title: "Extreme Acceleration of Graph Neural Network-based Prediction Models for Quantum Chemistry"
+    url: https://arxiv.org/abs/2211.13853
+    date: 2022-11-25
+    authors: "Hatem Helal, Jesun Firoz, Jenna Bilbrey, Mario Michael Krell, Tom Murray, Ang Li, Sotiris Xantheas, Sutanay Choudhury"
+    abstract: "Molecular property calculations are the bedrock of chemical physics. High-fidelity ab initio modeling techniques for computing the molecular properties can be prohibitively expensive, and motivate the development of machine-learning models that make the same predictions more efficiently. Training graph neural networks over large molecular databases introduces unique computational challenges such as the need to process millions of small graphs with variable size and support communication patterns that are distinct from learning over large graphs such as social networks. This paper demonstrates a novel hardware-software co-design approach to scale up the training of graph neural networks for molecular property prediction. We introduce an algorithm to coalesce the batches of molecular graphs into fixed size packs to eliminate redundant computation and memory associated with alternative padding techniques and improve throughput via minimizing communication. We demonstrate the effectiveness of our co-design approach by providing an implementation of a well-established molecular property prediction model on the Graphcore Intelligence Processing Units (IPU). We evaluate the training performance on multiple molecular graph databases with varying degrees of graph counts, sizes and sparsity. We demonstrate that such a co-design approach can reduce the training time of such molecular property prediction models from days to less than two hours, opening new possibilities for AI-driven scientific discovery."
+    published: "Journal of Chemical Information and Modeling"
+
+  - title: "BESS: Balanced Entity Sampling and Sharing for Large-Scale Knowledge Graph Completion"
+    url: https://arxiv.org/abs/2211.12281
+    date: 2022-11-22
+    authors: "Alberto Cattaneo, Daniel Justus, Harry Mellor, Douglas Orr, Jerome Maloberti, Zhenying Liu, Thorin Farnsworth, Andrew Fitzgibbon, Blazej Banaszewski, Carlo Luschi"
+    abstract: "We present the award-winning submission to the WikiKG90Mv2 track of OGB-LSC@NeurIPS 2022. The task is link-prediction on the large-scale knowledge graph WikiKG90Mv2, consisting of 90M+ nodes and 600M+ edges. Our solution uses a diverse ensemble of 85 Knowledge Graph Embedding models combining five different scoring functions (TransE, TransH, RotatE, DistMult, ComplEx) and two different loss functions (log-sigmoid, sampled softmax cross-entropy). Each individual model is trained in parallel on a Graphcore Bow Pod16 using BESS (Balanced Entity Sampling and Sharing), a new distribution framework for KGE training and inference based on balanced collective communications between workers. Our final model achieves a validation MRR of 0.2922 and a test-challenge MRR of 0.2562, winning the first place in the competition. The code is publicly available at: https://github.com/graphcore/distributed-kge-poplar/tree/2022-ogb-submission."
+    published: "arXiv Preprint"
+
+"Physics":
+
+  - title: "MESS: Modern Electronic Structure Simulations"
+    url: https://arxiv.org/abs/2406.03121
+    date: 2024-06-05
+    authors: "Hatem Helal, Andrew Fitzgibbon"
+    abstract: "Electronic structure simulation (ESS) has been used for decades to provide quantitative scientific insights on an atomistic scale, enabling advances in chemistry, biology, and materials science, among other disciplines. Following standard practice in scientific computing, the software packages driving these studies have been implemented in compiled languages such as FORTRAN and C. However, the recent introduction of machine learning (ML) into these domains has meant that ML models must be coded in these languages, or that complex software bridges have to be built between ML models in Python and these large compiled software systems. This is in contrast with recent progress in modern ML frameworks which aim to optimise both ease of use and high performance by harnessing hardware acceleration of tensor programs defined in Python. We introduce MESS: a modern electronic structure simulation package implemented in JAX; porting the ESS code to the ML world. We outline the costs and benefits of following the software development practices used in ML for this important scientific workload. MESS shows significant speedups n widely available hardware accelerators and simultaneously opens a clear pathway towards combining ESS with ML. MESS is available at https://github.com/graphcore-research/mess."
+    published: "ICML'24 Workshop on AI for Science: Scaling in AI for Scientific Discovery"
+
+  - title: "Reducing the Cost of Quantum Chemical Data By Backpropagating Through Density Functional Theory"
+    url: https://arxiv.org/abs/2402.04030
+    date: 2024-02-06
+    authors: "Alexander Mathiasen, Hatem Helal, Paul Balanca, Adam Krzywaniak, Ali Parviz, Frederik Hvilshøj, Blazej Banaszewski, Carlo Luschi, Andrew William Fitzgibbon"
+    abstract: "Density Functional Theory (DFT) accurately predicts the quantum chemical properties of molecules, but scales as O(N3electrons). Schütt et al. (2019) successfully approximate DFT 1000x faster with Neural Networks (NN). Arguably, the biggest problem one faces when scaling to larger molecules is the cost of DFT labels. For example, it took years to create the PCQ dataset (Nakata & Shimazaki, 2017) on which subsequent NNs are trained within a week. DFT labels molecules by minimizing energy E(⋅) as a \"loss function.\" We bypass dataset creation by directly training NNs with E(⋅) as a loss function. For comparison, Schütt et al. (2019) spent 626 hours creating a dataset on which they trained their NN for 160h, for a total of 786h; our method achieves comparable performance within 31h."
+    published: "arXiv preprint"
+
+  - title: "Generating QM1B with PySCF_IPU"
+    url: https://arxiv.org/abs/2311.01135
+    date: 2023-11-02
+    authors: "Alexander Mathiasen, Hatem Helal, Kerstin Klaser, Paul Balanca, Josef Dean, Carlo Luschi, Dominique Beaini, Andrew Fitzgibbon, Dominic Masters"
+    abstract: "The emergence of foundation models in Computer Vision and Natural Language Processing have resulted in immense progress on downstream tasks. This progress was enabled by datasets with billions of training examples. Similar benefits are yet to be unlocked for quantum chemistry, where the potential of deep learning is constrained by comparatively small datasets with 100k to 20M training examples. These datasets are limited in size because the labels are computed using the accurate (but computationally demanding) predictions of Density Functional Theory (DFT). Notably, prior DFT datasets were created using CPU supercomputers without leveraging hardware acceleration. In this paper, we take a first step towards utilising hardware accelerators by introducing the data generator PySCFIPU using Intelligence Processing Units (IPUs). This allowed us to create the dataset QM1B with one billion training examples containing 9-11 heavy atoms. We demonstrate that a simple baseline neural network (SchNet 9M) improves its performance by simply increasing the amount of training data without additional inductive biases. To encourage future researchers to use QM1B responsibly, we highlight several limitations of QM1B and emphasise the low-resolution of our DFT options, which also serves as motivation for even larger, more accurate datasets. Code and dataset are available on Github: http://github.com/graphcore-research/pyscf-ipu"
+    published: "Proceedings of the 37th Conference on Neural Information Processing Systems, Datasets and Benchmarks track"
+
+  - title: "PySCF_IPU: Repurposing Density Functional Theory to Suit Deep Learning"
+    url: https://openreview.net/pdf?id=kIzat5hJxg
+    date: 2023-06-15
+    authors: "Alexander Mathiasen, Hatem Helal, Paul Balanca, Kerstin Klaeser, Josef Dean, Carlo Luschi, Dominique Beaini, Andrew William Fitzgibbon, Dominic Masters"
+    abstract: "Density Functional Theory (DFT) accurately predicts the properties of molecules given their atom types and positions, and often serves as ground truth for molecular property prediction tasks. Neural Networks (NN) are popular tools for such tasks and are trained on DFT datasets, with the aim to approximate DFT at a fraction of the computational cost. Research in other areas of machine learning has shown that generalisation performance of NNs tends to improve with increased dataset size, however, the computational cost of DFT limits the size of DFT datasets. We present PySCFIPU, a DFT library that allows us to iterate on both dataset generation and NN training. We create QM10X, a dataset with 10^8 conformers, in 13 hours, on which we subsequently train SchNet in 12 hours. We show that the predictions of SchNet improve solely by increasing training data without incorporating further inductive biases."
+    published: "ICML'23 Workshop on the Synergy of Scientific and Machine Learning Modeling"
+
+"Other":
+
+  - title: "Proxy-Normalizing Activations to Match Batch Normalization while Removing Batch Dependence"
+    url: https://arxiv.org/abs/2106.03743
+    date: 2021-06-07
+    authors: "Antoine Labatie, Dominic Masters, Zach Eaton-Rosen, Carlo Luschi"
+    abstract: "We investigate the reasons for the performance degradation incurred with batch-independent normalization. We find that the prototypical techniques of layer normalization and instance normalization both induce the appearance of failure modes in the neural network's pre-activations: (i) layer normalization induces a collapse towards channel-wise constant functions; (ii) instance normalization induces a lack of variability in instance statistics, symptomatic of an alteration of the expressivity. To alleviate failure mode (i) without aggravating failure mode (ii), we introduce the technique \"Proxy Normalization\" that normalizes post-activations using a proxy distribution. When combined with layer normalization or group normalization, this batch-independent normalization emulates batch normalization's behavior and consistently matches or exceeds its performance."
+    published: "Proceedings of the 35th Conference on Neural Information Processing Systems"
+
+  - title: "Making EfficientNet More Efficient: Exploring Batch-Independent Normalization, Group Convolutions and Reduced Resolution Training"
+    url: https://arxiv.org/abs/2106.03640
+    date: 2021-06-07
+    authors: "Dominic Masters, Antoine Labatie, Zach Eaton-Rosen, Carlo Luschi"
+    abstract: "Much recent research has been dedicated to improving the efficiency of training and inference for image classification. This effort has commonly focused on explicitly improving theoretical efficiency, often measured as ImageNet validation accuracy per FLOP. These theoretical savings have, however, proven challenging to achieve in practice, particularly on high-performance training accelerators. In this work, we focus on improving the practical efficiency of the state-of-the-art EfficientNet models on a new class of accelerator, the Graphcore IPU. We do this by extending this family of models in the following ways: (i) generalising depthwise convolutions to group convolutions; (ii) adding proxy-normalized activations to match batch normalization performance with batch-independent statistics; (iii) reducing compute by lowering the training resolution and inexpensively fine-tuning at higher resolution. We find that these three methods improve the practical efficiency for both training and inference. Code available at https://github.com/graphcore/graphcore-research/tree/main/Making_EfficientNet_More_Efficient."
+    published: "arXiv Preprint"
+
+  - title: "Parallel Training of Deep Networks with Local Updates"
+    url: https://arxiv.org/abs/2012.03837
+    date: 2020-12-07
+    authors: "Michael Laskin, Luke Metz, Seth Nabarro, Mark Saroufim, Badreddine Noune, Carlo Luschi, Jascha Sohl-Dickstein, Pieter Abbeel"
+    abstract: "Deep learning models trained on large data sets have been widely successful in both vision and language domains. As state-of-the-art deep learning architectures have continued to grow in parameter count so have the compute budgets and times required to train them, increasing the need for compute-efficient methods that parallelize training. Two common approaches to parallelize the training of deep networks have been data and model parallelism. While useful, data and model parallelism suffer from diminishing returns in terms of compute efficiency for large batch sizes. In this paper, we investigate how to continue scaling compute efficiently beyond the point of diminishing returns for large batches through local parallelism, a framework which parallelizes training of individual layers in deep networks by replacing global backpropagation with truncated layer-wise backpropagation. Local parallelism enables fully asynchronous layer-wise parallelism with a low memory footprint, and requires little communication overhead compared with model parallelism. We show results in both vision and language domains across a diverse set of architectures, and find that local parallelism is particularly effective in the high-compute regime."
+    published: "Workshop on Split Learning for Distributed Machine Learning (SLDML), 2021"
+
+  - title: "Bundle Adjustment on a Graph Processor"
+    url: https://arxiv.org/abs/2003.03134
+    date: 2020-03-06
+    authors: "Joseph Ortiz, Mark Pupilli, Stefan Leutenegger, Andrew J. Davison"
+    abstract: "Graph processors such as Graphcore's Intelligence Processing Unit (IPU) are part of the major new wave of novel computer architecture for AI, and have a general design with massively parallel computation, distributed on-chip memory and very high inter-core communication bandwidth which allows breakthrough performance for message passing algorithms on arbitrary graphs. We show for the first time that the classical computer vision problem of bundle adjustment (BA) can be solved extremely fast on a graph processor using Gaussian Belief Propagation. Our simple but fully parallel implementation uses the 1216 cores on a single IPU chip to, for instance, solve a real BA problem with 125 keyframes and 1919 points in under 40ms, compared to 1450ms for the Ceres CPU library. Further code optimisation will surely increase this difference on static problems, but we argue that the real promise of graph processing is for flexible in-place optimisation of general, dynamically changing factor graphs representing Spatial AI problems. We give indications of this with experiments showing the ability of GBP to efficiently solve incremental SLAM problems, and deal with robust cost functions and different types of factors."
+    published: "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020"
+
+  - title: "Revisiting Small Batch Training for Deep Neural Networks"
+    url: https://arxiv.org/abs/1804.07612
+    date: 2018-04-20
+    authors: "Dominic Masters, Carlo Luschi"
+    abstract: "Modern deep neural network training is typically based on mini-batch stochastic gradient optimization. While the use of large mini-batches increases the available computational parallelism, small batch training has been shown to provide improved generalization performance and allows a significantly smaller memory footprint, which might also be exploited to improve machine throughput. In this paper, we review common assumptions on learning rate scaling and training duration, as a basis for an experimental comparison of test performance for different mini-batch sizes. We adopt a learning rate that corresponds to a constant average weight update per gradient calculation (i.e., per unit cost of computation), and point out that this results in a variance of the weight updates that increases linearly with the mini-batch size m. The collected experimental results for the CIFAR-10, CIFAR-100 and ImageNet datasets show that increasing the mini-batch size progressively reduces the range of learning rates that provide stable convergence and acceptable test performance. On the other hand, small mini-batch sizes provide more up-to-date gradient calculations, which yields more stable and reliable training. The best performance has been consistently obtained for mini-batch sizes between m=2 and m=32, which contrasts with recent work advocating the use of mini-batch sizes in the thousands."
+    published: "arXiv Preprint"
