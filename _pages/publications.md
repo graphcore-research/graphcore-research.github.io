@@ -66,7 +66,7 @@ navigation.addEventListener("navigate", (e) => {
                     <h3>{{ paper.title }}</h3>
                     <div class="abstract">{{ paper.abstract }}</div>
                     <div class="authors">{{ paper.authors }}</div>
-                    <div class="published">{{ paper.date | date: "%B %Y" }}; {{ paper.published }})</div>
+                    <div class="published">{{ paper.date | date: "%B %Y" }}; {{ paper.published }}</div>
                 </div>
             </a>
             {% endfor %}
