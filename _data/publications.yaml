@@ -4,7 +4,6 @@
 #    - Follow the existing pattern: link to arXiv /abs, "Author Name, Author Name", etc.
 
 # Template:
-
   # - title: ""
   #   url:
   #   date:
@@ -167,7 +166,35 @@
     abstract: "Density Functional Theory (DFT) accurately predicts the properties of molecules given their atom types and positions, and often serves as ground truth for molecular property prediction tasks. Neural Networks (NN) are popular tools for such tasks and are trained on DFT datasets, with the aim to approximate DFT at a fraction of the computational cost. Research in other areas of machine learning has shown that generalisation performance of NNs tends to improve with increased dataset size, however, the computational cost of DFT limits the size of DFT datasets. We present PySCFIPU, a DFT library that allows us to iterate on both dataset generation and NN training. We create QM10X, a dataset with 10^8 conformers, in 13 hours, on which we subsequently train SchNet in 12 hours. We show that the predictions of SchNet improve solely by increasing training data without incorporating further inductive biases."
     published: "ICML'23 Workshop on the Synergy of Scientific and Machine Learning Modeling"
 
-"Other":
+"Graphics":
+  - title: "Towards Neural Path Tracing in SRAM"
+    url: https://arxiv.org/abs/2305.20061
+    date: 2023-05-31
+    authors: "Mark Pupilli"
+    abstract: "We present an experimental neural path tracer designed to exploit the large on-chip memory of Graphcore intelligence-processing-units (IPUs). This open source renderer demonstrates how to map path tracing to the novel software and hardware architecture and is a useful tool for analysing in-cache neural-rendering scenarios. Such scenarios will be increasingly important if rasterisation is replaced by combinations of ray/path tracing, neural-radiance caching, and AI denoising/up-scaling, for which small neural networks are already routinely employed. A detailed description of the implementation also serves as a self-contained resource for more general software design on IPU."
+    published: "High Performance Graphics (HPG), 2023"
+
+  - title: "Bundle Adjustment on a Graph Processor"
+    url: https://arxiv.org/abs/2003.03134
+    date: 2020-03-06
+    authors: "Joseph Ortiz, Mark Pupilli, Stefan Leutenegger, Andrew J. Davison"
+    abstract: "Graph processors such as Graphcore's Intelligence Processing Unit (IPU) are part of the major new wave of novel computer architecture for AI, and have a general design with massively parallel computation, distributed on-chip memory and very high inter-core communication bandwidth which allows breakthrough performance for message passing algorithms on arbitrary graphs. We show for the first time that the classical computer vision problem of bundle adjustment (BA) can be solved extremely fast on a graph processor using Gaussian Belief Propagation. Our simple but fully parallel implementation uses the 1216 cores on a single IPU chip to, for instance, solve a real BA problem with 125 keyframes and 1919 points in under 40ms, compared to 1450ms for the Ceres CPU library. Further code optimisation will surely increase this difference on static problems, but we argue that the real promise of graph processing is for flexible in-place optimisation of general, dynamically changing factor graphs representing Spatial AI problems. We give indications of this with experiments showing the ability of GBP to efficiently solve incremental SLAM problems, and deal with robust cost functions and different types of factors."
+    published: "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020"
+
+"Efficient ML":
+  - title: "Tuple Packing: Efficient Batching of Small Graphs in Graph Neural Networks"
+    url: https://arxiv.org/abs/2209.06354
+    date: 2022-09-14
+    authors: "Mario Michael Krell, Manuel Lopez, Sreenidhi Anand, Hatem Helal, Andrew William Fitzgibbon"
+    abstract: "When processing a batch of graphs in machine learning models such as Graph Neural Networks (GNN), it is common to combine several small graphs into one overall graph to accelerate processing and remove or reduce the overhead of padding. This is for example supported in the PyG library. However, the sizes of small graphs can vary substantially with respect to the number of nodes and edges, and hence the size of the combined graph can still vary considerably, especially for small batch sizes. Therefore, the costs of excessive padding and wasted compute are still incurred when working with static shapes, which are preferred for maximum acceleration. This paper proposes a new hardware agnostic approach -- tuple packing -- for generating batches that cause minimal overhead. The algorithm extends recently introduced sequence packing approaches to work on the 2D tuples of (|nodes|, |edges|). A monotone heuristic is applied to the 2D histogram of tuple values to define a priority for packing histogram bins together with the objective to reach a limit on the number of nodes as well as the number of edges. Experiments verify the effectiveness of the algorithm on multiple datasets."
+    published: "arXiv Preprint"
+
+  - title: "Efficient Sequence Packing without Cross-contamination: Accelerating Large Language Models without Impacting Performance"
+    url: https://arxiv.org/abs/2107.02027
+    date: 2021-06-29
+    authors: "Mario Michael Krell, Matej Kosec, Sergio P. Perez, Andrew Fitzgibbon"
+    abstract: "Effective training of today's large language models (LLMs) depends on large batches and long sequences for throughput and accuracy. To handle variable-length sequences on hardware accelerators, it is common practice to introduce padding tokens, so that all sequences in a batch have the same length. We show in this paper that the variation in sequence lengths in common NLP datasets is such that up to 50% of all tokens can be padding. In less common, but not extreme, cases (e.g. GLUE-cola with sequence length 128), the ratio is up to 89%. Existing methods to address the resulting inefficiency are complicated by the need to avoid cross-contamination in self-attention, by a reduction in accuracy when sequence ordering information is lost, or by customized kernel implementations only valid for specific accelerators. This paper introduces a new formalization of sequence packing in the context of the well-studied bin packing problem, and presents new algorithms based on this formulation which, for example, confer a 2x speedup for phase 2 pre-training in BERT. We show how existing models can be adapted to ensure mathematical equivalence between the original and packed models, meaning that packed models can be trained with existing pre-training and fine-tuning practices."
+    published: "arXiv Preprint"
 
   - title: "Proxy-Normalizing Activations to Match Batch Normalization while Removing Batch Dependence"
     url: https://arxiv.org/abs/2106.03743
@@ -189,13 +216,6 @@
     authors: "Michael Laskin, Luke Metz, Seth Nabarro, Mark Saroufim, Badreddine Noune, Carlo Luschi, Jascha Sohl-Dickstein, Pieter Abbeel"
     abstract: "Deep learning models trained on large data sets have been widely successful in both vision and language domains. As state-of-the-art deep learning architectures have continued to grow in parameter count so have the compute budgets and times required to train them, increasing the need for compute-efficient methods that parallelize training. Two common approaches to parallelize the training of deep networks have been data and model parallelism. While useful, data and model parallelism suffer from diminishing returns in terms of compute efficiency for large batch sizes. In this paper, we investigate how to continue scaling compute efficiently beyond the point of diminishing returns for large batches through local parallelism, a framework which parallelizes training of individual layers in deep networks by replacing global backpropagation with truncated layer-wise backpropagation. Local parallelism enables fully asynchronous layer-wise parallelism with a low memory footprint, and requires little communication overhead compared with model parallelism. We show results in both vision and language domains across a diverse set of architectures, and find that local parallelism is particularly effective in the high-compute regime."
     published: "Workshop on Split Learning for Distributed Machine Learning (SLDML), 2021"
-
-  - title: "Bundle Adjustment on a Graph Processor"
-    url: https://arxiv.org/abs/2003.03134
-    date: 2020-03-06
-    authors: "Joseph Ortiz, Mark Pupilli, Stefan Leutenegger, Andrew J. Davison"
-    abstract: "Graph processors such as Graphcore's Intelligence Processing Unit (IPU) are part of the major new wave of novel computer architecture for AI, and have a general design with massively parallel computation, distributed on-chip memory and very high inter-core communication bandwidth which allows breakthrough performance for message passing algorithms on arbitrary graphs. We show for the first time that the classical computer vision problem of bundle adjustment (BA) can be solved extremely fast on a graph processor using Gaussian Belief Propagation. Our simple but fully parallel implementation uses the 1216 cores on a single IPU chip to, for instance, solve a real BA problem with 125 keyframes and 1919 points in under 40ms, compared to 1450ms for the Ceres CPU library. Further code optimisation will surely increase this difference on static problems, but we argue that the real promise of graph processing is for flexible in-place optimisation of general, dynamically changing factor graphs representing Spatial AI problems. We give indications of this with experiments showing the ability of GBP to efficiently solve incremental SLAM problems, and deal with robust cost functions and different types of factors."
-    published: "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020"
 
   - title: "Revisiting Small Batch Training for Deep Neural Networks"
     url: https://arxiv.org/abs/1804.07612
