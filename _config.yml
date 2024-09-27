@@ -67,7 +67,7 @@ plugins:
 author:
   name   : "Graphcore Research"
   avatar : "/assets/images/gc-symbol-pink.png"
-  bio    : "Our mission is to advance AI research by characterising the computational requirements of machine intelligence."
+  bio    : "Our mission is to advance AI research and characterise the computational requirements of machine intelligence."
   links:
     - label: "Graphcore"
       icon: "fas fa-fw fa-microchip"
