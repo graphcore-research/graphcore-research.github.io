@@ -8,7 +8,7 @@ tags:
     - quantisation
 potm_year: 2024
 potm_month: 9
-paper_order: 1
+paper_order: 2
 image_dir: "/assets/images/posts/2024-09/potm/fp8_smooth_swiglu/"
 review_author:
     name: "Paul Balanca"

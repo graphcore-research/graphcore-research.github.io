@@ -10,8 +10,8 @@ tags:
     - LLMs
 potm_year: 2024
 potm_month: 9
-paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts/2024-10/potm/llm-correction-via-rl/"
+paper_order: 1
+image_dir: "/assets/images/posts/2024-09/potm/llm-correction-via-rl/"
 review_author:
     name: "Charlie Blake"
     link: "https://x.com/thecharlieblake"
