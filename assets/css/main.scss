@@ -17,7 +17,14 @@
 
 h2 {
     margin-top: 1.5em;
-    font-size: 1.6em;
+}
+
+a {
+    color: #53595e;
+}
+
+a:visited {
+    color: #53595e;
 }
 
 figcaption {
@@ -167,4 +174,117 @@ figcaption {
         width: 300px;
         margin-right: -300px;
     }
+}
+
+.publications-wrapper h2 {
+    margin-top: 0em;
+    margin-bottom: 0.4em;
+    padding-bottom: 0.2em;
+    font-size: 1.6em;
+}
+
+.publications-wrapper h3 {
+    font-size: 1.25em;
+    margin: 0.5em 0em 0.5em 0;
+}
+
+.paper-entry-link {
+    text-decoration: none;
+    color: inherit;
+    padding: 1em;
+    display: block;
+    background-color: #FAF8F9;
+    margin: 0em 0em 0.8em 0;
+}
+
+.paper-entry-link:visited {
+    color: inherit;
+}
+
+.paper-entry-link:hover {
+    background-color: #fff0f4;
+    text-decoration: none;
+    color: inherit;
+}
+
+.paper-entry a {
+    text-decoration: underline;
+}
+
+.paper-entry a:hover {
+    color: inherit;
+}
+
+.paper-entry .abstract {
+    margin: 2em 0em 2em 0;
+}
+
+.paper-entry a:hover, .paper-entry-link:hover {
+  text-decoration: none !important;
+}
+
+.paper-entry .abstract {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: 4.5em;
+}
+
+.paper-entry .authors {
+    opacity: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 4.5em;
+}
+
+.paper-entry .published {
+    opacity: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 4.5em;
+    margin-top: 1em;
+    font-size: small;
+}
+
+.toggle-link a i {
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-link a:hover i {
+  text-decoration: none !important;
+  transform: translate(0em, 0.2em);
+}
+
+.toggle-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+}
+
+.toggle-link a:hover {
+  text-decoration: none !important;
+}
+
+.toggle-link i {
+  color: #ff6f7a;
+  font-size: 23px;
+}
+
+.more-papers {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.65s ease;
 }

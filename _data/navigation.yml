@@ -3,5 +3,7 @@ main:
     url: /papers-of-the-month/
   - title: "Posts"
     url: /posts/
+  - title: "Our Papers"
+    url: /publications/
   - title: "About Us"
     url: /about/

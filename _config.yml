@@ -67,7 +67,7 @@ plugins:
 author:
   name   : "Graphcore Research"
   avatar : "/assets/images/gc-symbol-pink.png"
-  bio    : "Our mission is to follow and contribute to the advancement of AI research, aiming to characterise the computational requirements of machine intelligence."
+  bio    : "Our mission is to advance AI research and characterise the computational requirements of machine intelligence."
   links:
     - label: "Graphcore"
       icon: "fas fa-fw fa-microchip"
@@ -83,7 +83,7 @@ author:
       url: "https://www.graphcore.ai/graphcore-research-newsletter-1"
     - label: "Our Papers"
       icon: "fas fa-fw fa-book"
-      url: "https://www.graphcore.ai/resources/research-papers"
+      url: "/publications"
 
 footer:
   links:
@@ -98,7 +98,7 @@ footer:
       url: "https://www.graphcore.ai/graphcore-research-newsletter-1"
     - label: "Our Papers"
       icon: "fas fa-fw fa-book"
-      url: "https://www.graphcore.ai/resources/research-papers"
+      url: "/publications"
 
 defaults:
   # _posts
