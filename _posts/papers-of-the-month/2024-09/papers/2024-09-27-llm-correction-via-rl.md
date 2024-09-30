@@ -1,6 +1,6 @@
 ---
 title: "Training Language Models to Self-Correct via Reinforcement Learning"
-paper_authors: "Kumar, Zhuang et al."
+paper_authors: "Aviral Kumar, Vincent Zhuang, et al."
 orgs: "Google DeepMind"
 paper_link: "https://arxiv.org/abs/2409.12917"
 tags:
@@ -40,11 +40,11 @@ The most straightforward approach to solving the self-correction problem is simp
 4. Evaluate the final solutions, and now filter out the _incorrect_ ones
 5. Take this dataset of 2-stage "corrected" answers and train the model on it
 
-This is the basis of the [STaR method](https://arxiv.org/abs/2203.14465), which the authors use as a baseline, alongside PairSFT, which works similarly, but uses arbitrary pairs of incorrect-correct responses to a given prompt as training data.
+This is the basis of the [STaR method](https://arxiv.org/abs/2203.14465), which the authors use as a baseline, alongside PairSFT, which works similarly but uses arbitrary pairs of incorrect-correct responses to a given prompt as training data.
 
 The authors test these methods and see the following:
 
-<img src="{{ page.image_dir | append: 'table-1.png' | relative_url }}" alt="An evaluation of the STaR and PairSFT baselines, showing that neither is able to offer significant improvements.">
+<img src="{{ page.image_dir | append: 'table-1.png' | relative_url }}" alt="An evaluation of the STaR and PairSFT baselines shows that neither is able to offer significant improvements.">
 
 STaR slightly improves the initial attempt, but is poor at correcting --- so much so that it tends to make answers worse, not better! Pair-SFT offers a modest accuracy improvement, though this is largely down to a drop in the value of the final column, which indicates the fraction of correct responses the model ruins via wrong "corrections". So in summary: the only improvement we really see is the model learning to be much more cautious in correcting itself.
 
@@ -65,7 +65,7 @@ $$
 $$
 </div>
 
-Here $\hat{r} (\mathbf{y_2}, \mathbf{y^*})$ is some "correctness" function that acts as a reward, which crucially is based on $\mathbf{y_2}$, the model's _second_ attempt at the problem. The KL term acts on the _first_ attempt, encouraging the model to keep it's first guess that same as the original ("reference") model.
+Here $\hat{r} (\mathbf{y_2}, \mathbf{y^*})$ is some "correctness" function that acts as a reward, which crucially is based on $\mathbf{y_2}$, the model's _second_ attempt at the problem. The KL term acts on the _first_ attempt, encouraging the model to keep its first guess the same as the original ("reference") model.
 
 We can see from this that the aim is to encourage the model to learn strong correction behaviour, by fixing the first attempt and optimizing just the second (approximately). This addresses the minimal edit problem.
 
@@ -89,10 +89,10 @@ In short, it works. Results are good on maths problems, and even better on codin
 
 The first-attempt accuracy is slightly degraded, but the second attempt is substantially better than any other attempt by other methods. The main reason for this is shown in the second-to-last column: a large increase in incorrect answers becoming correct, which is the key objective.
 
-The paper shows a number of other evaluations and ablations, making a strong case for the method.
+The paper shows several other evaluations and ablations, making a strong case for the method.
 
 ### Takeaways
 
 This paper makes a compelling case for why supervised fine-tuning is limited as a post-training procedure, and for some problems (such as self-correction), some kind of on-policy RL is required. Carefully designed objectives are required to make this work, but it appears to significantly boost a model's ability to reason at inference time.
 
-This is just the start. The authors consider a fairly simple problem setting: a single correction attempt on a zero-shot answer, with no supervision as to the source of error. One could imagine a similar approach taken using many correction attempts, possibly on chain-of-thought responses, and with more granular feedback. This promises to be a significant direction of future LLM research, with significant computational and algorithmic implications.
+This is just the start. The authors consider a fairly simple problem setting: a single correction attempt on a zero-shot answer, with no supervision as to the source of error. One could imagine a similar approach with many correction attempts, possibly on chain-of-thought responses, and with more granular feedback. This promises to be a significant direction of future LLM research, with significant computational and algorithmic implications.
