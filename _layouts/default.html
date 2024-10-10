@@ -1,4 +1,12 @@
 ---
+# Top Notice:
+#   If dismissed, it will stay hidden for expiry_ms
+#   Changing the label will re-show the notice
+#   Clearing cookies will re-show the notice
+#
+top_notice_text: "Graphcore Research is hiring!"
+top_notice_label: "hiring"
+top_notice_expiry_ms: 10080000  # 1 week (ms)
 ---
 
 <!doctype html>
@@ -13,11 +21,39 @@
 <head>
     {% include head.html %}
     {% include head/custom.html %}
+    <script>
+        // .top-notice
+        const topNoticeLabel = "{{ layout.top_notice_label }}";
+        const topNoticeExpiryMs = {{layout.top_notice_expiry_ms}};
+        function showTopNotice(s) {
+            for (const element of document.querySelectorAll(".top-notice,.top-notice-spacer")) {
+                element.style.display = s;
+            }
+        }
+        function onClickHideTopNotice() {
+            showTopNotice("none");
+            localStorage.setItem("dismiss-notice", topNoticeLabel);
+            localStorage.setItem("dismiss-notice-time", Date.now());
+        }
+        window.onload = function () {
+            if (topNoticeLabel !== "" && (
+                 (topNoticeLabel !== localStorage.getItem("dismiss-notice"))
+                 || (Date.now() > parseInt(localStorage.getItem("dismiss-notice-time")) + topNoticeExpiryMs))) {
+                showTopNotice("");  // Reset to CSS value
+            }
+        };
+    </script>
 </head>
 
 <body
     class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
     {% include_cached skip-links.html %}
+    <!-- .top-notice -->
+    <div class="top-notice-spacer" style="display: none;"></div>
+    <div class="top-notice" style="display: none;">
+        <a href="https://grnh.se/7120b5732us" target="_blank">{{layout.top_notice_text}}</a>
+        <span onclick="onClickHideTopNotice();">&#x2715;</span>
+    </div>
     {% include_cached masthead.html %}
 
     <div class="initial-content">

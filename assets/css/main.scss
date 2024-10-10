@@ -295,3 +295,34 @@ figcaption {
     margin-bottom: 0.75em;
     font-weight: bold;
 }
+
+.top-notice-spacer {
+    height: 1.25em;  // = top-notice.{font-size + 2*padding}
+    width: 100%;
+}
+.top-notice {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    text-align: center;
+    font-size: 0.75em;
+    padding: 0.25em;
+    font-weight: bold;
+    background-color: #ff6f7a;
+    z-index: 128; // nav has z-index 10
+}
+.top-notice a {
+    display: inline-block;
+    flex-grow: 1;
+    color: #FAF8F9;
+    text-decoration: none;
+}
+.top-notice span {
+    display: inline-block;
+    color: #FAF8F9;
+    padding-right: 1em;
+    padding-left: 1em;
+    cursor: pointer;
+}
