@@ -9,7 +9,7 @@ tags:
 potm_year: 2024
 potm_month: October
 paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts/2024-10/potm/sscm/"
+image_dir: "/assets/images/posts/2024-10/potm/ssscm/"
 review_author:
     name: "Mark Pupilli"
     link: "https://www.linkedin.com/in/mark-pupilli"
