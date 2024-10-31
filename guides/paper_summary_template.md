@@ -1,73 +1,49 @@
 ---
-title: "<Full Paper Title>"
-paper_authors: "<Forename Surname, et al.' or 'Forename Surname, Forename Surname and Forename Surname.' (max 3 unless >3 first authors)>"
-orgs: "<name of org>"
-paper_link: "https://arxiv.org/abs/<...>"
+title: "Simplifying, Stabilizing & Scaling Continuous-Time Consistency Models"
+paper_authors: "Cheng Lu and Yang Song"
+orgs: "OpenAI"
+paper_link: "[https://arxiv.org/abs/<...>](https://arxiv.org/abs/2410.11081)"
 tags:
+    - diffusion
     - efficient-inference
-    - quantisation  # Use https://graphcore-research.github.io/tags/ as reference
-potm_year: <YYYY>
-potm_month: <M>
+potm_year: 2024
+potm_month: October
 paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts/<YYYY-MM>/potm/<short_paper_name>/"
+image_dir: "/assets/images/posts/2024-10/potm/sscm/"
 review_author:
-    name: "<Your Name>"
-    link: "<e.g. twitter or linkedin url>"
+    name: "Mark Pupilli"
+    link: "https://www.linkedin.com/in/mark-pupilli"
 hidden: true
 ---
 
-[200 words is a rough guide for the length of a summary.
-Feel free to go a fair bit over or under if needs be.
-The editor will fix any issues with images being rendered too wide/narrow etc.
-See README for how to view locally if you wish to (not required. Contact CB if this
-is broken for you.)]
-
 ### The key idea
 
-A few sentences outlining why the paper is interesting...
-
-Add images where appropriate throughout. This section should always
-have at least 1 key figure though.
-
-*Please use high-res images (zoom in for those screenshots!)*
+This paper describes a range of techniques for stabilising the training of consistency models: generative models which can generate samples from noise in a small number of iterations. The stability improvements allow scaling to larger model size (1.5 billion parameters) which results in Frechet Inception Distance (FID) scores within 10% of the state of the art for image generation.
 
 <img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A specific and succinct sentence or two describing the figure (alt text). Valuable for seo and accessibility.">
 <figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
 
-### [optional] Background
+### Background
+Diffusion models, for example [denoising diffusion probabilistic models](https://arxiv.org/abs/2006.11239) (DDPMs), require hundreds or thousands of iterations to reverse a noising process and produce a sample. [Consistency models](https://arxiv.org/abs/2303.01469) (CMs), in contrast, are generative models that produce samples from noise in single step or a few steps of repeated denoising and noising if higher quality is required. Consitency models are trained either by distillation, e.g. from a pre-trained DDPM, or from scratch in such a way that any starting point on the same trajectory produces the same final sample: i.e samples are self-consistent.
 
-If necessary, a short intro to background matierial needed to understand the method
+The reduction in iterations required for sampling can reduce computational cost by orders of magnitude and the consistency property adds robustness preventing mode collapse which could manifest as poor variety in generated images (only representating averaged subsets of the training distribution). The trade-off for these advantages is somewhat reduced generation quality (FID scores) compared to other methods.
+
+Continuous-time CMs reformulate the training objective to score match in the CM's tangent space, avoiding discretisation errors and the need to evaluate the score explicitly from a pre-trained model. This introduces various instabilities in both numerics and training dynamics which this work aims to address. Projecting the score into tangent space also requires forward mode auto-differentiation to efficiently compute Jacobian vector products (JVP) with the tangent function $\partial {f_\theta(x_t,t)}/\partial{dt}$: derivative of a high-dimensional image with respect to a scalar (time).
 
 ### Their method
 
-Latex can be included in the standard way, either inline: $R=\sum _{t=0}^{\infty }\gamma ^{t}r_{t}$
+They use a _TrigFlow_ formulation which uses $sin(t)$ and $cos(t)$ as interpolants to enforce boundary conditions. This formulation unifies previously proposed forms of diffusion but it is also simpler to stabilise. The resulting tangent function only has one unstable term (determined empirically). This is stabalised by a number of techniques:
 
-Or as a block:
+- Use a warm up schedule for the unstable term in the tangent.
+- Remove the conditioning function on the time variable to avoid overflow in the tangent function.
+- Use [positional embedding](https://arxiv.org/abs/1706.03762) instead of [Fourier embedding](https://arxiv.org/abs/2006.10739) to avoid unstable dynamics.
+- Add extra normalisations within the adaptive group wise normalisation layers.
+- The tangent function, as a whole, is normalised or clipped when it appears in the gradient.
+- The variational weight is learned adaptively (this also conveniently removes another training hyper parameter).
+- Rearrange the JVP calculation to avoid overflow in FP16 training.
 
-<div>
-$$
-Q_{t+1}^{A}(s_{t},a_{t})=Q_{t}^{A}(s_{t},a_{t})+\alpha _{t}(s_{t},a_{t})\left(r_{t}+\gamma Q_{t}^{B}\left(s_{t+1},\mathop {\operatorname {arg~max} } _{a}Q_{t}^{A}(s_{t+1},a)\right)-Q_{t}^{A}(s_{t},a_{t})\right).
-$$
-</div>
-
-Code can also be included in the standard way:
-
-```
-import popart
-
-builder = popart.Builder()
-
-# Build a simple graph
-i1 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-i2 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-
-o = builder.aiOnnx.add([i1, i2])
-```
+They additionally offer an efficient JVP implementation for flash attention for use with forward-mode auto-differentiation allowing them to increase the model size further than would otherwise be possible.
 
 ### Results
 
-...
-
-### [optional] Takeaways
-
-...
+TODO
