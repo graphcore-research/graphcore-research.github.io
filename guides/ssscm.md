@@ -20,8 +20,8 @@ hidden: true
 
 This paper describes a range of techniques for stabilising the training of consistency models: generative models which can generate samples from noise in a small number of iterations. The stability improvements allow scaling to larger model size (1.5 billion parameters) which results in Frechet Inception Distance (FID) scores within 10% of the state of the art for image generation.
 
-<img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A specific and succinct sentence or two describing the figure (alt text). Valuable for seo and accessibility.">
-<figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
+<img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="Plot showing effective sampling compute versus FID score for a range of models.">
+<figcaption>Figure 1: Sample quality vs. effective sampling compute (billion parameters × number of function evaluations during sampling). We compare the sample quality of different models on ImageNet 512×512, measured by FID (↓). Our 2-step sCM achieves sample quality comparable to the best previous generative models while using less than 10% of the effective sampling compute.</figcaption>
 
 ### Background
 Diffusion models, for example [denoising diffusion probabilistic models](https://arxiv.org/abs/2006.11239) (DDPMs), require hundreds or thousands of iterations to reverse a noising process and produce a sample. [Consistency models](https://arxiv.org/abs/2303.01469) (CMs), in contrast, are generative models that produce samples from noise in single step or a few steps of repeated denoising and noising if higher quality is required. Consitency models are trained either by distillation, e.g. from a pre-trained DDPM, or from scratch in such a way that any starting point on the same trajectory produces the same final sample: i.e samples are self-consistent.
