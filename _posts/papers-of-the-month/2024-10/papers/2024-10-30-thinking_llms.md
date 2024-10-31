@@ -1,0 +1,50 @@
+---
+title: "Thinking LLMs: General Instruction Following with Thought Generation"
+paper_authors: "Tianhao Wu, et al."
+orgs: "Meta FAIR, UC Berkeley, NYU"
+paper_link: "https://arxiv.org/abs/2410.10630"
+tags:
+    - LLMs
+    - self-correction
+    - reasoning
+potm_year: 2024
+potm_month: 10
+paper_order: 1  # Editor will decide
+image_dir: "/assets/images/posts/2024-10/potm/thinking_llms/"
+review_author:
+    name: "Alberto Cattaneo"
+    link: "http://www.linkedin.com/in/albertocattaneo91"
+hidden: true
+---
+
+### The key idea
+
+There has been a growing trend in allowing LLMs to use more inference-time compute to generate answers to hard questions. The [Chain-of-Thought](https://arxiv.org/abs/2201.11903) approach, which pushes the model to self-correct and iteratively revise its answer, has shown significant promise, but mainly for tasks involving maths and logic - while, in principle, taking the time to think should be helpful for any task. The authors propose a method to equip existing LLMs with the ability to think and plan before outputting a response, by a custom post-training procedure that does not require any additional human data (RLAIF).   
+
+<img src="{{ page.image_dir | append: 'fig1.png' | relative_url }}" alt="Thought Preference Optimization training procedure.">
+
+### Their method
+
+The model's output is divided into two parts: the thought process (which, differently from CoT, will not be shown to the user) and the actual response. In order to achieve this separation, the user query is prepended with a generic \emph{thought prompt}, of the form:
+
+<img src="{{ page.image_dir | append: 'thought_prompt.png' | relative_url }}" alt="Example of thought prompt.">
+
+Simply doing this will actually degrade the performance of the model, as instruction-tuned LLMs have been heavily optimized to provide direct responses. The model needs therefore to be fine-tuned to produce useful thoughts, but no instructions on how to think are provided: the LLM is incentivized to generate its own thoughts, using as steering metric only the quality of the response part of the output. This approach has the advantage of not requiring any additional training data on human thoughts, relying entirely on Reinforcement Learning from AI Feedback (RLAIF).
+
+Thought Process Optimization training is divided over several iterations. During an iteration, for each training instruction (concatenated to the thought prompt) multiple outputs are sampled. A judge model scores the outputs by only looking at the response part and ignoring the thought process. The best- and worst-scoring samples are then taken to construct a preference pair, which will be used as training data for the next iteration using a [Direct Preference Optimization loss](https://arxiv.org/abs/2305.18290). By doing so, the model learns which thoughts lead to a better response.
+
+### Results
+
+The authors use Llama-3-8B-Instruct as seed model. On both the AlpacaEval and Arena-Hard benchmarks, the LLM with Thought Process Optimization significantly outperforms the seed model, approaching (or even surpassing) the performance of much larger models. Interestingly enough, the training procedure shows great benefits even when the model is asked to produce direct responses without any thinking ("Direct response baseline" in the table).
+
+<img src="{{ page.image_dir | append: 'results.png' | relative_url }}" alt="Results table.">
+
+Improvements over the seed model are shown to consistently increase with the number of TPO training iterations. When looking at individual tasks, it is surprising to notice that - while mathematical and analytic tasks benefit from thinking - the categories with the larger improvements are actually non-reasoning ones, like language translation and writing, or marketing.
+
+<img src="{{ page.image_dir | append: 'fine_grained_results.png' | relative_url }}" alt="Improvements for different tasks.">
+
+<img src="{{ page.image_dir | append: 'example.png' | relative_url }}" alt="Example of output for non-reasoning task.">
+
+### Takeaways
+
+This work highlights how the reasoning abilities of an LLM at test time can be improved through RLAIF by letting the model learn on its own how to generate useful thoughts, unlike previous techniques (like self-correction and self-refinement) that relied on supervised fine-tuning.
