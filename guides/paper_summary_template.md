@@ -6,10 +6,10 @@ paper_link: "https://arxiv.org/abs/<...>"
 tags:
     - efficient-inference
     - quantisation  # Use https://graphcore-research.github.io/tags/ as reference
-potm_year: 2024
-potm_month: 10
+potm_year: <YYYY>
+potm_month: <M>
 paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts/2024-10/potm/<short_paper_name>/"
+image_dir: "/assets/images/posts/<YYYY-MM>/potm/<short_paper_name>/"
 review_author:
     name: "<Your Name>"
     link: "<e.g. twitter or linkedin url>"
