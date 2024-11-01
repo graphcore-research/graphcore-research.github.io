@@ -9,7 +9,7 @@ tags:
     - reasoning
 potm_year: 2024
 potm_month: 10
-paper_order: 1  # Editor will decide
+paper_order: 3
 image_dir: "/assets/images/posts/2024-10/potm/thinking_llms/"
 review_author:
     name: "Alberto Cattaneo"
@@ -19,7 +19,7 @@ hidden: true
 
 ### The key idea
 
-There has been a growing trend in allowing LLMs to use more inference-time compute to generate answers to harder questions. The [Chain-of-Thought](https://arxiv.org/abs/2201.11903) approach, which pushes the model to self-correct and iteratively revise its answer, has shown significant promise, but mainly for tasks involving maths and logic - while, in principle, taking the time to think should be helpful for any task. The authors propose a method to equip existing LLMs with the ability to think and plan before outputting a response, by a custom post-training procedure, dubbed Thought Process Optimization, which does not require any additional human data (RLAIF).   
+There has been a growing trend in allowing LLMs to use more inference-time compute to generate answers to harder questions. The [Chain-of-Thought](https://arxiv.org/abs/2201.11903) approach, which pushes the model to self-correct and iteratively revise its answer, has shown significant promise, particularly for tasks involving maths and logic. However, in principle, taking the time to think should be helpful for a broad range of tasks. The authors propose a method to equip existing LLMs with the ability to think and plan before outputting a response through a custom post-training procedure called Thought Process Optimization. The technique does not require any additional human data, instead leveraging Reinforcement Learning from AI Feedback (RLAIF).
 
 <img src="{{ page.image_dir | append: 'fig1.png' | relative_url }}" alt="Thought Preference Optimization training procedure.">
 
@@ -29,13 +29,13 @@ The LLM's output is divided into two parts: the thought process (which, differen
 
 <img src="{{ page.image_dir | append: 'thought_prompt.png' | relative_url }}" alt="Example of thought prompt.">
 
-Simply doing this will actually degrade the performance of the model, as instruction-tuned LLMs have been heavily optimized to provide direct responses. The model needs therefore to be fine-tuned to produce useful thoughts. Crucially, no instructions on how to think are provided: the LLM is incentivized to generate its own thoughts, using as steering metric only the quality of the response part of the output. This approach has the advantage of not requiring any additional training data on human thoughts, relying entirely on Reinforcement Learning from AI Feedback (RLAIF).
+Simply doing this will actually degrade the performance of the model, as instruction-tuned LLMs have been heavily optimized to provide direct responses. The model needs therefore to be fine-tuned to produce useful thoughts. Crucially, no instructions on how to think are provided: the LLM is incentivised to generate its own thoughts, using only the quality of the response as the steering metric. This approach has the advantage of not requiring any additional training data on human thoughts, relying entirely on Reinforcement Learning from AI Feedback (RLAIF).
 
-Thought Process Optimization training is performed over several iterations. During an iteration, for each training instruction (concatenated to the thought prompt) multiple outputs are sampled in parallel. A judge model scores the outputs by only looking at the response part, ignoring the thought process. The best- and worst-scoring samples (now including the thought process) are then taken to construct a preference pair, which will be used as training data for the next iteration using a [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) loss. By doing so, the model is able to learn which thoughts lead to a better response.
+Thought Process Optimization training is performed over several iterations. During an iteration, for each training instruction (concatenated to the thought prompt), multiple outputs are sampled in parallel. A judge model scores the outputs by only looking at the response part, ignoring the thought process. The best- and worst-scoring samples (now including the thought process) are then taken to construct a preference pair, which will be used as training data for the next iteration using a [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) loss. By doing so, the model is able to learn which thoughts lead to a better response.
 
 ### Results
 
-The authors use Llama-3-8B-Instruct as seed model. On both the AlpacaEval and Arena-Hard benchmarks, the LLM with Thought Process Optimization significantly outperforms the seed model, approaching (or even surpassing) the performance of much larger models. Interestingly enough, the fine-tuning procedure shows great benefits even when the model is asked to produce direct responses without any thinking ("Direct response baseline" in the table).
+The authors use Llama-3-8B-Instruct as the seed model. On both the AlpacaEval and Arena-Hard benchmarks, the LLM with Thought Process Optimization significantly outperforms the seed model, approaching (or even surpassing) the performance of much larger models. Interestingly enough, the fine-tuning procedure shows great benefits even when the model is asked to produce direct responses without any thinking ("Direct response baseline" in the table).
 
 <img src="{{ page.image_dir | append: 'results.png' | relative_url }}" alt="Results table.">
 
