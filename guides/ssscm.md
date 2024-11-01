@@ -18,7 +18,7 @@ hidden: true
 
 ### The key idea
 
-This paper describes a range of techniques for stabilising the training of consistency models: generative models which can generate samples from noise in a small number of iterations. The stability improvements allow scaling to larger model size (1.5 billion parameters) which results in Frechet Inception Distance (FID) scores within 10% of the state of the art for image generation.
+This paper describes a range of techniques for stabilising the training of consistency models: generative models which can generate images from noise in a small number of iterations. Their improvements allow scaling to larger model size (1.5 billion parameters) which results in Frechet Inception Distance (FID) scores within 10% of the [current state of the art](https://arxiv.org/abs/2406.11838) for image generation but with orders of magnitude lower computational cost and better parameter efficiency than some larger networks.
 
 <img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="Plot showing effective sampling compute versus FID score for a range of models.">
 <figcaption>Figure 1: Sample quality vs. effective sampling compute (billion parameters × number of function evaluations during sampling). We compare the sample quality of different models on ImageNet 512×512, measured by FID (↓). Our 2-step sCM achieves sample quality comparable to the best previous generative models while using less than 10% of the effective sampling compute.</figcaption>
@@ -28,7 +28,9 @@ Diffusion models, for example [denoising diffusion probabilistic models](https:/
 
 The reduction in iterations required for sampling can reduce computational cost by orders of magnitude and the consistency property adds robustness preventing mode collapse which could manifest as poor variety in generated images (only representating averaged subsets of the training distribution). The trade-off for these advantages is somewhat reduced generation quality (FID scores) compared to other methods.
 
-Continuous-time CMs reformulate the training objective to score match in the CM's tangent space, avoiding discretisation errors and the need to evaluate the score explicitly from a pre-trained model. This introduces various instabilities in both numerics and training dynamics which this work aims to address. Projecting the score into tangent space also requires forward mode auto-differentiation to efficiently compute Jacobian vector products (JVP) with the tangent function $\partial {f_\theta(x_t,t)}/\partial{dt}$: derivative of a high-dimensional image with respect to a scalar (time).
+Continuous-time CMs reformulate the training objective to score match in the CM's tangent space, avoiding discretisation errors and the need to evaluate the score explicitly from a pre-trained model. This introduces various instabilities in both numerics and training dynamics which this work aims to address.
+
+Projecting the score into tangent space also requires forward mode auto-differentiation to efficiently compute Jacobian vector products (JVP) with the tangent function $\partial {f_\theta(x_t,t)}/\partial{dt}$: derivative of a high-dimensional image with respect to a scalar (time).
 
 ### Their method
 
@@ -46,4 +48,18 @@ They additionally offer an efficient JVP implementation for flash attention for 
 
 ### Results
 
-TODO
+They compare two variants of their model consistency training (sCT) and distillation (sCD) with a range of other models. sCD (distillation from a pre-trained network) is shown to be the preferred method as it gives better task performance than sCT, is compatible with classifier free guidance, and is also more computationally efficient for larger image sizes. They also show evidence that sCD has the desireable propertty of scaling at the same rate as the teacher model.
+
+The table below shows sample quality for a small subset of their comparisons (see the full paper for their comprehensive results):
+
+|Model|# Function Evaluations(↓)|FID(↓)|#Params|
+|---|---|---|---|
+|sCT-XXL (theirs)|2|3.76|1.5B|
+|sCD-XXL (theirs)|1|2.28|1.5B|
+|sCD-XXL (theirs)|2|1.88|1.5B|
+|sCD-XXL (theirs)|2|1.88|1.5B|
+|EDM2-L|126|1.88|778M|
+|EDM2-XXL|126|1.81|1.5B|
+|MAR|128|**1.73**|481M|
+
+Further improvements may close the above gap and improve parameter efficiency with the potential to allow high-quality images to be generated in real-time.
