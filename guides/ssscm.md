@@ -30,7 +30,7 @@ The reduction in iterations required for sampling can reduce computational cost 
 
 Continuous-time CMs reformulate the training objective to score match in the CM's tangent space, avoiding discretisation errors and the need to evaluate the score explicitly from a pre-trained model. This introduces various instabilities in both numerics and training dynamics which this work aims to address.
 
-Projecting the score into tangent space also requires forward mode auto-differentiation to efficiently compute Jacobian vector products (JVP) with the tangent function $\partial {f_\theta(x_t,t)}/\partial{dt}$: derivative of a high-dimensional image with respect to a scalar (time).
+Projecting the score into tangent space also requires forward mode auto-differentiation to efficiently compute Jacobian vector products (JVPs) with the tangent function $\partial {f_\theta(x_t,t)}/\partial{dt}$: the derivative of a high-dimensional image with respect to a scalar (time).
 
 ### Their method
 
