@@ -44,7 +44,7 @@ They use a _TrigFlow_ formulation which uses $sin(t)$ and $cos(t)$ as interpolan
 - The variational weight is learned adaptively (this also conveniently removes another training hyper parameter).
 - Rearrange the JVP calculation to avoid overflow in FP16 training.
 
-They additionally offer an efficient JVP implementation for flash attention for use with forward-mode auto-differentiation allowing them to increase the model size further than would otherwise be possible.
+They additionally offer an efficient JVP implementation for flash attention for use with forward-mode auto-differentiation allowing them to increase the model size further than would otherwise be practical.
 
 ### Results
 
