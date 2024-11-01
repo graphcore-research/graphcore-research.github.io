@@ -18,7 +18,7 @@ hidden: true
 
 ### The key idea
 
-This paper describes a range of techniques for stabilising the training of consistency models: generative models which can generate images from noise in a small number of iterations. Their improvements allow scaling to larger model size (1.5 billion parameters) which results in Frechet Inception Distance (FID) scores within 10% of the [current state of the art](https://arxiv.org/abs/2406.11838) for image generation but with orders of magnitude lower computational cost and better parameter efficiency than some larger networks.
+This paper describes a range of techniques for stabilising the training of consistency models: generative models which produce images from noise in a small number of iterations. Their improvements allow scaling to larger model size (1.5 billion parameters) which results in Frechet Inception Distance (FID) scores within 10% of the [current state of the art](https://arxiv.org/abs/2406.11838) for image generation but with orders of magnitude lower computational cost and better parameter efficiency than some larger networks.
 
 <img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="Plot showing effective sampling compute versus FID score for a range of models.">
 <figcaption>Figure 1: Sample quality vs. effective sampling compute (billion parameters × number of function evaluations during sampling). We compare the sample quality of different models on ImageNet 512×512, measured by FID (↓). Our 2-step sCM achieves sample quality comparable to the best previous generative models while using less than 10% of the effective sampling compute.</figcaption>
