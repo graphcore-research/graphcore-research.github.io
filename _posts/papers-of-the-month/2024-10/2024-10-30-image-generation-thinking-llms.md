@@ -1,5 +1,5 @@
 ---
-title: "October Papers: Improving image generation & Thinking LLMs"
+title: "October Papers: Improving image generation & making LLMs think"
 header:
     teaser: /assets/images/posts/2024-10/potm/twitter_card.png
     image: /assets/images/posts/2024-10/potm/twitter_card.png
