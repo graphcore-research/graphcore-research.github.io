@@ -18,7 +18,7 @@ toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
 
-This month brought us some exciting developments in image- generating models, as well as some interesting insights into how to make large language models *think*!
+This month brought us some exciting developments in improving image-generating models, as well as some interesting insights into how to make large language models *think*!
 
 We start with promising results from OpenAI on using *consistency models* for image generation, challenging the well-established denoising diffusion paradigm. While not quite reaching the same performance, these models require orders of magnitude less compute to generate an image, and may provide a very promising future direction.
 
