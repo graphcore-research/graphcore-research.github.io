@@ -24,7 +24,7 @@ We start with promising results from OpenAI on using *consistency models* for im
 
 At the same time, researchers from Google DeepMind were able to achieve state-of-the-art performance in text-to-image generation, by scaling an autoregressive-type transformer to 10.5 billion parameters, stressing the importance of continuous token representations for images.
 
-Finally, since the introduction of OpenAI's [o1 model](https://openai.com/index/introducing-openai-o1-preview/), there has been a growing interest within the research community in understanding how to make large language models reason. In *Thinking LLMs*, the authors propose a fine-tuning method to improve the responses from LLMs by eliciting a thought process before generating the answer.
+Finally, since the introduction of OpenAI's [o1 model](https://openai.com/index/introducing-openai-o1-preview/), there has been a growing interest within the research community in understanding how to make large language models reason. In *Thinking LLMs*, the authors propose a training method to improve the responses from LLMs by eliciting a thought process before generating the answer.
 
 *We hope you enjoy these month's papers as much as we did! If you have thoughts or questions, please reach out to us at [@GCResearchTeam](https://x.com/GCResearchTeam).*
 
