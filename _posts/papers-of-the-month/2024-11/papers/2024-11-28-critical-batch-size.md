@@ -4,7 +4,11 @@ paper_authors: "Hanlin Zhang, et al."
 orgs: "Harvard, Berkeley, University of Hong Kong, Amazon"
 paper_link: "https://arxiv.org/abs/2410.21676"
 tags:
-    - tbd
+    - batch-size
+    - training-dynamics
+    - efficient-training
+    - scaling-laws
+    - LLMs
 potm_year: 2024
 potm_month: 11
 paper_order: 1
@@ -25,7 +29,7 @@ The key contribution in this paper is an analysis of how CBS _scales_ wrt. data 
 
 One can view the standard ML training procedure as operating in two phases: the accumulation of gradients, and the update of parameters based on those gradients. Accumulation takes place in three places: within a local mini-batch (summing over outer-products to compute weight gradients), across devices (data parallel all-reduce), and across sequential mini-batches (gradient accumulation).
 
-For the sake of computational efficiency, we wish to use sufficiently large local mini-batches to hide the cost of loading weights, and as many data parallel devices as we have available to maximise compute. When the global batch size is lower than the CBS it makes no difference to the final loss how large or small the batch size is (i.e. how much we accumulate before a we update the parameters) - we always reach the same loss with the same amount of data. Another way to view this is to say that below the CBS, a doubling of the batch size halves the number of steps required (termed "linear scaling").
+For the sake of computational efficiency, we wish to use sufficiently large local mini-batches to hide the cost of loading weights, and as many data parallel devices as we have available to maximise compute. When the global batch size is lower than the CBS it makes no difference to the final loss how large or small the batch size is (i.e. how much we accumulate before a we update the parameters) - we always reach the same loss with the same amount of data. Another way to view this is to say that below the CBS, a doubling of the batch size halves the number of updates required (termed "linear scaling").
 
 The CBS defines the point at which linear scaling ceases to hold. This concept was first introduced in [OpenAI's Large-Batch training paper](https://arxiv.org/abs/1812.06162), which shows that gradient noise can be used to predict the critical batch size. But what that paper and its successors don't show is how the CBS relates to the model size and number of tokens trained on, particularly in the context of LLM training. Understanding this is the purpose of this paper.
 
@@ -38,7 +42,7 @@ The authors provide a definition of the CBS, by which this relationship can be m
 
 20% is a somewhat arbitrary threshold, but a useful one.
 
-Instead of setting a target number of tokens and looking at the degradation in loss as batch size increases, they've instead chosen to set a target loss and look at the increase in steps required to reach it. I think this is sensible - step-increase is a more interpretable metric than loss-increase, but this does make some things harder. For instance, they have to use a slightly non-standard (though well-validated) loss schedule that doesn't need to know the number of steps ahead of time.
+Instead of setting a target number of tokens and looking at the degradation in loss as batch size increases, they've instead chosen to set a target loss and look at the increase in steps required to reach it. This seems sensible - step-increase is a more interpretable metric than loss-increase, but this does make some things harder. For instance, they have to use a slightly non-standard (though well-validated) loss schedule that doesn't need to know the number of steps ahead of time.
 
 ### Results
 
@@ -57,11 +61,6 @@ The scaling laws determine the forecasts in the bottom row. The most interesting
 
 ### Takeaways
 
-TODO:
+This is a very useful paper, with a nice clear central result (something like: "only worry about scaling batch size with model size (alone) if you have a ~1000x increase in parameters"). It's made more robust by the careful control of hyperparameters (e.g. using µP to scale the learning rate). Practitioners will be able to use this kind of analysis to determine their own critical batch size for large training runs.
 
-What does longer training do to LR schedule shape (i.c under their new one)
-Llama approach and varying cbs stuff
-Is chinchilla CBS?
-What do they do with warmup?
-(no scaling law exponent for data size?? And don't use M and B)
-...
+The only thing really lacking is a good intuition for _why_ longer training runs should have a larger CBS. One assumption here is that later in training larger batch sizes are more helpful, as the model improves and more data is required to derive an effective update (i.e. the loss landscape is harder to descent). This opens up the question of whether the CBS increases during training (this may well explain their finding), and if so how might one set a batch size schedule. We look forward to seeing future papers investigate this question!
