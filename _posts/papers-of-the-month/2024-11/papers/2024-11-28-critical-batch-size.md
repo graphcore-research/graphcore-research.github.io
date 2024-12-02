@@ -20,7 +20,7 @@ review_author:
 
 ### The key idea
 
-The critical batch size (CBS) is the largest batch size at which an LLM can be trained without requiring more data to reach the same loss. The key contribution in this paper is an analysis of how CBS _scales_ with respect to data and model size in a modern training setup. They find a key and perhaps surprising result: CBS is largely determined by the amount of data trained on, and is almost invariant to model size.
+The critical batch size (CBS) is the largest batch size at which an LLM can be trained without requiring more data to reach the same loss. The key contribution in this paper is an analysis of how CBS _scales_ with respect to data and model size in a modern training setup. They find a key and perhaps surprising result: CBS is largely determined by the amount of training data, and is almost invariant to model size.
 
 ### Background
 
