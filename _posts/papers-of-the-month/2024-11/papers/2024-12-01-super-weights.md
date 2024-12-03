@@ -26,17 +26,17 @@ In an LLM, a small number of MLP down projection weights appear to be critical f
 
 The authors start by asking the question of how "massive activations" as observed by [Sun et al. (2024)](https://arxiv.org/abs/2402.17762) (see [our summary in a previous month](https://graphcore-research.github.io/papers-of-the-month/low-rank-galore-and-1_58-bit-weights/#massive-activations-in-large-language-models)) are created. These massive activations appear independent of token position in every layer, and appear regardless of input prompt. 
 
-The authors demonstrate that these activations appear to be created by (in most case) a multiplication of a single element in each of the weight matrix and the preceding activation that dominates the dot product. That is, for a massive activation $Y_{ij}$ we have
+The authors demonstrate that these activations appear to be created by (in most cases) a multiplication of a single element in each of the weight matrix and the preceding activation that dominates the dot product. That is, for a massive activation $Y_{ij}$ we have
 
 $Y_{ij} = \sum_k X_{ik}W_{jk} \approx X_{im}W_{jm}$
 
 where the forward pass of the feed-forward layer is calculated as $Y = XW^T$.
 
-These super weights are not always the largest by magnitude in the weight matrix. The authors demonstrate that this super weight can be found simply be feeding in an arbitrary prompt, locating the massive activation in the output, then iteratively pruning weights until the massive activation is diminished. In most cases, only a single weight needs to be removed.
+These super weights are not always the largest by magnitude in the weight matrix. The authors demonstrate that super weights can be found simply by feeding in an arbitrary prompt, locating the massive activation in the output, then iteratively pruning weights until the massive activation is diminished. In most cases, only a single weight needs to be removed.
 
 <img class="constrained_img_large" src="{{ page.image_dir | append: 'FIG-Identification.png' | relative_url }}" alt="Graphs showing how super weights in an LLM are identified">
 
-The authors provide a super useful table so that you can go and look-up these super weights for yourself for a range of open models.  
+The authors provide a super useful table so that you can go and look up these super weights for yourself for a range of open models.  
 
 <img class="constrained_img_large" src="{{ page.image_dir | append: 'TBL-Directory.png' | relative_url }}" alt="Lookup table for where to find super weights for models hosted on Hugging Face">
 
