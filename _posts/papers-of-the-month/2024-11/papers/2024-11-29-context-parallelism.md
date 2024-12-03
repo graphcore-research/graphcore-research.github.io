@@ -8,11 +8,12 @@ tags:
     - long-context
 potm_year: 2024
 potm_month: 11
-paper_order: 1  # Editor will decide
+paper_order: 2
 image_dir: "/assets/images/posts/2024-11/potm/context-parallelism/"
 review_author:
     name: "Arianna Saracino"
     link: "https://www.linkedin.com/in/arianna-saracino-038889a8/"
+hidden: true
 ---
 
 ### The key idea
