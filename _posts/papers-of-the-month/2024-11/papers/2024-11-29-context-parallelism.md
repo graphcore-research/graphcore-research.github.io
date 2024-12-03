@@ -24,10 +24,10 @@ In this paper the authors focus on the use of context parallelism and of adaptiv
 
 Context parallelism proves beneficial for reducing latency in multi-node inference with respect to other parallelism strategies as it involves less communication traffic than e.g. tensor parallelism. On the other hand, the main intuition behind adaptively switching between different variations of the ring attention heuristic is that inference presents different KV cache hit rates according to user behaviour and the phase of the serving process. This variability can be exploited to optimise performance for each stage of inference.
 
-<img src="{{ page.image_dir | append: 'fig-1a.png' | relative_url }}" alt="Figure showing that near-linear scaling is achieved with Context Parallel with an increasing number of nodes, and that this is not achieved with Tensor Parallel.">
+<img src="{{ page.image_dir | append: 'fig-1a.png' | relative_url }}" alt="Figure showing that near-linear scaling is achieved with Context Parallel with an increasing number of nodes, and that this is not achieved with Tensor Parallel." class="constrained_img_large">
 <figcaption>Figure 1a. Graph showing that near-linear scaling is achieved with Context Parallel with an increasing number of nodes, and that this is not achieved with Tensor Parallel.</figcaption>
 
-<img src="{{ page.image_dir | append: 'fig-1b.png' | relative_url }}" alt="Figure showing that Time To First Token (TTFT) is halved when moving from 8 CP ranks to 16.">
+<img src="{{ page.image_dir | append: 'fig-1b.png' | relative_url }}" alt="Figure showing that Time To First Token (TTFT) is halved when moving from 8 CP ranks to 16." class="constrained_img_large">
 <figcaption>Figure 1b. Graph showing that Time To First Token (TTFT) is halved when moving from 8 CP ranks to 16.</figcaption>
 
 
