@@ -11,11 +11,12 @@ tags:
     - LLMs
 potm_year: 2024
 potm_month: 11
-paper_order: 1
+paper_order: 4
 image_dir: "/assets/images/posts/2024-11/potm/critical-batch-size/"
 review_author:
     name: "Charlie Blake"
     link: "https://thecharlieblake.co.uk/"
+hidden: true
 ---
 
 ### The key idea

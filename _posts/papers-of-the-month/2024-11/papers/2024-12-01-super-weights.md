@@ -1,6 +1,6 @@
 ---
 title: "The Super Weight in Large Language Models"
-paper_authors: "Mengxia Yu et al."
+paper_authors: "Mengxia Yu, et al."
 orgs: "University of Notre Dame, Apple"
 paper_link: "https://arxiv.org/abs/2411.07191"
 tags:
@@ -13,6 +13,7 @@ image_dir: "/assets/images/posts/2024-11/potm/super-weights/"
 review_author:
     name: "Luke Prince"
     link: "https://www.linkedin.com/in/lyprince/"
+hidden: true
 ---
 
 ### The key idea
