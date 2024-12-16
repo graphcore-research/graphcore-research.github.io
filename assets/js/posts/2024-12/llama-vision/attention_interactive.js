@@ -1,3 +1,5 @@
+// Copyright (c) 2024 Graphcore Ltd. All rights reserved.
+
 const S = {
     nTiles: 4,
     nPatch: 40,
