@@ -70,7 +70,7 @@ window.addEventListener("load", attnSelfAttnInit)
 // Cross attention
 
 function attnCrossAttnDraw(ctx, divTokens, img, attn, idx) {
-    attnDraw(ctx, img, attn, idx * S.nPatch * S.nPatch, /*boost*/2)
+    attnDraw(ctx, img, attn, idx * S.nPatch * S.nPatch, /*boost*/4)
     Array.from(divTokens.children).forEach((e, i) => {
         if (i === idx) {
             e.style = "background-color: #f88;"
@@ -86,7 +86,7 @@ async function attnCrossAttnInit() {
     const attn = new Float32Array(await attnResponse.arrayBuffer())
     const attnJsonReponse = await fetch("/assets/images/posts/2024-12/llama-vision/cross_attention.json")
     const attnJson = await attnJsonReponse.json()
-    console.log("layer", attnJson["layer"])
+    // console.log("layer", attnJson["layer"])
 
     const divTokens = document.getElementById("cross-attention-tokens")
     const canvas = document.getElementById("cross-attention-interactive")
