@@ -27,7 +27,7 @@ Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this
 ![Image of four people looking at a laptop]({{ page.image_dir | append: 'image.png' | relative_url }}){:class="constrained_img_large"}
 
 <!-- TODO - update public link -->
-**Code** — This post is accompanied by an [IPython notebook](https://github.com/graphcore-research/squashed-llama/blob/notebooks/20241022-MllamaExample/MllamaBlog.ipynb), which requires at least 24 GB of accelerator memory to run. It includes a barebones implementation of the Llama 3.2 VLM in pure PyTorch (and code to generate the plots).
+**Code** — This post is accompanied by an [IPython notebook](https://github.com/graphcore-research/squashed-llama/blob/notebooks/20241022-MllamaExample/MllamaBlog.ipynb), which requires 40 GB of accelerator memory to run. It includes a barebones implementation of the Llama 3.2 VLM in pure PyTorch (and code to generate the plots).
 
 **Overview** — To turn an LLM into a VLM, the crucial problem is how to _represent and process the image_, and how to use it as _context while generating_ the response text. We'll cover each of the major components that handle this in turn: image preprocessing, patch embedding, positional embedding, the vision transformer and cross-attention. Each section is accompanied by an expandable explanation section _"Understanding X..."_, providing more depth on that component.
 
@@ -41,7 +41,7 @@ image = ((image / 255) - tensor([0.48, 0.46, 0.41])) / tensor([0.27, 0.26, 0.28]
 
 Apart from rescaling, in this particular model the image is resampled and padded to fit into 4 square 560px x 560px tiles. The arrangement of tiles is flexible, allowing different aspect ratios. In this case, the preprocessed image is of shape `(4, 560, 560, 3)`.
 
-<details markdown="1"><summary>Understanding preprocessing</summary>
+<details markdown="1" open="true"><summary>Understanding preprocessing</summary>
 
 Learning can be a bit faster if inputs are "whitened", giving them zero mean and unit standard deviation, over the dataset. Unlike `LayerNorm` and `RMSNorm`, this operation is not per-example, instead using some fixed scales which were chosen prior to training, based on the dataset.
 
@@ -66,13 +66,13 @@ img = img.flatten(1, 2).flatten(2, 4)  # shape=(4, 1600, 588)
 embeddings = img @ patch_embedding.T  # shape=(4, 1600, 1290)
 ```
 
-<details markdown="1"><summary>Understanding patch embedding</summary>
+<details markdown="1" open="true"><summary>Understanding patch embedding</summary>
 
 The "patched" image looks like this:
 
 ![the image above, chopped up with small 14x14 pixel patches]({{ page.image_dir | append: 'image_patches.png' | relative_url }}){:class="constrained_img_large"}
 
-The `patch_embedding` takes each patch of 588 scaled-RGB values and converts it to a 1280-vector. This is a dot product (see [transformer walk-through](../gemma)), which compares each patch with 1280 different vectors, testing for similarity. These vectors were learned during pre-training to extract useful information from the RGB values. We can visualise them as 1280 images (although note that the intensity scale is somewhat artificial, and for readability, they are sorted by standard deviation since feature ordering is arbitrary):
+The `patch_embedding` takes each patch of 588 scaled-RGB values and converts it to a 1280-vector. This is a dot product (see [transformer walk-through](../gemma)), which compares each patch with 1280 different vectors, testing for similarity. These vectors were learned during pre-training to extract useful information from the RGB values. We can visualise them as 1280 14x14-pixel RGB images (note that the intensity scale is somewhat artificial, and for readability, they are sorted by standard deviation since feature ordering is arbitrary):
 
 ![a grid of 14x14 pixel patches, which generally look like frequency filters]({{ page.image_dir | append: 'patch_embedding.png' | relative_url }}){:class="constrained_img_large"}
 
@@ -103,7 +103,7 @@ We call this an _absolute_ positional embedding since it is based on the absolut
 embeddings += params.positional_embedding[aspect_ratio_id]  # shape (4, 1600, 1280)
 ```
 
-<details markdown="1"><summary>Understanding positional embedding</summary>
+<details markdown="1" open="true"><summary>Understanding positional embedding</summary>
 
 It's somewhat hard to visualise the positional embedding, a `(4, 40, 40, 1280)` tensor. The reason for this is that it exists primarily to influence attention between two patches, which is described by a `(4, 40, 40, 4, 40, 40)` attention map. Unfortunately, the effect of the positional embedding on these attention maps is not linearly separable from the input-dependent patch embedding. But if we pretend for an instant that it is, for a selected head in the first layer, we can see the following "average pre-softmax attention map", where the averaging is over all `(4, 40, 40)` query locations:
 
@@ -140,11 +140,11 @@ hidden += z @ params.mlp_down.T + params.mlp_down_bias
 
 All following the standard transformer pattern. The vision transformer (40 layers, hidden size 1280) is quite small compared with the text transformer (40 layers, hidden size 4096). In this model, only patches (not tokens) are fed as input to the vision transformer, and only tokens (not patches) are fed as direct input to the text transformer.
 
-<details markdown="1"><summary>Understanding the vision transformer</summary>
+<details markdown="1" open="true"><summary>Understanding the vision transformer</summary>
 
 **Differences:** Of the differences listed above, _no causal masking_ and _no grouped query attention_ are because the vision model isn't trained autoregressively, to predict patches in order. This means there is no need to mask out "future information" so that the model can't cheat during training. It also means the model is not expected to run with a KV cache and sequence length 1 at inference time, reducing the need for grouped query attention to save KV cache bandwidth.
 
-The remaining differences - _non-gated MLP_ and using _layer norm_ instead of RMS norm aren't obviously necessary, to me, although there may be reasons of which I'm aware favouring these for vision models.
+The remaining differences - _non-gated MLP_ and using _layer norm_ instead of RMS norm aren't obviously necessary to me, although there may be reasons of which I'm not aware favouring these for vision models.
 
 **Self-attention:** To inspect what the self-attention attention layers are doing, we can visualise the attention weights (each in the range [0, 1]) of layer 16, head 3, for the top-left tile. Note that the transparency is log-scaled between `1/(4*40*40)` (opaque) and `1` (transparent). Hover over the picture to select different "query patches" and see which "key-value patches" they attend to.
 
@@ -165,7 +165,7 @@ We observe how areas of the image tend to change together, and there are "jumps"
 
 The text transformer is mostly unchanged from the original pre-trained model (Llama 8B). In order to incorporate information from the vision transformer, 8 additional cross-attention layers are interleaved into the stack of text transformer layers.
 
-The cross-attention layers take queries from the text sequence, but keys and values from the vision transformer output. They also omit RoPE embeddings, but introduce an RMSNorm after the query and key projections. The following code supports both (text) self-attention and (text-vision) cross-attention layers, given `params`, `hidden`, `vision_out`, `layer_idx` and `rotate()`:
+The cross-attention layers take queries from the text sequence, but keys and values from the vision transformer. Specifically, the input to the key and value projections is formed by concatenating the vision transformer residual state after layers [3, 7, 15, 23, 30] and the final hidden state, then projecting to the language model's hidden size. Cross-attention layers omit RoPE embeddings and introduce an RMSNorm after the query and key projections. The following code supports both (text) self-attention and (text-vision) cross-attention layers, given `params`, `hidden`, `vision_out`, `layer_idx` and `rotate()`:
 
 ```python
 input_q = F.rms_norm(hidden, (1280,), params.attn_norm)
@@ -193,7 +193,7 @@ mix = F.scaled_dot_product_attention(
 
 Note that the code in the notebook is slightly more complex since it supports a KV cache for self-attention layers.
 
-<details markdown="1"><summary>Understanding cross-attention</summary>
+<details markdown="1" open="true"><summary>Understanding cross-attention</summary>
 
 Cross-attention works similarly to self-attention, just the keys and values come from the image, rather than the preceding text. There is no such thing as causal masking, and relative positional encoding doesn't make sense across domains. We can visualise the cross-attention maps in a similar way as before. In this case, we're showing the attention map from the penultimate cross-attention layer (layer 33), averaged over all 32 heads. Hover over the tokens to see where attention is generally focused.
 
@@ -209,11 +209,12 @@ Note, however, that these visualisations should only be taken as a rough indicat
 
 ## Finished 🚢
 
-That's just about it. Put everything together, and our model can answer the question correctly 🎉.
+<!-- TODO - update public link -->
+That's just about it. Put everything together ([notebook](https://github.com/graphcore-research/squashed-llama/blob/notebooks/20241022-MllamaExample/MllamaBlog.ipynb)), and our model can answer the question correctly 🎉.
 
-> What colour shirt is the person to the left of the laptop wearing?
+> **Query:** What colour shirt is the person to the left of the laptop wearing?
 >
-> The person to the left of the laptop is wearing a blue-green t-shirt. The shirt is...
+> **Response:** The person to the left of the laptop is wearing a blue-green t-shirt. The shirt is...
 
 More to the point, we've seen how to adapt an LLM to make a Vision-Language Model (VLM) — the trick is to keep it structurally very simple, with the model's power coming from parametric scale & careful pretraining. Llama-3.2 Vision has some fundamental differences and some indicental ones, versus the text-only Llama models. The fundamental ones we saw were:
 
@@ -223,13 +224,3 @@ More to the point, we've seen how to adapt an LLM to make a Vision-Language Mode
  - Cross-attention in the text transformer to incorporate vision information.
 
 It's impressive what such simple model structures can achieve! Hopefully, we can find ways to push them even further, making training more effective and inference more efficient, as this is by no means the final word on Vision-Text modelling.
-
-
-<!-- For development, expand all details -->
-<!-- <script>
-window.onload = () => {
-    document.querySelectorAll("details").forEach(
-        (e) => e.setAttribute("open", true)
-    )
-}
-</script> -->
