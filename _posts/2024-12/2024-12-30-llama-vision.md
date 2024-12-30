@@ -1,6 +1,6 @@
 ---
 title: "Llama 3.2 Vision — A Deep Dive"
-date: 2024-12-10T01:00:00-00:00
+date: 2024-12-30T01:00:00-00:00
 header:
     teaser: /assets/images/posts/2024-12/llama-vision/vision_transformer_state.gif
     image: /assets/images/posts/2024-12/llama-vision/vision_transformer_state.gif
@@ -26,10 +26,9 @@ Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this
 
 ![Image of four people looking at a laptop]({{ page.image_dir | append: 'image.png' | relative_url }}){:class="constrained_img_large"}
 
-<!-- TODO - update public link -->
-**Code** — This post is accompanied by an [IPython notebook](https://github.com/graphcore-research/squashed-llama/blob/notebooks/20241022-MllamaExample/MllamaBlog.ipynb), which requires 40 GB of accelerator memory to run. It includes a barebones implementation of the Llama 3.2 VLM in pure PyTorch (and code to generate the plots).
+**Code** — This post is accompanied by an [IPython notebook](https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2024-12-LlamaVision.ipynb), which requires 40 GB of accelerator memory to run. It includes a barebones implementation of the Llama 3.2 VLM in pure PyTorch (and code to generate the plots).
 
-**Overview** — To turn an LLM into a VLM, the crucial problem is how to _represent and process the image_, and how to use it as _context while generating_ the response text. We'll cover each of the major components that handle this in turn: image preprocessing, patch embedding, positional embedding, the vision transformer and cross-attention. Each section is accompanied by an expandable explanation section _"Understanding X..."_, providing more depth on that component.
+**Overview** — To turn an LLM into a VLM, the crucial problem is how to _represent and process the image_, and how to use it as _context while generating_ the response text. We'll cover each of the major components that handle this in turn: image preprocessing, patch embedding, positional embedding, the vision transformer and cross-attention. Each section is accompanied by an optional explanation section _"Understanding X..."_, providing more depth on that component.
 
 ## Image preprocessing
 
@@ -209,8 +208,7 @@ Note, however, that these visualisations should only be taken as a rough indicat
 
 ## Finished 🚢
 
-<!-- TODO - update public link -->
-That's just about it. Put everything together ([notebook](https://github.com/graphcore-research/squashed-llama/blob/notebooks/20241022-MllamaExample/MllamaBlog.ipynb)), and our model can answer the question correctly 🎉.
+That's just about it. Put everything together ([notebook](https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2024-12-LlamaVision.ipynb)), and our model can answer the question correctly 🎉.
 
 > **Query:** What colour shirt is the person to the left of the laptop wearing?
 >
