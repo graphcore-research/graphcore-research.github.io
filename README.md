@@ -2,28 +2,14 @@
 
 Link: [graphcore-research.github.io](https://graphcore-research.github.io/)
 
-## Running in a VSCode devcontainer (recommended)
-
- - (Install Docker.)
- - Open the folder inside a devcontainer "Rebuild and Reopen in Container".
- - Run `bundle install`
- - Run `bundle exec jekyll serve`
-
 ## Running locally
 
-To run locally, execute:
+This will allow you to view a local version of the site as you edit.
 
-```
-gem install jekyll bundler
-```
-
-(only needed the first time). A local instance of the blog can then be launched via:
-
-```
-bundle exec jekyll serve
-```
-
-(please contact CB if this doesn't work for you.)
+ - (Install Docker)
+ - Open the folder inside a devcontainer (in VSCode select "Rebuild and Reopen in Container")
+ - Run `bundle install`
+ - Run `bundle exec jekyll serve`
 
 ## Editing
 
@@ -35,15 +21,16 @@ For guidance on how to edit things on the site, your best bet is the
 More fundamental info may instead be found in the
 [Jekyll Docs](https://jekyllrb.com/docs/).
 
-The site is automatically built off of the `main` branch - any merge to `main` should
-automatically trigger the site to update.
-
 ## Papers of the Month
 
 All guidance for _Papers of the Month_ authors can be found in the summary template at
 [for_authors/README.md](guides/paper_summary_template.md).
 
 ## Deploying
+
+The main repo used for developing content is this "internal" one, [`graphcore-research.github.io-internal`](https://github.com/graphcore-research/graphcore-research.github.io-internal). However the "public" repo which is the one that forms the main site is [`graphcore-research.github.io`](https://github.com/graphcore-research/graphcore-research.github.io).
+
+To "publish" the blog, one must merge a given branch into `main` on this internal repo, then push this main branch to the public repo (this is the only way the public repo should ever be modified, no direct commits).
 
 To deploy from the internal repo to the public one, set up:
 
@@ -52,6 +39,12 @@ git remote add public git@github-personal:graphcore-research/graphcore-research.
 ```
 
 then run `git push public main`.
+
+## Preview
+
+The "Running Locally" section above enables a local preview. One can also view a version of the _internal_ repo (as opposed to the public one) on the public internet (though we don't advertise this anywhere). This can be useful as a sanity check before pushing a change to the public site, as described above.
+
+The link to this preview can be found on the page https://github.com/graphcore-research/graphcore-research.github.io-internal/settings/pages. Note that in the "Build and deployment" section the branch used can be changed from main to the user's chosen branch, which can be useful for e.g. sharing a preview of a branch with others.
 
 ## License
 
