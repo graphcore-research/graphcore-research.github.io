@@ -173,7 +173,7 @@ input_kv = vision_out if cross_attn else input_kv
 q, k, v = (
     (z @ m.T).view(-1, nh, 128).transpose(-2, -3)
     for m, nh, z in (
-        (params.attn_q, 32, input_kv),
+        (params.attn_q, 32, input_q),
         (params.attn_k, 8, input_kv),
         (params.attn_v, 8, input_kv),
     )
