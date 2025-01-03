@@ -46,3 +46,7 @@ Similarly, when merging the monthly PR into main this template also contains a c
 ## Publishing
 
 Once the primary `pom-YYYY-MM` branch is ready and checklist completed, merge it into `main`. Then follow the instructions in the deployment section of `README.md` (see `## Deployment`) to make this public. Editors are advised to preview the internal version of the site as described in `README.md` (`## Preview`) before pushing to public main.
+
+## Posting on social media
+
+TODO
