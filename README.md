@@ -24,7 +24,7 @@ More fundamental info may instead be found in the
 ## Papers of the Month
 
 All guidance for _Papers of the Month_ authors can be found in the summary template at
-[for_authors/README.md](guides/paper_summary_template.md).
+[for_authors/README.md](paper_summary_template.md).
 
 ## Deploying
 
