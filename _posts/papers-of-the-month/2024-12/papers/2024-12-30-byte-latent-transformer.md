@@ -8,7 +8,7 @@ tags:
     - byte-level
 potm_year: 2024
 potm_month: 12
-paper_order: 1  # Editor will decide
+paper_order: 1
 image_dir: "/assets/images/posts/2024-12/potm/byte-latent-transformer/"
 review_author:
     name: "Luka Ribar"

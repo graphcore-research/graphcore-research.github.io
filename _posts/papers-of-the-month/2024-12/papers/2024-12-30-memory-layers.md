@@ -9,7 +9,7 @@ tags:
     - transformers
 potm_year: 2024
 potm_month: 12
-paper_order: 1  # Editor will decide
+paper_order: 2
 image_dir: "/assets/images/posts/2024-12/potm/memory-layers/"
 review_author:
     name: "Douglas Orr"
