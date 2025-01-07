@@ -21,7 +21,7 @@ hidden: true
 
 ### The key idea
 
-Language models get the [Joint Embedding Predictive Architecture (JEPA)](https://openreview.net/pdf?id=BZ5a1r-kVsf) treament (gets JEPA-dised?)! The authors develop a proof-of-concept model that tries to break a document into a set of concepts based on sentence structure. Using a predictive encoder-decoder model, they train the model to predict the embedding of the next concept in the sequence. They show promising signs of a model that can efficiently produce coherent summaries of long documents without the need for autoregressive token generation.
+Language models get the [Joint Embedding Predictive Architecture (JEPA)](https://openreview.net/pdf?id=BZ5a1r-kVsf) treatment (gets JEPA-dised?)! The authors develop a proof-of-concept model that tries to break a document into a set of concepts based on sentence structure. Using a predictive encoder-decoder model, they train the model to predict the embedding of the next concept in the sequence. They show promising signs of a model that can efficiently produce coherent summaries of long documents without the need for autoregressive token generation.
 
 <img src="{{ page.image_dir | append: 'FIG-LCM-Schema.png' | relative_url }}" alt="Schema representing the high level idea motivating large concept models. One use case is summarising long reasoning chains.">
 
@@ -33,17 +33,21 @@ The core intuition motivating the design of this model is that tokens are not th
 
 There is an inherent challenge in both defining a concept space and a generative process that maps concepts to tokens. The authors address each of these challenges in turn.
 
-Starting with the concept space, the authors use a sentence-level encoder-decoder transformer model trained as on a variety of tasks (machine translation, denoising, text-to-speech). They reason that concepts are better represented by phrases or sentences (10 - 20 tokens each), and that each of these tasks would be able to distill phrases into a common vector space that can represent concepts and be decoded back into semantically similar text.
+Starting with the concept space, the authors use a sentence-level encoder-decoder transformer model trained as on a variety of tasks (machine translation, denoising, text-to-speech). They reason that concepts are better represented by phrases or sentences (10 - 20 tokens each), and that each of these tasks would be able to distil phrases into a common vector space that can represent concepts and be decoded back into semantically similar text.
+
 <img src="{{ page.image_dir | append: 'FIG-SONAR.png' | relative_url }}" alt="The SONAR model used for embedding sentences of tokens to concepts.">
 
 For simplicity, we'll only provide a detailed outline of the concept predictor the authors use for large scale experiments as the authors played around with a number of different variants. They settled on a "Two-Tower" architecture comprised of a *contextualiser* and a *denoiser*. The *contextualiser* is a decoder-only transformer model that takes a sequence of concept vectors and encodes them into the last hidden state by a causal mask in self-attention layers. The output of the *contextualiser* is fed to the *denoiser* via a cross-attention in each transformer block, which is used to transform noise into a clean prediction of the next concept via diffusion.
+
 <img src="{{ page.image_dir | append: 'FIG-Two-Tower.png' | relative_url }}" alt="The two model architecture used to predict and generate concepts">
 
 ### Results
 
 The authors evaluate the model on summarisation tasks and compare with similarly sizes large language models with 7-8B parameters. Summarisation quality is a notoriously tricky capability to evaluate, so a mixture of n-gram based metrics and model-based metrics are used. In general the authors find that their large concept model performs similarly to large language models, although notably take a hit on fluency metrics (CoLA) for short-form summaries, and model-based source attribution metrics (SH-4). This is somewhat difficult to draw conclusions about since fluency is a core competency of large language models and model-based source attribution metrics are highly sensitive to data leakage. 
-<img src="{{ page.image_dir | append: 'TBL-Short.png' | relative_url }}" alt="Performance on summarisation of short form documents compared to large language models.">
-<img src="{{ page.image_dir | append: 'TBL-Long.png' | relative_url }}" alt="Performance on summarisation of long form documents compared to large language models.">
+
+<img class="constrained_img_large" src="{{ page.image_dir | append: 'TBL-Short.png' | relative_url }}" alt="Performance on summarisation of short form documents compared to large language models.">
+
+<img class="constrained_img_large" src="{{ page.image_dir | append: 'TBL-Long.png' | relative_url }}" alt="Performance on summarisation of long form documents compared to large language models.">
 
 The authors also demonstrate that they can exploit the multi-lingual encoder model to perform zero-shot summarisation in many more languages than Llama 3.1, trained on a much smaller set of languages, demonstrating useful generalisation properties.
 <img src="{{ page.image_dir | append: 'FIG-Multilingual.png' | relative_url }}" alt="Generalisation of summarisation performance of the model to many languages.">
