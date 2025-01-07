@@ -66,10 +66,10 @@ Its architecture is very similar to the local encoder with a combination of the 
 
 ### Results
 
-<img src="{{ page.image_dir | append: 'fig-bpb.png' | relative_url }}" alt="Bits-per-byte results.">
+<img src="{{ page.image_dir | append: 'fig-bpb.png' | relative_url }}" alt="Bits-per-byte at fixed inference budget.">
 <figcaption>Figure 5. Scaling results for a fixed inference budget.</figcaption>
 
-Figure 5 shows the scaling trends for a fixed *inference* budget — note that as patch sizes can be larger than the average token size, the BLT models can have more parameters than an equivalent standard transformer architecture (as the bulk of the parameters is in the latent transformer that is called per-patch). This also means that the number of parameters can be increased by increasing the average patch size while fixing the total FLOPs consumed. The scaling curves show that, while at the "Chinchilla compute-optimal" point (left vertical line) the standard Lllama architecture beats BLT, further training leads to a crossover point where BLT yields a lower loss.
+Figure 5 shows the scaling trends for a fixed *inference* budget — note that as patch sizes can be larger than the average token size, the BLT models can have more parameters than an equivalent standard transformer architecture (as the bulk of the parameters is in the latent transformer that is called per-patch). This also means that the number of parameters can be increased by increasing the average patch size while fixing the total FLOPs consumed. The scaling curves show that, while at the "Chinchilla compute-optimal" point (left vertical line) the standard Llama architecture beats BLT, further training leads to a crossover point where BLT yields a lower loss.
 
 <img src="{{ page.image_dir | append: 'fig-bpb-compute-optimal.png' | relative_url }}" alt="Bits-per-byte at compute-optimal ratio.">
 <figcaption>Figure 6. Scaling results at compute-optimal ratio.</figcaption>
