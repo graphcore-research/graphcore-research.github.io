@@ -10,7 +10,7 @@ tags:
     - diffusion  # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2024
 potm_month: 12
-paper_order: 1  # Editor will decide
+paper_order: 2  # Editor will decide
 image_dir: "/assets/images/posts/2024-12/potm/large-concept-models/"
 review_author:
     name: "Luke Prince"
