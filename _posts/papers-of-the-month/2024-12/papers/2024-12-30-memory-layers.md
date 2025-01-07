@@ -52,11 +52,11 @@ To test their architecture, the authors train autoregressive language models and
 
 Their headline result shows task performance improvement as the memory layer is scaled, allowing a 1.3B model with `Memory+` layers to approach the performance of a 7B model without memory layers (dashed line).
 
-<img class="constrained_img_large" src="{{ page.image_dir | append: 'figure-1.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'figure-1.png' | relative_url }}" alt="">
 
 Their largest model (8B) follows the Llama 3 architecture, and generally outperforms the dense baseline after 1T training tokens, although not consistently across all downstream tasks.
 
-<img class="constrained_img_large" src="{{ page.image_dir | append: 'table-2.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'table-2.png' | relative_url }}" alt="">
 
 ### Takeaways
 
