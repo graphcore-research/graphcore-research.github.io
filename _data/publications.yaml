@@ -167,6 +167,7 @@
     published: "ICML'23 Workshop on the Synergy of Scientific and Machine Learning Modeling"
 
 "Graphics":
+
   - title: "Towards Neural Path Tracing in SRAM"
     url: https://arxiv.org/abs/2305.20061
     date: 2023-05-31
@@ -182,6 +183,14 @@
     published: "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020"
 
 "Efficient ML":
+
+  - title: "Approximate Top-k for Increased Parallelism"
+    url: https://arxiv.org/abs/2412.04358
+    date: 2024-12-14
+    authors: "Oscar Key, Luka Ribar, Alberto Cattaneo, Luke Hudlass-Galley, Douglas Orr"
+    abstract: "The nearest neighbour search problem underlies many important machine learning applications, including efficient long-context generation, retrieval-augmented generation, and knowledge graph completion. However, computing top-k exactly suffers from limited parallelism, making it inefficient for highly parallel machine learning accelerators. By relaxing the requirement that the top-k is exact, bucketed algorithms can dramatically increase parallelism by independently computing many smaller top-k operations. We explore the design choices for this class of algorithms using both theoretical analysis and empirical evaluation on downstream tasks. Our motivating examples are sparsity algorithms for language models, which often use top-k to select the most important parameters or activations. We also release a fast bucketed top-k implementation for PyTorch."
+    published: "NeurIPS'24 Workshop on Adaptive Foundation Models"
+
   - title: "Tuple Packing: Efficient Batching of Small Graphs in Graph Neural Networks"
     url: https://arxiv.org/abs/2209.06354
     date: 2022-09-14
