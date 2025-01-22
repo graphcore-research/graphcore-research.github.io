@@ -166,6 +166,14 @@
     abstract: "Density Functional Theory (DFT) accurately predicts the properties of molecules given their atom types and positions, and often serves as ground truth for molecular property prediction tasks. Neural Networks (NN) are popular tools for such tasks and are trained on DFT datasets, with the aim to approximate DFT at a fraction of the computational cost. Research in other areas of machine learning has shown that generalisation performance of NNs tends to improve with increased dataset size, however, the computational cost of DFT limits the size of DFT datasets. We present PySCFIPU, a DFT library that allows us to iterate on both dataset generation and NN training. We create QM10X, a dataset with 10^8 conformers, in 13 hours, on which we subsequently train SchNet in 12 hours. We show that the predictions of SchNet improve solely by increasing training data without incorporating further inductive biases."
     published: "ICML'23 Workshop on the Synergy of Scientific and Machine Learning Modeling"
 
+
+  - title: "Reducing Down(stream)time: Pretraining Molecular GNNs using Heterogeneous AI Accelerators"
+    url: https://arxiv.org/abs/2211.04598
+    date: 2022-11-08
+    authors: "Jenna A. Bilbrey, Kristina M. Herman, Henry Sprueill, Soritis S. Xantheas, Payel Das, Manuel Lopez Roldan, Mike Kraus, Hatem Helal, Sutanay Choudhury"
+    abstract: "The demonstrated success of transfer learning has popularized approaches that involve pretraining models from massive data sources and subsequent finetuning towards a specific task. While such approaches have become the norm in fields such as natural language processing, implementation and evaluation of transfer learning approaches for chemistry are in the early stages. In this work, we demonstrate finetuning for downstream tasks on a graph neural network (GNN) trained over a molecular database containing 2.7 million water clusters. The use of Graphcore IPUs as an AI accelerator for training molecular GNNs reduces training time from a reported 2.7 days on 0.5M clusters to 1.2 hours on 2.7M clusters. Finetuning the pretrained model for downstream tasks of molecular dynamics and transfer to a different potential energy surface took only 8.3 hours and 28 minutes, respectively, on a single GPU."
+    published: "NeurIPS'22 Workshop on Machine Learning and the Physical Sciences"
+
 "Graphics":
 
   - title: "Towards Neural Path Tracing in SRAM"
