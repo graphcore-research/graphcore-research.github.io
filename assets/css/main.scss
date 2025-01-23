@@ -190,8 +190,15 @@ figcaption {
     font-style: italic;
 }
 
+.paper-sep-year {
+    color: #888;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    margin: 0em 0em 0.5em 0em;
+}
+
 .paper-entry-link {
-    margin: 0em 0em 0.8em 0;
+    margin: 0em 0em 0.8em 0em;
     padding: 0.75em;
     text-decoration: none;
     color: inherit;
@@ -218,7 +225,7 @@ figcaption {
 }
 
 .paper-entry h3 {
-    margin: 0em 0em 1em 0;
+    margin: 0em 0em 1em 0em;
     font-size: 1.1em;
 }
 
@@ -231,7 +238,7 @@ figcaption {
 }
 
 .paper-entry .abstract {
-    margin: 0em 0em 0.5em 0;
+    margin: 0em 0em 0.5em 0em;
     font-size: normal;
     -webkit-line-clamp: 3;
     line-clamp: 3;

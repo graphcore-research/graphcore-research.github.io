@@ -14,14 +14,24 @@ h1 {
 function filterPapersByArea(area) {
     let showing = 0;
     let total = 0;
+    let showingYears = new Set();
     document.querySelectorAll(".paper-entry-link").forEach((e) => {
         if (area === null || e.dataset.paperAreas.split(",").includes(area)) {
             e.style.display = "block";
             showing++;
+            showingYears.add(e.dataset.paperYear);
         } else {
             e.style.display = "none";
         }
         total++;
+    });
+    console.log(showingYears);
+    document.querySelectorAll(".paper-sep-year").forEach((e) => {
+        if (showingYears.has(e.innerText)) {
+            e.style.display = "block";
+        } else {
+            e.style.display = "none";
+        }
     });
     document.querySelector(".paper-area-showing").innerText = `Showing ${showing}/${total}`;
 }
@@ -61,14 +71,22 @@ window.addEventListener("load", () => {
 </aside>
 
 <div>
-    {% for paper in site.data.publications.papers %}
-    <a href="{{ paper.url }}" target="_blank" class="paper-entry-link" data-paper-areas="{{ paper.area | join: "," }}">
-        <div class="paper-entry">
-            <h3>{{ paper.title }}</h3>
-            <div class="abstract">{{ paper.abstract }}</div>
-            <div class="authors">{{ paper.authors }}</div>
-            <div class="published">{{ paper.date | date: "%B %Y" }}; {{ paper.published }}</div>
-        </div>
-    </a>
+    {% for year in site.data.publications.papers %}
+        <div class="paper-sep-year">{{ year[0]  }}</div>
+        <!-- A mess - to handle empty `conference:` or `workshop:` blocks -->
+        {% assign empty_array = "" | split: "," %}
+        {% assign year_conference = year[1].conference | default: empty_array %}
+        {% assign year_workshop = year[1].workshop | default: empty_array %}
+        {% assign year_papers = year_conference | concat: year_workshop %}
+        {% for paper in year_papers %}
+        <a href="{{ paper.url }}" target="_blank" class="paper-entry-link" data-paper-areas="{{ paper.area | join: "," }}" data-paper-year="{{ year[0] }}">
+            <div class="paper-entry">
+                <h3>{% if paper.icon %}<i class="fas {{ paper.icon }}"></i>{% endif %} {{ paper.title }}</h3>
+                <div class="abstract">{{ paper.abstract }}</div>
+                <div class="authors">{{ paper.authors }}</div>
+                <div class="published">{{ paper.date | date: "%B %Y" }}; {{ paper.published }}</div>
+            </div>
+        </a>
+        {% endfor %}
     {% endfor %}
 </div>
