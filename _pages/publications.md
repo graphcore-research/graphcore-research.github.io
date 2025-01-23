@@ -84,7 +84,7 @@ window.addEventListener("load", () => {
                 <h3>{% if paper.icon %}<i class="fas {{ paper.icon }}"></i>{% endif %} {{ paper.title }}</h3>
                 <div class="abstract">{{ paper.abstract }}</div>
                 <div class="authors">{{ paper.authors }}</div>
-                <div class="published">{{ paper.date | date: "%B %Y" }}; {{ paper.published }}</div>
+                <div class="published">{{ paper.published }}</div>
             </div>
         </a>
         {% endfor %}
