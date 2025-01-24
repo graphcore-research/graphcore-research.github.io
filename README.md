@@ -11,6 +11,14 @@ This will allow you to view a local version of the site as you edit.
  - Run `bundle install`
  - Run `bundle exec jekyll serve`
 
+## Papers of the Month
+
+All guidance for _Papers of the Month_ authors can be found in the summary template at [paper_summary_template.md](paper_summary_template.md).
+
+## Our Papers
+
+To update the "our papers" list, see [_data/publications.yaml](_data/publications.yaml). To update the layout, see [_pages/publications.md](_pages/publications.md) and [assets/css/main.scss](assets/css/main.scss).
+
 ## Editing
 
 This blog is hosted on Github pages. See `settings > pages` for details.
@@ -20,11 +28,6 @@ For guidance on how to edit things on the site, your best bet is the
 [Minimal Mistakes Guide](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/).
 More fundamental info may instead be found in the
 [Jekyll Docs](https://jekyllrb.com/docs/).
-
-## Papers of the Month
-
-All guidance for _Papers of the Month_ authors can be found in the summary template at
-[for_authors/README.md](paper_summary_template.md).
 
 ## Deploying
 

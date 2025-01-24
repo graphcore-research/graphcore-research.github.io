@@ -73,6 +73,7 @@ figcaption {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 1000;
 }
 
 #analytics-cookie .btn {
@@ -176,31 +177,37 @@ figcaption {
     }
 }
 
-.publications-wrapper h2 {
-    margin-top: 0em;
-    margin-bottom: 0.4em;
-    padding-bottom: 0.2em;
-    font-size: 1.6em;
+// Papers
+
+.paper-area-filter {
+    cursor: pointer;
+}
+.paper-area-filter.active {
+    background-color: #e2e4e5;
+}
+.paper-area-showing {
+    padding: 0.25rem 0.75rem;
+    font-style: italic;
 }
 
-.publications-wrapper h3 {
-    font-size: 1.25em;
-    margin: 0.5em 0em 0.5em 0;
+.paper-sep-year {
+    color: #888;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    margin: 0em 0em 0.5em 0em;
 }
 
 .paper-entry-link {
+    margin: 0em 0em 0.8em 0em;
+    padding: 0.75em;
     text-decoration: none;
     color: inherit;
-    padding: 1em;
     display: block;
     background-color: #FAF8F9;
-    margin: 0em 0em 0.8em 0;
 }
-
 .paper-entry-link:visited {
     color: inherit;
 }
-
 .paper-entry-link:hover {
     background-color: #fff0f4;
     text-decoration: none;
@@ -210,52 +217,50 @@ figcaption {
 .paper-entry a {
     text-decoration: underline;
 }
-
 .paper-entry a:hover {
     color: inherit;
 }
-
-.paper-entry .abstract {
-    margin: 2em 0em 2em 0;
-}
-
 .paper-entry a:hover, .paper-entry-link:hover {
-  text-decoration: none !important;
+    text-decoration: none !important;
+}
+
+.paper-entry h3 {
+    margin: 0em 0em 1em 0em;
+    font-size: 1.1em;
+}
+
+.paper-entry > .abstract, .authors, .published {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    max-height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .paper-entry .abstract {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  max-height: 4.5em;
+    margin: 0em 0em 0.5em 0em;
+    font-size: normal;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
 }
 
 .paper-entry .authors {
-    opacity: 60%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
+    margin: 0em 0em 0.5em 0.75em;
+    font-size: small;
+    opacity: 75%;
     -webkit-line-clamp: 2;
     line-clamp: 2;
-    -webkit-box-orient: vertical;
-    max-height: 4.5em;
 }
 
 .paper-entry .published {
-    opacity: 60%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
+    font-size: small;
+    font-style: italic;
+    opacity: 75%;
     -webkit-line-clamp: 2;
     line-clamp: 2;
-    -webkit-box-orient: vertical;
-    max-height: 4.5em;
-    margin-top: 1em;
-    font-size: small;
 }
+
+// </Papers>
 
 .toggle-link a i {
   margin-left: 5px;
