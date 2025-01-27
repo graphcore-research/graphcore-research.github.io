@@ -147,7 +147,6 @@ papers:
         authors: "Dominic Masters, Josef Dean, Kerstin Klaser, Zhiyi Li, Sam Maddrell-Mander, Adam Sanders, Hatem Helal, Deniz Beker, Andrew Fitzgibbon, Shenyang Huang, Ladislav Rampášek, Dominique Beaini"
         abstract: "We present GPS++, a hybrid Message Passing Neural Network / Graph Transformer model for molecular property prediction. Our model integrates a well-tuned local message passing component and biased global attention with other key ideas from prior literature to achieve state-of-the-art results on large-scale molecular dataset PCQM4Mv2. Through a thorough ablation study we highlight the impact of individual components and find that nearly all of the model's performance can be maintained without any use of global self-attention, showing that message passing is still a competitive approach for 3D molecular property prediction despite the recent dominance of graph transformers. We also find that our approach is significantly more accurate than prior art when 3D positional information is not available."
         published: "Transactions on Machine Learning Research"
-        icon: fa-medal
 
     workshop:
 
@@ -196,13 +195,22 @@ papers:
 
     workshop:
 
+      - title: "GPS++: An Optimised Hybrid MPNN/Transformer for Molecular Property Prediction"
+        url: https://arxiv.org/abs/2212.02229
+        date: 2022-11-18
+        area: [gnns]
+        authors: "Dominic Masters, Josef Dean, Kerstin Klaser, Zhiyi Li, Sam Maddrell-Mander, Adam Sanders, Hatem Helal, Deniz Beker, Ladislav Rampášek, Dominique Beaini"
+        abstract: "This technical report presents GPS++, the first-place solution to the Open Graph Benchmark Large-Scale Challenge (OGB-LSC 2022) for the PCQM4Mv2 molecular property prediction task. Our approach implements several key principles from the prior literature. At its core our GPS++ method is a hybrid MPNN/Transformer model that incorporates 3D atom positions and an auxiliary denoising task. The effectiveness of GPS++ is demonstrated by achieving 0.0719 mean absolute error on the independent test-challenge PCQM4Mv2 split. Thanks to Graphcore IPU acceleration, GPS++ scales to deep architectures (16 layers), training at 3 minutes per epoch, and large ensemble (112 models), completing the final predictions in 1 hour 32 minutes, well under the 4 hour inference budget allocated. Our implementation is publicly available at: this https URL."
+        published: "NeurIPS'22 Competition on Open Graph Benchmark - Large Scale Challenge"
+        icon: fa-medal
+
       - title: "BESS: Balanced Entity Sampling and Sharing for Large-Scale Knowledge Graph Completion"
         url: https://arxiv.org/abs/2211.12281
         date: 2022-11-22
         area: [gnns]
         authors: "Alberto Cattaneo, Daniel Justus, Harry Mellor, Douglas Orr, Jerome Maloberti, Zhenying Liu, Thorin Farnsworth, Andrew Fitzgibbon, Blazej Banaszewski, Carlo Luschi"
         abstract: "We present the award-winning submission to the WikiKG90Mv2 track of OGB-LSC@NeurIPS 2022. The task is link-prediction on the large-scale knowledge graph WikiKG90Mv2, consisting of 90M+ nodes and 600M+ edges. Our solution uses a diverse ensemble of 85 Knowledge Graph Embedding models combining five different scoring functions (TransE, TransH, RotatE, DistMult, ComplEx) and two different loss functions (log-sigmoid, sampled softmax cross-entropy). Each individual model is trained in parallel on a Graphcore Bow Pod16 using BESS (Balanced Entity Sampling and Sharing), a new distribution framework for KGE training and inference based on balanced collective communications between workers. Our final model achieves a validation MRR of 0.2922 and a test-challenge MRR of 0.2562, winning the first place in the competition. The code is publicly available at: https://github.com/graphcore/distributed-kge-poplar/tree/2022-ogb-submission."
-        published: "arXiv Preprint"
+        published: "NeurIPS'22 Competition on Open Graph Benchmark - Large Scale Challenge"
         icon: fa-medal
 
       - title: "Reducing Down(stream)time: Pretraining Molecular GNNs using Heterogeneous AI Accelerators"
