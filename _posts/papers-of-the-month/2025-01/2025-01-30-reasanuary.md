@@ -1,5 +1,5 @@
 ---
-title: "January Papers: More Like "Reasanuary" Papers"
+title: "January Papers: More Like 'Reasanuary' Papers"
 header:
     teaser: /assets/images/posts/2025-01/potm/twitter_card.png
     image: /assets/images/posts/2025-01/potm/twitter_card.png
@@ -21,7 +21,7 @@ author.twitter: "GCResearchTeam"
 Welcome to Papers of the Month — Graphcore Research's effort to bring you our pick of the most interesting ML papers.
 In December we noted a collection of papers which took innovative approaches to allocating compute (FLOPs) to input data.
 
-We start with the Byte Latent Transformer. This modifies the standard transformer to operate on _patches_, which comprise a variable number of input bytes, as determined by an entropy metric. The consequence of this is that compute is dynamically allocated towards "harder input data". This has some similarities with the Concept Model architecture, which also uses a flexible intermediate representation. The model performs autoregressive sentence generation in this modality-agnostic space, rather than token space. 
+We start with the Byte Latent Transformer. This modifies the standard transformer to operate on _patches_, which comprise a variable number of input bytes, as determined by an entropy metric. The consequence of this is that compute is dynamically allocated towards "harder input data". This has some similarities with the Concept Model architecture, which also uses a flexible intermediate representation. The model performs autoregressive sentence generation in this modality-agnostic space, rather than token space.
 
 The Memory Layers architecture allows extra parameters to be added to a model without increasing FLOPs. Decoupling these resources gives model designers more control (e.g. for co-design, to fit their hardware resources) and potentially facilitates more effective models in general.
 
