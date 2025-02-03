@@ -66,4 +66,4 @@ Overall, their approach outperforms the baselines, showing particular effectiven
 
 ### Takeaways
 
-As more efforts are being put into scaling inference-time compute in order to improve the reasoning capabilities of LLMs, this paper shows that applying evolutionary search principles to optimize the model response can lead to significant performance boosts. The current approach is however limited to tasks where solutions can be programmatically evaluated and scored, and further results on a more variety tasks (such as mathematical reasoning) could give more insight into the capabilities of the approach.
+As more efforts are being put into scaling inference-time compute in order to improve the reasoning capabilities of LLMs, this paper shows that applying evolutionary search principles to optimize the model response can lead to significant performance boosts. The current approach is however limited to tasks where solutions can be programmatically evaluated and scored, and further results on a wider variety tasks (such as mathematical reasoning) could provide more insight into the capabilities of the approach.
