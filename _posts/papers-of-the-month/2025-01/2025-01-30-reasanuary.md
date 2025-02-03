@@ -1,5 +1,5 @@
 ---
-title: "January Papers: More Like "Reasanuary" Papers"
+title: "January Papers: More Like Reasanuary Papers"
 header:
     teaser: /assets/images/posts/2025-01/potm/twitter_card.png
     image: /assets/images/posts/2025-01/potm/twitter_card.png
