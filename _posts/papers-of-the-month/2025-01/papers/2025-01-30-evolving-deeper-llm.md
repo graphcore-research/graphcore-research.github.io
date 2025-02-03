@@ -7,8 +7,8 @@ tags:
     - LLMs
     - reasoning
 potm_year: 2025
-potm_month: 1
-paper_order: 1
+potm_month: 01
+paper_order: 2
 image_dir: "/assets/images/posts/2025-01/potm/evolving-deeper-llm/"
 review_author:
     name: "Luka Ribar"
