@@ -1,14 +1,17 @@
 ---
-title: "DeepSeek-V3 & DeepSeek-R1 Technical Reports"
+title: "Transformer-Squared: Self-Adaptive LLMs"
 paper_authors: "Qi Sun, Edoardo Cetin, Yujin Tang"
 orgs: "Sakana AI"
 paper_link: "https://arxiv.org/abs/2501.06252"
 tags:
     - fine-tuning
+    - LLMs
+    - efficient-training
+    - inference
 potm_year: 2025
 potm_month: 01
-paper_order: 1  # Editor will decide
-image_dir: "/assets/images/posts2025-01/potm/transformer2/"
+paper_order: 3  # Editor will decide
+image_dir: "/assets/images/posts/2025-01/potm/transformer2/"
 review_author:
     name: "Paul Balanca"
     link: "https://github.com/balancap"
