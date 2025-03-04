@@ -18,7 +18,7 @@ toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
 
-Welcome to Papers of the Month! This time around, our monthly selection of ML papers revolves around the central theme of *scale* – and learning how to scale efficiently. Scaling-laws for LLMs, multi-scale quantisation training and scaling test-time compute: it's a rich menu!
+Welcome to Papers of the Month! This time around, our monthly selection of ML papers revolves around the central theme of *scale* – and learning how to scale efficiently. Scaling-laws for LLMs, multi-scale quantisation training and scaling test-time compute: it's a rich buffet!
 
 The first paper, **Distillation Scaling Laws**, presents a thorough study of distillation for Language Models, with the aim of estimating how student performance scales as a function of model size and amount of distillation data used -- offering very useful insights, in an era where distillation pre-training of LLMs is becoming more and more widespread to improve "capability per watt".
 
