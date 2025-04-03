@@ -6,7 +6,6 @@ paper_link: "https://arxiv.org/abs/2503.19206"
 tags:
     - LLMs
     - fine-tuning
-    - training-dynamics
 potm_year: 2025
 potm_month: 3
 paper_order: 1  # Editor will decide
