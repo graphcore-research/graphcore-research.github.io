@@ -34,8 +34,8 @@ Traditional computational drug design methods focus on improving specific metric
 
 ![Workflow](images/drugflow-figure.png)
 
-<img src="{{ page.image_dir | append: 'drugflow-pipeline.png' | relative_url }}" alt="DRUGFLOW workflow">
-<figcaption>Figure 1. DRUGFLOW workflow. </figcaption>
+<img src="{{ page.image_dir | append: drugflow-figure.png | relative_url }}" alt="DRUGFLOW Workflow">
+<figcaption></figcaption>
 
 
 DRUGFLOW is a conditional probabilistic model that learns ligand atom coordinates ($x_{t}$), atom types ($h_{t}$), bond types ($e_{t}$), and uncertainty estimates at the atom level ($\hat{\sigma}_{\text{tot}}$), as shown in Figure 1. The generative process is conditioned on a fixed protein backbone. The model operates on continuous features (atom coordinates) and discrete features (atom types and bond types). The continuous features are learned using flow matching and sampled from a Gaussian prior distribution, as shown on the left-hand side of Figure 1. The discrete features are learned using a Markov bridge model and sampled from a categorical prior distribution. The authors also developed FLEXFLOW, an extension of DRUGFLOW, which also learns continuous side-chain angles of the protein backbone, but we will not discuss it here.
@@ -60,16 +60,22 @@ $$\dot{x}_t = \frac{x_1 - x_t}{1 - t} = x_1 - x_0$$
 
 Here, the goal of flow matching is to regress from the prior distribution (Gaussian noise) to a desired distribution (the training data distribution). Assuming that the flow matching regression error is normally distributed with standard deviation $\sigma_\theta$, the loss function that maximizes the likelihood of the true vector field under this uncertainty assumption can be written as:
 
-<div>
-$$L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right]$$
-</div>
+Test
+$$
+\mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)}\right]
+$$
 
+$$ L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right] $$
 
 where $v_\theta(x_t, t) \in \mathbb{R}^d$ and $\sigma_\theta(x_t, t) \in \mathbb{R}$ are two output heads of the neural network, and $\dot{x}_t$ is the ground-truth conditional vector field.
 
 The vector field (${v_\theta(x_t, t)}$) learned using graph neural network  operates on ligand and protein representation. The graph neural network uses Geometric Vector Perceptrons (GVP) to ensure equivariance to global rotation and translation. As shown in Figure 1, the model generates a per-atom uncertainty score in addition to the vector field for flow matching at every sampling step. The total per-atom uncertainty estimate is calculated as sum of the uncertainties of the particular atom along the flow matching path as defined below:
 
-$$\hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt$$
+$$ \hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt $$
+
+test
+$$ \int_0^1 \sigma_\theta^2(x_t, t) \, dt $$
+
 
 Atom types and bonds are learned using Markov bridge models, but we will not discuss it here as it will make the blog long.
 
@@ -104,10 +110,14 @@ The authors evaluated the performance of the model in terms of learning the trai
 As shown in Table 1 of the paper, DRUGFLOW outperformed other models in approximating the training data distribution based on metrics measuring the chemical and structural properties of 3D molecules. However, in terms of absolute metric values, the baseline models outperformed DRUGFLOW.
 
 ![Distance metrics](images/metric_distance.png)
+<img src="{{ page.image_dir | append: metric_distance.png | relative_url }}" alt="Metrics evaluation">
+<figcaption></figcaption>
 
 During sampling, the model generates the molecular structure along with an uncertainty estimate. The uncertainty estimate detects out-of-distribution samples. As shown in Figure 2B, samples near the tail of the distribution had higher uncertainty compared to those around the mode. Uncertainty estimation also showed a negative correlation with binding affinity and a positive correlation with both the size of the generated molecules and structural clashes, as shown in Figures 2C,D below.
 
 ![Distance metrics](images/uncertainty.png)
+<img src="{{ page.image_dir | append: uncertainty.png | relative_url }}" alt="Uncertainty estimate">
+<figcaption></figcaption>
 
 The authors conducted preference alignment for drug-likeness (QED), synthetic accessibility (SA), vina efficiency score, and rapid elimination of swill (REOS) filters. To train the preference aligned model:
 
@@ -119,6 +129,8 @@ The authors conducted preference alignment for drug-likeness (QED), synthetic ac
 In addition to preference-aligned models, the authors fine-tuned the pre-trained DRUGFLOW model using only the winning samples and compared their performance. As shown in Figure 3, the 3D molecules generated by the preference-aligned model exhibited superior chemical properties and binding affinity to the target protein compared to the training set, as well as molecules generated by the reference and fine-tuned models.
 
 ![Distance metrics](images/alignment.png)
+<img src="{{ page.image_dir | append: alignment.png | relative_url }}" alt="Model alignment">
+<figcaption></figcaption>
 
 ### Takeaways
 Generative models are trained to learn the distribution of training data, and during sampling or inference, the generated samples reflect this distribution. To use these models for practical applications where we are interested in molecules with specific chemical and physical properties, it is important to consider the representation of molecules with similar features in the training set. What we are interested in may lie in the tails of the learned distribution, making them less likely to be sampled. In such cases, as the authors have shown in this paper, aligning the model using a relatively small preference dataset can improve the quality of the generated molecules.
