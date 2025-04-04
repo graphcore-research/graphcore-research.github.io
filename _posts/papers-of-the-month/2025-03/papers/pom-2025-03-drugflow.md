@@ -65,7 +65,7 @@ Here, the goal of flow matching is to regress from the prior distribution (Gauss
 Test 
 
 $$
-L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right]
+L_{FM-OOD} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right]
 $$
 
 
@@ -83,6 +83,10 @@ $$ -->
 
 $$
 \sigma = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
+$$
+
+$$
+\hat{\sigma{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
 $$
 
 
