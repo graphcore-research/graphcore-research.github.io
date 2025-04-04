@@ -78,7 +78,7 @@ The vector field (${v_\theta(x_t, t)}$) learned using graph neural network  oper
 
 
 $$
-\hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
+\sigma^{'}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
 $$
 
 
