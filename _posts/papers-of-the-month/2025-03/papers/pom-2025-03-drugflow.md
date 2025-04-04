@@ -34,7 +34,7 @@ Traditional computational drug design methods focus on improving specific metric
 
 ![Workflow](images/drugflow-figure.png)
 
-<img src="{{ page.image_dir | append: drugflow-figure.png | relative_url }}" alt="DRUGFLOW Workflow">
+<img src="{{ page.image_dir | append: 'drugflow-figure.png' | relative_url }}" alt="DRUGFLOW Workflow">
 <figcaption></figcaption>
 
 
@@ -86,7 +86,7 @@ $$
 $$
 
 $$
-\hat{\sigma{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
+\hat{\sigma_{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
 $$
 
 
