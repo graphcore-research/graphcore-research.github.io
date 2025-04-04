@@ -47,31 +47,26 @@ The model operates on a molecular graph represented as $\mathcal{G} = (\mathcal{
 
 - **Ligand representation:** Ligands are represented by atoms as nodes, bonds as edges, and atom types as node features (one-hot encoded).
 
-- **Protein representation:** Amino acids in the protein backbone are represented by the central carbon atom ($C_{\alpha}$) of the backbone of the amino acid. The protein is represented as nodes of ($C_{\alpha}$) and edges between ($C_{\alpha}$) atoms. Edges between amino acids ($C_{\alpha}$) are constructed using a predefined cutoff distance ($10~\AA$). Here, node features include one-hot encoded amino acid types and a vector representation of its atoms.
+- **Protein representation:** Amino acids in the protein backbone are represented by the central carbon atom ($C_{\alpha}$) of the backbone of the amino acid. The protein is represented as nodes of ($C_{\alpha}$) and edges between ($C_{\alpha}$) atoms. Edges between amino acids ($C_{\alpha}$) are constructed using a predefined cutoff distance 10 angstroms. Here, node features include one-hot encoded amino acid types and a vector representation of its atoms.
 
-- Edges are also created between ligand atoms and protein ($C_{\alpha}$) atoms using a predefined cutoff distance ($10~\AA$).
+- Edges are also created between ligand atoms and protein ($C_{\alpha}$) atoms using a predefined cutoff distance 10 angstroms.
 
 
 #### Continuous flow matching and uncertainty estimation
 
 The continous atom coordinates were learnt using Independent-coupling Conditional Flow Matching (ICFM) and consider a Gaussian conditional probability path defined by $p_t(x|x_1) = \mathcal{N}(x|\mu_t(x_1), \sigma_t(x_1)^2 I)$ with flow path $\mu_t(x_1) = t x_1 + (1 - t) x_0, \quad \sigma_t(x_1) = \sigma$ to model the flow for ligand coordinates. This results in a constant velocity vector field
 
-$$   \dot{x}_t = \frac{x_1 - x_t}{1 - t} = x_1 - x_0
-$$
+$$\dot{x}_t = \frac{x_1 - x_t}{1 - t} = x_1 - x_0$$
 
 Here, the goal of flow matching is to regress from the prior distribution (Gaussian noise) to a desired distribution (the training data distribution). Assuming that the flow matching regression error is normally distributed with standard deviation $\sigma_\theta$, the loss function that maximizes the likelihood of the true vector field under this uncertainty assumption can be written as:
 
-$$
-    L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right]
-$$
+$$L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right]$$
 
 where $v_\theta(x_t, t) \in \mathbb{R}^d$ and $\sigma_\theta(x_t, t) \in \mathbb{R}$ are two output heads of the neural network, and $\dot{x}_t$ is the ground-truth conditional vector field.
 
 The vector field (${v_\theta(x_t, t)}$) learned using graph neural network  operates on ligand and protein representation. The graph neural network uses Geometric Vector Perceptrons (GVP) to ensure equivariance to global rotation and translation. As shown in Figure 1, the model generates a per-atom uncertainty score in addition to the vector field for flow matching at every sampling step. The total per-atom uncertainty estimate is calculated as sum of the uncertainties of the particular atom along the flow matching path as defined below:
 
-$$
-    \hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
-$$
+$$\hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt$$
 
 Atom types and bonds are learned using Markov bridge models, but we will not discuss it here as it will make the blog long.
 
@@ -82,9 +77,7 @@ In real-world applications, for example, when developing a drug to treat a given
 To perform preference alignment, the authors trained a new model $\phi$ and used a fixed reference (pre-trained DRUGFLOW) model $\theta$ for comparison. Only $\phi$ is optimized during training. For each data point $\mathcal{c}$, losses were computed for winning and losing samples: $L_c^w(\phi)$ and $L_c^l(\phi)$, where $L_c^w(\phi) := L_c(x^w, \phi)$ and $L_c^l(\phi) := L_c(x^l, \phi)$. These include the flow matching loss for coordinates and Markov bridge losses for atom and bond types. The same losses are also computed for the reference model $\theta$ for comparison.
 
 The multi-domain preference alignment (MDPA) loss is defined as:
-$$
-L_{\text{MDPA}}(\phi) = - \log \sigma \left( - \beta_t \sum_c \lambda_c (\Delta_w^c - \Delta_l^c) \right) + \lambda_w L^w(\phi) + \lambda_l L^l(\phi)
-$$
+$$ L_{\text{MDPA}}(\phi) = - \log \sigma \left( - \beta_t \sum_c \lambda_c (\Delta_w^c - \Delta_l^c) \right) + \lambda_w L^w(\phi) + \lambda_l L^l(\phi)$$
 
 where:
 
