@@ -70,15 +70,19 @@ $$
 
 
 
-<!-- $$ L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right] $$ -->
+$$ L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right] $$
 
 where $v_\theta(x_t, t) \in \mathbb{R}^d$ and $\sigma_\theta(x_t, t) \in \mathbb{R}$ are two output heads of the neural network, and $\dot{x}_t$ is the ground-truth conditional vector field.
 
 The vector field (${v_\theta(x_t, t)}$) learned using graph neural network  operates on ligand and protein representation. The graph neural network uses Geometric Vector Perceptrons (GVP) to ensure equivariance to global rotation and translation. As shown in Figure 1, the model generates a per-atom uncertainty score in addition to the vector field for flow matching at every sampling step. The total per-atom uncertainty estimate is calculated as sum of the uncertainties of the particular atom along the flow matching path as defined below:
 
 
+<!-- $$
+\hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
+$$ -->
+
 $$
-\sigma^{'}_{tot} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
+\sigma = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
 $$
 
 
