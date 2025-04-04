@@ -71,10 +71,18 @@ where $v_\theta(x_t, t) \in \mathbb{R}^d$ and $\sigma_\theta(x_t, t) \in \mathbb
 
 The vector field (${v_\theta(x_t, t)}$) learned using graph neural network  operates on ligand and protein representation. The graph neural network uses Geometric Vector Perceptrons (GVP) to ensure equivariance to global rotation and translation. As shown in Figure 1, the model generates a per-atom uncertainty score in addition to the vector field for flow matching at every sampling step. The total per-atom uncertainty estimate is calculated as sum of the uncertainties of the particular atom along the flow matching path as defined below:
 
-$$ \hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt $$
+$$ 
+\hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt 
+$$
+
+
 
 test
-$$ \int_0^1 \sigma_\theta^2(x_t, t) \, dt $$
+
+$$
+\int_0^1 \sigma_\theta^2(x_t, t) \, dt
+$$
+
 
 
 Atom types and bonds are learned using Markov bridge models, but we will not discuss it here as it will make the blog long.
