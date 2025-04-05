@@ -67,6 +67,4 @@ Large language model training with `DynamicTanh` requires heavier tuning. Succes
 
 The use of $\tanh$ in place of layer-norm is appealing given it throws away the need for expensive reductions required for computing activation statistics. As we move matrix multiplications down to lower and lower bit-widths, these reductions become comparably more expensive as part of training.
 
-This approach doesn't come without caveats. The main one I can see is that the lower cost of training large language models with `DynamicTanh` is lost when required to sweep two extra hyperparameters. A $\mu$P-like hyperparameter transfer rule would be extremely helpful to mitigate this.
-
-The smaller caveat is that even more extreme activation values would lead to even flatter norm slopes, suggesting the shape of the learned function should end up more like [$x \exp({-x^2/2})$](https://www.wolframalpha.com/input?i2d=true&i=plot+x+*+Power%5Be%2C-Divide%5BPower%5Bx%2C2%5D%2C2%5D%5D+from+-5+to+5). You can see this kind of non-monotonicity showing in the upper right parts of Figure 4 panels. 
+The key caveat is that the lower cost of training large language models with `DynamicTanh` is lost when required to sweep two extra hyperparameters. A $\mu$P-like hyperparameter transfer rule would be extremely helpful to mitigate this.
