@@ -25,11 +25,13 @@ In short, the authors looked at the functions learned by layer-norms in a variet
 
 ### Their method
 
-The authors push data through pretrained vision and speech transformers and show that input/output mappings (pre-affine transform) in later layers are non-linear, and have a distinct S-shape reminiscent of $\tanh$. 
+The authors push data through pretrained vision and speech transformers and show that input/output mappings (pre-affine transform) in later layers are non-linear, and have a distinct S-shape reminiscent of $\tanh$.
 
 This non-linearity arises because layer-norm computes means and standard deviations on a per-token basis. As such the token-wise mapping through normalisation is linear. However, activation values along particular channels that are consistently large in absolute value increase the variance sufficiently such that affected tokens will have weaker slopes in their individual normalisations. Unaffected tokens have lower variance, and hence stronger slopes in their normalisation. The net effect is such that the extreme values produced across these channels are effectively soft-capped.
 
 <img src="{{ page.image_dir | append: 'FIG-Explain.png' | relative_url }}" alt="Explanation of how tokenwise linear layernorm funcions produce global tanh-like nonlinearity">
+
+I found this result sufficiently unintuitive that I needed to write [a small example]([IPython notebook](https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2025-03-DynamicTanh.ipynb)) on synthetic data to grok this properly.
 
 This observation begs the question of whether inserting the tanh function in place of layer-norm can produce equally capable transformers models. As such the authors propose `DynamicTanh`: $\textrm{DynT}(x; \alpha, \gamma, \beta) = \gamma * \tanh(\alpha x) + \beta$, where $\alpha$ is a learnable scalar and $\gamma$, $\beta$ are affine parameters equivalent to those used by layer-norm.
 
