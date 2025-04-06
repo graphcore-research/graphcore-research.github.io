@@ -8,7 +8,7 @@ tags:
     - fine-tuning
 potm_year: 2025
 potm_month: 3
-paper_order: 1  # Editor will decide
+paper_order: 3
 image_dir: "/assets/images/posts/2025-03/potm/overtrained-fine-tuning/"
 review_author:
     name: "Douglas Orr"

@@ -1,5 +1,5 @@
 ---
-title: "Transformers without normalisation"
+title: "Transformers without Normalisation"
 paper_authors: "Jiachen Zhu et al."
 orgs: "FAIR, Meta"
 paper_link: "https://arxiv.org/abs/2503.10622"
@@ -9,7 +9,7 @@ tags:
     - transformers
 potm_year: 2025
 potm_month: 3
-paper_order: 1  # Editor will decide
+paper_order: 1
 image_dir: "/assets/images/posts/2025-03/potm/dynamic-tanh/"
 review_author:
     name: "Luke Prince"

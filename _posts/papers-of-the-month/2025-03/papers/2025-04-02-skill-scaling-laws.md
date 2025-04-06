@@ -8,7 +8,7 @@ tags:
     - scaling-laws
 potm_year: 2025
 potm_month: 3
-paper_order: 1  # Editor will decide
+paper_order: 2
 image_dir: "/assets/images/posts/2025-03/potm/skill-scaling-laws/"
 review_author:
   name: "Alberto Cattaneo"
