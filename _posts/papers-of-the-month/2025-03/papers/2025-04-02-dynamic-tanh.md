@@ -31,7 +31,7 @@ This non-linearity arises because layer-norm computes means and standard deviati
 
 <img src="{{ page.image_dir | append: 'FIG-Explain.png' | relative_url }}" alt="Explanation of how tokenwise linear layer-norm funcions produce global tanh-like nonlinearity">
 
-I found this result sufficiently unintuitive that I needed to write [a small example]([IPython notebook](https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2025-03-DynamicTanh.ipynb)) on synthetic data to grok this properly.
+I found this result sufficiently unintuitive that I needed to write a small example [IPython notebook](https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2025-03-DynamicTanh.ipynb) on synthetic data to grok this properly.
 
 This observation begs the question of whether inserting the tanh function in place of layer-norm can produce equally capable transformer models. As such the authors propose `DynamicTanh`: $\textrm{DynT}(x; \alpha, \gamma, \beta) = \gamma * \tanh(\alpha x) + \beta$, where $\alpha$ is a learnable scalar and $\gamma$, $\beta$ are affine parameters equivalent to those used by layer-norm.
 
