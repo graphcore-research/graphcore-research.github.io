@@ -18,7 +18,7 @@ hidden: true
 
 ### The key idea
 
-Current generations of LLMs are often "overtrained" on trillions of tokens since pretrained model performance continues to increase past the [Chinchilla](https://arxiv.org/abs/2203.15556) point of optimal pretraining compute. We often assume that a better pretrained model would result in better task performance after fine-tuning, but this work challenges this assumption.
+Current generations of LLMs are often "overtrained" on trillions of tokens since pretrained model performance continues to increase past the <a href="https://arxiv.org/abs/2203.15556" target="_blank">Chinchilla</a> point of optimal pretraining compute. We often assume that a better pretrained model would result in better task performance after fine-tuning, but this work challenges this assumption.
 
 In the headline results (below), the authors take OLMo-1B intermediate checkpoints and show that the best performance after instruction fine-tuning is achieved with the 2.3 trillion token checkpoint, and performance degrades after 3 trillion tokens.
 
