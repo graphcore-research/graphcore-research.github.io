@@ -6,8 +6,8 @@ paper_link: "https://arxiv.org/abs/2412.02700<...>"
 tags:
     - diffusion
     - generative-models  # Use https://graphcore-research.github.io/tags/ as reference
-potm_year: <2025>
-potm_month: <4>
+potm_year: 2025
+potm_month: 4
 paper_order: 1  # Editor will decide
 image_dir: "/assets/images/posts/2025-04/potm/motion-prompting/"
 review_author:
