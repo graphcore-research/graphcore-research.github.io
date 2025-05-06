@@ -18,8 +18,8 @@ hidden: true
 ---
 
 ### The key idea
-Reasoning models, which are predominantly transformer-based, have recently benefited from longer chain-of-thought reasoning, that is, a longer context. 
-These transformer-based models, however, suffer from a quadratic increase in computational complexity with respect to context length. 
+Language models applied to reasoning have recently been shown to benefit from longer chain-of-thought sequences, which require the model to process a longer context.
+However, transformer-based models suffer from a quadratic increase in computational complexity with respect to context length.
 The authors tackle this problem using a novel hybrid reasoning model (M1) based on Mamba, which has been shown to be computationaly more efficient than transformers [Gu and Dao, COLM 2024]. In doing so, they give the first hybrid Mamba-based reasoning model whose performance on math reasoning tasks outperforms transformer-based reasoning models.
 
 ### Their method
@@ -36,14 +36,14 @@ The authors adapt the multi-step distillation approach proposed in [Wang et al.,
     $$L_\text{GPRO}(\Theta) = \mathbb{E}\left[\frac{\pi_{\Theta}(a \mid s)}{\pi_{\Theta_\text{old}}(a \mid s)} \cdot \hat{A}(s, a)\right] + \eta \cdot H(\pi_\Theta).$$ 
 
 ### Results
-The authors evaluate the performance of their M1-3B model by reasoning (Table 1), inference speed (Figure 2), and test-time scaling (Figure 3):
+The authors evaluate the performance of their M1-3B model in terms of reasoning (Table 1), inference speed (Figure 2), and test-time scaling (Figure 3):
 
 1. *Reasoning.* M1-3B outperforms all non-reasoning language models and the Qwen2.5-Math-7B-Instruct reasoning model in all benchmarks. It slightly underperforms against the DeepSeek-R1-Distill-Qwen-1.5B reasoning model in almost all benchmarks. 
 
     <img class="constrained_img" src="{{ page.image_dir | append: 'tab1.png' | relative_url }}" alt="Reasoning performance results for the hybrid Mamba-based M1-3B model and various transformer-based models.">
     <figcaption><strong>Table 1.</strong>Reasoning performance results. Pass@1 refers to a percentage mark using a single sample per question and Maj@32 refers to a majority vote on 32 samples per question. </figcaption>
 
-2. *Inference Speed.* As batch size and generation length are scaled up, M1-3B shows better speed ups compared to other models of similar and even smaller size, with up to a 3x speed up when compared to the Llama-3.2-3B model, which M1-3B is based on.
+2. *Inference Speed.* As batch size and generation length are scaled up, M1-3B shows better speedups compared to other models of similar and even smaller size, with up to a 3x speed up when compared to the Llama-3.2-3B model, which M1-3B is based on.
 
     <img class="constrained_img" src="{{ page.image_dir | append: 'fig2.png' | relative_url }}" alt="Inference speed results for the hybrid Mamba-based M1-3B model and various transformer-based models.">
     <figcaption><strong>Figure 2.</strong>Inference speed results when using prompt length 256 and decoding length 4096 (left) and when using batch size 128 (right).</figcaption>
@@ -55,6 +55,6 @@ The authors evaluate the performance of their M1-3B model by reasoning (Table 1)
 
 
 ### Takeaways
-The M1-3B model shows that it is not necessary to rely solely on transformers for designing reasoning models. This hybrid model built on Mamba obtains improved computational efficiency and performance over even the larger Qwen2.5-Math-7B-Instruct reasoning model. However, for the smaller DeepSeek-R1-Distill-Qwen-1.5B model, it is only able to gain an improved reasoning performance by taking advantage of the more efficient inference time, that is, allowing for 'more reasoning' in a fixed amount of time.
+The M1-3B model shows that transformers are not the only good option for reasoning models. This hybrid model built on Mamba obtains improved computational efficiency and performance over even the larger Qwen2.5-Math-7B-Instruct reasoning model. However, for the smaller DeepSeek-R1-Distill-Qwen-1.5B model, it is only able to gain an improved reasoning performance by taking advantage of the more efficient inference time, that is, allowing for 'more reasoning' in a fixed amount of time.
 
 ...
