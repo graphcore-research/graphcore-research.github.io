@@ -1,8 +1,8 @@
 ---
 title: "Motion Prompting: Controlling Video Generation with Motion Trajectories"
-paper_authors: "Daniel Geng, Charles Herrmann, et al."
+paper_authors: "Daniel Geng et al."
 orgs: "Google Deepmind, University of Michigan and Brown University"
-paper_link: "https://arxiv.org/abs/2412.02700<...>"
+paper_link: "https://arxiv.org/abs/2412.02700"
 tags:
     - diffusion
     - generative-models  # Use https://graphcore-research.github.io/tags/ as reference
