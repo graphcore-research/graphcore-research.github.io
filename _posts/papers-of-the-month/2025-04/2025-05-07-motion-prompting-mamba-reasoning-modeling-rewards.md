@@ -19,7 +19,7 @@ author.twitter: "GCResearchTeam"
 ---
 
 April has been a busy month for the AI research community, with ICLR (the first of the "big three" AI conferences of the year)
-being held towards the end of the month. We're pleased to share summaries of a few of our favourite papers we've seen this month.
+taking place in Singapore. We're pleased to share summaries of a few of our favourite papers we've seen this month.
 
 First up, [Motion Prompting](#motion-prompting-controlling-video-generation-with-motion-trajectories) introduces flexible spatio-temporal trajectories, or "motion prompts", as a powerful new way to
 control nuanced dynamic actions and motion in video generation, overcoming the limitations of text prompts.
