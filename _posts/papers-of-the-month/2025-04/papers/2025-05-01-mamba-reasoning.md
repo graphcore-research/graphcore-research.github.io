@@ -1,6 +1,6 @@
 ---
 title: "M1: Towards Scalable Test-Time Compute with Mamba Reasoning Models"
-paper_authors: "Wang et al."
+paper_authors: "Junxiong Wang et al."
 orgs: "TogetherAI, Cornell University, University of Geneva, Princeton University"
 paper_link: "https://arxiv.org/abs/2504.10449"
 tags:
