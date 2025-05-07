@@ -1,13 +1,14 @@
 ---
 title: "Inference-Time Scaling for Generalist Reward Modeling"
-paper_authors: "Zijun Liu, et al."
+paper_authors: "Zijun Liu et al."
 orgs: "DeepSeek-AI, Dept. of ComputerSci & Tech. Tsinghua University, Institute for AI Industry Research (AIR) Tsinghua University"
 paper_link: "https://arxiv.org/abs/2504.02495"
 tags:
     - LLMs
-    - Reward Modeling
-    - Reinforcement Learning
-    - inference-time compute
+    - reward-modeling
+    - reinforcement-learning
+    - inference-time-compute
+    - test-time-compute
 potm_year: 2025
 potm_month: 4
 paper_order: 2
