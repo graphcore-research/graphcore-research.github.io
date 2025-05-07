@@ -30,7 +30,9 @@ This paper addresses both challenges by introducing **Self-Principled Critique T
 This approach is implemented in **DeepSeek-GRM-27B**, a Gemma-2-27B-based post-trained with SPCT and enhanced with a secondary Meta Reward Model (MetaRM) to further improve inference-time scaling performance, as shown in Figure 1. 
 
 
-<img src="{{ page.image_dir | append: 'grm-inference-time-scaling-perf.png' | relative_url }}" alt="Inference-time scaling performance tested on RM Bench shows DeepSeek-GRM-27B outperforming strong public models.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'grm-inference-time-scaling-perf.png' | relative_url }}" alt="Inference-time scaling performance tested on RM Bench shows DeepSeek-GRM-27B outperforming strong public models.">
+<figcaption><strong>Figure 1.</strong> Inference-time scaling performance with different RMs on all RM benchmarks. Results are shown with up to 8 samples for each method, and are further scaled to 32 samples for ours. Non-italic font indicates models based on Gemma-2-27B.</figcaption>
+
 
 ### Their method
 
@@ -56,7 +58,9 @@ Table 2 show that the post-trained DeepSeek-GRM-27B outperforms the baseline met
 
 Table 3 and Figure 1 demonstrate that with inference-time scaling (using 32-sample voting) the model achieves the best overall performance, which improves further when combined with MetaRM-guided voting. 
 
-<img src="{{ page.image_dir | append: 'inference-time-scalability.png' | relative_url }}" alt="Inference-time scalability results of different methods on RM benchmarks.">
+<img class="constrained_img" src="{{ page.image_dir | append: 'inference-time-scalability.png' | relative_url }}" alt="Inference-time scalability results of different methods on RM benchmarks.">
+<figcaption><strong>Table 3.</strong> Inference-time scalability results of different methods on RM benchmarks. Settings are the same as Table 2.</figcaption>
+
 
 ### Results - scaling inference vs training costs
 
