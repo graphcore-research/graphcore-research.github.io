@@ -26,7 +26,7 @@ control nuanced dynamic actions and motion in video generation, overcoming the l
 This is followed by [Inference-Time Scaling for Generalist Reward Modeling](#inference-time-scaling-for-generalist-reward-modeling), which presents Self-Principled Critique Tuning (SPCT),
 a method that powers DeepSeek-GRM—a generalist reward model capable of generating adaptive, high-quality rewards and achieving
 strong performance gains through scalable inference-time compute.
-Finally, [M1](#m1-towards-scalable-test-time-compute-with-mamba-reasoning-models) looks at using a Mambda-based architecture to tackle reasoning problems, as a more computationally-efficient approach
+Finally, [M1](#m1-towards-scalable-test-time-compute-with-mamba-reasoning-models) looks at using a Mamba-based architecture to tackle reasoning problems, as a more computationally-efficient approach
 when compared to transformers with chains-of-thought.
 
 
