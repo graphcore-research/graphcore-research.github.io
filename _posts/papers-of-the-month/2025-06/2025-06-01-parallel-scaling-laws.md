@@ -67,7 +67,7 @@ Dramatically reduces cost of parallel scaling training (which requires $P$ forwa
 | 2.8B         | 1  | 55.2          |
 
 
-For a 1.6B model, scaling to $P=8$ parallel streams achieves performance comparable with a 4.4B model on coding tasks. These efficiency gains are most pronounced at small batch sizes ($\leq 8$), making PARSCALE particularly suitable for edge deployment scenarios.
+For a 1.6B model, scaling to $P=8$ parallel streams achieves performance comparable with a 4.4B model on coding tasks. These efficiency gains are most pronounced at small batch sizes ($\leq 8$) where inference is memory-bound. This makes PARSCALE most suitable for edge deployment scenarios.
 
 - 22x less memory increase compared to parameter scaling.
 - 6x lower latency.
