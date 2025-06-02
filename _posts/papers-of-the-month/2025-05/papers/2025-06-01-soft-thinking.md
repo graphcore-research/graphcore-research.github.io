@@ -23,7 +23,7 @@ hidden: true
 Conventional reasoning models generate long reasoning traces, which are typically
 constrained to the expressivity of the model's vocabulary. The discretisation of
 reasoning makes it hard to explore multiple paths or ideas, and limits the model's
-ability to ``think'' about abstract concepts, as it is always forced to express its
+ability to  "think" about abstract concepts, as it is always forced to express its
 thoughts in natural language.
 
 Recent works have looked into *latent* thoughts, such as [Coconut](https://arxiv.org/abs/2412.06769) and
@@ -94,9 +94,9 @@ sequence length, indicating that Soft Thinking enables richer concepts for a giv
 <img src="{{ page.image_dir | append: 'results-table-2.png' | relative_url }}" alt="Results table 1.">
 <figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across coding datasets. Best results are highlighted in **bold**.</figcaption>
 
-One concern surrounding latent reasoning is the possible lack of intepretability of the reasoning trace.
-While there has been some [recent literature](https://arxiv.org/abs/2505.13775) questioning the validity
-of the traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible
+One concern surrounding latent reasoning is difficulty in interpeting the reasoning trace.
+While [another recent paper](https://arxiv.org/abs/2505.13775) questions the validity
+of traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible
 reasoning traces, simply by examining the highest-probability (discrete) token after each forward pass.
 
 <img src="{{ page.image_dir | append: 'probability-distribution.png' | relative_url }}" alt="Probability distribution over a complete reasoning trace.">
