@@ -9,7 +9,7 @@ tags:
     - RAG
 potm_year: 2025
 potm_month: 5
-paper_order: 1  # Editor will decide
+paper_order: 2  # Editor will decide
 image_dir: "/assets/images/posts/2025-05/potm/AlphaEvolve/"
 review_author:
     name: "Robert Hu"
