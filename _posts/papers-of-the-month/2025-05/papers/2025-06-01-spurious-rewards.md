@@ -1,5 +1,5 @@
 ---
-title: "<Full Paper Title>"
+title: "Spurious Rewards: Rethinking Training Signals in RLVR"
 paper_authors: "Rulin Shao, Shuyue Stella Li, Rui Xin and Scott Geng"
 orgs: "University of Washington, Allen Institute for AI and University of California, Berkeley"
 paper_link: "https://github.com/ruixin31/Rethink_RLVR/blob/main/paper/rethink-rlvr.pdf"
@@ -10,24 +10,24 @@ tags:
     - fine-tuning  # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2025
 potm_month: 6
-paper_order: ?  # Editor will decide
+paper_order: 4  # Editor will decide
 image_dir: "/assets/images/posts/2025-06/potm/spurious-rewards/"
 review_author:
-    name: "Sam OT"
+    name: "Sam Olesker-Taylor"
     link: "https://www.linkedin.com/in/sam-olesker-taylor/"
 hidden: true
 ---
 
 ### The key idea
 
-The authors (claim to) boost significantly [Qwen-Math](https://arxiv.org/abs/2409.12122v1) performance via reinforcement learning (RL) with *random*, or even *spurious*, rewards on the MATH-500 benchmark. This hints at models' already possessing reasoning abilities, which the RL procedure 'coaxes out', rather than developing.
+The authors (claim to) boost significantly [Qwen-Math](https://arxiv.org/abs/2409.12122v1) performance via reinforcement learning (RL) with *random*, or even *spurious*, rewards on the MATH-500 benchmark. This hints at models' already possessing reasoning abilities, which the RL procedure "coaxes out", rather than developing.
 
 <img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="Performance gains on MATH-500 benchmark using various reward types during RLVR training">
 <figcaption>Figure 1. MATH-500 accuracy after 150 steps of RLVR on various training signals. We show that even "spurious rewards" (e.g., rewarding *incorrect* labels or with completely random rewards) can yield strong MATH-500 gains on Qwen models. Notably, these reward signals do not work for other models like Llama3 and OLMo2, which have different reasoning priors.</figcaption>
 
 >   **NB**. The baseline evaluations in this paper, and related ones, have been [called into question](https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37). They [suggest](https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37#2012f1fbf0ee80319fb6ee27b1474624) an under-reporting of ~15 percentage points (49.4% vs 64.3%) here. This is raised in a [short thread](https://x.com/YiranWu18/status/1927491538386342229) on the original [post on X](https://x.com/StellaLisy/status/1927392717593526780). Still, *some* of the claimed gain is not absorbed by correct baseline evaluation.
 >   
->   With all this in mind, it is my opinion that the claims in the current paper (outlined below), and from similar papers, should be taken with a ~~pinch~~ handful of salt. More replication is required.
+>   With all this in mind, the claims in the current paper (outlined below), and from similar papers, should be taken with a pinch of salt.
 
 
 ### Background
@@ -57,7 +57,7 @@ The MATH-500 benchmark is the focus. The baseline model was tested (no RLVR), al
 | *Incorrect* | reward only incorrect answers | **+24.6%**  | **~10%**  |
 | *Truth*     | ground-truth reward           | **+28.8%**  | **~15%**  |
 
-*"Adjusted" here is my personal estimation of the boost after removing ~15%, as mentioned above (and [here](https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37#2012f1fbf0ee80319fb6ee27b1474624)).
+*"Adjusted" here is an estimation of the boost after removing ~15%, as mentioned above (and [here](https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37#2012f1fbf0ee80319fb6ee27b1474624)).
 
 Whilst none of the other options perform as well as RLVR with the true labels, random and incorrect rewards get pretty close. Interestingly, other models analysed (LLaMA 3.2B Instruct and OLMo 2 7B) did *not* show such gains.
 
