@@ -5,9 +5,9 @@ orgs: "Zhejiang University, Qwen Team, Alibaba Group"
 paper_link: "https://arxiv.org/abs/2505.10475"
 tags:
 potm_year: 2025
-potm_month: 6
+potm_month: 5
 paper_order: 1 # Editor will decide
-image_dir: "/assets/images/posts/2025-06/potm/parallel-scaling-laws/"
+image_dir: "/assets/images/posts/2025-05/potm/parallel-scaling-laws/"
 review_author:
   name: "Tom Pollak"
   link: "https://www.linkedin.com/in/tompollak/"
