@@ -20,20 +20,11 @@ hidden: true
 
 ### The key idea
 
-Conventional reasoning models generate long reasoning traces, which are typically
-constrained to the expressivity of the model's vocabulary. The discretisation of
-reasoning makes it hard to explore multiple paths or ideas, and limits the model's
-ability to  "think" about abstract concepts, as it is always forced to express its
-thoughts in natural language.
+Conventional reasoning models generate long reasoning traces, which are typically constrained to the expressivity of the model's vocabulary. The discretisation of reasoning makes it hard to explore multiple paths or ideas, and limits the model's ability to  "think" about abstract concepts, as it is always forced to express its thoughts in natural language.
 
-Recent works have looked into *latent* thoughts, such as [Coconut](https://arxiv.org/abs/2412.06769) and
-[Latent Reasoning](https://arxiv.org/abs/2502.05171), in which the thoughts are not
-necessarily discretised tokens, but rather continuous tokens in some latent space.
-However, training these methods can be non-trivial, and scaling the size of the models
-can be very challenging.
+Recent works have looked into *latent* thoughts, such as [Coconut](https://arxiv.org/abs/2412.06769) and [Latent Reasoning](https://arxiv.org/abs/2502.05171), in which the thoughts are not necessarily discretised tokens, but rather continuous tokens in some latent space. However, training these methods is non-trivial and scaling model size can be very challenging.
 
-In *Soft Thinking*, the authors propose a training-free approach to latent reasoning,
-in which the "concept tokens" are a probability-weighted mixture of the token embeddings.
+In *Soft Thinking*, the authors propose a training-free approach to latent reasoning, in which the "concept tokens" are a probability-weighted mixture of the token embeddings.
 
 <img src="{{ page.image_dir | append: 'soft-thinking-schematic.png' | relative_url }}" alt="Visualisation of the Soft Thinking method.">
 <figcaption>*Soft Thinking* replaces discrete tokens with soft, abstract *concept tokens*, enabling reasoning in continuous concept space.</figcaption>
@@ -41,10 +32,7 @@ in which the "concept tokens" are a probability-weighted mixture of the token em
 
 ### Their method
 
-Typically, reasoning models employ standard LLM inference techniques for generating their
-reasoning traces: each forward pass $i$ generates a probability distribution over the vocabulary,
-from which a token $t_i$ is sampled from. This token is then embedded using the embedding matrix $\mathbf{E}$
-and injected into the model's input. 
+Typically, reasoning models employ standard LLM inference techniques for generating their reasoning traces: each forward pass $i$ generates a probability distribution over the vocabulary, from which a token $t_i$ is sampled from. This token is then embedded using the embedding matrix $\mathbf{E}$ and injected into the model's input. 
 
 Mathematically, this can be expressed as
 <div>
@@ -60,33 +48,19 @@ $$
 </div>
 where $p_i$ is the probability distribution for the $i$th forward pass, and $\mathrm{LLM}$ is the model.
 
-The sampling operation of LLM inference discretises the model's output, limiting its
-expressivity. In contrast, Soft Thinking proposes taking a probability-weighted mixture of the
-input token embeddings, making a so-called *concept token*. This means the next input token can be
-expressed as
+The sampling operation of LLM inference discretises the model's output, limiting its expressivity. In contrast, Soft Thinking proposes taking a probability-weighted mixture of the input token embeddings, making a so-called *concept token*. This means the next input token can be expressed as
 <div>
 $$
 e_{i+1} = \sum_{k=1}^{|V|}p_i[k] \cdot E[k]
 $$
 </div>
 
-This approach means that the input embedding layer and output head
-do not need to be weight-tied, which can cause issues for other continuous reasoning approaches
-such as [Coconut](https://arxiv.org/abs/2412.06769).
+This approach means that the input embedding layer and output head do not need to be weight-tied, which can cause issues for other continuous reasoning approaches such as [Coconut](https://arxiv.org/abs/2412.06769).
 
-As the model no longer injects conventional tokens into the model as part of its reasoning
-trace, over time the model will be in an out-of-distribution regime. In order to mitigate this,
-the authors suggest a cold stop mechanism, which measures the entropy of the concept token,
-and if it falls below a threshold $\tau$ for some number of consecutive iterations, then
-a `</think>` token is injected into the sequence to terminate the reasoning trace and commence
-answer generation. This prevents the model from becoming overconfident, and provides a simple
-stopping condition for the model to exit latent-thought generation.
+As the model no longer injects conventional tokens into the model as part of its reasoning trace, over time the model will be in an out-of-distribution regime. To mitigate this, the authors suggest a cold stop mechanism, which measures the entropy of the concept token, and if it falls below a threshold $\tau$ for some number of consecutive iterations, then a `</think>` token is injected into the sequence to terminate the reasoning trace and commence answer generation. This prevents the model from becoming overconfident, and provides a simple stopping condition for the model to exit latent-thought generation.
 
 ### Results
-The authors examine Soft Thinking over a number of mathematical and coding tasks, on three different
-models: QwQ-32B, DeepSeek-R1-DistillQwen-32B, and DeepSeek-R1-Distill-Llama-70B. They find that across
-all models and tasks, they see an improvement in task performance, and very often a reduction in
-sequence length, indicating that Soft Thinking enables richer concepts for a given token.
+The authors examine Soft Thinking over a number of mathematical and coding tasks, on three different models: QwQ-32B, DeepSeek-R1-DistillQwen-32B, and DeepSeek-R1-Distill-Llama-70B. They find that across all models and tasks, they see an improvement in task performance, and very often a reduction in sequence length, indicating that Soft Thinking enables richer concepts for a given token.
 
 <img src="{{ page.image_dir | append: 'results-table-1.png' | relative_url }}" alt="Results table 1.">
 <figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across mathematical datasets. Best results are highlighted in **bold**.</figcaption>
@@ -94,10 +68,7 @@ sequence length, indicating that Soft Thinking enables richer concepts for a giv
 <img src="{{ page.image_dir | append: 'results-table-2.png' | relative_url }}" alt="Results table 1.">
 <figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across coding datasets. Best results are highlighted in **bold**.</figcaption>
 
-One concern surrounding latent reasoning is difficulty in interpeting the reasoning trace.
-While [another recent paper](https://arxiv.org/abs/2505.13775) questions the validity
-of traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible
-reasoning traces, simply by examining the highest-probability (discrete) token after each forward pass.
+One concern surrounding latent reasoning is difficulty in interpeting the reasoning trace. While [another recent paper](https://arxiv.org/abs/2505.13775) questions the validity of traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible reasoning traces, simply by examining the highest-probability (discrete) token after each forward pass.
 
 <img src="{{ page.image_dir | append: 'probability-distribution.png' | relative_url }}" alt="Probability distribution over a complete reasoning trace.">
 <figcaption>An example illustrating the probability distribution of our proposed *Soft Thinking* method. At each step, top-$k$ token candidates and their probabilities are shown. Red boxes indicate the selected tokens that form the final generated sequence for readability and interpretability.</figcaption>
@@ -105,7 +76,4 @@ reasoning traces, simply by examining the highest-probability (discrete) token a
 
 ### Takeaways
 
-Soft Thinking offers a viable way to imbue pre-trained reasoning models with latent reasoning capabilities which permit abstract concepts
-in a continuous space, without requiring any additional fine-tuning. As their results demonstrate, this offers the opportunity for
-greater task performance with shorter sequence lengths. While this work doesn't investigate how we can train models to best utilise the
-concept space, it does indicate that research in this direction is likely to bear promising results.
+Soft Thinking offers a viable way to imbue pre-trained reasoning models with latent reasoning capabilities which permit abstract concepts in a continuous space, without requiring any additional fine-tuning. As their results demonstrate, this offers the opportunity for greater task performance with shorter sequence lengths. While this work doesn't investigate how we can train models to best use the concept space, it does indicate that research in this direction is likely to bear promising results.
