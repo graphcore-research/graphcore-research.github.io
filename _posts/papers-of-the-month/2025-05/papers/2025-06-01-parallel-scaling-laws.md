@@ -4,6 +4,10 @@ paper_authors: "Mouxiang Chen et al."
 orgs: "Zhejiang University, Qwen Team, Alibaba Group"
 paper_link: "https://arxiv.org/abs/2505.10475"
 tags:
+  - LLMs
+  - efficient-inference
+  - scaling-laws
+  - fine-tuning
 potm_year: 2025
 potm_month: 5
 paper_order: 1 # Editor will decide
