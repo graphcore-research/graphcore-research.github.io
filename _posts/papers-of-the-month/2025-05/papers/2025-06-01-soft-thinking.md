@@ -10,7 +10,7 @@ tags:
     - efficient-inference  # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2025
 potm_month: 5
-paper_order: 1  # Editor will decide
+paper_order: 3  # Editor will decide
 image_dir: "/assets/images/posts/2025-05/potm/soft-thinking/"
 review_author:
     name: "Luke Hudlass-Galley"
