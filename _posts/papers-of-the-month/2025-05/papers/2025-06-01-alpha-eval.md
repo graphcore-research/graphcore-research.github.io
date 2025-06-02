@@ -37,15 +37,15 @@ AlphaEvolve works by evolving full programs through an LLM-driven, feedback-grou
 
 To understand what makes AlphaEvolve effective, the authors performed ablation studies on two tasks: matrix multiplication and the kissing number problem. The key findings:
 
-No evolution: Removing the evolutionary loop (i.e., re-prompting the initial program) significantly degrades performance.
+1. **No evolution**: Removing the evolutionary loop (i.e., re-prompting the initial program) significantly degrades performance.
 
-No context: Stripping rich context from prompts leads to worse solutions, confirming that prompt engineering matters.
+2. **No context**: Stripping rich context from prompts leads to worse solutions, confirming that prompt engineering matters.
 
-Small LLMs only: Using only lightweight models reduces result quality. Strong base models like Gemini Pro make a difference.
+3. **Small LLMs only**: Using only lightweight models reduces result quality. Strong base models like Gemini Pro make a difference.
 
-No full-file evolution: Restricting changes to a single function (vs. whole files) limits AlphaEvolve’s power and flexibility.
+4. **No full-file evolution**: Restricting changes to a single function (vs. whole files) limits AlphaEvolve’s power and flexibility.
 
-No meta-prompt evolution: Removing the co-evolution of prompts results in slower progress, showing prompt quality co-evolution is a key driver.
+5. **No meta-prompt evolution** : Removing the co-evolution of prompts results in slower progress, showing prompt quality co-evolution is a key driver.
 
 Together, these ablations show that AlphaEvolve’s strength comes from multiple interacting components; especially full-code evolution, high-quality LLMs, and contextual prompting.
 
