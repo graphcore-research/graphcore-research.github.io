@@ -18,12 +18,6 @@ review_author:
 hidden: true
 ---
 
-[200 words is a rough guide for the length of a summary.
-Feel free to go a fair bit over or under if needs be.
-The editor will fix any issues with images being rendered too wide/narrow etc.
-See README for how to view locally if you wish to (not required. Contact CB if this
-is broken for you.)]
-
 ### The key idea
 
 Conventional reasoning models generate long reasoning traces, which are typically
@@ -39,54 +33,79 @@ However, training these methods can be non-trivial, and scaling the size of the 
 can be very challenging.
 
 In *Soft Thinking*, the authors propose a training-free approach to latent reasoning,
-in which the ``concept tokens'' are a probability-weighted mixture of the token embeddings.
+in which the "concept tokens" are a probability-weighted mixture of the token embeddings.
 
+<img src="{{ page.image_dir | append: 'soft-thinking-schematic.png' | relative_url }}" alt="Visualisation of the Soft Thinking method.">
+<figcaption>*Soft Thinking* replaces discrete tokens with soft, abstract *concept tokens*, enabling reasoning in continuous concept space.</figcaption>
 
-
-A few sentences outlining why the paper is interesting...
-
-Add images where appropriate throughout. This section should always
-have at least 1 key figure though.
-
-*Please use high-res images (zoom in for those screenshots!)*
-
-<img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="A specific and succinct sentence or two describing the figure (alt text). Valuable for seo and accessibility.">
-<figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
-
-### [optional] Background
-
-If necessary, a short intro to background matierial needed to understand the method
 
 ### Their method
 
-Latex can be included in the standard way, either inline: $R=\sum _{t=0}^{\infty }\gamma ^{t}r_{t}$
+Typically, reasoning models employ standard LLM inference techniques for generating their
+reasoning traces: each forward pass $i$ generates a probability distribution over the vocabulary,
+from which a token $t_i$ is sampled from. This token is then embedded using the embedding matrix $\mathbf{E}$
+and injected into the model's input. 
 
-Or as a block:
-
+Mathematically, this can be expressed as
 <div>
 $$
-Q_{t+1}^{A}(s_{t},a_{t})=Q_{t}^{A}(s_{t},a_{t})+\alpha _{t}(s_{t},a_{t})\left(r_{t}+\gamma Q_{t}^{B}\left(s_{t+1},\mathop {\operatorname {arg~max} } _{a}Q_{t}^{A}(s_{t+1},a)\right)-Q_{t}^{A}(s_{t},a_{t})\right).
+e_{i+1} = \mathbf{E}[t_i]
+$$
+</div>
+such that
+<div>
+$$
+t_i \sim p_i = \mathrm{LLM}(e_1, \cdots,  e_{i-1})
+$$
+</div>
+where $p_i$ is the probability distribution for the $i$th forward pass, and $\mathrm{LLM}$ is the model.
+
+The sampling operation of LLM inference discretises the model's output, limiting its
+expressivity. In contrast, Soft Thinking proposes taking a probability-weighted mixture of the
+input token embeddings, making a so-called *concept token*. This means the next input token can be
+expressed as
+<div>
+$$
+e_{i+1} = \sum_{k=1}^{|V|}p_i[k] \cdot E[k]
 $$
 </div>
 
-Code can also be included in the standard way:
+This approach means that the input embedding layer and output head
+do not need to be weight-tied, which can cause issues for other continuous reasoning approaches
+such as [Coconut](https://arxiv.org/abs/2412.06769).
 
-```
-import popart
-
-builder = popart.Builder()
-
-# Build a simple graph
-i1 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-i2 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-
-o = builder.aiOnnx.add([i1, i2])
-```
+As the model no longer injects conventional tokens into the model as part of its reasoning
+trace, over time the model will be in an out-of-distribution regime. In order to mitigate this,
+the authors suggest a cold stop mechanism, which measures the entropy of the concept token,
+and if it falls below a threshold $\tau$ for some number of consecutive iterations, then
+a `</think>` token is injected into the sequence to terminate the reasoning trace and commence
+answer generation. This prevents the model from becoming overconfident, and provides a simple
+stopping condition for the model to exit latent-thought generation.
 
 ### Results
+The authors examine Soft Thinking over a number of mathematical and coding tasks, on three different
+models: QwQ-32B, DeepSeek-R1-DistillQwen-32B, and DeepSeek-R1-Distill-Llama-70B. They find that across
+all models and tasks, they see an improvement in task performance, and very often a reduction in
+sequence length, indicating that Soft Thinking enables richer concepts for a given token.
 
-...
+<img src="{{ page.image_dir | append: 'results-table-1.png' | relative_url }}" alt="Results table 1.">
+<figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across mathematical datasets. Best results are highlighted in **bold**.</figcaption>
 
-### [optional] Takeaways
+<img src="{{ page.image_dir | append: 'results-table-2.png' | relative_url }}" alt="Results table 1.">
+<figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across coding datasets. Best results are highlighted in **bold**.</figcaption>
 
-...
+One concern surrounding latent reasoning is the possible lack of intepretability of the reasoning trace.
+While there has been some [recent literature](https://arxiv.org/abs/2505.13775) questioning the validity
+of the traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible
+reasoning traces, simply by examining the highest-probability (discrete) token after each forward pass.
+
+<img src="{{ page.image_dir | append: 'probability-distribution.png' | relative_url }}" alt="Probability distribution over a complete reasoning trace.">
+<figcaption>An example illustrating the probability distribution of our proposed *Soft Thinking* method. At each step, top-$k$ token candidates and their probabilities are shown. Red boxes indicate the selected tokens that form the final generated sequence for readability and interpretability.</figcaption>
+
+
+### Takeaways
+
+Soft Thinking offers a viable way to imbue pre-trained reasoning models with latent reasoning capabilities which permit abstract concepts
+in a continuous space, without requiring any additional fine-tuning. As their results demonstrate, this offers the opportunity for
+greater task performance with shorter sequence lengths. While this work doesn't investigate how we can train models to best utilise the
+concept space, it does indicate that research in this direction is likely to bear promising results.
