@@ -9,9 +9,9 @@ tags:
     - reasoning
     - fine-tuning  # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2025
-potm_month: 6
+potm_month: 5
 paper_order: 4  # Editor will decide
-image_dir: "/assets/images/posts/2025-06/potm/spurious-rewards/"
+image_dir: "/assets/images/posts/2025-05/potm/spurious-rewards/"
 review_author:
     name: "Sam Olesker-Taylor"
     link: "https://www.linkedin.com/in/sam-olesker-taylor/"
