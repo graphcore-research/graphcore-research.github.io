@@ -24,7 +24,7 @@ Researches at Qwen introduce a new dimension of scaling: parallel forward passes
 
 ### Background
 
-The approach comes from a practical inference bottleneck: for large models, single batch inference can be memory-bound, especially on resource constrained edge devices. Rather than increasing model size or generating more reasoning steps PARSCALE aims to scale a new axis, parallel computation, to keep model size approximately constant.
+The approach comes from a practical inference bottleneck: for large models, single batch inference can be memory-bound, especially on resource constrained edge devices. Rather than increasing model size or generating more reasoning steps, PARSCALE aims to scale a new axis, parallel computation, to keep model size approximately constant while improving performance.
 
 Inspired by techniques like Classifier-Free Guidance (CFG), PARSCALE hypothesizes:
 
@@ -32,11 +32,18 @@ Inspired by techniques like Classifier-Free Guidance (CFG), PARSCALE hypothesize
 
 ### Methodology
 
-PARSCALE executes $P$ forward passes in parallel, each conditioned with a unique learned prefix. Outputs of the different streams are combined using a learned aggregation MLP. Conceptually this is similar to ensembling, but with almost complete parameter sharing between the members (~0.2% extra per stream).
+PARSCALE executes $P$ forward passes in parallel, each conditioned with a unique learned prefix (implemented via prefix tuning). Outputs of the different streams are combined using a learned aggregation MLP.
 
-Unlike inference-time tricks (e.g. beam search), the diversity between streams in PARSCALE is learned during training and used at inference, enabling more effective use of parallelism.
+Unlike inference-time tricks (e.g., beam search or self-consistency), PARSCALE learns the aggregation during _training_, leading to more effective use of parallel compute. Conceptually this is similar to ensembling, but with almost complete parameter sharing between the members.
 
-The method was tested both in pre-training (up to 1T tokens) and in post-training (LoRA-style) settings.
+#### Training Strategy
+
+To reduce training costs, they propose a two-stage approach:
+
+- Stage 1: Standard pre-training (1T tokens)
+- Stage 2: Add PARSCALE (20B tokens, 2% overhead)
+
+Dramatically reduces cost of parallel scaling training (which requires $P$ forward passes) only applied to the final 20B tokens, not the full 1T.
 
 ### Results
 
@@ -60,8 +67,16 @@ The method was tested both in pre-training (up to 1T tokens) and in post-trainin
 | 2.8B         | 1  | 55.2          |
 
 
-For a 1.6B model, scaling to $P=8$ parallel streams achieves performance comparable with a 4.4B model on coding tasks. This uses 22x less memory and 6x the latency compared to parameter scaling.
+For a 1.6B model, scaling to $P=8$ parallel streams achieves performance comparable with a 4.4B model on coding tasks. These efficiency gains are most pronounced at small batch sizes ($\leq 8$), making PARSCALE particularly suitable for edge deployment scenarios.
+
+- 22x less memory increase compared to parameter scaling.
+- 6x lower latency.
+- 8x increase (linear with $P$) KV cache size.
+
+#### Dynamic Parallel Scaling
+
+PARSCALE remains effective with frozen main parameters for different values of P. This enables dynamic parallel scaling: switching P to dynamically adapt model capabilities during inference.
 
 ### Takeaways
 
-PARSCALE provides a new axis in which to boost model capability, particuarly in resource constrained single batch inference. However KV cache grows linearly with the number of parallel streams ($P$) so less useful on long-context tasks. The paper is limited to a small number of streams, so it is an open question as to whether $O(\log P)$ scaling holds for $P \lt \lt 8$
+PARSCALE provides a new axis in which to boost model capability, particuarly in resource constrained single-batch inference. However KV cache grows linearly with the number of parallel streams ($P$) so effectiveness may diminish beyond $P=8$ (the largest tested configuration). It is an open question as to whether $O(\log P)$ scaling holds for $P ≫ 8$.
