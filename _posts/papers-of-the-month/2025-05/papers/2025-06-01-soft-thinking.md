@@ -1,5 +1,5 @@
-title: "Soft Thinking: Unlocking the Reasoning Potential of LLMs in Continuous Concept Space"
 ---
+title: "Soft Thinking: Unlocking the Reasoning Potential of LLMs in Continuous Concept Space"
 paper_authors: "Zhen Zhang et al."
 orgs: "University of California, Purdue University, LMSYS Org, Microsoft"
 paper_link: "https://arxiv.org/abs/2505.15778"
@@ -65,7 +65,7 @@ The authors examine Soft Thinking over a number of mathematical and coding tasks
 <img src="{{ page.image_dir | append: 'results-table-1.png' | relative_url }}" alt="Results table 1.">
 <figcaption>Table 1: Comparison of Soft Thinking and various baseline methods on accuracy and generation length across mathematical datasets. Best results are highlighted in bold.</figcaption>
 
-<img src="{{ page.image_dir | append: 'results-table-2.png' | relative_url }}" alt="Results table 1.">
+<img src="{{ page.image_dir | append: 'results-table-2.png' | relative_url }}" alt="Results table 2.">
 <figcaption>Table 2: Comparison of Soft Thinking and various baseline methods on accuracy and generation length across coding datasets. Best results are highlighted in bold.</figcaption>
 
 One concern surrounding latent reasoning is difficulty in interpeting the reasoning trace. While [another recent paper](https://arxiv.org/abs/2505.13775) questions the validity of traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible reasoning traces, simply by examining the highest-probability (discrete) token after each forward pass.
