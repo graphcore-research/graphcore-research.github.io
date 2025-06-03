@@ -27,7 +27,7 @@ Recent works have looked into *latent* thoughts, such as [Coconut](https://arxiv
 In *Soft Thinking*, the authors propose a training-free approach to latent reasoning, in which the "concept tokens" are a probability-weighted mixture of the token embeddings.
 
 <img src="{{ page.image_dir | append: 'soft-thinking-schematic.png' | relative_url }}" alt="Visualisation of the Soft Thinking method.">
-<figcaption>*Soft Thinking* replaces discrete tokens with soft, abstract *concept tokens*, enabling reasoning in continuous concept space.</figcaption>
+<figcaption>Figure 2: Soft Thinking replaces discrete tokens with soft, abstract concept tokens, enabling reasoning in continuous concept space.</figcaption>
 
 
 ### Their method
@@ -63,15 +63,15 @@ As the model no longer injects conventional tokens into the model as part of its
 The authors examine Soft Thinking over a number of mathematical and coding tasks, on three different models: QwQ-32B, DeepSeek-R1-DistillQwen-32B, and DeepSeek-R1-Distill-Llama-70B. They find that across all models and tasks, they see an improvement in task performance, and very often a reduction in sequence length, indicating that Soft Thinking enables richer concepts for a given token.
 
 <img src="{{ page.image_dir | append: 'results-table-1.png' | relative_url }}" alt="Results table 1.">
-<figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across mathematical datasets. Best results are highlighted in **bold**.</figcaption>
+<figcaption>Table 1: Comparison of Soft Thinking and various baseline methods on accuracy and generation length across mathematical datasets. Best results are highlighted in bold.</figcaption>
 
 <img src="{{ page.image_dir | append: 'results-table-2.png' | relative_url }}" alt="Results table 1.">
-<figcaption>Comparison of *Soft Thinking* and various baseline methods on accuracy and generation length across coding datasets. Best results are highlighted in **bold**.</figcaption>
+<figcaption>Table 2: Comparison of Soft Thinking and various baseline methods on accuracy and generation length across coding datasets. Best results are highlighted in bold.</figcaption>
 
 One concern surrounding latent reasoning is difficulty in interpeting the reasoning trace. While [another recent paper](https://arxiv.org/abs/2505.13775) questions the validity of traces to the actual reasoning itself, the Soft Thinking authors are still able to generate legible reasoning traces, simply by examining the highest-probability (discrete) token after each forward pass.
 
 <img src="{{ page.image_dir | append: 'probability-distribution.png' | relative_url }}" alt="Probability distribution over a complete reasoning trace.">
-<figcaption>An example illustrating the probability distribution of our proposed *Soft Thinking* method. At each step, top-$k$ token candidates and their probabilities are shown. Red boxes indicate the selected tokens that form the final generated sequence for readability and interpretability.</figcaption>
+<figcaption>Figure 4: An example illustrating the probability distribution of our proposed Soft Thinking method. At each step, top-$k$ token candidates and their probabilities are shown. Red boxes indicate the selected tokens that form the final generated sequence for readability and interpretability.</figcaption>
 
 
 ### Takeaways
