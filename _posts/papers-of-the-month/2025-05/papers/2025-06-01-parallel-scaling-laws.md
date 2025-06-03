@@ -15,7 +15,7 @@ image_dir: "/assets/images/posts/2025-05/potm/parallel-scaling-laws/"
 review_author:
   name: "Tom Pollak"
   link: "https://www.linkedin.com/in/tompollak/"
-hidden: false
+hidden: true
 ---
 
 ### The key idea
