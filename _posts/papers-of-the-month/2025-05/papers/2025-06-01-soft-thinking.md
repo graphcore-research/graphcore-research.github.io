@@ -1,5 +1,5 @@
----
 title: "Soft Thinking: Unlocking the Reasoning Potential of LLMs in Continuous Concept Space"
+---
 paper_authors: "Zhen Zhang et al."
 orgs: "University of California, Purdue University, LMSYS Org, Microsoft"
 paper_link: "https://arxiv.org/abs/2505.15778"
