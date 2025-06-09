@@ -168,7 +168,7 @@ centroids_t = t.ppf(torch.linspace(c0, c1, n), df_, scale=scale)
 
 In our paper (Figure 29), we evaluate these formats for direct-cast quantisation of langauge models from the Llama, Gemma, Qwen and Phi families:
 
-<img class="img" src="{{ page.image_dir | append: 'fig29_element_formats.png' | relative_url }}">
+<img class="img" style="max-width: 600px;" src="{{ page.image_dir | append: 'fig29_element_formats.png' | relative_url }}">
 
 Each dot is a model, lower (scaled KL divergence of model outputs) is better, normalised against the performance of that model under the cube root density block absmax quantiser for the Student's t distribution and averaged over bit widths from 3-5 bits. We see that our normal format is on-par with NF4, while the Student's t format consistently outperforms it (note that the Student's t format chooses a `df` parameter for each tensor separately, to minimise MSE.)
 
