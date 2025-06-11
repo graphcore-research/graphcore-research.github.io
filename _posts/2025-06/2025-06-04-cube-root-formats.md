@@ -23,7 +23,7 @@ Your boss emails you a point in 128-billion-dimensional space. "Llama 3.1 8B," t
 
 Quantisation comes first, with two problems. First, you must choose a space smaller than a 128-billion-dimensional binary number for the model to sit in. Second, you need to find a good point in that space. In our recent work on [optimal formats for weight quantisation](https://arxiv.org/abs/2505.12988), we've had a crack at the first question.
 
-In this post, we'll learn how to construct optimal formats for known scalar distributions via the "cube root rule". We'll start with a recap of a well-known existing format that claims optimality for the normal distribution. Then we'll explore the cube root rule — a non-intuitive result from the 1950s — and use it to build our own quantisation formats for scaled normal, Laplace and Student's t distributions.
+In this post, we'll learn how to construct optimal formats for known scalar distributions via the "cube root rule". We'll start with a recap of an existing format that claims optimality for the normal distribution. Then we'll explore the cube root rule — a non-intuitive result from the 1950s — and use it to build our own quantisation formats for scaled normal, Laplace and Student's t distributions.
 
 ## NormalFloat (NF4)
 
@@ -58,20 +58,18 @@ error = torch.mean((quantise(x) - x) ** 2)
 
 _Note: we motivate the choice of MSE in [our paper](https://arxiv.org/abs/2505.12988) by showing how it predicts the KL divergence between model outputs before and after quantisation._
 
-So, how do we design a non-linear format to minimise MSE? Classical quantisation literature comes to the rescue! Given samples from a distribution, the Lloyd-Max algorithm (k-means) optimises centroids to minimise MSE ([Lloyd (1982)](https://www.stat.cmu.edu/~rnugent/PCMI2016/papers/LloydKMeans.pdf), [Max (1960)](https://cs.nyu.edu/home/people/in_memoriam/roweis/csc2515-2006/readings/max60.pdf)).
-
-Alternatively, for a known distribution, [Panter and Dite (1951)](https://ieeexplore.ieee.org/document/1701410) find that **the density of centroids should follow the cube root of the data density**. To evolve NormalFloat, let's explore this second approach.
+So, how do we design a non-linear format to minimise MSE? Classical quantisation literature comes to the rescue! Given samples from a distribution, the Lloyd-Max algorithm (k-means) optimises centroids to minimise MSE ([Lloyd (1982)](https://www.stat.cmu.edu/~rnugent/PCMI2016/papers/LloydKMeans.pdf), [Max (1960)](https://cs.nyu.edu/home/people/in_memoriam/roweis/csc2515-2006/readings/max60.pdf)). Alternatively, for a known distribution, [Panter and Dite (1951)](https://ieeexplore.ieee.org/document/1701410) find that **the density of centroids should follow the cube root of the data density**. We'll explore this second approach.
 
 ## Cube root density formats
 
-To optimise MSE, the density of our centroids is proportional to the cube root of the density of the data pdf. (Recall for quantile quantisation (NF4), it was directly proportional, no cube root.)
+To optimise MSE, the density of our centroids should be proportional to the cube root of the density of the data pdf. (Recall for quantile quantisation (NF4), it was directly proportional, no cube root.)
 
 Taking the cube root of a pdf flattens it out somewhat, making it less "spiky". We can explore this effect if we generalise the rule using an exponent `alpha`, so `centroid_density ∝ pdf ** alpha`. In this plot, we can vary `alpha`, with `1/3` corresponding to the cube root rule and `1` corresponding to quantile quantisation.
 
 <script src="/assets/js/posts/2025-06/cube-root-formats/crd_iplot_alpha.js"></script>
 <div id="crd-iplot-alpha" style="width: 32em"></div>
 
-As we vary `alpha`, we see the distribution of quantised values isn't uniform at the optimum, and the centroids are more spread out than they would be under quantile quantisation. But this does indeed result in lower MSE for standard normal data.
+Note that the distribution of quantised values isn't uniform at the optimum (`alpha=1/3`), and the centroids are more spread out than they would be under quantile quantisation (`alpha=1`). But this does indeed result in lower MSE for standard normal data.
 
 _Note that this plot uses slightly different code from the above: `ppf(torch.linspace(0, 1, n+2)[1:-1])`, which performs better for the cube root rule, but worse for quantile quantisation, but in both cases, the cube root rule has lower MSE than quantile quantisation._
 
@@ -79,7 +77,7 @@ _Note that this plot uses slightly different code from the above: `ppf(torch.lin
 
 Conveniently, for normal, Laplace and Student's t distributions, if we take the cube root of the pdf and normalise it, we obtain another distribution of the same family, but with different parameters.
 
-For example, the cube root of the pdf of `normal(mean=0, std=1)` data is a scaled `normal(mean=0, std=sqrt(3))` pdf. To apply the cube root rule, we have `new_std = old_std * sqrt(3)`. It's a similar story for Laplace and Student's t, with different scaling factors:
+For example, the cube root of the pdf of `normal(mean=0, std=1)` data is a scaled `normal(mean=0, std=sqrt(3))` pdf. To apply the cube root rule, we have `new_std = old_std * sqrt(3)`. It's a similar story for Laplace and Student's t, with their own rules for updating the parameters:
 
 ```python
 n = 8
@@ -95,7 +93,7 @@ These centroids come out as:
 
 <img class="img" src="{{ page.image_dir | append: 'crd_rms.svg' | relative_url }}">
 
-Note that the Laplace and Student's t centroids are more spread out, due to the heavier tails of these distributions (note that the incoming data has been scaled to have `RMS=1` in all cases).
+Note that the Laplace and Student's t centroids are more spread out, due to the heavier tails of these distributions (the incoming data has been scaled to have `RMS=1` in all cases).
 
 ## Block absmax formats
 
@@ -115,7 +113,7 @@ data /= scale.unsqueeze(-1)
 data = data.flatten(-2)
 ```
 
-After scaling, normally distributed data looks like this:
+An example of normally distributed samples, after block absmax scaling:
 
 <img class="img" src="{{ page.image_dir | append: 'block_absmax.svg' | relative_url }}">
 
@@ -123,17 +121,17 @@ This looks like a mixture of a <span style="color: #1b9e77; font-weight:bold">tr
 
 ### Cube root density for block absmax formats
 
-We're all set for the final step in our journey to find MSE-optimal formats for block absmax scaled data.
+Now for the final step in our journey to find MSE-optimal formats for block absmax scaled data.
 
 We want to distribute centroids according to the cube root of the distribution we just plotted ⬆. To do this, we need to know the truncation points of the normal distribution before it is scaled to `[-1, +1]`. This is the expected absolute maximum of `block_size` iid normal values. Fortunately, there are some approximations to this, a simple one is `expected_max = sqrt(2 * log(block_size / pi))`.
 
-This is it — we've reached our **recipe for optimal block absmax formats**:
+That's everything we need for our **recipe for optimal block absmax formats**:
 
- 1. Assume a distribution for the input data (e.g. normal, Laplace, Student's t) and given `block_size`, `n`.
+ 1. Assume a distribution for the input data (e.g. normal, Laplace, Student's t); we're given `block_size` and `n` centroids.
  2. Calculate an approximate expected absolute maximum of `block_size` iid values. This is the truncation point.
  3. Choose centroids: always include `[-1, +1]`, then choose `n-2` equally spaced values according to the cube root of the truncated-and-scaled pdf (which is also a truncated normal, Laplace or Student's t distribution).
 
-The code is perhaps simpler than the recipe:
+The code is perhaps simpler than the recipe. For the normal distribution:
 
 ```python
 n, block_size = 8, 64
@@ -170,7 +168,7 @@ In our paper (Figure 29), we evaluate these formats for direct-cast quantisation
 
 <img class="img" style="max-width: 600px;" src="{{ page.image_dir | append: 'fig29_element_formats.png' | relative_url }}">
 
-Each dot is a model, lower (scaled KL divergence of model outputs) is better, normalised against the performance of that model under the cube root density block absmax quantiser for the Student's t distribution and averaged over bit widths from 3-5 bits. We see that our normal format is on par with NF4, while the Student's t format consistently outperforms it (note that the Student's t format chooses a `df` parameter for each tensor separately, to minimise MSE.)
+Each dot corresponds to a different model; lower (scaled KL divergence of model outputs) is better; performance is normalised against the performance of that model under the cube root density block absmax quantiser for the Student's t distribution and averaged over bit widths from 3-5 bits. We see that our normal format is on par with NF4, while the Student's t format consistently outperforms it (note that the Student's t format chooses a `df` parameter for each tensor separately, to minimise MSE.)
 
 ## Conclusions
 
