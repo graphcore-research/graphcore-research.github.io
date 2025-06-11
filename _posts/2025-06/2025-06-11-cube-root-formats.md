@@ -1,6 +1,6 @@
 ---
 title: "Optimal Formats and the Cube Root of the PDF"
-date: 2025-06-04T01:00:00-00:00
+date: 2025-06-11T01:00:00-00:00
 header:
     teaser: /assets/images/posts/2025-06/cube-root-formats/headline.png
     image: /assets/images/posts/2025-06/cube-root-formats/headline.png
