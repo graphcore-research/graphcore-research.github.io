@@ -69,7 +69,7 @@ Taking the cube root of a pdf flattens it out somewhat, making it less "spiky". 
 <script src="/assets/js/posts/2025-06/cube-root-formats/crd_iplot_alpha.js"></script>
 <div id="crd-iplot-alpha" style="width: 32em"></div>
 
-Note that the distribution of quantised values isn't uniform at the optimum (`alpha=1/3`), and the centroids are more spread out than they would be under quantile quantisation (`alpha=1`). But this does indeed result in lower MSE for standard normal data.
+Note that the distribution of quantised values isn't uniform at the optimum (`alpha=1/3`), and the centroids are more spread out than they would be under quantile quantisation (`alpha=1`). At `alpha=1` we would expect the bin counts to be uniform, but the end bin locations are approximate, causing more values to fall into the these bins. We see that the cube root rule (`alpha=1/3`) results in lower MSE for standard normal data.
 
 _Note that this plot uses slightly different code from the above: `ppf(torch.linspace(0, 1, n+2)[1:-1])`, which performs better for the cube root rule, but worse for quantile quantisation, but in both cases, the cube root rule has lower MSE than quantile quantisation._
 
@@ -168,10 +168,12 @@ In our paper (Figure 29), we evaluate these formats for direct-cast quantisation
 
 <img class="img" style="max-width: 600px;" src="{{ page.image_dir | append: 'fig29_element_formats.png' | relative_url }}">
 
-Each dot corresponds to a different model; lower (scaled KL divergence of model outputs) is better; performance is normalised against the performance of that model under the cube root density block absmax quantiser for the Student's t distribution and averaged over bit widths from 3-5 bits. We see that our normal format is on par with NF4, while the Student's t format consistently outperforms it (note that the Student's t format chooses a `df` parameter for each tensor separately, to minimise MSE.)
+Note that `E2M1` is `FP4` (4-bit floating point). Each dot corresponds to a different model; lower (scaled KL divergence of model outputs) is better; performance is normalised against the performance of that model under the cube root density block absmax quantiser for the Student's t distribution and averaged over bit widths from 3-5 bits. We see that our normal format is on par with NF4, while the Student's t format consistently outperforms it (note that the Student's t format chooses a `df` parameter for each tensor separately, to minimise MSE.)
 
 ## Conclusions
 
 Much of what we've covered isn't new — the cube root rule [dates back to the 1950s](https://ieeexplore.ieee.org/document/1701410). But it's somewhat unintuitive, and the journey through optimal quantisers, extreme value theory and inverse cdfs has been a fun one. When it comes to optimal weight quantisation, I hope this has filled in some more of the picture for you, as it did for me.
 
 If you want to learn more, check out [our paper](https://arxiv.org/abs/2505.12988), or get in touch. Thanks for reading!
+
+_Thanks to Paul Balança for the helpful review and suggestions._

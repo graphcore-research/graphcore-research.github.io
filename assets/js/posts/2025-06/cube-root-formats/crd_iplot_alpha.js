@@ -102,9 +102,9 @@ function crdCreatePlot(root) {
 
     const barPlot = new Svg(root.querySelector(".crd-freq"), 128, 128);
     barPlot.line(plotX, plotH, 128, plotH, 1, "#000000");
-    barPlot.text(68, 127, 8, 0, "#000000", "Quantised Value");
+    barPlot.text(68, 127, 8, 0, "#000000", "Quantisation Bins");
     barPlot.line(plotX, plotH, plotX, 0, 1, "#000000");
-    barPlot.text(10, 64, 8, -90, "#000000", "Density");
+    barPlot.text(10, 64, 8, -90, "#000000", "Count");
     const s = (128 - plotX) / 8;
     const bars = Array.from({ length: 8 }, (_, i) =>
         barPlot.rect(plotX + 0.5 + i * s, 0, s * 0.8, 0, "#1b9e77"));
