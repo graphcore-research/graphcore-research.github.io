@@ -176,4 +176,4 @@ Much of what we've covered isn't new — the cube root rule [dates back to the 1
 
 If you want to learn more, check out [our paper](https://arxiv.org/abs/2505.12988), or get in touch. Thanks for reading!
 
-_Thanks to Paul Balança for the helpful review and suggestions._
+_Thanks to Paul Balança for the helpful review and suggestions and to my coauthors Luka Ribar and Carlo Luschi._

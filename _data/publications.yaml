@@ -41,8 +41,17 @@ papers:
         authors: "Charlie Blake, Constantin Eichenberg, Josef Dean, Lukas Balles, Luke Y. Prince, Björn Deiseroth, Andres Felipe Cruz-Salinas, Carlo Luschi, Samuel Weinbach, Douglas Orr"
         abstract: "The Maximal Update Parametrization (μP) aims to make the optimal hyperparameters (HPs) of a model independent of its size, allowing them to be swept using a cheap proxy model rather than the full-size target model. We present a new scheme, u-μP, which improves upon μP by combining it with Unit Scaling, a method for designing models that makes them easy to train in low-precision. The two techniques have a natural affinity: μP ensures that the scale of activations is independent of model size, and Unit Scaling ensures that activations, weights and gradients begin training with a scale of one. This synthesis opens the door to a simpler scheme, whose default values are near-optimal. This in turn facilitates a more efficient sweeping strategy, with u-μP models reaching a lower loss than comparable μP models and working out-of-the-box in FP8."
         published: "Proceedings of the 13th International Conference on Learning Representations"
+        icon: fa-lightbulb
 
     workshop:
+
+      - title: "Optimal Formats for Weight Quantisation"
+        url: https://arxiv.org/abs/2505.12988
+        date: 2025-05-19
+        area: [low-precision]
+        authors: "Douglas Orr, Luka Ribar, Carlo Luschi"
+        abstract: "Weight quantisation is an essential technique for enabling efficient training and deployment of modern deep learning models. However, the recipe book of quantisation formats is large and the formats are often chosen empirically. In this paper, we propose a framework for systematic design and analysis of quantisation formats. By connecting the question of format design with the classical quantisation theory, we show that the strong practical performance of popular formats comes from their ability to represent values using variable-length codes. Framing the optimisation problem as minimising the KL divergence between the original and quantised model outputs, the objective is aligned with minimising the squared quantisation error of the model parameters. We therefore develop and evaluate squared-error-optimal formats for known distributions, observing significant improvement of variable-length codes over fixed-length codes. Uniform quantisation followed by lossless compression with a variable-length code is shown to be optimal. However, we find that commonly used block formats and sparse outlier formats also outperform fixed-length codes, implying they also exploit variable-length encoding. Finally, by using the relationship between the Fisher information and KL divergence, we derive the optimal allocation of bit-widths to individual parameter tensors across the model's layers, saving up to 0.25 bits per parameter when tested with direct-cast quantisation of language models."
+        published: "ICML'25 Workshop on Efficient Systems for Foundation Models"
 
   2024:
     conference:
