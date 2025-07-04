@@ -1,5 +1,5 @@
 ---
-title: "June Papers: TBD"
+title: "June Papers: Gradient norms, LLM reasoning, and autoregressive video generation"
 header:
     teaser: /assets/images/posts/2025-06/potm/twitter_card.png
     image: /assets/images/posts/2025-06/potm/twitter_card.png
