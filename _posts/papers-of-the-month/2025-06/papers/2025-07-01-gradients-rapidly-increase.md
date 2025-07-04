@@ -1,4 +1,4 @@
---
+---
 title: "Why Gradients Rapidly Increase Near the End of Training"
 paper_authors: "Aaron Defazio"
 orgs: "FAIR at Meta"
@@ -27,17 +27,21 @@ However, it has been observed that in some long training runs the norm of the gr
 
 We can see why this is by considering the steady state dynamics of a single layer of the model. In particular, we consider linear layers that are immediately followed by a normalisation operation such as RMSNorm or LayerNorm. The key property that these layers have is that their gradients are orthogonal to their weights, that is, their dot product is 0. We denote the weights of a given layer at timestep $t$ by $x_t$, its gradient by $g_t$, the learning rate at this point in the schedule by $\gamma_t$, and the weight decay by $\lambda$. By considering a single SGD step with weight decay, we have:
 
+<div>
 $$ x_t = x_t - \gamma_t g_t - \gamma_t \lambda x_t $$
 $$ x_t = (1 - \lambda \gamma_t) x_t - \gamma_t g_t $$
 $$ \left\| x_t \right\| ^2 = (1 - \lambda \gamma_t)^2 \left\| x_t \right\| ^2 + \gamma_t ^ 2 \left\| g_t \right\| ^2 $$
 $$ (2 \lambda \gamma_t - \lambda^2 \gamma_t^2) \left\| x_t \right\| ^2 = \gamma_t^2 \left\| g_t \right\| ^2 $$
+</div>
 
 Further assuming that $ \lambda^2 \gamma_t^2 \ll 2 \lambda \gamma_t$ and that this term can be ignored, we have:
 
+<div>
 $$ 2 \lambda \gamma_t \left\| x_t \right\| ^2 = \gamma_t^2 \left\| g_t \right\| ^2 $$
 $$ \frac{\left\| g_t \right\|}{\left\| x_t \right\|} = \sqrt{\frac{2 \lambda}{\gamma_t}} $$
+</div>
 
-In a typical learning-rate schedule, the learning rate is decayed to 0 or to a small fraction of the maximum learning rate, so we expect the ratio $ \left\| g_t \right| / \left\| x_t \right| $ to increase rapidly towards the end of training. A similar argument, though a more approximate one, gives a similar result for Adam.
+In a typical learning-rate schedule, the learning rate is decayed to 0 or to a small fraction of the maximum learning rate, so we expect the ratio $ \left\| g_t \right\| / \left\| x_t \right\| $ to increase rapidly towards the end of training. A similar argument, though a more approximate one, gives a similar result for Adam.
 
 This behaviour can be seen clearly in a training run for ImageNet with SGD.
 
@@ -45,15 +49,19 @@ This behaviour can be seen clearly in a training run for ImageNet with SGD.
 
 This issue can be addressed by making the weight decay proportional to the learning rate in accordance with the learning rate schedule.
 
+<div>
 $$ \hat{\lambda}_t = \frac{\lambda \gamma}{\gamma_{\text{max}}} $$
+</div>
 
 Then we have:
 
+<div>
 $$ \frac{\left\| g_t \right\|}{\left\| x_t \right\|} = \sqrt{\frac{2 \lambda}{\gamma_{\text{max}}}} $$
+</div>
 
 ## Practice
 
-This is a lovely theoretical result, but many modern LLM architectures (e.g. Llama) don't actually have many linear layers immediately followed by normalisation.
+This is a lovely theoretical result, but many modern LLM architectures (e.g., Llama) don't actually have many linear layers immediately followed by normalisation.
 Instead, normalisation is typically applied after adding the input to the previous layer (i.e. after the residual connection).
 The argument might still hold water anyway: almost all pairs of vectors in very high-dimensional Euclidean space are nearly orthogonal, so one may argue that it is still 
 fine to neglect the $ \left\langle x_t, g_t \right\rangle $ term.
@@ -63,5 +71,4 @@ gradients and the weights, as well as giving a lower loss throughout training.
 
 <img src="{{ page.image_dir | append: 'figure-4.png' | relative_url }}" alt="Three graphs for a Llama training run using the paper's proposed correction. The loss is better with the new method and the gradient and weight norms are more stable.">
 
-In conclusion, this method is a promising way to control the norms of the gradients throughout training, and may be a key ingredient in training models in low precision in 
-the future.
+In conclusion, this method is a promising way to control the norms of the gradients throughout training, and may be a key component of low-precision model training in the future.
