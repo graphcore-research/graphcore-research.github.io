@@ -15,17 +15,19 @@ review_author:
 hidden: true
 ---
 
-## Background
+### The key idea
 
 When training machine learning models in low precision, it is important to ensure that none of the values in the computations overflow the range of the format you are using, lest the process crash. Even if all of the values are kept in the representable range, the training may perform better if the values stay in the region with the best signal-to-noise ratio for a given floating-point format. For this reason, it is ideal that the norms of the activations, gradients and weights stay within a certain range throughout training.
 
 However, it has been observed that in some long training runs the norm of the gradient vector increases rapidly towards the end of training. For example, in the training run in Figure 1, the norm of the gradient vector roughly doubles towards the end of training.
 
+The paper shows that this is due to the interaction between weight decay, normalisation layers, and the learning rate schedule, proposing a simple correction to fix this undesired behaviour.
+
 <img src="{{ page.image_dir | append: 'figure-1.png' | relative_url }}" alt="A graph showing the gradient norm for an LLM training run over time. After 125B tokens, the gradient norm increases to roughly twice of what it was before.">
 
-## Theory
+### Theory
 
-We can see why this is by considering the steady state dynamics of a single layer of the model. In particular, we consider linear layers that are immediately followed by a normalisation operation such as RMSNorm or LayerNorm. The key property that these layers have is that their gradients are orthogonal to their weights, that is, their dot product is 0. We denote the weights of a given layer at timestep $t$ by $x_t$, its gradient by $g_t$, the learning rate at this point in the schedule by $\gamma_t$, and the weight decay by $\lambda$. By considering a single SGD step with weight decay, we have:
+We can see why the gradient norm increases by considering the steady state dynamics of a single layer of the model. In particular, we consider linear layers that are immediately followed by a normalisation operation such as RMSNorm or LayerNorm. The key property that these layers have is that their gradients are orthogonal to their weights, that is, their dot product is 0. We denote the weights of a given layer at timestep $t$ by $x_t$, its gradient by $g_t$, the learning rate at this point in the schedule by $\gamma_t$, and the weight decay by $\lambda$. By considering a single SGD step with weight decay, we have:
 
 <div>
 $$ x_t = x_t - \gamma_t g_t - \gamma_t \lambda x_t $$
@@ -59,7 +61,7 @@ Then we have:
 $$ \frac{\left\| g_t \right\|}{\left\| x_t \right\|} = \sqrt{\frac{2 \lambda}{\gamma_{\text{max}}}} $$
 </div>
 
-## Practice
+### Practice
 
 This is a lovely theoretical result, but many modern LLM architectures (e.g., Llama) don't actually have many linear layers immediately followed by normalisation.
 Instead, normalisation is typically applied after adding the input to the previous layer (i.e. after the residual connection).
