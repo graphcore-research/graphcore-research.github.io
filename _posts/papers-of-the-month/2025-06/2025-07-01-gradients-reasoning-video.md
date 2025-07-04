@@ -1,5 +1,5 @@
 ---
-title: "June Papers: Gradient norms, LLM reasoning, and video generation"
+title: "June Papers: Gradient Norms, LLM Reasoning and Video Generation"
 header:
     teaser: /assets/images/posts/2025-06/potm/twitter_card.png
     image: /assets/images/posts/2025-06/potm/twitter_card.png
