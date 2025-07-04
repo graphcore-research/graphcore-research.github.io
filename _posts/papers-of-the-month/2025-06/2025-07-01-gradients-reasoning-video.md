@@ -18,7 +18,7 @@ toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
 
-This June did not only brings us very hot and sunny days (at least here in the UK), but an excellent selection of new and exciting ML research! Out of the many good candidates, this month we selected three papers, covering quite a lot of different ground.
+This June not only brought us very hot and sunny days (at least here in the UK), but also an excellent selection of new and exciting ML research! Out of the many good candidates, this month we selected three papers, covering quite a lot of different ground.
 
 In the first paper, [Why Gradients Rapidly Increase Near the End of Training](#why-gradients-rapidly-increase-near-the-end-of-training), a researcher from FAIR explores the puzzling phenomenon of increasing gradient magnitudes during training, offering an elegant mathematical explanation and a simple remedy.
 
