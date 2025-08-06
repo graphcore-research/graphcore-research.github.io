@@ -8,7 +8,7 @@ tags:
     - dataset
 potm_year: 2025
 potm_month: 07
-paper_order: 1
+paper_order: 3
 image_dir: "/assets/images/posts/2025-07/potm/datarater/"
 review_author:
     name: "Paul Balanca"
