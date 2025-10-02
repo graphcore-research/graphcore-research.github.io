@@ -22,14 +22,14 @@ areas:
 
 papers:
 
-  ### Template:
-  # - title: ""
-  #   url:
-  #   date:
-  #   area: []
-  #   authors: ""
-  #   abstract: ""
-  #   published: ""
+      # ## Template:
+      # - title: ""
+      #   url:
+      #   date:
+      #   area: []
+      #   authors: ""
+      #   abstract: ""
+      #   published: ""
 
   2025:
     conference:
@@ -37,7 +37,7 @@ papers:
       - title: "On Stochastic Rounding with Few Random Bits"
         url: https://arxiv.org/abs/2504.20634
         date: 2025-05-07
-        area: [low-precision, efficient-ml]
+        area: [low-precision]
         authors: "Andrew Fitzgibbon, Stephen Felix"
         abstract: "Large-scale numerical computations make increasing use of low-precision (LP) floating point formats and mixed precision arithmetic, which can be enhanced by the technique of stochastic rounding (SR), that is, rounding an intermediate high-precision value up or down randomly as a function of the value's distance to the two rounding candidates. Stochastic rounding requires, in addition to the high-precision input value, a source of random bits. As the provision of high-quality random bits is an additional computational cost, it is of interest to require as few bits as possible while maintaining the desirable properties of SR in a given computation, or computational domain. This paper examines a number of possible implementations of few-bit stochastic rounding (FBSR), and shows how several natural implementations can introduce sometimes significant bias into the rounding process, which are not present in the case of infinite-bit, infinite-precision examinations of these implementations. The paper explores the impact of these biases in machine learning examples, and hence opens another class of configuration parameters of which practitioners should be aware when developing or adopting low-precision floating point. Code is available at https://github.com/graphcore-research/arith25-stochastic-rounding."
         published: "Proceedings of the 32nd IEEE International Symposium on Computer Arithmetic"
@@ -51,6 +51,22 @@ papers:
         published: "Proceedings of the 13th International Conference on Learning Representations (Spotlight)"
 
     workshop:
+
+      - title: "Elucidating the Design Space of FP4 training"
+        url: https://arxiv.org/abs/2509.17791
+        date: 2025-09-22
+        area: [low-precision]
+        authors: "Robert Hu, Carlo Luschi, Paul Balança"
+        abstract: "The increasing computational demands of foundation models have spurred research into low-precision training, with 4-bit floating-point (FP4) formats emerging as a frontier for maximizing hardware throughput. While numerous techniques have been proposed to stabilize FP4 training, they often present isolated solutions with varying, and not always clear, computational overheads. This paper aims to provide a unified view of the design space of FP4 training. We introduce a comprehensive, quantisation gradient-based framework for microscaling quantization that allows for a theoretical analysis of the computational costs associated with different stabilization methods on both the forward and backward passes. Using a simulator built on this framework, we conduct an extensive empirical study across a wide range of machine learning tasks, including regression, image classification, diffusion models, and language models. By systematically evaluating thousands of combinations of techniques, such as novel gradient approximations, rounding strategies, and scaling methods, we identify which configurations offer the most favourable performance-to-overhead trade-off. We find that the techniques enabling the best trade-off involve carefully combining Hadamard transformations, tensor scaling and stochastic rounding. We further find that using UE5M3 as a scaling factor potentially offers a good compromise between range and precision with manageable computational overhead."
+        published: "arXiv Preprint"
+
+      - title: "KNARsack: Teaching Neural Algorithmic Reasoners to Solve Pseudo-Polynomial Problems"
+        url: https://arxiv.org/abs/2509.15239
+        date: 2025-09-17
+        area: [gnns]
+        authors: "Stjepan Požgaj, Dobrik Georgiev, Marin Šilić, Petar Veličković"
+        abstract: "Neural algorithmic reasoning (NAR) is a growing field that aims to embed algorithmic logic into neural networks by imitating classical algorithms. In this extended abstract, we detail our attempt to build a neural algorithmic reasoner that can solve Knapsack, a pseudo-polynomial problem bridging classical algorithms and combinatorial optimisation, but omitted in standard NAR benchmarks. Our neural algorithmic reasoner is designed to closely follow the two-phase pipeline for the Knapsack problem, which involves first constructing the dynamic programming table and then reconstructing the solution from it. The approach, which models intermediate states through dynamic programming supervision, achieves better generalization to larger problem instances than a direct-prediction baseline that attempts to select the optimal subset only from the problem inputs."
+        published: "arXiv Preprint"
 
       - title: "Optimal Formats for Weight Quantisation"
         url: https://arxiv.org/abs/2505.12988

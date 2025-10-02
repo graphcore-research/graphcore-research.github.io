@@ -4,8 +4,8 @@
 #   Changing the label will re-show the notice
 #   Clearing cookies will re-show the notice
 #
-top_notice_text: "Graphcore Research is hiring!"
-top_notice_label: "hiring"
+top_notice_text: ""              # "Graphcore Research is hiring!"
+top_notice_label: ""             # "hiring"
 top_notice_expiry_ms: 604800000  # 1 week (ms)
 ---
 
@@ -24,7 +24,7 @@ top_notice_expiry_ms: 604800000  # 1 week (ms)
     <script>
         // .top-notice
         const topNoticeLabel = "{{ layout.top_notice_label }}";
-        const topNoticeExpiryMs = {{layout.top_notice_expiry_ms}};
+        const topNoticeExpiryMs = {{ layout.top_notice_expiry_ms | default: 0 }};
         function showTopNotice(s) {
             for (const element of document.querySelectorAll(".top-notice,.top-notice-spacer")) {
                 element.style.display = s;
