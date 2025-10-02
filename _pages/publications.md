@@ -25,7 +25,6 @@ function filterPapersByArea(area) {
         }
         total++;
     });
-    console.log(showingYears);
     document.querySelectorAll(".paper-sep-year").forEach((e) => {
         if (showingYears.has(e.innerText)) {
             e.style.display = "block";
