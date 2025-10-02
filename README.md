@@ -49,6 +49,10 @@ The "Running Locally" section above enables a local preview. One can also view a
 
 The link to this preview can be found on the page https://github.com/graphcore-research/graphcore-research.github.io-internal/settings/pages. Note that in the "Build and deployment" section the branch used can be changed from main to the user's chosen branch, which can be useful for e.g. sharing a preview of a branch with others.
 
+## Hiring banner
+
+Set `top_notice_text` and `top_notice_label` in ![default.html](_layouts/default.html) to enable the "we're hiring" banner.
+
 ## License
 
 Copyright (c) 2024 Graphcore Ltd. Licensed under the MIT License.
