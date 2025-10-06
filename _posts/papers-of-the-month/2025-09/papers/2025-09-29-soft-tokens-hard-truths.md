@@ -18,12 +18,6 @@ review_author:
 hidden: true
 ---
 
-[200 words is a rough guide for the length of a summary.
-Feel free to go a fair bit over or under if needs be.
-The editor will fix any issues with images being rendered too wide/narrow etc.
-See README for how to view locally if you wish to (not required. Contact CB if this
-is broken for you.)]
-
 ### The key idea
 
 Over the course of the last year, a number of works have investigated "latent reasoning",
@@ -63,16 +57,19 @@ The authors considered chain-of-thought models with the following paradigms:
     - **Soft tokens**: using the output probability distribution to weight the input embeddings (softmax temperature = $0.5$).
     - **Fuzzy tokens**: Similar to soft tokens, but with a softmax temperature $0.0001$, which makes them very close to hard tokens, before adding Gaussian noise.
 - _For inference_:   
-    - **Hard tokens**: the conventional LLM generation approach in which tokens from the vocabulary are sampled.
-    - **Soft tokens**: using the output probability distribution to weight the input embeddings (softmax temperature = $0.5$).
-    - **Fuzzy tokens**: Similar to soft tokens, but with a softmax temperature $0.0001$, which makes them very close to hard tokens, before adding Gaussian noise.
+    - **Hard Greedy**: discrete tokens, CoT temperature $\tau=0.0$ at test time
+    - **Hard Sample**: discrete tokens, CoT temperature $\tau=1.0$ at test time
+    - **Soft Greedy**: Gaussian scale $0.0$, CoT temperature $\tau=0.5$ at test time
+    - **Soft Sample**: Gaussian scale $\sigma=0.33 *$ RMSNorm of embeddings, CoT temperature $\tau=0.5$ at test time
+    - **Fuzzy Greedy**: Gaussian scale $0.0$, CoT temperature $\tau=0.0001$ at test time
+    - **Fuzzy Sample**: Gaussian scale $\sigma=0.33 *$ RMSNorm of embeddings, CoT temperature $\tau=0.0001$ at test time
+
+Base models include Llama 3.2 3B Instruct, Llama 3.1 8B Instruct, and Qwen 2.5 3B Instruct, trained on math reasoning datasets GSM8K, MATH and DeepScaleR. Test performance was evaluated on GSM8K, OlympiadBench, and the MATH-500 subset of the MATH test set.
+
+<img src="{{ page.image_dir | append: 'results-gsm8k.png' | relative_url }}" alt="GSM8K results">
+
+The results found that, across datasets and models, the three training schemes were broadly comparable with evaluating pass@$1$ performance. However, when considering pass@$32$ performance, soft and fuzzy training attain a superior performance. They also find that soft and fuzzy training is better when inferring on out-of-distribution data. For inference, the authors found that hard inference attains the best performance in general, regardless of the training scheme.
 
 
-
-
-
-...
-
-### [optional] Takeaways
-
-...
+### Conclusion
+Soft Tokens, Hard Truths introduces a framework for using SOTA RL algorithms in a continuous thought paradigm. Their results demonstrate the benefits of continuous thoughts during training, however the observation that sampling during inference is better is a somewhat surprising result; we will be keenly watching this space as the community better understands this behaviour, and continues to advance the field of latent reasoning.
