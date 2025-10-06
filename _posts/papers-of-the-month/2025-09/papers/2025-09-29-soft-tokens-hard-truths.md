@@ -26,7 +26,7 @@ is broken for you.)]
 
 ### The key idea
 
-Over the course of the last year, a number of works have investigated ``latent reasoning'',
+Over the course of the last year, a number of works have investigated "latent reasoning",
 in which reasoning tokens are represented in some continuous latent space, rather than a 
 specific token in the language vocabulary. Many of these works require implementation
 schemes that are difficult to scale (such as [Coconut](https://arxiv.org/abs/2412.06769))
@@ -37,49 +37,39 @@ leading post-training methods for improving reasoning performance.
 
 In **Soft Tokens, Hard Truths**, the authors propose a simple and scalable method to implement
 continuous thoughts which integrates with RL training schemes. They use this to explore
-difference configurations of ``soft'' continious tokens and ``hard'' 
+difference configurations of "soft" continious tokens and "hard" sampled tokens in both
+training and inference. 
 
+<img src="{{ page.image_dir | append: 'schematic.png' | relative_url }}" alt="Soft Tokens schematic for generating with hard, soft, or fuzzy tokens">
+<figcaption>
+Figure 1. Hard, fuzzy and soft generation during CoT phase. In hard generation, at each time step, a discrete token $CoT_t$ is sampled from the probability vector $p_{t−1}$ and its embedding $h^0_{CoT1}$ is passed to the transformer, generating a sequence of discrete CoT tokens: $CoT_1, ..., CoT_T$ over time. In fuzzy and soft generation, at each time step, noise, $\epsilon_t$, is injected into the probability weighted mixture embedding, $h^t_0 = p_{t−1}E$, where E is the token embedding matrix. This noisy input embedding is passed to the transformer, generating a sequence of continuous noisy CoT embeddings: $\tilde{h}^0_{CoT_1}, ..., \tilde{h}^0_{CoT_T}$ over time. Additionally, for fuzzy generation, the temperature $\tau$ used in the CoT phase tends to $0$, such that the non-noisy embeddings $h_0$ reduce to embeddings of discrete tokens. We find that the combination of soft/fuzzy training and hard inference performs universally best, matching hard training at pass@1 and surpassing it at pass@$32$, indicating better preservation of diversity.
+</figcaption>
 
-
-A few sentences outlining why the paper is interesting...
-
-Add images where appropriate throughout. This section should always
-have at least 1 key figure though.
-
-*Please use high-res images (zoom in for those screenshots!) The editor will *
-
-![A specific and succinct sentence or two describing the figure 1 (alt text). Valuable for seo and accessibility.](example_upload/figure_1.png)
-<figcaption>Figure 1a. If the caption isn't included in the image, it should be added like so.</figcaption>
-
-### [optional] Background
-
-If necessary, a short intro to background matierial needed to understand the method
 
 ### Their method
 
-Latex can be included in the standard way, either inline: $R=\sum _{t=0}^{\infty }\gamma ^{t}r_{t}$
+One approach to obtain continuous tokens from a pre-trained LLMs is by using the final softmax from the previous forward pass. Instead of sampling from the probability distribution to determine the next token (which is subsequently fed into the model as the input in the next forward pass), the probability distribution can be used as weights to make a probability-weighted average of the input embeddings to create a "soft token". On the next forward pass, we can skip the
+initial embedding layer, and instead pass the soft token straight into the LLM. Works such as [Soft Thinking](https://arxiv.org/abs/2505.15778) have found that pre-trained models are fairly robust to this sort of interpolation, and are able to obtain good task performance without any additional training.
 
-Or as a block:
+SOTA reinforcement learning approaches such as GRPO rely on generating several reasoning traces and answers, which are then used to determine _advantages_ which provide the signal used for backpropoagation. The challenge with soft tokens is that, because reasoning tokens are now no longer sampled (but rather deterministic interpolations of the input embedding space), there is no diversity across reasoning traces. This greatly limits the exploration that RL fine-tuning methods require. To address this, the authors propose injecting random noise on the input embeddings. This allows different rollouts to have different trajectories, greatly improving the exploration for RL to learn from.
 
-$$
-Q_{t+1}^{A}(s_{t},a_{t})=Q_{t}^{A}(s_{t},a_{t})+\alpha _{t}(s_{t},a_{t})\left(r_{t}+\gamma Q_{t}^{B}\left(s_{t+1},\mathop {\operatorname {arg~max} } _{a}Q_{t}^{A}(s_{t+1},a)\right)-Q_{t}^{A}(s_{t},a_{t})\right).
-$$
-
-Code can also be included in the standard way:
-
-```
-import popart
-
-builder = popart.Builder()
-
-# Build a simple graph
-i1 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-i2 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32]))
-
-o = builder.aiOnnx.add([i1, i2])
-```
 
 ### Results
+
+The authors considered chain-of-thought models with the following paradigms:
+
+- _For training_:   
+    - **Hard tokens**: the conventional LLM generation approach in which tokens from the vocabulary are sampled.
+    - **Soft tokens**: using the output probability distribution to weight the input embeddings (softmax temperature = $0.5$).
+    - **Fuzzy tokens**: Similar to soft tokens, but with a softmax temperature $0.0001$, which makes them very close to hard tokens, before adding Gaussian noise.
+- _For inference_:   
+    - **Hard tokens**: the conventional LLM generation approach in which tokens from the vocabulary are sampled.
+    - **Soft tokens**: using the output probability distribution to weight the input embeddings (softmax temperature = $0.5$).
+    - **Fuzzy tokens**: Similar to soft tokens, but with a softmax temperature $0.0001$, which makes them very close to hard tokens, before adding Gaussian noise.
+
+
+
+
 
 ...
 
