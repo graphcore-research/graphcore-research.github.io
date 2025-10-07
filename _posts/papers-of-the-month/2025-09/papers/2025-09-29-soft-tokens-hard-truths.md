@@ -31,7 +31,7 @@ leading post-training methods for improving reasoning performance.
 
 In **Soft Tokens, Hard Truths**, the authors propose a simple and scalable method to implement
 continuous thoughts which integrates with RL training schemes. They use this to explore
-difference configurations of "soft" continious tokens and "hard" sampled tokens in both
+different configurations of "soft" continuous tokens and "hard" sampled tokens in both
 training and inference. 
 
 <img src="{{ page.image_dir | append: 'schematic.png' | relative_url }}" alt="Soft Tokens schematic for generating with hard, soft, or fuzzy tokens">
@@ -45,7 +45,7 @@ Figure 1. Hard, fuzzy and soft generation during CoT phase. In hard generation, 
 One approach to obtain continuous tokens from a pre-trained LLMs is by using the final softmax from the previous forward pass. Instead of sampling from the probability distribution to determine the next token (which is subsequently fed into the model as the input in the next forward pass), the probability distribution can be used as weights to make a probability-weighted average of the input embeddings to create a "soft token". On the next forward pass, we can skip the
 initial embedding layer, and instead pass the soft token straight into the LLM. Works such as [Soft Thinking](https://arxiv.org/abs/2505.15778) have found that pre-trained models are fairly robust to this sort of interpolation, and are able to obtain good task performance without any additional training.
 
-SOTA reinforcement learning approaches such as GRPO rely on generating several reasoning traces and answers, which are then used to determine _advantages_ which provide the signal used for backpropoagation. The challenge with soft tokens is that, because reasoning tokens are now no longer sampled (but rather deterministic interpolations of the input embedding space), there is no diversity across reasoning traces. This greatly limits the exploration that RL fine-tuning methods require. To address this, the authors propose injecting random noise on the input embeddings. This allows different rollouts to have different trajectories, greatly improving the exploration for RL to learn from.
+SOTA reinforcement learning approaches such as GRPO rely on generating several reasoning traces and answers, which are then used to determine _advantages_ which provide the signal used for backpropagation. The challenge with soft tokens is that, because reasoning tokens are now no longer sampled (but rather deterministic interpolations of the input embedding space), there is no diversity across reasoning traces. This greatly limits the exploration that RL fine-tuning methods require. To address this, the authors propose injecting random noise on the input embeddings. This allows different rollouts to have different trajectories, greatly improving the exploration for RL to learn from.
 
 
 ### Results
