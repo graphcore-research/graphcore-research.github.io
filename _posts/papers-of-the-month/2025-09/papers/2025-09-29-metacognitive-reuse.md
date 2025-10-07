@@ -38,13 +38,13 @@ hidden: false
 According to Didolkar et al., this is the key lesson we should teach LLMs. Why?
 The authors have observed that while rapid progress in the performance of
 Chain-of-Thought approaches has been made, this has also led to an
-effectiveness/efficiency decline. From where? Because **the LLMs re-derives
+effectiveness/efficiency decline. From where? Because **the LLMs re-derive
 knowledge from scratch too often**, resulting in less room for exploration and
 larger token output.
 
 
 The proposed remedy is _metacognitive reuse_. Instead of providing a set of
-facts/rules, we let the LLMs synthesise their own _behaviours_. Those are
+facts/rules, we let the LLMs synthesise their own _behaviours_. These are
 concise pieces of knowledge, reusable across questions/datasets and models.
 
 <!-- A few sentences outlining why the paper is interesting... -->
@@ -63,7 +63,7 @@ concise pieces of knowledge, reusable across questions/datasets and models.
 **Behaviour Curation Pipeline (left)**: All the 3 stages of behaviour curation
 pipeline: _solution_, _reflection_, _extraction_. LLM A is referred to as the
 <tt>Metacognitive Strategist</tt>. **Reasoning with behaviours (right; in
-gray)**: The three proposed ways to utilize behaviours -- inference,
+gray)**: The three proposed ways to utilise behaviours -- inference,
 self-improvement and supervised fine-tuning (SFT). LLM B and LLM C are a
 student and teacher LLMs respectively.
 
