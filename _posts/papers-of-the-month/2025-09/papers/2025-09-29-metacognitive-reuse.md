@@ -113,7 +113,7 @@ set of behaviours, which are to be appended to the behaviour handbook.
 
 
 Out of the three prompts, perhaps the most insightful is the reflection prompt.
-Behavour is defined there as "a note or skill", which "can be a strategy, a
+Behaviour is defined there as "a note or skill", which "can be a strategy, a
 trick, or a technique", or "it can also be a general rule or a commonsense
 principle", and, most importantly, **"is not a solution to the problem, but can
 be used to solve it"**. Correctness analysis prompting aside, the authors
@@ -127,7 +127,7 @@ Such an approach, however, would bloat the number of input tokens and, as a
 result, have higher cost than CoT. The authors also note this: instead of
 feeding in all behaviours, for a question $Q_i$, a subset of behaviours $B_i$
 is retrieved and the solution $S_i$ is generated based on the $(B_i, Q_i)$
-pair. The retreival function depends on the dataset -- topic-matching is used for
+pair. The retrieval function depends on the dataset -- topic-matching is used for
 MATH, FAISS top-40 cosine similarity lookup for AIME.
 
 When it comes to Behaviour-guided self-improvement, there is some confusion
@@ -263,7 +263,7 @@ I would estimate the reduction to be 10-15%.
 
 ### Takeaways
 
-So, what score would the Reveiwer #2 inside me give? Despite my initial hopes,
+So, what score would the Reviewer #2 inside me give? Despite my initial hopes,
 I am leaning towards rejection. The idea of metacognitive-reuse seems novel and
 exciting enough for me, but the experiments execution is a bit flawed. The
 authors discuss the efficiency implications of having a larger input but:
@@ -278,6 +278,6 @@ authors discuss the efficiency implications of having a larger input but:
   question (requires 3 prompts; cache hits unlikely)?
 * Never compare to other, non-prompting, test-time compute scaling techniques,
   such as [latent reasoning](https://arxiv.org/pdf/2507.06203) -- if latent
-  reasoning is both cheaper/more accurate, then the abovfe approach is
+  reasoning is both cheaper/more accurate, then the above approach is
   obsolete. I am not certain that this will be the case, but I call for a
   comparison.
