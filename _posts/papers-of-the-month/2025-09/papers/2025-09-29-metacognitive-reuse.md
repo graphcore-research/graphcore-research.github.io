@@ -94,7 +94,7 @@ computation required is even higher.
 ### Their method
 
 **Behaviour curation** &ensp; There is a lack of formal definition of
-behaviour. With the risk of repeating myself, authors define it _in the main
+behaviour. At the risk of repeating myself, authors define it _in the main
 text_ as "a reusable skill---concise piece of knowledge---distilled from an
 LLM's chain of thought" (p.4). E.g.:
 
