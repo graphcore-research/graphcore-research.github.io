@@ -20,7 +20,7 @@ image_dir: "/assets/images/posts/2025-09/potm/metacognitive-reuse/"
 review_author:
     name: "Dobrik Georgiev"
     link: "https://x.com/DobrikG"
-hidden: false
+hidden: true
 ---
 
 <!-- [200 words is a rough guide for the length of a summary. -->
