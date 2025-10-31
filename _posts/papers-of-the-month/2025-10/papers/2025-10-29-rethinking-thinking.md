@@ -10,7 +10,7 @@ tags:   # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2025
 potm_month: 10
 paper_order: 0  # Editor will decide
-image_dir: "/assets/images/posts/2025-10/potm/rethinking-thinking"
+image_dir: "/assets/images/posts/2025-10/potm/rethinking-thinking/"
 review_author:
     name: "Sam Olesker-Taylor"
     link: "https://www.linkedin.com/in/sam-olesker-taylor/"
