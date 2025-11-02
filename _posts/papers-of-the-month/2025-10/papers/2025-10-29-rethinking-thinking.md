@@ -35,12 +35,12 @@ The authors measure accuracy vs *sequential budget*, which is a proxy for latenc
 
 The standard approach to scaling LLMs to solve harder problems is to give them a greater inference budget: they think for longer and longer, exploring different solution strategies. This is highly unsatisfying due to the quadratic scaling of compute with context length. LLMs may even struggle to 'find' the correct information inside their long reasoning traces—if it even exists.
 
-*Latent reasoning*, in which non-language 'tokens' are used, is often employed to address this: these tokens are supposed to be more 'expressive', meaning fewer are needed. The current paper takes a very different approach, giving the LLM a *bounded workspace* to suggest new ideas.
+*Latent reasoning*, in which non-language 'tokens' are used, is often employed to address this: these tokens are supposed to be more 'expressive' than tokens representing natural language, meaning fewer are needed. The current paper takes a very different approach, giving the LLM a *bounded workspace* to suggest new ideas.
 
 
 ### Their Method
 
-The primary tool introduced is *Parallel-Distill-Refine* (PDR).
+The primary tool introduced is *Parallel-Distill-Refine* (PDR). For multiple rounds, PDR performs the following steps with the output of each round seeding the next:
 
 1.  Generate $M \ge 1$ diverse drafts in parallel.
 2.  Distil them into a *bounded* workspace: e.g., summarise or pick the top-$k$ drafts.
