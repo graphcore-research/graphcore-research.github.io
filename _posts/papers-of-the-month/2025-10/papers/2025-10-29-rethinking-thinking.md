@@ -9,7 +9,7 @@ tags:   # Use https://graphcore-research.github.io/tags/ as reference
     - reinforcement-learning
 potm_year: 2025
 potm_month: 10
-paper_order: 0  # Editor will decide
+paper_order: 1  # Editor will decide
 image_dir: "/assets/images/posts/2025-10/potm/rethinking-thinking/"
 review_author:
     name: "Sam Olesker-Taylor"
@@ -35,7 +35,7 @@ The authors measure accuracy vs *sequential budget*, which is a proxy for latenc
 
 The standard approach to scaling LLMs to solve harder problems is to give them a greater inference budget: they think for longer and longer, exploring different solution strategies. This is highly unsatisfying due to the quadratic scaling of compute with context length. LLMs may even struggle to 'find' the correct information inside their long reasoning traces—if it even exists.
 
-*Latent reasoning*, in which non-language 'tokens' are used, is often employed to address this: these token are supposed to be more 'expressive', meaning fewer are needed. The current paper takes a very different approach, giving the LLM a *bounded workspace* to suggest new ideas.
+*Latent reasoning*, in which non-language 'tokens' are used, is often employed to address this: these tokens are supposed to be more 'expressive', meaning fewer are needed. The current paper takes a very different approach, giving the LLM a *bounded workspace* to suggest new ideas.
 
 
 ### Their Method
@@ -43,10 +43,10 @@ The standard approach to scaling LLMs to solve harder problems is to give them a
 The primary tool introduced is *Parallel-Distill-Refine* (PDR).
 
 1.  Generate $M \ge 1$ diverse drafts in parallel.
-2.  Distil them into a *bounded* workspace: eg, summarise or pick the top-$k$ drafts.
+2.  Distil them into a *bounded* workspace: e.g., summarise or pick the top-$k$ drafts.
 3.  Refine answer conditional on this workspace.
 
-The overall structure is outlined in Figure 2(a) below. There are various options for "distil", as outlined in Figure 2(b). If no parallelisation is utilised (ie, $M = 1$), PDR becomes *Sequential-Refine* (SR).
+The overall structure is outlined in Figure 2(a) below. There are various options for "distil", as outlined in Figure 2(b). If no parallelisation is utilised (i.e., $M = 1$), PDR becomes *Sequential-Refine* (SR).
 
 <img src="{{ page.image_dir | append: 'figure_2.png' | relative_url }}" alt="Parallel-Distill-Refine overview">
 
@@ -74,4 +74,4 @@ The results on AIME 2025 (Figure 9 in their appendix, not repeated here) show si
 
 Unfortunately, no particularly satisfactory plots are given using the *total* budget. Figures 4 and 10 give some indication, but the CoT models are always given far less total budget. This is natural since they have no inherent parallelisation. Still, *some* information can be gleaned from these.
 
-Other experiments include comparing distillation methods and varying the architecture for a given *total* budget—eg, 'deep & narrow' (generate few in parallel and repeat many times) versus 'shallow and wide' (generate many in parallel and repeat few times).
+Other experiments include comparing distillation methods and varying the architecture for a given *total* budget—e.g., 'deep & narrow' (generate few in parallel and repeat many times) versus 'shallow and wide' (generate many in parallel and repeat few times).
