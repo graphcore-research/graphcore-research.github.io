@@ -34,7 +34,7 @@ During the diffusion phase, the sequences $x(k)$ corresponding to each span $k \
 The full joint distribution given context $c$ is defined as
 <div>
 $$p_{PD}(x, z \mid c) = p_{AR}(z \mid c), p_{D}(x \mid z, c) = p_{AR}(z \mid c) \prod_{k=1}^{b(z)} p_{D}(x(k) \mid z, c),$$
-<div>
+</div>
 where $x = \bigcup_{k=1}^{b(z)} x(k)$.
 
 <img src="{{ page.image_dir | append: 'algo.png' | relative_url }}" alt="Planned diffusion pseudo-code.">
@@ -52,7 +52,7 @@ $$
 	•	\frac{1}{t}, \mathbb{1}(y_i \in X), CE\big(f_\theta(M_i(Y_t), i), y_i\big)
 \Big]
 $$
-<div>
+</div>
 where $Y_t = X_t \cup Z$ and $X_t$ denotes the noised sequence under the discrete diffusion process.
 The first term in the sum corresponds to the autoregressive loss, while the second term corresponds to the diffusion loss.
 
