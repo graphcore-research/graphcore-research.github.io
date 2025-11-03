@@ -60,8 +60,6 @@ The first term in the sum corresponds to the autoregressive loss, while the seco
 
 
 #### Data
-A synthetic data curation pipeline producing text annotated with planning control tags using Gemini to annotate the SlimOrca instruction–finetuning dataset.
-
 A synthetic data curation pipeline produces training data annotated with planning control tags, using Gemini to label the SlimOrca instruction-finetuning dataset.
 
 #### Inference
