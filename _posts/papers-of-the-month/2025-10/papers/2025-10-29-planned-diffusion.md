@@ -33,7 +33,7 @@ It specifies a set of $b(z)$ semantically independent spans as well as the lengt
 During the diffusion phase, the sequences $x(k)$ corresponding to each span $k \in {1, \ldots, b(z)}$ with $|x(k)| = l_k(z)$ are generated in parallel.
 The full joint distribution given context $c$ is defined as
 <div>
-$$p_{PD}(x, z \mid c) = p_{AR}(z \mid c), p_{D}(x \mid z, c) = p_{AR}(z \mid c) \prod_{k=1}^{b(z)} p_{D}(x(k) \mid z, c),$$
+$$p_{PD}(x, z \mid c) = p_{AR}(z \mid c) p_{D}(x \mid z, c) = p_{AR}(z \mid c) \prod_{k=1}^{b(z)} p_{D}(x(k) \mid z, c),$$
 </div>
 where $x = \bigcup_{k=1}^{b(z)} x(k)$.
 
