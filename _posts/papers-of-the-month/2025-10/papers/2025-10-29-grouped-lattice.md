@@ -59,7 +59,7 @@ where $\mu > 0$ is a learned parameter per group. For example, for various $\mu$
 
 <img src="{{ page.image_dir | append: 'companding.png' | relative_url }}" class="constrained_img_small" alt="Plot of companding function for various mu values, showing increasing nonlinearity as mu increases.">
 
-**4. Lattice vector quantisation** Finally, split each group into vectors (e.g. size 8), and quantise each vector by rounding to the (approximate) nearest point on a learned lattice. The lattice is defined by a basis matrix $G$ (size $8 \times 8$ in this example), which is trained using an alternating scheme: first fixing $G$ and optimising the integer indices using the Babai closest-vector algorithm, then fixing the integer indices and optimising $G$ with gradient descent.
+**4. Lattice vector quantisation** Finally, split each group into vectors (e.g. size 8), and quantise each vector by rounding to the (approximate) nearest point on a learned lattice. The lattice is defined by a basis matrix $G$ (size $8 \times 8$ in this example) as $\\{Gz \| z\in \text{int}\\{b\\}^8\\}$, which is trained using an alternating scheme: first fixing $G$ and optimising the integer indices using the Babai closest-vector algorithm, then fixing the integer indices and optimising $G$ with gradient descent.
 
 Putting everything together, the quantisation procedure for a group of weights follows:
 
