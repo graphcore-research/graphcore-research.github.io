@@ -18,7 +18,7 @@ hidden: true
 
 ### The key idea
 
-Introduces grouped lattice vector quantisation (GLVQ), a weight quantisation technique that splits weight tensors into groups, selects a bit width for each group based on a local importance score, compresses their range using a _companding_ nonlinearity, then splits groups into vectors, before rounding to a lattice. The companding function and lattice basis matrix both are trained with a short run on calibration data. This is illustrated below.
+The paper introduces grouped lattice vector quantisation (GLVQ), a weight quantisation technique that splits weight tensors into groups, selects a bit width for each group based on a local importance score, compresses their range using a _companding_ nonlinearity, then splits groups into vectors, before rounding to a lattice. The companding function and lattice basis matrix both are trained with a short run on calibration data. This is illustrated below.
 
 <img src="{{ page.image_dir | append: 'fig1.png' | relative_url }}" class="constrained_img_large" style="max-width: 700px" alt="Four-step GLVQ framework: from the LLM weight matrix, 1) divide into groups, 2) allocate bit-width to each group based on salience, 3) apply elementwise group-specific companding functions and 4) encode by rounding to a lattice.">
 
@@ -47,7 +47,7 @@ The quantisation procedure follows four steps:
 
 **2. Salience-determined bit allocation** Based on activations from calibration data, choose bit-widths per weight group to minimise the local objective $D_{\text{KL}}(\mathrm{Softmax}(W x) \,\|\|\, \mathrm{Softmax}(\hat{W}x))$, where $W$ is the original weight, quantised to $\hat{W}$ and $x$ is a calibration input. E.g. if the _average_ bit width target is 2 bits/param, more sensitive groups might be allocated 3 bits/param, and less sensitive groups 1 bit/param.
 
-**3. Companding** Since the quantiser in the following step is linear, it is helpful to first compress the range of weights. Use a _companding function_ (elementwise nonlinarity), defined as:
+**3. Companding** Since the quantiser in the following step is linear, it is helpful to first compress the range of weights. Use a _companding function_ (elementwise nonlinearity), defined as:
 
 <div>
 $$
