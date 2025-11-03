@@ -19,15 +19,17 @@ hidden: true
 
 ### The key idea
 
-The authors take a systematic study into understanding the effectiveness of LLM-based graph learning on text-attributed graphs (TAGs). To that end, they use a standard approach to LLM-based graph learning: they provide as input to the LLM a description of the task and the encoded graph structure (encoded using a GNN or a template-based method). See Figure 1 for an illustration of the pipeline. In particular, the following is an example of a prompt used for the task of node classification on the Cora dataset:
+The authors take a systematic study into understanding the effectiveness of strategies to encode text-attributed graphs (TAGs) for using in LLMs. To that end, they compare standard approaches to LLM-based graph learning: they provide as input to the LLM a description of the task and the graph structure, encoded using either a GNN, an MLP or a template-based method. See Figure 1 for an illustration of the pipeline. 
+
+<img src="{{ page.image_dir | append: 'figure_3.png' | relative_url }}" alt="Figure 1. A high-level overview of LLM-based graph learning. The left shows examples of the graph structures that are represented. The middle illustrates both template-based and generic GNN-based methods. The right outlines the pipeline to align the graph's structure into LLMs.">
+<figcaption>Figure 1. A high-level overview of LLM-based graph learning. The left shows examples of the graph structures that are represented. The middle illustrates both template-based and generic GNN-based methods. The right outlines the pipeline to align the graph's structure into LLMs.</figcaption>
+
+In particular, the following is an example of a prompt used for the task of node classification on the Cora dataset:
 
 <blockquote>Given a node-centered graph: < graph >, each node represents a paper, we need to
 classify the center node into 7 classes: Case Based, Genetic Algorithms, Neural Networks,
 Probabilistic Methods, Reinforcement Learning, Rule Learning, Theory, please tell me which
 class the center node belongs to?</blockquote>
-
-<img src="{{ page.image_dir | append: 'figure_3.png' | relative_url }}" alt="Figure 1. A high-level overview of LLM-based graph learning. The left shows examples of the graph structures that are represented. The middle illustrates both template-based and generic GNN-based methods. The right outlines the pipeline to align the graph's structure into LLMs.">
-<figcaption>Figure 1. A high-level overview of LLM-based graph learning. The left shows examples of the graph structures that are represented. The middle illustrates both template-based and generic GNN-based methods. The right outlines the pipeline to align the graph's structure into LLMs.</figcaption>
 
 <!-- ### Background
 Graph learning offers methods for modeling relational and structural data 
@@ -36,14 +38,16 @@ Maybe write about LLaGA and GraphToken if time allows... -->
 
 ### Their method and results
 
-The authors consider the graph-based tasks of node classification, link prediction and molecular property prediction. Although node classification and link prediction are natural tasks on graphs, these tasks on TAGs are often correlated with node descriptions. Therefore, they also include molecular property prediction which is known to rely more on the intrinsic graph structure of the molecule.
+The authors consider the graph-based tasks of node classification, link prediction and molecular property prediction. While node classification and link prediction on TAGs are often assisted by node descriptions, molecular property predictions rely more on the intrinsic graph structure of the molecular graph.
 
-To evaluate these tasks, the authors consider two key LLM-based graph learning techniques: (1) generic graph learning with GNNs using the [GraphToken](https://arxiv.org/abs/2402.05862) framework, and (2) templated graph learning with [LLaGA](https://arxiv.org/abs/2402.08170).
+To evaluate these tasks, the authors consider two key LLM-based graph learning techniques: 
+1. generic graph learning with GNNs using the [GraphToken](https://arxiv.org/abs/2402.05862) framework, and 
+2. templated graph learning with [LLaGA](https://arxiv.org/abs/2402.08170).
 
 #### Generic graph learning
 
 The authors use the GraphToken framework as the basis for generic structural encoding via GNNs, which follows the pipeline outlined in Figure 1. They consider several GNN backbones with this framework -- the Graph Convolutional Network (GCN), the Graph Attention Network (GAT), and the Graph Isomorphic Network (GIN) -- and compare them to a simple MLP in lieu of the GNN in this framework.
-Their results, presented in Table 1, show that the message passing protocols of GNNs do not provide a significant improvement over a simple MLP that only incorporates the graph's node textual descriptions, i.e., not the relational structure.
+Their results, presented in Table 1, show that for encoding a graph to use in an LLM, the message passing protocols of GNNs do not provide a significant improvement over a simple MLP that only incorporates the graph's node textual descriptions.
 
 <img src="{{ page.image_dir | append: 'figure_1.png' | relative_url }}" alt="Figure 1. Tables evaluating the effectiveness of message passing in GNNs compared to a simple MLP baseline. GNNs are at best marginally better for node classification, link prediction, and molecular property prediction.">
 <figcaption>Table 1. These tables evaluate the effectiveness of message passing in GNNs compared to a simple MLP baseline in the LLM-based graph learning pipeline. <bold>Best</bold> results are bolded and <underline>second best</underline> results are underlined.</figcaption>
@@ -55,4 +59,4 @@ The authors use LLaGA's framework as the basis for templated structural encoding
 <figcaption>Table 2. This table evaluates the effectiveness of templated graph learning using full (ND), limited (HN), and no (CO) graph structure representation in the LLM-based graph learning pipeline. <bold>Best</bold> results are bolded.</figcaption>
 
 ### Conclusion
-In this blog post, we have reviewed a subset of results presented by the authors (do check out their paper for other results). These results show that for node classification, link prediction, and molecular property prediction, providing an LLM with the encoding of only the node textual descriptions has comparable results (and better in some cases) to providing it with the encoding of the graph structure using known methods. This highlights the already good performance of LLMs for graph learning tasks on TAGs. Furthermore, it raises the question of the effectiveness of current methods for encoding graph structure for LLM-based graph learning.
+In this blog post, we have reviewed a subset of results presented by the authors (do check out their paper for other results). These results show that for node classification, link prediction, and molecular property prediction, providing an LLM with the encoding of only the node textual descriptions has comparable results (and better in some cases) to providing it with the encoding of the graph structure using known methods. This highlights the already good performance of LLMs for graph learning tasks on TAGs, but raises the question of the effectiveness of current methods for encoding graph structure for LLM-based graph learning.
