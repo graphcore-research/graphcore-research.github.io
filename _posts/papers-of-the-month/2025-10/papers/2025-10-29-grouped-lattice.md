@@ -1,6 +1,6 @@
 ---
 title: "Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression"
-paper_authors: "Zi Zhang, et al."
+paper_authors: "Xi Zhang, et al."
 orgs: "Nanyang Technological University, Alibaba Group, Southwest Jiaotong University"
 paper_link: "https://arxiv.org/abs/2510.20984"
 tags:
