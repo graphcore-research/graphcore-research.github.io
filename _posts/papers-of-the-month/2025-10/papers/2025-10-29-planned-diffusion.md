@@ -4,9 +4,9 @@ paper_authors: "Daniel Israel, et al."
 orgs: "University of California, Los Angeles, MIT CSAIL, Google"
 paper_link: "https://arxiv.org/abs/2510.18087"
 tags:
-    - LLM
-    - Autoregressive
-    - Discrete diffusion # Use https://graphcore-research.github.io/tags/ as reference
+    - LLMs
+    - diffusion
+    - efficient-inference # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2025
 potm_month: 10
 paper_order: 1  # Editor will decide
