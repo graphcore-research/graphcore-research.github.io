@@ -57,7 +57,7 @@ Importantly, whilst *total compute* is affected by the number of drafts generate
 
 ### Results
 
-The main result of the paper is shown in Figure 3 below. It compares the performances at matched *sequential* token budget $B_\textsf{seq}$. The figure is given first, then key aspects are summarised in a table below.
+The main result of the paper is shown in Figure 3 below. It compares the performances at matched *sequential* thinking budget $B_\textsf{seq}$. The figure is given first, then key aspects are summarised in a table below.
 
 <img src="{{ page.image_dir | append: 'figure_3.png' | relative_url }}" alt="Results on AIME 2024">
 
