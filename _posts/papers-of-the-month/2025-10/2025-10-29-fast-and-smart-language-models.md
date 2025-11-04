@@ -5,7 +5,7 @@ header:
     image: /assets/images/posts/2025-10/potm/twitter_card.png
     og_image: /assets/images/posts/2025-10/potm/twitter_card.png
 
-date: 2025-10-29T01:00:00-00:00
+date: 2025-11-04T01:00:00-00:00
 potm_year: 2025
 potm_month: 10
 
