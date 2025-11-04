@@ -9,7 +9,7 @@ tags:
     - graph-learning
 potm_year: 2025
 potm_month: 10
-paper_order: 1  # Editor will decide
+paper_order: 4  # Editor will decide
 image_dir: "/assets/images/posts/2025-10/potm/structure-does-not-help/"
 review_author:
     name: "Kheeran K. Naidu"

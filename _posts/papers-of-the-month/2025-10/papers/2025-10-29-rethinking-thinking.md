@@ -9,7 +9,7 @@ tags:   # Use https://graphcore-research.github.io/tags/ as reference
     - reinforcement-learning
 potm_year: 2025
 potm_month: 10
-paper_order: 1  # Editor will decide
+paper_order: 3  # Editor will decide
 image_dir: "/assets/images/posts/2025-10/potm/rethinking-thinking/"
 review_author:
     name: "Sam Olesker-Taylor"

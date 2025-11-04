@@ -9,7 +9,7 @@ tags:
     - efficient-inference # Use https://graphcore-research.github.io/tags/ as reference
 potm_year: 2025
 potm_month: 10
-paper_order: 1  # Editor will decide
+paper_order: 2  # Editor will decide
 image_dir: "/assets/images/posts/2025-10/potm/planned-diffusion/"
 review_author:
     name: "Benoit Gaujac"
