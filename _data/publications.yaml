@@ -16,7 +16,7 @@ areas:
   low-precision: "Low Precision"
   sparsity: "Sparsity"
   efficient-ml: "Efficient ML"
-  gnns: "Graph Neural Networks"
+  gnns: "Graph Learning"
   physics: "Physics"
   graphics: "Graphics"
 
