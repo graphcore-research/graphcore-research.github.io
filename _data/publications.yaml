@@ -16,7 +16,7 @@ areas:
   low-precision: "Low Precision"
   sparsity: "Sparsity"
   efficient-ml: "Efficient ML"
-  gnns: "Graph Neural Networks"
+  gnns: "Graph Learning"
   physics: "Physics"
   graphics: "Graphics"
 
@@ -33,6 +33,14 @@ papers:
 
   2025:
     conference:
+
+      - title: "The Role of Graph Topology in the Performance of Biomedical Knowledge Graph Completion Models"
+        url: https://www.arxiv.org/abs/2409.04103
+        date: 2025-10-07
+        area: [gnns]
+        authors: "Alberto Cattaneo, Stephen Bonner, Thomas Martynec, Edward Morrissey, Carlo Luschi, Ian P Barrett, Daniel Justus"
+        abstract: "Knowledge Graph Completion has been increasingly adopted as a useful method for several tasks in biomedical research, like drug repurposing or drug-target identification. To that end, a variety of datasets and Knowledge Graph Embedding models has been proposed over the years. However, little is known about the properties that render a dataset useful for a given task and, even though theoretical properties of Knowledge Graph Embedding models are well understood, their practical utility in this field remains controversial. We conduct a comprehensive investigation into the topological properties of publicly available biomedical Knowledge Graphs and establish links to the accuracy observed in real-world applications. By releasing all model predictions and a new suite of analysis tools we invite the community to build upon our work and continue improving the understanding of these crucial applications."
+        published: "Bioinformatics, Volume 41, Issue 10, October 2025"
 
       - title: "On Stochastic Rounding with Few Random Bits"
         url: https://arxiv.org/abs/2504.20634
@@ -51,6 +59,14 @@ papers:
         published: "Proceedings of the 13th International Conference on Learning Representations (Spotlight)"
 
     workshop:
+
+      - title: "Ground-Truth Subgraphs for Better Training and Evaluation of Knowledge Graph Augmented LLMs"
+        url: https://arxiv.org/abs/2511.04473
+        date: 2025-11-06
+        area: [gnns]
+        authors: "Alberto Cattaneo, Carlo Luschi, Daniel Justus"
+        abstract: "Retrieval of information from graph-structured knowledge bases represents a promising direction for improving the factuality of LLMs. While various solutions have been proposed, a comparison of methods is difficult due to the lack of challenging QA datasets with ground-truth targets for graph retrieval. We present SynthKGQA, a framework for generating high-quality synthetic Knowledge Graph Question Answering datasets from any Knowledge Graph, providing the full set of ground-truth facts in the KG to reason over each question. We show how, in addition to enabling more informative benchmarking of KG retrievers, the data produced with SynthKGQA also allows us to train better models. We apply SynthKGQA to Wikidata to generate GTSQA, a new dataset designed to test zero-shot generalization abilities of KG retrievers with respect to unseen graph structures and relation types, and benchmark popular solutions for KG-augmented LLMs on it."
+        published: "arXiv Preprint"
 
       - title: "Elucidating the Design Space of FP4 training"
         url: https://arxiv.org/abs/2509.17791
@@ -104,14 +120,6 @@ papers:
         authors: "Oscar Key, Luka Ribar, Alberto Cattaneo, Luke Hudlass-Galley, Douglas Orr"
         abstract: "The nearest neighbour search problem underlies many important machine learning applications, including efficient long-context generation, retrieval-augmented generation, and knowledge graph completion. However, computing top-k exactly suffers from limited parallelism, making it inefficient for highly parallel machine learning accelerators. By relaxing the requirement that the top-k is exact, bucketed algorithms can dramatically increase parallelism by independently computing many smaller top-k operations. We explore the design choices for this class of algorithms using both theoretical analysis and empirical evaluation on downstream tasks. Our motivating examples are sparsity algorithms for language models, which often use top-k to select the most important parameters or activations. We also release a fast bucketed top-k implementation for PyTorch."
         published: "NeurIPS'24 Workshop on Adaptive Foundation Models"
-
-      - title: "The Role of Graph Topology in the Performance of Biomedical Knowledge Graph Completion Models"
-        url: https://www.arxiv.org/abs/2409.04103
-        date: 2024-09-06
-        area: [gnns]
-        authors: "Alberto Cattaneo, Stephen Bonner, Thomas Martynec, Carlo Luschi, Ian P Barrett, Daniel Justus"
-        abstract: "Knowledge Graph Completion has been increasingly adopted as a useful method for several tasks in biomedical research, like drug repurposing or drug-target identification. To that end, a variety of datasets and Knowledge Graph Embedding models has been proposed over the years. However, little is known about the properties that render a dataset useful for a given task and, even though theoretical properties of Knowledge Graph Embedding models are well understood, their practical utility in this field remains controversial. We conduct a comprehensive investigation into the topological properties of publicly available biomedical Knowledge Graphs and establish links to the accuracy observed in real-world applications. By releasing all model predictions and a new suite of analysis tools we invite the community to build upon our work and continue improving the understanding of these crucial applications."
-        published: "ICML'24 Workshop on Machine Learning for Life and Material Science: From Theory to Industry applications"
 
       - title: "Scalify: scale propagation for efficient low-precision LLM training"
         url: https://arxiv.org/abs/2407.17353
