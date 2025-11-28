@@ -4,8 +4,9 @@
 #   Changing the label will re-show the notice
 #   Clearing cookies will re-show the notice
 #
-top_notice_text: ""              # "Graphcore Research is hiring!"
-top_notice_label: ""             # "hiring"
+top_notice_text: "Graphcore Research is hiring!"
+top_notice_label: "hiring"
+top_notice_link: "https://grnh.se/26flvuyo2us"
 top_notice_expiry_ms: 604800000  # 1 week (ms)
 ---
 
@@ -52,7 +53,7 @@ top_notice_expiry_ms: 604800000  # 1 week (ms)
     <!-- .top-notice -->
     <div class="top-notice-spacer" style="display: none;"></div>
     <div class="top-notice" style="display: none;">
-        <a href="https://grnh.se/7120b5732us" target="_blank">{{layout.top_notice_text}}</a>
+        <a href="{{layout.top_notice_link}}">{{layout.top_notice_text}}</a>
         <span onclick="onClickHideTopNotice();">&#x2715;</span>
     </div>
     {% include_cached masthead.html %}
