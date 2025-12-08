@@ -27,7 +27,7 @@ That will show us the difference between well-tuned Adam and well-tuned second-o
 #### Background
 
 Throughout a decade of transformation in deep learning, Adam dominated as the _de facto_ default optimizer of choice for neural network training.
-Although there have been many and various optimizers proposed, Adam's combination of momentum and normalized gradients with per-parameter adaptivity proved hard to beat.
+Although there have been many and various optimizers proposed, Adam's combination of momentum and normalized gradients with per-parameter adaptivity has proven hard to beat.
 However, this status quo is being challenged: [Muon](https://kellerjordan.github.io/posts/muon/) was shown to be the most efficient optimizer for training LLMs in the [nanogpt speed-run](https://github.com/KellerJordan/modded-nanogpt), and then scaled up successfully to [16B-parameter models](https://arxiv.org/abs/2502.16982).
 In this context comes [How to Scale Second-Order Optimization](https://openreview.net/pdf?id=Ei6IsmxYrb), presented at NeurIPS 2025 in San Diego last week.
 
@@ -46,8 +46,8 @@ Taken together, these recommendations show that well-tuned Muon can train LLMs w
 
 This figure from the paper shows Adam compared to Muon for training LLaMA-architecture LLMs at 190M-1.4B parameters.
 The 'Compute Optimal' curves (with triangle markers) use fewer tokens per parameter, so the fixed compute budget can be deployed to widen the model architecture, thus leading to lower loss compared to the runs with 20 tokens per parameter (with circle markers).
-For example, the smallest compute-optimal Adam run, at ~$6 \times 10^{16}$ FLOPS, uses model width of 576, whereas the Muon run uses a width of 704.
-However, the [NeurIPS review discussion](https://openreview.net/forum?id=Ei6IsmxYrb) suggests that the FLOP count excludes the additional compute required for the Muon optimizer steps, weakening this conclusion slightly.
+For example, the smallest compute-optimal Adam run, at ~$6 \times 10^{16}$ FLOPs, uses model width of 576, whereas the Muon run uses a width of 704.
+Note that the [NeurIPS review discussion](https://openreview.net/forum?id=Ei6IsmxYrb) suggests that the FLOP count excludes the additional compute required for the Muon optimizer steps, which the [Muon blog post](https://kellerjordan.github.io/posts/muon/) estimates as an overhead of below 1% total FLOPs.
 
 <img src="{{ page.image_dir | append: 'figure_7b.png' | relative_url }}" alt="Relative amount of compute required for Muon to reach the same loss as Adam. Muon is shown to need approx. 1.4x times compute.">
 
