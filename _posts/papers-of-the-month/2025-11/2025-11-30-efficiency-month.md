@@ -1,5 +1,5 @@
 ---
-title: "November Papers: The efficiency month"
+title: "November Papers: Perspectives on efficiency"
 header:
     teaser: /assets/images/posts/2025-11/potm/twitter_card.png
     image: /assets/images/posts/2025-11/potm/twitter_card.png
@@ -17,14 +17,11 @@ toc_label: "Papers"
 toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
-November is back to a favourite of ours: efficiency. We reviewed four of our favorite papers for you in detail:
+November is back to a favourite topic of ours: efficiency. We reviewed three of our favorite papers looking on LLM efficiency from different angles:
 
-
-
-- First up, [How to Scale Second-Order Optimization](#xyz-paper1) is looking at MuP and second order optimization.
-- [Intelligence per Watt](#intelligent-per-watt) discusses our favorite metric on large language models: energy efficiency.
-- [Int vs FP](#int-vs-fp) is contributing to an old-timer in quantization: integer vs floating point formats.
-<!-- - Finally, [When Structure Doesn’t Help](#when-structure-doesnt-help-llms-do-not-read-text-attributed-graphs-as-effectively-as-we-expected) compares techniques for encoding graphs for consumption by LLMs with surprising results. -->
+- First up, [How to Scale Second-Order Optimization](#how-to-scale-second-order-optimization) is looking at optimal tuning of second order optimizers such as Muon. 
+- [Intelligence per Watt](#intelligence-per-watt-measuring-intelligence-efficiency-of-local-ai) discusses our favorite metric on large language models: energy efficiency. And how to take advantage of edge AI inference.
+- Finally, [Int vs FP](#int-vs-fp-a-comprehensive-study-of-fine-grained-low-bit-quantization-formats) is contributing to an old-timer topic in quantization: integer vs floating (block) point formats.
 
 *We hope you enjoy this month’s papers as much as we did! If you have thoughts or questions, please reach out to us at [@GCResearchTeam](https://x.com/GCResearchTeam).*  
 
