@@ -1,11 +1,11 @@
 ---
 title: "Constructing Efficient Fact-Storing MLPs for Transformers"
-paper_authors: "<Owen Dugan, et al.>"
+paper_authors: "Owen Dugan, et al."
 orgs: "Computer Science Department, Stanford University"
 paper_link: "https://www.arxiv.org/abs/2512.00207"
 tags:
     - transformers
-potm_year: <2025>
+potm_year: 2025
 potm_month: 12
 paper_order: 1  # Editor will decide
 image_dir: "/assets/images/posts/2025-12/potm/constructing-mlps/"
