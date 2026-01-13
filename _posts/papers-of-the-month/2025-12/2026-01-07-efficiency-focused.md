@@ -18,11 +18,12 @@ toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
 December capped the year with a set of insightful contributions, despite the holiday season and the busy NeurIPS period. Our team reviewed the following papers:
-<!-- Constructing Efficient Fact-Storing MLPs for Transformers -->
-- First up, [Constructing Efficient Fact-Storing MLPs for Transformers](#constructing-efficient-fact-storing-mlps-for-transformers) shows how MLP layers can be explicitly constructed as key–value stores to achieve high facts-per-parameter efficiency. 
 
 <!-- SonicMoE: Accelerating MoE with IO and Tile-aware Optimizations -->
-- Next, [SonicMoE](#sonicmoe-accelerating-moe-with-io-and-tile-aware-optimizations) tackles issues of fine-grained and sparse MoEs using hardware-aware optimizations to restore efficiency.
+- First up, [SonicMoE](#sonicmoe-accelerating-moe-with-io-and-tile-aware-optimizations) tackles issues of fine-grained and sparse MoEs using hardware-aware optimizations to restore efficiency.
+
+<!-- Constructing Efficient Fact-Storing MLPs for Transformers -->
+- Next, [Constructing Efficient Fact-Storing MLPs for Transformers](#constructing-efficient-fact-storing-mlps-for-transformers) shows how MLP layers can be explicitly constructed as key–value stores to achieve high facts-per-parameter efficiency. 
 
 <!-- Bolmo: Byteifying the Next Generation of Language Models -->
 - Finally, [Bolmo](#bolmo-byteifying-the-next-generation-of-language-models) presents a method for "byteifying" existing subword-level language models that improves character-level understanding while achieving comparable performance to subword-level models.

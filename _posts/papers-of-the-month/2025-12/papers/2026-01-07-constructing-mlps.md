@@ -7,7 +7,7 @@ tags:
     - transformers
 potm_year: 2025
 potm_month: 12
-paper_order: 1  # Editor will decide
+paper_order: 2  # Editor will decide
 image_dir: "/assets/images/posts/2025-12/potm/constructing-mlps/"
 review_author:
     name: "Johanna Vielhaben"
