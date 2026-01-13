@@ -17,7 +17,7 @@ toc_label: "Papers"
 toc_icon: "book"
 author.twitter: "GCResearchTeam"
 ---
-December capped the year with a set of insightful contributions, despite the holiday season and the busy NeurIPS period. Our team reviewed the following papers:
+Despite the holiday season and the busy NeurIPS period, December closed the year with set of insightful papers. Our team reviewed the following three papers:
 
 <!-- SonicMoE: Accelerating MoE with IO and Tile-aware Optimizations -->
 - First up, [SonicMoE](#sonicmoe-accelerating-moe-with-io-and-tile-aware-optimizations) tackles issues of fine-grained and sparse MoEs using hardware-aware optimizations to restore efficiency.
