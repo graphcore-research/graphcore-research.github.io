@@ -7,18 +7,18 @@
 #  - published -- please copy existing examples for workshops, conferences, etc.
 #  - icon      -- optional fontawesome icon
 #
-# Conference numbers:
-#   ICLR    2025 = 13th
-#   ICML    2025 = 42nd
-#   NeurIPS 2025 = 39th
+# Conference numbers (2026):
+#   ICLR    = 14th    | Proceedings of the 14th International Conference on Learning Representations
+#   ICML    = 43rd    | Proceedings of the 43rd International Conference on Machine Learning
+#   NeurIPS = 40th    | Proceedings of the 40th Conference on Neural Information Processing Systems
 
 areas:
   low-precision: "Low Precision"
   sparsity: "Sparsity"
-  efficient-ml: "Efficient ML"
   gnns: "Graph Learning"
   physics: "Physics"
   graphics: "Graphics"
+  general-ml: "General ML"
 
 papers:
 
@@ -33,6 +33,14 @@ papers:
 
   2025:
     conference:
+
+      - title: "Beyond Scalars: Concept-Based Alignment Analysis in Vision Transformers"
+        url: https://arxiv.org/abs/2412.06639
+        date: 2024-12-09
+        area: [general-ml]
+        authors: "Johanna Vielhaben, Dilyara Bareeva, Jim Berend, Wojciech Samek, Nils Strodthoff"
+        abstract: "Vision transformers (ViTs) can be trained using various learning paradigms, from fully supervised to self-supervised. Diverse training protocols often result in significantly different feature spaces, which are usually compared through alignment analysis. However, current alignment measures quantify this relationship in terms of a single scalar value, obscuring the distinctions between common and unique features in pairs of representations that share the same scalar alignment. We address this limitation by combining alignment analysis with concept discovery, which enables a breakdown of alignment into single concepts encoded in feature space. This fine-grained comparison reveals both universal and unique concepts across different representations, as well as the internal structure of concepts within each of them. Our methodological contributions address two key prerequisites for concept-based alignment: 1) For a description of the representation in terms of concepts that faithfully capture the geometry of the feature space, we define concepts as the most general structure they can possibly form - arbitrary manifolds, allowing hidden features to be described by their proximity to these manifolds. 2) To measure distances between concept proximity scores of two representations, we use a generalized Rand index and partition it for alignment between pairs of concepts. We confirm the superiority of our novel concept definition for alignment analysis over existing linear baselines in a sanity check. The concept-based alignment analysis of representations from four different ViTs reveals that increased supervision correlates with a reduction in the semantic structure of learned representations."
+        published: "Proceedings of the 39th Conference on Neural Information Processing Systems"
 
       - title: "The Role of Graph Topology in the Performance of Biomedical Knowledge Graph Completion Models"
         url: https://www.arxiv.org/abs/2409.04103
@@ -60,13 +68,29 @@ papers:
 
     workshop:
 
+      - title: "MXNorm: Reusing block scales for efficient tensor normalisation"
+        url: https://openreview.net/pdf?id=RAFywmBRDV
+        date: 2025-12-06
+        area: [low-precision]
+        authors: "Callum McLean, Luke Yuri Prince, Alexandre Payot, Paul Balanca, Carlo Luschi"
+        abstract: "The matrix multiplications which comprise the bulk of computation in deep learning are being performed in increasingly narrow-precision formats. For example, next generation AI accelerators support dot products in MXFP4, a format requiring only 4.25 bits per element. However, accelerator performance for low-precision matrix multiplication far outstrips their performance on reductions and elementwise computations that are still being performed in higher precision. In this work, we reduce the cost of normalisation tensors by approximating the RMSNorm of an MXFP tensor using only the MX block scales, thereby enabling a 32x decrease in the size of reductions needed for normalisation. We validate our approximation on pre-training of Llama-3 models of 250M and 1B parameters, finding minimal loss of training accuracy compared to a baseline using RMSNorm with MXFP8 matmuls."
+        published: "NeurIPS'25 Workshop on ML for Systems"
+
+      - title: "Variational Entropy Search is Just 1D Regression"
+        url: https://openreview.net/pdf?id=JPXNOiOiod
+        date: 2025-12-07
+        area: [general-ml]
+        authors: "Michael Pearce, Tom Pollak, Luke Hudlass-Galley"
+        abstract: "Variational Entropy Search (VES) is a recently proposed class of acquisition functions for Bayesian optimization (BO) that unifies Expected Improvement and Max-Value Entropy Search (MES). In BO, a Gaussian process is fit to a set of observed data D and in MES, at a given input x ∈ R^d, one samples scalar output values y ∼ P[y|x, D], then samples functions that fit both D and (x, y) and finds the peaks of these functions y^∗. These y^∗ samples are conditioned on y and come from a non-trivial distribution P[y^∗|y]. Given x, the MES goal is to estimate how much the potential y value may reduce entropy of this distribution. The VES goal, is to instead learn a variational approximation q(y^∗|y) that estimates a lower bound to MES. In this work, for a given point x we reinterpret VES as a simple 1-dimensional frequentist regression problem from y to y^∗. By framing prior work in this perspective, we explore possible improvements, including generalizing VES to noisy objectives. We explore a variety of simple 1D regression models in BO benchmarks on synthetic data, highlighting open questions for future research."
+        published: "NeurIPS'25 Workshop on Frontiers in Probabilistic Inference"
+
       - title: "Ground-Truth Subgraphs for Better Training and Evaluation of Knowledge Graph Augmented LLMs"
         url: https://arxiv.org/abs/2511.04473
         date: 2025-11-06
         area: [gnns]
         authors: "Alberto Cattaneo, Carlo Luschi, Daniel Justus"
         abstract: "Retrieval of information from graph-structured knowledge bases represents a promising direction for improving the factuality of LLMs. While various solutions have been proposed, a comparison of methods is difficult due to the lack of challenging QA datasets with ground-truth targets for graph retrieval. We present SynthKGQA, a framework for generating high-quality synthetic Knowledge Graph Question Answering datasets from any Knowledge Graph, providing the full set of ground-truth facts in the KG to reason over each question. We show how, in addition to enabling more informative benchmarking of KG retrievers, the data produced with SynthKGQA also allows us to train better models. We apply SynthKGQA to Wikidata to generate GTSQA, a new dataset designed to test zero-shot generalization abilities of KG retrievers with respect to unseen graph structures and relation types, and benchmark popular solutions for KG-augmented LLMs on it."
-        published: "arXiv Preprint"
+        published: "NeurIPS'25 Workshop on New Perspectives in Advancing Graph ML"
 
       - title: "Elucidating the Design Space of FP4 training"
         url: https://arxiv.org/abs/2509.17791
@@ -116,7 +140,7 @@ papers:
       - title: "Approximate Top-k for Increased Parallelism"
         url: https://arxiv.org/abs/2412.04358
         date: 2024-12-14
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Oscar Key, Luka Ribar, Alberto Cattaneo, Luke Hudlass-Galley, Douglas Orr"
         abstract: "The nearest neighbour search problem underlies many important machine learning applications, including efficient long-context generation, retrieval-augmented generation, and knowledge graph completion. However, computing top-k exactly suffers from limited parallelism, making it inefficient for highly parallel machine learning accelerators. By relaxing the requirement that the top-k is exact, bucketed algorithms can dramatically increase parallelism by independently computing many smaller top-k operations. We explore the design choices for this class of algorithms using both theoretical analysis and empirical evaluation on downstream tasks. Our motivating examples are sparsity algorithms for language models, which often use top-k to select the most important parameters or activations. We also release a fast bucketed top-k implementation for PyTorch."
         published: "NeurIPS'24 Workshop on Adaptive Foundation Models"
@@ -264,7 +288,7 @@ papers:
       - title: "Tuple Packing: Efficient Batching of Small Graphs in Graph Neural Networks"
         url: https://arxiv.org/abs/2209.06354
         date: 2022-09-14
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Mario Michael Krell, Manuel Lopez, Sreenidhi Anand, Hatem Helal, Andrew William Fitzgibbon"
         abstract: "When processing a batch of graphs in machine learning models such as Graph Neural Networks (GNN), it is common to combine several small graphs into one overall graph to accelerate processing and remove or reduce the overhead of padding. This is for example supported in the PyG library. However, the sizes of small graphs can vary substantially with respect to the number of nodes and edges, and hence the size of the combined graph can still vary considerably, especially for small batch sizes. Therefore, the costs of excessive padding and wasted compute are still incurred when working with static shapes, which are preferred for maximum acceleration. This paper proposes a new hardware agnostic approach -- tuple packing -- for generating batches that cause minimal overhead. The algorithm extends recently introduced sequence packing approaches to work on the 2D tuples of (|nodes|, |edges|). A monotone heuristic is applied to the 2D histogram of tuple values to define a priority for packing histogram bins together with the objective to reach a limit on the number of nodes as well as the number of edges. Experiments verify the effectiveness of the algorithm on multiple datasets."
         published: "arXiv Preprint"
@@ -283,7 +307,7 @@ papers:
       - title: "Proxy-Normalizing Activations to Match Batch Normalization while Removing Batch Dependence"
         url: https://arxiv.org/abs/2106.03743
         date: 2021-06-07
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Antoine Labatie, Dominic Masters, Zach Eaton-Rosen, Carlo Luschi"
         abstract: "We investigate the reasons for the performance degradation incurred with batch-independent normalization. We find that the prototypical techniques of layer normalization and instance normalization both induce the appearance of failure modes in the neural network's pre-activations: (i) layer normalization induces a collapse towards channel-wise constant functions; (ii) instance normalization induces a lack of variability in instance statistics, symptomatic of an alteration of the expressivity. To alleviate failure mode (i) without aggravating failure mode (ii), we introduce the technique \"Proxy Normalization\" that normalizes post-activations using a proxy distribution. When combined with layer normalization or group normalization, this batch-independent normalization emulates batch normalization's behavior and consistently matches or exceeds its performance."
         published: "Proceedings of the 35th Conference on Neural Information Processing Systems"
@@ -301,7 +325,7 @@ papers:
       - title: "Efficient Sequence Packing without Cross-contamination: Accelerating Large Language Models without Impacting Performance"
         url: https://arxiv.org/abs/2107.02027
         date: 2021-06-29
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Mario Michael Krell, Matej Kosec, Sergio P. Perez, Andrew Fitzgibbon"
         abstract: "Effective training of today's large language models (LLMs) depends on large batches and long sequences for throughput and accuracy. To handle variable-length sequences on hardware accelerators, it is common practice to introduce padding tokens, so that all sequences in a batch have the same length. We show in this paper that the variation in sequence lengths in common NLP datasets is such that up to 50% of all tokens can be padding. In less common, but not extreme, cases (e.g. GLUE-cola with sequence length 128), the ratio is up to 89%. Existing methods to address the resulting inefficiency are complicated by the need to avoid cross-contamination in self-attention, by a reduction in accuracy when sequence ordering information is lost, or by customized kernel implementations only valid for specific accelerators. This paper introduces a new formalization of sequence packing in the context of the well-studied bin packing problem, and presents new algorithms based on this formulation which, for example, confer a 2x speedup for phase 2 pre-training in BERT. We show how existing models can be adapted to ensure mathematical equivalence between the original and packed models, meaning that packed models can be trained with existing pre-training and fine-tuning practices."
         published: "arXiv Preprint"
@@ -317,7 +341,7 @@ papers:
       - title: "Making EfficientNet More Efficient: Exploring Batch-Independent Normalization, Group Convolutions and Reduced Resolution Training"
         url: https://arxiv.org/abs/2106.03640
         date: 2021-06-07
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Dominic Masters, Antoine Labatie, Zach Eaton-Rosen, Carlo Luschi"
         abstract: "Much recent research has been dedicated to improving the efficiency of training and inference for image classification. This effort has commonly focused on explicitly improving theoretical efficiency, often measured as ImageNet validation accuracy per FLOP. These theoretical savings have, however, proven challenging to achieve in practice, particularly on high-performance training accelerators. In this work, we focus on improving the practical efficiency of the state-of-the-art EfficientNet models on a new class of accelerator, the Graphcore IPU. We do this by extending this family of models in the following ways: (i) generalising depthwise convolutions to group convolutions; (ii) adding proxy-normalized activations to match batch normalization performance with batch-independent statistics; (iii) reducing compute by lowering the training resolution and inexpensively fine-tuning at higher resolution. We find that these three methods improve the practical efficiency for both training and inference. Code available at https://github.com/graphcore/graphcore-research/tree/main/Making_EfficientNet_More_Efficient."
         published: "arXiv Preprint"
@@ -346,7 +370,7 @@ papers:
       - title: "Parallel Training of Deep Networks with Local Updates"
         url: https://arxiv.org/abs/2012.03837
         date: 2020-12-07
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Michael Laskin, Luke Metz, Seth Nabarro, Mark Saroufim, Badreddine Noune, Carlo Luschi, Jascha Sohl-Dickstein, Pieter Abbeel"
         abstract: "Deep learning models trained on large data sets have been widely successful in both vision and language domains. As state-of-the-art deep learning architectures have continued to grow in parameter count so have the compute budgets and times required to train them, increasing the need for compute-efficient methods that parallelize training. Two common approaches to parallelize the training of deep networks have been data and model parallelism. While useful, data and model parallelism suffer from diminishing returns in terms of compute efficiency for large batch sizes. In this paper, we investigate how to continue scaling compute efficiently beyond the point of diminishing returns for large batches through local parallelism, a framework which parallelizes training of individual layers in deep networks by replacing global backpropagation with truncated layer-wise backpropagation. Local parallelism enables fully asynchronous layer-wise parallelism with a low memory footprint, and requires little communication overhead compared with model parallelism. We show results in both vision and language domains across a diverse set of architectures, and find that local parallelism is particularly effective in the high-compute regime."
         published: "Workshop on Split Learning for Distributed Machine Learning (SLDML), 2021"
@@ -359,7 +383,7 @@ papers:
       - title: "Revisiting Small Batch Training for Deep Neural Networks"
         url: https://arxiv.org/abs/1804.07612
         date: 2018-04-20
-        area: [efficient-ml]
+        area: [general-ml]
         authors: "Dominic Masters, Carlo Luschi"
         abstract: "Modern deep neural network training is typically based on mini-batch stochastic gradient optimization. While the use of large mini-batches increases the available computational parallelism, small batch training has been shown to provide improved generalization performance and allows a significantly smaller memory footprint, which might also be exploited to improve machine throughput. In this paper, we review common assumptions on learning rate scaling and training duration, as a basis for an experimental comparison of test performance for different mini-batch sizes. We adopt a learning rate that corresponds to a constant average weight update per gradient calculation (i.e., per unit cost of computation), and point out that this results in a variance of the weight updates that increases linearly with the mini-batch size m. The collected experimental results for the CIFAR-10, CIFAR-100 and ImageNet datasets show that increasing the mini-batch size progressively reduces the range of learning rates that provide stable convergence and acceptable test performance. On the other hand, small mini-batch sizes provide more up-to-date gradient calculations, which yields more stable and reliable training. The best performance has been consistently obtained for mini-batch sizes between m=2 and m=32, which contrasts with recent work advocating the use of mini-batch sizes in the thousands."
         published: "arXiv Preprint"
