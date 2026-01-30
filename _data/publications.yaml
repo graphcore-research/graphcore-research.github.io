@@ -34,14 +34,6 @@ papers:
   2025:
     conference:
 
-      - title: "Beyond Scalars: Concept-Based Alignment Analysis in Vision Transformers"
-        url: https://arxiv.org/abs/2412.06639
-        date: 2024-12-09
-        area: [general-ml]
-        authors: "Johanna Vielhaben, Dilyara Bareeva, Jim Berend, Wojciech Samek, Nils Strodthoff"
-        abstract: "Vision transformers (ViTs) can be trained using various learning paradigms, from fully supervised to self-supervised. Diverse training protocols often result in significantly different feature spaces, which are usually compared through alignment analysis. However, current alignment measures quantify this relationship in terms of a single scalar value, obscuring the distinctions between common and unique features in pairs of representations that share the same scalar alignment. We address this limitation by combining alignment analysis with concept discovery, which enables a breakdown of alignment into single concepts encoded in feature space. This fine-grained comparison reveals both universal and unique concepts across different representations, as well as the internal structure of concepts within each of them. Our methodological contributions address two key prerequisites for concept-based alignment: 1) For a description of the representation in terms of concepts that faithfully capture the geometry of the feature space, we define concepts as the most general structure they can possibly form - arbitrary manifolds, allowing hidden features to be described by their proximity to these manifolds. 2) To measure distances between concept proximity scores of two representations, we use a generalized Rand index and partition it for alignment between pairs of concepts. We confirm the superiority of our novel concept definition for alignment analysis over existing linear baselines in a sanity check. The concept-based alignment analysis of representations from four different ViTs reveals that increased supervision correlates with a reduction in the semantic structure of learned representations."
-        published: "Proceedings of the 39th Conference on Neural Information Processing Systems"
-
       - title: "The Role of Graph Topology in the Performance of Biomedical Knowledge Graph Completion Models"
         url: https://www.arxiv.org/abs/2409.04103
         date: 2025-10-07
@@ -49,6 +41,14 @@ papers:
         authors: "Alberto Cattaneo, Stephen Bonner, Thomas Martynec, Edward Morrissey, Carlo Luschi, Ian P Barrett, Daniel Justus"
         abstract: "Knowledge Graph Completion has been increasingly adopted as a useful method for several tasks in biomedical research, like drug repurposing or drug-target identification. To that end, a variety of datasets and Knowledge Graph Embedding models has been proposed over the years. However, little is known about the properties that render a dataset useful for a given task and, even though theoretical properties of Knowledge Graph Embedding models are well understood, their practical utility in this field remains controversial. We conduct a comprehensive investigation into the topological properties of publicly available biomedical Knowledge Graphs and establish links to the accuracy observed in real-world applications. By releasing all model predictions and a new suite of analysis tools we invite the community to build upon our work and continue improving the understanding of these crucial applications."
         published: "Bioinformatics, Volume 41, Issue 10, October 2025"
+
+      - title: "Beyond Scalars: Concept-Based Alignment Analysis in Vision Transformers"
+        url: https://openreview.net/pdf?id=l1DDTSqFq7
+        date: 2025-09-18
+        area: [general-ml]
+        authors: "Johanna Vielhaben, Dilyara Bareeva, Jim Berend, Wojciech Samek, Nils Strodthoff"
+        abstract: "Vision transformers (ViTs) can be trained using various learning paradigms, from fully supervised to self-supervised. Diverse training protocols often result in significantly different feature spaces, which are usually compared through alignment analysis. However, current alignment measures quantify this relationship in terms of a single scalar value, obscuring the distinctions between common and unique features in pairs of representations that share the same scalar alignment. We address this limitation by combining alignment analysis with concept discovery, which enables a breakdown of alignment into single concepts encoded in feature space. This fine-grained comparison reveals both universal and unique concepts across different representations, as well as the internal structure of concepts within each of them. Our methodological contributions address two key prerequisites for concept-based alignment: 1) For a description of the representation in terms of concepts that faithfully capture the geometry of the feature space, we define concepts as the most general structure they can possibly form - arbitrary manifolds, allowing hidden features to be described by their proximity to these manifolds. 2) To measure distances between concept proximity scores of two representations, we use a generalized Rand index and partition it for alignment between pairs of concepts. We confirm the superiority of our novel concept definition for alignment analysis over existing linear baselines in a sanity check. The concept-based alignment analysis of representations from four different ViTs reveals that increased supervision correlates with a reduction in the semantic structure of learned representations."
+        published: "Proceedings of the 39th Conference on Neural Information Processing Systems"
 
       - title: "On Stochastic Rounding with Few Random Bits"
         url: https://arxiv.org/abs/2504.20634
