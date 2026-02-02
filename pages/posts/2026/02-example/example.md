@@ -1,5 +1,6 @@
 ---
 date: 2026-02-01
+categories: ["Articles"]
 tags:
   - example
 ---
@@ -7,6 +8,8 @@ tags:
 # Example post
 
 Demonstrate/test various formatting features.
+
+<!-- more -->
 
  - [images](#images)
  - [tables](#tables)

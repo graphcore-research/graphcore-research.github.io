@@ -20,7 +20,12 @@ hooks:
   - hooks/notebook_to_markdown.py
 
 plugins:
-  - blog: {blog_dir: "."}
+  - blog:
+      blog_dir: "."
+      post_excerpt: required
+      categories_allowed:
+        - Articles
+        - "Papers of the Month"
   - search
 
 markdown_extensions:
