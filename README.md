@@ -5,7 +5,7 @@
 ## Development
 
 ```sh
-uv sync --extra dev
+uv sync
 source .venv/bin/activate
 
 # start dev server with autoreload
