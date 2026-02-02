@@ -3,6 +3,7 @@ site_name: Graphcore Research
 nav:
   - Blog: index.md
   - About: about.md
+  - "Our Papers": publications.md
 
 docs_dir: pages
 
@@ -12,10 +13,8 @@ theme:
   features:
     - content.code.copy
 
-extra_css:
-  - custom.css
-
 hooks:
+  - hooks/render_page_templates.py
   - hooks/notebook_to_markdown.py
 
 plugins:
@@ -33,6 +32,10 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.superfences
+
+extra_css:
+  - custom.css
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

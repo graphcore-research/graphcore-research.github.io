@@ -64,34 +64,33 @@ def notebook_to_markdown(
     return outputs
 
 
-TMP_DIR_CONFIG_KEY = "_notebook_blog_tmp_dir"
+TMP_DIR_CONFIG_KEY = "_notebook_to_markdown_tmpdir"
+TMP_DIR_PREFIX = "mkdocs_notebook_to_markdown_"
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
-    tmp_dir = config[TMP_DIR_CONFIG_KEY] = tempfile.mkdtemp(
-        prefix="mkdocs_notebook_blog_"
-    )
+    tmp_dir = config[TMP_DIR_CONFIG_KEY] = tempfile.mkdtemp(prefix=TMP_DIR_PREFIX)
     files_out = []
     for file in files:
-        if file.src_path.endswith(".ipynb"):
-            outputs = notebook_to_markdown(
-                Path(file.src_dir) / file.src_path,
-                Path(tmp_dir) / Path(file.src_path).parent,
-                Path(config.theme.dirs[0]),  # Configured as: "theme.custom_dir"
-            )
-            files_out.extend(
-                [
-                    mkfiles.File(
-                        str(output.relative_to(tmp_dir)),
-                        src_dir=tmp_dir,
-                        dest_dir=file.dest_dir,
-                        use_directory_urls=False,
-                    )
-                    for output in outputs
-                ]
-            )
-        else:
+        if not file.src_path.endswith(".ipynb"):
             files_out.append(file)
+            continue
+        outputs = notebook_to_markdown(
+            Path(file.src_dir) / file.src_path,
+            Path(tmp_dir) / Path(file.src_path).parent,
+            Path(config.theme.dirs[0]),  # Configured as: "theme.custom_dir"
+        )
+        files_out.extend(
+            [
+                mkfiles.File(
+                    str(output.relative_to(tmp_dir)),
+                    src_dir=tmp_dir,
+                    dest_dir=file.dest_dir,
+                    use_directory_urls=file.use_directory_urls,
+                )
+                for output in outputs
+            ]
+        )
     return mkfiles.Files(files_out)
 
 
