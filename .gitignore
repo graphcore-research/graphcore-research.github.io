@@ -1,0 +1,6 @@
+*.pyc
+.ipynb-checkpoints
+.venv
+
+/local
+/site

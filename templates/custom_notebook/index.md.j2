@@ -1,0 +1,5 @@
+{%- extends 'markdown/index.md.j2' -%}
+
+{%- block stream -%}
+<pre>{{ output.text | e }}</pre>
+{%- endblock stream -%}
