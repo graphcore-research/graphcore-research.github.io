@@ -2,8 +2,8 @@ site_name: Graphcore Research
 
 nav:
   - Blog: index.md
-  - About: about.md
   - "Our Papers": publications.md
+  - "About Us": about.md
 
 docs_dir: pages
 

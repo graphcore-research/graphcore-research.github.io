@@ -3,6 +3,20 @@
   --md-accent-fg-color: #53595e;
 }
 
+.md-content a,
+.md-typeset a {
+  color: var(--md-typeset-color);
+}
+
+.md-content a:hover,
+.md-typeset a:hover {
+  color: var(--md-primary-fg-color);
+}
+
+.linkpill {
+  white-space: nowrap;
+}
+
 /* Publications page > Filters */
 
 .paper-area-filter {
