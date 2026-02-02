@@ -10,6 +10,8 @@ docs_dir: pages
 theme:
   name: material
   custom_dir: templates
+  logo: img/gc-symbol-white.png
+  favicon: img/favicon.ico
   features:
     - content.code.copy
 
