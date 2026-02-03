@@ -1,4 +1,5 @@
 site_name: Graphcore Research
+site_url: https://graphcore-research.github.io
 
 nav:
   - Blog: index.md
@@ -27,7 +28,9 @@ plugins:
       categories_allowed:
         - Articles
         - "Papers of the Month"
+      authors_profiles: true
   - search
+  - social
 
 markdown_extensions:
   - attr_list

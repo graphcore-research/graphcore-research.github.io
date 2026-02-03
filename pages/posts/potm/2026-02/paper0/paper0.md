@@ -1,5 +1,6 @@
 ---
-potm_order: 1
+potm_order: 2
+authors: [douglaso]
 ---
 
 ## Paper 0 - Advancing the field of foobar

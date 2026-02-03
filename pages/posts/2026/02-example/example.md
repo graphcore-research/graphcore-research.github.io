@@ -1,6 +1,7 @@
 ---
 date: 2026-02-01
 categories: ["Articles"]
+authors: [douglaso]
 tags:
   - example
 ---

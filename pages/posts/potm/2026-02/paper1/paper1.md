@@ -1,5 +1,6 @@
 ---
-potm_order: 2
+potm_order: 1
+authors: [lukar]
 ---
 
 ## Paper 1 - Big Changes to Bar

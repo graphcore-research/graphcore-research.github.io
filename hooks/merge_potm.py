@@ -16,7 +16,7 @@ from pathlib import Path
 
 import mkdocs
 import mkdocs.structure.files as mkfiles
-
+import yaml
 
 LOGGER = logging.getLogger("mkdocs")
 
@@ -24,8 +24,9 @@ LOGGER = logging.getLogger("mkdocs")
 @dataclass
 class PotmReview:
     file: mkfiles.File
-    potm_order: int
     body: str
+    potm_order: int
+    authors: list[str]
 
 
 def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
@@ -41,19 +42,22 @@ def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
             continue
         content = Path(file.abs_src_path).read_text(encoding="utf-8")
         body, frontmatter = mkdocs.utils.meta.get_data(content)
-        potm_order = frontmatter.pop("potm_order")
-        if potm_order is None:
-            msg = f"Error: {file.src_path} is missing 'potm_order' in frontmatter."
-            LOGGER.error(msg)
-            raise mkdocs.exceptions.Abort(msg)
+        meta = {}
+        expected_fields = ["potm_order", "authors"]
+        for field in expected_fields:
+            if field not in frontmatter:
+                msg = f"Error: {file.src_path} is missing '{field}' in frontmatter."
+                LOGGER.error(msg)
+                raise mkdocs.exceptions.Abort(msg)
+            meta[field] = frontmatter.pop(field)
         if frontmatter:
             msg = (
                 f"Error: {file.src_path} has unexpected frontmatter fields: {list(frontmatter.keys())}."
-                " For potm reviews, only 'potm_order' is allowed."
+                f" For potm reviews, only {expected_fields} are allowed."
             )
             LOGGER.error(msg)
             raise mkdocs.exceptions.Abort(msg)
-        reviews.append(PotmReview(file=file, potm_order=potm_order, body=body))
+        reviews.append(PotmReview(file=file, body=body, **meta))
     reviews.sort(key=lambda x: x.potm_order)
     return reviews
 
@@ -115,7 +119,7 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
             continue
         file_path = Path(file.abs_src_path)
         potm_content = file_path.read_text(encoding="utf-8")
-        _, frontmatter = mkdocs.utils.meta.get_data(potm_content)
+        potm_body, frontmatter = mkdocs.utils.meta.get_data(potm_content)
         if frontmatter.get("merge_potm") is True:
             # Find all children with the .md extension in the same directory
             reviews = find_potm_reviews(files, file.src_path)
@@ -126,15 +130,21 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
                 files.remove(review.file)
 
             # Write merged content to temporary directory
+            frontmatter.setdefault("authors", [])
             for review in reviews:
-                potm_content += "\n\n" + rebase_links(
+                potm_body += "\n\n" + rebase_links(
                     review.body,
                     from_dir=Path(review.file.src_path).parent,
                     to_dir=Path(file.src_path).parent,
                 )
+                frontmatter["authors"].extend(
+                    [a for a in review.authors if a not in frontmatter["authors"]]
+                )
             output_path = tmp_dir / file.src_path
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(potm_content, encoding="utf-8")
+            output_path.write_text(
+                f"---\n{yaml.dump(frontmatter)}\n---\n" + potm_body, encoding="utf-8"
+            )
             files.append(
                 mkfiles.File(
                     file.src_path,

@@ -5,7 +5,7 @@ requires-python = ">=3.10"
 dependencies = [
     "nbconvert",
     "mkdocs",
-    "mkdocs-material",
+    "mkdocs-material[imaging]",
 ]
 
 [tool.setuptools]
