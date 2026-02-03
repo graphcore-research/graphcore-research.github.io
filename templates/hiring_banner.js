@@ -6,7 +6,7 @@ const _banner_config = {
   expiry_ms: 604800000,
 };
 
-window.addEventListener("load", async () => {
+window.addEventListener("DOMContentLoaded", () => {
 
   const shouldShowBanner = () => {
     if (!_banner_config.enabled) return false;
