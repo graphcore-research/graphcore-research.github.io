@@ -16,8 +16,9 @@ theme:
     - content.code.copy
 
 hooks:
-  - hooks/render_page_templates.py
+  - hooks/merge_potm.py
   - hooks/notebook_to_markdown.py
+  - hooks/render_page_templates.py
 
 plugins:
   - blog:

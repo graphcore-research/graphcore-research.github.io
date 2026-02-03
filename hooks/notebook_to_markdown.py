@@ -69,29 +69,30 @@ TMP_DIR_PREFIX = "mkdocs_notebook_to_markdown_"
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
-    tmp_dir = config[TMP_DIR_CONFIG_KEY] = tempfile.mkdtemp(prefix=TMP_DIR_PREFIX)
-    files_out = []
-    for file in files:
+    tmp_dir = Path(tempfile.mkdtemp(prefix=TMP_DIR_PREFIX))
+    config[TMP_DIR_CONFIG_KEY] = str(tmp_dir)
+    files = mkfiles.Files(files)
+
+    for file in list(files):
         if not file.src_path.endswith(".ipynb"):
-            files_out.append(file)
             continue
+
         outputs = notebook_to_markdown(
             Path(file.src_dir) / file.src_path,
             Path(tmp_dir) / Path(file.src_path).parent,
             Path(config.theme.dirs[0]),  # Configured as: "theme.custom_dir"
         )
-        files_out.extend(
-            [
+        files.remove(file)
+        for output in outputs:
+            files.append(
                 mkfiles.File(
                     str(output.relative_to(tmp_dir)),
                     src_dir=tmp_dir,
                     dest_dir=file.dest_dir,
                     use_directory_urls=file.use_directory_urls,
                 )
-                for output in outputs
-            ]
-        )
-    return mkfiles.Files(files_out)
+            )
+    return files
 
 
 def on_post_build(config: mkdocs.config.Config) -> None:

@@ -2,6 +2,7 @@
 *.pyc
 .ipynb-checkpoints
 .venv
+.vscode
 
 /local
 /site

@@ -12,7 +12,7 @@ source .venv/bin/activate
 mkdocs serve --livereload --watch templates
 
 # build static site
-mkdocs build
+mkdocs build --strict
 ```
 
 ## Howto

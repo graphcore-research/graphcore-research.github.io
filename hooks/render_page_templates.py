@@ -1,6 +1,8 @@
-"""Render .md.j2 templates with adjacent .data.yaml context.
+"""MkDocs hooks to render .md.j2 templates with adjacent .data.yaml context.
 
 The content of the .data.yaml file is available as `data` to the Jinja2 template.
+
+Only render templates from the docs_dir.
 """
 
 import shutil
@@ -12,6 +14,7 @@ import mkdocs
 import mkdocs.structure.files as mkfiles
 import yaml
 
+
 TMP_DIR_CONFIG_KEY = "_render_page_templates_tmpdir"
 TMP_DIR_PREFIX = "mkdocs_render_page_templates_"
 
@@ -19,20 +22,19 @@ TMP_DIR_PREFIX = "mkdocs_render_page_templates_"
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
     tmp_dir = Path(tempfile.mkdtemp(prefix=TMP_DIR_PREFIX))
     config[TMP_DIR_CONFIG_KEY] = str(tmp_dir)
+    files = mkfiles.Files(files)
 
     docs_dir = Path(config["docs_dir"]).resolve()
     env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(str(docs_dir)), autoescape=False
     )
-
-    files_out = []
-    for file in files:
-        file_src_dir = Path(file.src_dir).resolve()
-        if file_src_dir != docs_dir or not file.src_path.endswith(".md.j2"):
-            files_out.append(file)
+    for file in list(files):
+        if not file.src_path.endswith(".md.j2"):
+            continue
+        if Path(file.src_dir).resolve() != docs_dir:
             continue
 
-        template_path = docs_dir / file.src_path
+        template_path = Path(file.abs_src_path)
         data = {}
         data_path = template_path.parent / (
             template_path.name.split(".")[0] + ".data.yaml"
@@ -45,7 +47,8 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         output_path = tmp_dir / output_rel_path
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(rendered, encoding="utf-8")
-        files_out.append(
+        files.remove(file)
+        files.append(
             mkfiles.File(
                 output_rel_path,
                 src_dir=str(tmp_dir),
@@ -54,7 +57,7 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
             )
         )
 
-    return mkfiles.Files(files_out)
+    return files
 
 
 def on_post_build(config: mkdocs.config.Config) -> None:
