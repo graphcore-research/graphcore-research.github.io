@@ -1,6 +1,9 @@
 ---
 potm_order: 1
 authors: [lukar]
+tags:
+  - bar
+  - foobar
 ---
 
 ## Paper 1 - Big Changes to Bar

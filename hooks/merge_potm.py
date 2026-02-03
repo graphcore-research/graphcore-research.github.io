@@ -27,6 +27,7 @@ class PotmReview:
     body: str
     potm_order: int
     authors: list[str]
+    tags: list[str]
 
 
 def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
@@ -43,7 +44,7 @@ def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
         content = Path(file.abs_src_path).read_text(encoding="utf-8")
         body, frontmatter = mkdocs.utils.meta.get_data(content)
         meta = {}
-        expected_fields = ["potm_order", "authors"]
+        expected_fields = ["potm_order", "authors", "tags"]
         for field in expected_fields:
             if field not in frontmatter:
                 msg = f"Error: {file.src_path} is missing '{field}' in frontmatter."
@@ -131,15 +132,20 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
             # Write merged content to temporary directory
             frontmatter.setdefault("authors", [])
+            frontmatter.setdefault("tags", [])
             for review in reviews:
                 potm_body += "\n\n" + rebase_links(
                     review.body,
                     from_dir=Path(review.file.src_path).parent,
                     to_dir=Path(file.src_path).parent,
                 )
-                frontmatter["authors"].extend(
-                    [a for a in review.authors if a not in frontmatter["authors"]]
-                )
+                for author in review.authors:
+                    if author not in frontmatter["authors"]:
+                        frontmatter["authors"].append(author)
+                for tag in review.tags:
+                    if tag not in frontmatter["tags"]:
+                        frontmatter["tags"].append(tag)
+
             output_path = tmp_dir / file.src_path
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_text(

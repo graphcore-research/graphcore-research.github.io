@@ -5,6 +5,7 @@ nav:
   - Blog: index.md
   - "Our Papers": publications.md
   - "About Us": about.md
+  - Tags: tags.md
 
 docs_dir: pages
 
@@ -31,6 +32,7 @@ plugins:
       authors_profiles: true
   - search
   - social
+  - tags
 
 markdown_extensions:
   - attr_list
