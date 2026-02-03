@@ -1,6 +1,6 @@
-"""MkDocs hooks to render .md.j2 templates with adjacent .data.yaml context.
+"""MkDocs hooks to render .md.j2 templates with adjacent .data.yml context.
 
-The content of the .data.yaml file is available as `data` to the Jinja2 template.
+The content of the {name}.data.yml file is available as `data` to the Jinja2 template.
 
 Only render templates from the docs_dir.
 """
@@ -37,7 +37,7 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         template_path = Path(file.abs_src_path)
         data = {}
         data_path = template_path.parent / (
-            template_path.name.split(".")[0] + ".data.yaml"
+            template_path.name.split(".")[0] + ".data.yml"
         )
         if data_path.exists():
             data = yaml.safe_load(data_path.read_text(encoding="utf-8"))
