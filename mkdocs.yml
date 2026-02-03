@@ -1,4 +1,5 @@
 site_name: Graphcore Research
+copyright: Graphcore Research
 site_url: https://graphcore-research.github.io
 
 nav:
@@ -52,3 +53,15 @@ extra_css:
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/GCResearchTeam
+    - icon: fontawesome/brands/github
+      link: https://github.com/graphcore-research
+    - icon: fontawesome/solid/envelope
+      link: https://www.graphcore.ai/graphcore-research-newsletter-1
+    - icon: fontawesome/solid/book
+      link: /publications

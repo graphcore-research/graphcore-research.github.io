@@ -4,6 +4,7 @@
 }
 
 html {
+  /* Default is a bit large, reduce it here */
   font-size: 20px;
 }
 
@@ -19,6 +20,17 @@ html {
 
 .linkpill {
   white-space: nowrap;
+}
+
+/* Footer */
+
+.md-footer {
+  background-color: #444;
+  color: white;
+}
+
+.md-footer-meta>* {
+  padding: 0;
 }
 
 /* Publications page > Filters */
