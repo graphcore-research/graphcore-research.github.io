@@ -1,8 +1,0 @@
-# Hiring banner configuration
-# Update values as needed
-enabled: true
-text: "Graphcore Research is hiring"
-link: "https://grnh.se/26flvuyo2us"
-label: "hiring-2026-02"
-expiry_ms: 604800000
-height_px: 30

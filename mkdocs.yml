@@ -22,6 +22,7 @@ hooks:
   - hooks/merge_potm.py
   - hooks/notebook_to_markdown.py
   - hooks/render_page_templates.py
+  - hooks/generate_redirects.py
 
 plugins:
   - blog:
