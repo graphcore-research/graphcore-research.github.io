@@ -3,6 +3,10 @@
   --md-accent-fg-color: #53595e;
 }
 
+html {
+  font-size: 20px;
+}
+
 .md-content a,
 .md-typeset a {
   color: var(--md-typeset-color);
