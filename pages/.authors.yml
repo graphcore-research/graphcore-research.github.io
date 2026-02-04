@@ -1,9 +1,136 @@
 authors:
+
+  albertoc:
+    name: Alberto Cattaneo
+    description: Research Scientist
+    avatar: img/authors/albertoc.jpg
+
+  alexc:
+    name: Alex Cunha
+    description: Research Scientist
+    avatar: img/authors/alexc.jpg
+
+  alexp:
+    name: Alexandre Payot
+    description: Research Scientist
+    avatar: img/authors/alexp.jpg
+
+  ariannas:
+    name: Arianna Saracino
+    description: Research Scientist
+    avatar: img/authors/ariannas.jpg
+
+  benoitg:
+    name: Benoit Gaujac
+    description: Research Scientist
+    avatar: img/authors/benoitg.jpg
+
+  callumm:
+    name: Callum McLean
+    description: Research Scientist
+    avatar: img/authors/callumm.jpg
+
+  charlieb:
+    name: Charlie Blake
+    description: Research Scientist
+    avatar: img/authors/charlieb.jpg
+
+  danielj:
+    name: Daniel Justus
+    description: Research Scientist
+    avatar: img/authors/danielj.jpg
+
+  dobrikg:
+    name: Dobrik Georgiev
+    description: Research Scientist
+    avatar: img/authors/dobrikg.jpg
+
   douglaso:
     name: Douglas Orr
     description: Research Scientist
     avatar: img/authors/douglaso.jpg
+
+  johannav:
+    name: Johanna Vielhaben
+    description: Research Scientist
+    avatar: img/authors/johannav.jpg
+
+  josefd:
+    name: Josef Dean
+    description: Research Scientist
+    avatar: img/authors/josefd.jpg
+
+  kheerann:
+    name: Kheeran Naidu
+    description: Research Scientist
+    avatar: img/authors/kheerann.jpg
+
   lukar:
     name: Luka Ribar
     description: Research Scientist
     avatar: img/authors/lukar.jpg
+
+  lukehg:
+    name: Luke Hudlass-Galley
+    description: Research Scientist
+    avatar: img/authors/lukehg.jpg
+
+  lukep:
+    name: Luke Prince
+    description: Research Scientist
+    avatar: img/authors/lukep.jpg
+
+  markp:
+    name: Mark Pupilli
+    description: Research Scientist
+    avatar: img/authors/markp.jpg
+
+  michaelp:
+    name: Michael Pearce
+    description: Research Scientist
+    avatar: img/authors/michaelp.jpg
+
+  paulb:
+    name: Paul Balanca
+    description: Research Scientist
+    avatar: img/authors/paulb.jpg
+
+  roberthu:
+    name: Robert Hu
+    description: Research Scientist
+    avatar: img/authors/roberthu.jpg
+
+  samho:
+    name: Sam Hosegood
+    description: Research Scientist
+    avatar: img/authors/samho.jpg
+
+  samot:
+    name: Sam Olesker-Taylor
+    description: Research Scientist
+    avatar: img/authors/samot.jpg
+
+  seanc:
+    name: Seán Comerford
+    description: Research Scientist
+    avatar: img/authors/seanc.jpg
+
+  sylvainv:
+    name: Sylvain Viguier
+    description: Research Scientist
+    avatar: img/authors/sylvainv.jpg
+
+  tomca:
+    name: Tom Cashman
+    description: Research Scientist
+    avatar: img/authors/tomca.jpg
+
+  tomp:
+    name: Tom Pollak
+    description: Research Scientist
+    avatar: img/authors/tomp.jpg
+
+  yemanh:
+    name: Yeman Brhane Hagos
+    description: Research Scientist
+    avatar: img/authors/yemanh.jpg
