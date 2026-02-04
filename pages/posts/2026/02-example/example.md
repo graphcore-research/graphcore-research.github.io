@@ -1,12 +1,12 @@
 ---
+title: "Example post"
 date: 2026-02-01
 categories: ["Articles"]
 authors: [douglaso]
 tags:
   - example
+slug: example-post
 ---
-
-# Example post
 
 Demonstrate/test various formatting features.
 

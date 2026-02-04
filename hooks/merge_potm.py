@@ -25,6 +25,7 @@ LOGGER = logging.getLogger("mkdocs")
 class PotmReview:
     file: mkfiles.File
     body: str
+    title: str
     potm_order: int
     authors: list[str]
     tags: list[str]
@@ -44,7 +45,7 @@ def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
         content = Path(file.abs_src_path).read_text(encoding="utf-8")
         body, frontmatter = mkdocs.utils.meta.get_data(content)
         meta = {}
-        expected_fields = ["potm_order", "authors", "tags"]
+        expected_fields = ["title", "potm_order", "authors", "tags"]
         for field in expected_fields:
             if field not in frontmatter:
                 msg = f"Error: {file.src_path} is missing '{field}' in frontmatter."
@@ -122,6 +123,8 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         potm_content = file_path.read_text(encoding="utf-8")
         potm_body, frontmatter = mkdocs.utils.meta.get_data(potm_content)
         if frontmatter.get("merge_potm") is True:
+            frontmatter.setdefault("slug", "potm")
+
             # Find all children with the .md extension in the same directory
             reviews = find_potm_reviews(files, file.src_path)
 
@@ -134,11 +137,12 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
             frontmatter.setdefault("authors", [])
             frontmatter.setdefault("tags", [])
             for review in reviews:
-                potm_body += "\n\n" + rebase_links(
+                review_body = rebase_links(
                     review.body,
                     from_dir=Path(review.file.src_path).parent,
                     to_dir=Path(file.src_path).parent,
                 )
+                potm_body += f"\n\n## {review.title}\n\n{review_body}"
                 for author in review.authors:
                     if author not in frontmatter["authors"]:
                         frontmatter["authors"].append(author)
@@ -148,9 +152,7 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
             output_path = tmp_dir / file.src_path
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(
-                f"---\n{yaml.dump(frontmatter)}\n---\n" + potm_body, encoding="utf-8"
-            )
+            output_path.write_text(f"---\n{yaml.dump(frontmatter)}\n---\n{potm_body}")
             files.append(
                 mkfiles.File(
                     file.src_path,
