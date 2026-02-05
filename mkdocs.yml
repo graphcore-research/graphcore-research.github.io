@@ -72,7 +72,6 @@ extra:
     provider: google
     property: G-QCZ6T9KWHQ
   consent:
-    title: Cookie consent
     actions: [accept, reject, manage]
     description: >-
       This website stores a cookie on your computer to enable google analytics by default.
