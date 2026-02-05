@@ -103,14 +103,12 @@ def rebase_links(body: str, from_dir: Path, to_dir: Path) -> str:
     return _MD_LINK_RE.sub(_replace, body)
 
 
-TMP_DIR_CONFIG_KEY = "_merge_potm_tmpdir"
-TMP_DIR_PREFIX = "mkdocs_merge_potm_"
+TMP_DIR = Path(tempfile.mkdtemp(prefix="mkdocs_merge_potm_"))
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
     """Process all potm.md files and merge their associated papers."""
-    tmp_dir = Path(tempfile.mkdtemp(prefix=TMP_DIR_PREFIX))
-    config[TMP_DIR_CONFIG_KEY] = str(tmp_dir)
+    TMP_DIR.mkdir(parents=True, exist_ok=True)
     files = mkfiles.Files(files)
 
     docs_dir = Path(config["docs_dir"]).resolve()
@@ -150,13 +148,13 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
                     if tag not in frontmatter["tags"]:
                         frontmatter["tags"].append(tag)
 
-            output_path = tmp_dir / file.src_path
+            output_path = TMP_DIR / file.src_path
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_text(f"---\n{yaml.dump(frontmatter)}\n---\n{potm_body}")
             files.append(
                 mkfiles.File(
                     file.src_path,
-                    src_dir=str(tmp_dir),
+                    src_dir=str(TMP_DIR),
                     dest_dir=file.dest_dir,
                     use_directory_urls=file.use_directory_urls,
                 )
@@ -179,7 +177,5 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
 def on_post_build(config: mkdocs.config.Config) -> None:
     """Clean up temporary directory."""
-    tmp_dir = config.get(TMP_DIR_CONFIG_KEY)
-    if tmp_dir and Path(tmp_dir).exists():
-        shutil.rmtree(tmp_dir)
-        del config[TMP_DIR_CONFIG_KEY]
+    if TMP_DIR.exists():
+        shutil.rmtree(TMP_DIR)

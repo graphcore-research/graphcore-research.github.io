@@ -9,13 +9,11 @@ import jinja2
 import mkdocs
 import mkdocs.structure.files as mkfiles
 
-TMP_DIR_CONFIG_KEY = "_generate_redirects_tmpdir"
-TMP_DIR_PREFIX = "mkdocs_redirects_"
+TMP_DIR = Path(tempfile.mkdtemp(prefix="mkdocs_redirects_"))
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
-    tmp_dir = Path(tempfile.mkdtemp(prefix=TMP_DIR_PREFIX))
-    config[TMP_DIR_CONFIG_KEY] = str(tmp_dir)
+    TMP_DIR.mkdir(parents=True, exist_ok=True)
     files = mkfiles.Files(files)
 
     redirects_file = Path(config["docs_dir"]) / ".redirects.json"
@@ -33,13 +31,13 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
             target = "/" + target
         source = Path(source) / "index.html"
 
-        redirect_path = tmp_dir / source
+        redirect_path = TMP_DIR / source
         redirect_path.parent.mkdir(parents=True, exist_ok=True)
         redirect_path.write_text(template.render(target=target))
         files.append(
             mkfiles.File(
                 str(source),
-                src_dir=str(tmp_dir),
+                src_dir=str(TMP_DIR),
                 dest_dir=config["site_dir"],
                 use_directory_urls=False,
             )
@@ -48,9 +46,7 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
     return files
 
 
-def on_post_build(config):
+def on_post_build(config: mkdocs.config.Config) -> None:
     """Clean up temp directory after build"""
-    tmp_dir = config.get(TMP_DIR_CONFIG_KEY)
-    if tmp_dir and Path(tmp_dir).exists():
-        shutil.rmtree(tmp_dir)
-        del config[TMP_DIR_CONFIG_KEY]
+    if TMP_DIR.exists():
+        shutil.rmtree(TMP_DIR)

@@ -15,13 +15,11 @@ import mkdocs.structure.files as mkfiles
 import yaml
 
 
-TMP_DIR_CONFIG_KEY = "_render_page_templates_tmpdir"
-TMP_DIR_PREFIX = "mkdocs_render_page_templates_"
+TMP_DIR = Path(tempfile.mkdtemp(prefix="mkdocs_render_page_templates_"))
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
-    tmp_dir = Path(tempfile.mkdtemp(prefix=TMP_DIR_PREFIX))
-    config[TMP_DIR_CONFIG_KEY] = str(tmp_dir)
+    TMP_DIR.mkdir(parents=True, exist_ok=True)
     files = mkfiles.Files(files)
 
     docs_dir = Path(config["docs_dir"]).resolve()
@@ -44,14 +42,14 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         rendered = env.get_template(file.src_path).render(data=data)
 
         output_rel_path = file.src_path.replace(".md.j2", ".md")
-        output_path = tmp_dir / output_rel_path
+        output_path = TMP_DIR / output_rel_path
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(rendered, encoding="utf-8")
         files.remove(file)
         files.append(
             mkfiles.File(
                 output_rel_path,
-                src_dir=str(tmp_dir),
+                src_dir=str(TMP_DIR),
                 dest_dir=file.dest_dir,
                 use_directory_urls=file.use_directory_urls,
             )
@@ -61,7 +59,5 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
 
 def on_post_build(config: mkdocs.config.Config) -> None:
-    tmp_dir = config.get(TMP_DIR_CONFIG_KEY)
-    if tmp_dir and Path(tmp_dir).exists():
-        shutil.rmtree(tmp_dir)
-        del config[TMP_DIR_CONFIG_KEY]
+    if TMP_DIR.exists():
+        shutil.rmtree(TMP_DIR)

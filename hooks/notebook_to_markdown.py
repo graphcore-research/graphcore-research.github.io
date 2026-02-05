@@ -64,13 +64,11 @@ def notebook_to_markdown(
     return outputs
 
 
-TMP_DIR_CONFIG_KEY = "_notebook_to_markdown_tmpdir"
-TMP_DIR_PREFIX = "mkdocs_notebook_to_markdown_"
+TMP_DIR = Path(tempfile.mkdtemp(prefix="mkdocs_notebook_to_markdown_"))
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
-    tmp_dir = Path(tempfile.mkdtemp(prefix=TMP_DIR_PREFIX))
-    config[TMP_DIR_CONFIG_KEY] = str(tmp_dir)
+    TMP_DIR.mkdir(parents=True, exist_ok=True)
     files = mkfiles.Files(files)
 
     for file in list(files):
@@ -79,15 +77,15 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
         outputs = notebook_to_markdown(
             Path(file.src_dir) / file.src_path,
-            Path(tmp_dir) / Path(file.src_path).parent,
+            TMP_DIR / Path(file.src_path).parent,
             Path(config.theme.dirs[0]),  # Configured as: "theme.custom_dir"
         )
         files.remove(file)
         for output in outputs:
             files.append(
                 mkfiles.File(
-                    str(output.relative_to(tmp_dir)),
-                    src_dir=tmp_dir,
+                    str(output.relative_to(TMP_DIR)),
+                    src_dir=str(TMP_DIR),
                     dest_dir=file.dest_dir,
                     use_directory_urls=file.use_directory_urls,
                 )
@@ -96,7 +94,5 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
 
 def on_post_build(config: mkdocs.config.Config) -> None:
-    tmp_dir = config.get(TMP_DIR_CONFIG_KEY)
-    if tmp_dir and os.path.exists(tmp_dir):
-        shutil.rmtree(tmp_dir)
-        del config[TMP_DIR_CONFIG_KEY]
+    if TMP_DIR.exists():
+        shutil.rmtree(TMP_DIR)
