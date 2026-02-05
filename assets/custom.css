@@ -39,6 +39,38 @@ html {
   font-size: 0.75rem;
 }
 
+/* Images */
+
+.md-content img:not(.md-author *) {
+  display: block;
+  margin: 0.75rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-small {
+  max-width: 40% !important;
+}
+
+.img-medium {
+  max-width: 60% !important;
+}
+
+@media (max-width: 640px) {
+
+  .img-small,
+  .img-medium {
+    max-width: 100%;
+    width: auto;
+  }
+}
+
 /* Consent overrides */
 
 .md-consent__overlay {
