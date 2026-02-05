@@ -4,7 +4,7 @@ This hook processes Papers of the Month (POTM) directories by:
 1. Finding all .md files with `merge_potm: true` in the frontmatter
 2. Discovering sibling/child markdown files
 3. Sorting them by potm_order
-4. Formatting according to templates/potm_review.md.j2
+4. Formatting according to assets/potm_review.md.j2
 5. Merging their content into the potm.md file
 """
 

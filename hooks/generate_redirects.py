@@ -1,4 +1,4 @@
-"""Generate redirect HTML files based on .redirects.json, using templates/redirect.html.j2."""
+"""Generate redirect HTML files based on .redirects.json, using assets/redirect.html.j2."""
 
 import json
 import shutil

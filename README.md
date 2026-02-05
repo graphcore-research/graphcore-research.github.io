@@ -15,7 +15,7 @@ source .venv/bin/activate
 ./dev.sh folder-name
 
 # Equivalent
-env ONLY=folder-name mkdocs serve --livereload --watch templates
+env ONLY=folder-name mkdocs serve --livereload --watch assets
 
 # Build and test the full static site
 mkdocs build --strict
@@ -97,4 +97,26 @@ To add a paper to the "Our Papers" page, add it to [pages/publications.data.yml]
 
 ### Hiring Banner
 
-See the config at the top of [templates/hiring_banner.js](templates/hiring_banner.js) to enable/disable/modify the hiring banner.
+See the config at the top of [assets/hiring_banner.js](assets/hiring_banner.js) to enable/disable/modify the hiring banner.
+
+## Development
+
+MkDocs is a static site generator, which transforms and maps the markdown files, images, templates, css, js to a single folder containing the site. MkDocs is designed as a documentation generation system, but Material for MkDocs adds a blog system, and many convenient plugins that extend the core functionality. We configure and customise it using the `mkdocs.yml` file and add custom hooks in the `hooks/` folder (hooks are a simpler form of plugin).
+
+File/folder structure:
+
+```
+├── pyproject.toml              # Dependencies only
+├── mkdocs.yml                  # Main configuration file
+├── assets/                     # Static assets for direct-copy (e.g. images, js) and templates
+├── hooks/                      # Our custom hooks for notebooks, POTM, etc.
+├── pages/                      # Main content: posts, POTM.
+    ├── posts/                  # Blog posts
+    ├── posts/potm/             # Papers of the month, with special handling ([hooks/merge_potm.py](hooks/merge_potm.py)) to merge children into root
+    ├── .authors.yml            # Author information, required for every author alias
+    ├── .redirects.json         # Generate redirects to keep old links working (by [hooks/generate_redirects.py](hooks/generate_redirects.py))
+    ├── publications.md.j2      # "Our Papers" page template, rendered by [hooks/render_page_templates.py](hooks/render_page_templates.py)
+    ├── publications.data.yml   # "Our Papers" data
+    ├── *.md                    # Other standalone pages
+├── site/                       # Generated static site (after `mkdocs build`)
+```

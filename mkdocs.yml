@@ -12,7 +12,7 @@ docs_dir: pages
 
 theme:
   name: material
-  custom_dir: templates
+  custom_dir: assets
   logo: img/gc-symbol-white.png
   favicon: img/favicon.ico
   features:

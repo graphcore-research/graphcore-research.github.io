@@ -2,4 +2,4 @@
 if [ -n "$1" ]; then
     export ONLY="$1"
 fi
-mkdocs serve --livereload --watch templates
+mkdocs serve --livereload --watch assets
