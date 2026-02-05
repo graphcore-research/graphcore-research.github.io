@@ -78,7 +78,7 @@ html {
   color: var(--md-primary-fg-color) !important;
 }
 
-.potm-authors-orgs {
+.potm-meta-row {
   font-size: 0.9em;
   color: #444;
   display: flex;
@@ -87,21 +87,16 @@ html {
   align-items: center;
 }
 
-.potm-authors,
-.potm-orgs {
+.potm-meta {
   display: flex;
   align-items: center;
 }
 
-.potm-authors-icon,
-.potm-org-icon {
+.potm-meta-icon {
   margin-right: 0.35rem;
+  min-width: 1.5em;
   color: #666;
 }
-
-/* .potm-org-icon {
-  margin-left: 1em;
-} */
 
 .potm-footer-link {
   color: #444;

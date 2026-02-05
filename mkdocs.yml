@@ -48,6 +48,8 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.superfences
+  - toc:
+      toc_depth: "2-2"
 
 extra_css:
   - custom.css

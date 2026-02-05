@@ -154,18 +154,9 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
                     from_dir=Path(review.file.src_path).parent,
                     to_dir=Path(file.src_path).parent,
                 )
-                potm_body += (
-                    "\n\n"
-                    + template.render(
-                        **{
-                            k: v
-                            for k, v in review.__dict__.items()
-                            if k not in ("file", "body")
-                        },
-                        body=review_body,
-                    )
-                    + "\n\n"
-                )
+                data = dict(review.__dict__)
+                data["body"] = review_body
+                potm_body += "\n\n" + template.render(**data) + "\n\n"
                 for author in review.review_authors:
                     if author not in frontmatter["authors"]:
                         frontmatter["authors"].append(author)
