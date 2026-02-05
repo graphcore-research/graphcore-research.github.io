@@ -1,4 +1,4 @@
-This template is for _Papers of the Month_. For blog post reviews, use the checklist at the end. Please **delete as appropriate** before submitting the PR.
+This template includes 3 checklists, only 1 of which is needed for your PR. Please **delete as appropriate** before submitting the PR.
 
 For _Papers of the Month_, there are two types of PR:
 
