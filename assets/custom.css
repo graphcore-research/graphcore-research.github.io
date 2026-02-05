@@ -39,6 +39,23 @@ html {
   font-size: 0.75rem;
 }
 
+.md-tags {
+  margin-bottom: 1.5rem !important;
+}
+
+.md-tag {
+  cursor: pointer;
+  color: #888 !important;
+  background-color: transparent !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 0.4rem !important;
+}
+
+.md-tag:hover {
+  color: #444 !important;
+  background-color: #ddd !important;
+}
+
 /* Images */
 
 .md-content img:not(.md-author *) {
