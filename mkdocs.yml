@@ -19,6 +19,7 @@ theme:
     - content.code.copy
 
 hooks:
+  - hooks/filter_only.py
   - hooks/merge_potm.py
   - hooks/notebook_to_markdown.py
   - hooks/render_page_templates.py

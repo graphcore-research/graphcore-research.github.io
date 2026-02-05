@@ -8,8 +8,8 @@
 uv sync
 source .venv/bin/activate
 
-# start dev server with autoreload
-mkdocs serve --livereload --watch templates
+# start dev server with autoreload, filtered to a specific post
+env ONLY=my-folder-name mkdocs serve --livereload --watch templates
 
 # build static site
 mkdocs build --strict
