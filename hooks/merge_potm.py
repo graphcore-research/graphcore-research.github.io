@@ -132,6 +132,8 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         potm_content = file_path.read_text(encoding="utf-8")
         potm_body, frontmatter = mkdocs.utils.meta.get_data(potm_content)
         if frontmatter.get("merge_potm") is True:
+            if not re.search(r"<!--\s*more\s*-->", potm_body):
+                potm_body += "\n\n<!-- more -->\n\n"
             frontmatter.setdefault("slug", "potm")
             frontmatter.setdefault("categories", ["Papers of the Month"])
 
@@ -153,7 +155,8 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
                     to_dir=Path(file.src_path).parent,
                 )
                 potm_body += (
-                    template.render(
+                    "\n\n"
+                    + template.render(
                         **{
                             k: v
                             for k, v in review.__dict__.items()
