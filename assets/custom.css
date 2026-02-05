@@ -151,6 +151,7 @@ html {
 
 .hiring-banner a {
   cursor: pointer;
+  text-decoration: underline;
   z-index: 1000;
   user-select: none;
   padding: 0.25em;
@@ -236,7 +237,7 @@ html {
   display: block;
   margin: 0 0 0.8em 0;
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .paper-entry .abstract,

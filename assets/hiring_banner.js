@@ -3,7 +3,7 @@ const _banner_config = {
   text: "Graphcore Research is hiring",
   link: "https://grnh.se/26flvuyo2us",
   label: "hiring-2026-02",
-  expiry_ms: 604800000,
+  expiry_ms: 604800000,  // 7 days
 };
 
 window.addEventListener("DOMContentLoaded", () => {
