@@ -20,7 +20,7 @@ image_dir: "/assets/images/posts/2024-12/llama-vision/"
 author: Douglas Orr
 ---
 
-Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this post, we'll walk through the model changes needed to turn an LLM into a VLM for inference. To understand the LLM starting point, please see [A transformer walk-through with Gemma](../gemma), as we shall assume that content here.
+Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this post, we'll walk through the model changes needed to turn an LLM into a VLM for inference. To understand the LLM starting point, please see [A transformer walk-through with Gemma](/posts/gemma), as we shall assume that content here.
 
 **Problem** — Text generation, _conditioned on an image_: take an RGB image (below) and a short string prompt _"What colour shirt is the person to the left of the laptop wearing?"_, then use an already-trained VLM ([Llama-3.2-11B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct) by Meta) to generate an answer to the prompt.
 
@@ -71,7 +71,7 @@ The "patched" image looks like this:
 
 ![the image above, chopped up with small 14x14 pixel patches]({{ page.image_dir | append: 'image_patches.png' | relative_url }}){:class="constrained_img_large"}
 
-The `patch_embedding` takes each patch of 588 scaled-RGB values and converts it to a 1280-vector. This is a dot product (see [transformer walk-through](../gemma)), which compares each patch with 1280 different vectors, testing for similarity. These vectors were learned during pre-training to extract useful information from the RGB values. We can visualise them as 1280 14x14-pixel RGB images (note that the intensity scale is somewhat artificial, and for readability, they are sorted by standard deviation since feature ordering is arbitrary):
+The `patch_embedding` takes each patch of 588 scaled-RGB values and converts it to a 1280-vector. This is a dot product (see [transformer walk-through](/posts/gemma)), which compares each patch with 1280 different vectors, testing for similarity. These vectors were learned during pre-training to extract useful information from the RGB values. We can visualise them as 1280 14x14-pixel RGB images (note that the intensity scale is somewhat artificial, and for readability, they are sorted by standard deviation since feature ordering is arbitrary):
 
 ![a grid of 14x14 pixel patches, which generally look like frequency filters]({{ page.image_dir | append: 'patch_embedding.png' | relative_url }}){:class="constrained_img_large"}
 
