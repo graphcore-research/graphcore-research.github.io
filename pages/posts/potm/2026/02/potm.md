@@ -1,7 +1,6 @@
 ---
 title: "Papers of the Month - February 2026"
 date: 2026-02-02
-categories: ["Papers of the Month"]
 merge_potm: true
 ---
 

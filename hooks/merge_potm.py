@@ -2,11 +2,13 @@
 
 This hook processes Papers of the Month (POTM) directories by:
 1. Finding all .md files with `merge_potm: true` in the frontmatter
-2. Discovering sibling/child markdown files; they must have `potm_order` in frontmatter
+2. Discovering sibling/child markdown files
 3. Sorting them by potm_order
-4. Merging their content into the potm.md file
+4. Formatting according to templates/potm_review.md.j2
+5. Merging their content into the potm.md file
 """
 
+import dataclasses
 import logging
 import re
 import shutil
@@ -14,6 +16,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
+import jinja2
 import mkdocs
 import mkdocs.structure.files as mkfiles
 import yaml
@@ -25,10 +28,13 @@ LOGGER = logging.getLogger("mkdocs")
 class PotmReview:
     file: mkfiles.File
     body: str
-    title: str
-    potm_order: int
-    authors: list[str]
+    paper_title: str
+    paper_authors: str
+    paper_orgs: str
+    paper_link: str
+    review_authors: list[str]
     tags: list[str]
+    potm_order: int
 
 
 def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
@@ -45,7 +51,11 @@ def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
         content = Path(file.abs_src_path).read_text(encoding="utf-8")
         body, frontmatter = mkdocs.utils.meta.get_data(content)
         meta = {}
-        expected_fields = ["title", "potm_order", "authors", "tags"]
+        expected_fields = [
+            f.name
+            for f in dataclasses.fields(PotmReview)
+            if f.name not in ("file", "body")
+        ]
         for field in expected_fields:
             if field not in frontmatter:
                 msg = f"Error: {file.src_path} is missing '{field}' in frontmatter."
@@ -107,11 +117,12 @@ TMP_DIR = Path(tempfile.mkdtemp(prefix="mkdocs_merge_potm_"))
 
 
 def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.Files:
-    """Process all potm.md files and merge their associated papers."""
     TMP_DIR.mkdir(parents=True, exist_ok=True)
     files = mkfiles.Files(files)
 
     docs_dir = Path(config["docs_dir"]).resolve()
+    template_path = Path(config.theme.dirs[0]) / "potm_review.md.j2"
+    template = jinja2.Template(template_path.read_text())
     for file in list(files):
         if not file.src_path.endswith(".md"):
             continue
@@ -122,6 +133,7 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         potm_body, frontmatter = mkdocs.utils.meta.get_data(potm_content)
         if frontmatter.get("merge_potm") is True:
             frontmatter.setdefault("slug", "potm")
+            frontmatter.setdefault("categories", ["Papers of the Month"])
 
             # Find all children with the .md extension in the same directory
             reviews = find_potm_reviews(files, file.src_path)
@@ -140,8 +152,18 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
                     from_dir=Path(review.file.src_path).parent,
                     to_dir=Path(file.src_path).parent,
                 )
-                potm_body += f"\n\n## {review.title}\n\n{review_body}"
-                for author in review.authors:
+                potm_body += (
+                    template.render(
+                        **{
+                            k: v
+                            for k, v in review.__dict__.items()
+                            if k not in ("file", "body")
+                        },
+                        body=review_body,
+                    )
+                    + "\n\n"
+                )
+                for author in review.review_authors:
                     if author not in frontmatter["authors"]:
                         frontmatter["authors"].append(author)
                 for tag in review.tags:
@@ -176,6 +198,5 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
 
 
 def on_post_build(config: mkdocs.config.Config) -> None:
-    """Clean up temporary directory."""
     if TMP_DIR.exists():
         shutil.rmtree(TMP_DIR)

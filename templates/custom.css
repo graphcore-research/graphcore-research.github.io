@@ -61,6 +61,53 @@ html {
   padding: 0;
 }
 
+/* POTM */
+
+.potm-title {
+  margin-top: 0 !important;
+  display: inline-block;
+}
+
+.potm-paper-link {
+  font-size: 1.2em;
+  margin-left: 0.5em;
+  color: #666 !important;
+}
+
+.potm-paper-link:hover {
+  color: var(--md-primary-fg-color) !important;
+}
+
+.potm-authors-orgs {
+  font-size: 0.9em;
+  color: #444;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+  align-items: center;
+}
+
+.potm-authors,
+.potm-orgs {
+  display: flex;
+  align-items: center;
+}
+
+.potm-authors-icon,
+.potm-org-icon {
+  margin-right: 0.35rem;
+  color: #666;
+}
+
+/* .potm-org-icon {
+  margin-left: 1em;
+} */
+
+.potm-footer-link {
+  color: #444;
+  font-size: 0.9em;
+}
+
 /* Hiring Banner */
 
 .hiring-banner {
