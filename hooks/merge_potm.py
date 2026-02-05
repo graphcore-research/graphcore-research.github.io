@@ -64,7 +64,7 @@ def find_potm_reviews(files: mkfiles.Files, root_path: str) -> list[PotmReview]:
     return reviews
 
 
-_MD_LINK_RE = re.compile(r"(!?\[[^\]]*\]\()(\s*<?)([^)\s]+)(>?)([^)]*)\)")
+_MD_LINK_RE = re.compile(r"(!?\[(?:[^\]\\]|\\.)*\]\()(\s*<?)([^)\s]+)(>?)([^)]*)\)")
 
 
 def _should_rewrite_link(dest: str) -> bool:
