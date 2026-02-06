@@ -4,23 +4,57 @@
 
 ## Setup
 
-This site is built using [MkDocs](https://www.mkdocs.org/) with the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme & blog engine, and we recommend [uv](https://docs.astral.sh/uv) to manage the Python environment (dependencies in [pyproject.toml](pyproject.toml)).
+This site is built using [MkDocs](https://www.mkdocs.org/) with the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme & blog engine, and we recommend [uv](https://docs.astral.sh/uv) to manage the Python environment (or use another tool to install dependencies from `pyproject.toml`).
 
 ```sh
 uv sync
 source .venv/bin/activate
 
 # Start a dev server with autoreload, filtered to a specific post
-# (omit folder-name to build everything, with slower reloads)
+# - omit folder-name to build everything, with slower reloads
+# - it's sugar for $ env ONLY=folder-name mkdocs serve --livereload --watch assets
 ./dev.sh folder-name
 
-# Equivalent
-env ONLY=folder-name mkdocs serve --livereload --watch assets
-
-# Build and test the full static site
+# Build and test the full static site (optional)
+# - preview with $ python -m http.server -d site
 mkdocs build --strict
-python -m http.server -d site
 ```
+
+### Your first post
+
+Create a markdown file: `pages/posts/YYYY/MM-my-blog-post/post.md`, and copy the following content:
+
+```md
+---
+title: "Post Title"
+date: YYYY-MM-DD
+categories: [Articles]
+authors: [myalias]
+tags: [example]
+slug: my-blog-post
+---
+
+This is my first post! Intro paragraph (included in excerpt).
+
+<!-- more -->
+
+More content here!
+```
+
+_Note that the "identity" of the post is the tuple `(date, slug)` from the YAML "frontmatter" - this determines the URL. File paths are free-form, but we use the pattern described above to keep things tidy._
+
+Check your alias is in `pages/.authors.yml`.
+
+Now build (just your page, for speed):
+
+```sh
+./dev.sh MM-my-blog-post
+```
+
+You should be able to open http://localhost:8000/, and your post should be at http://localhost:8000/YYYY/MM/DD/my-blog-post/. If you edit your markdown file, the page should automatically reload with your changes.
+
+That's it & you're all set! You can probably get where you need to yourself from here, but see the [guide](#guide) below for some tips, gotchas and how to write a post as a notebook.
+
 
 ## Guide
 
@@ -34,7 +68,7 @@ A post is a markdown `.md` file in `pages/posts` and should be placed in its own
 ---
 title: "My post title, which is automatically inserted as a top-level heading"
 date: YYYY-MM-DD
-categories: ["Article"]         # must be in categories_allowed in mkdocs.yml
+categories: [Articles]          # must be in categories_allowed in mkdocs.yml
 authors: [alias1, alias2, ...]  # must exist in config/authors.yml
 tags: [tag1, tag2, ...]         # see <server>/tags
 slug: my-post-slug              # recommended: gives a permalink of /YYYY/MM/DD/my-post-slug
