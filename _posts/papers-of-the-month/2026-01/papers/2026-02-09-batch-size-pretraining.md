@@ -9,7 +9,7 @@ tags:
     - training dynamics
 potm_year: 2026
 potm_month: 01
-paper_order: 1
+paper_order: 3
 image_dir: "/assets/images/posts/2026-01/potm/batch-size-pretraining/"
 review_author:
     name: "Callum McLean"
