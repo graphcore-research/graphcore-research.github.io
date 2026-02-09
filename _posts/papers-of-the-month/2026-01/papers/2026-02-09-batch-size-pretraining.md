@@ -1,6 +1,6 @@
 ---
 title: "How to Set the Batch Size for Large-Scale Pre-training?"
-paper_authors: "Yunhua Zhao et al."
+paper_authors: "Yunhua Zhou et al."
 orgs: "Shanghai AI Laboratory, Shanghai JiaoTong University, Fudan University"
 paper_link: "https://arxiv.org/abs/2601.05034"
 tags:
