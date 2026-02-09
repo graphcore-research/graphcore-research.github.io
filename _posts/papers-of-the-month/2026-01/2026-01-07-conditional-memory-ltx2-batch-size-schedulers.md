@@ -25,7 +25,7 @@ This month, our team went through 21 different papers to find the most insightfu
 
 -	*LTX-2: Efficient Joint Audio-Visual Foundation Model.* HaCohen et al. propose a joint text-conditioned audio-visual generation framework built using modality-specific VAEs, a refined text-conditioning module, and an asymmetric dual-stream diffusion transformer.
 
--	*How to Set the Batch Size for Large-Scale Pre-training?* Zhou et al. discuss how to identify the optimal batch size for large-scale pretraining, and find that dyamically increasing the batch size can improve performance.
+-	*How to Set the Batch Size for Large-Scale Pre-training?* Zhou et al. discuss how to identify the optimal batch size for large-scale pretraining, and find that dyamically increasing the batch size through time can improve performance.
 
 
 *We hope you enjoy this month’s papers as much as we did! If you have thoughts or questions, please reach out to us at [@GCResearchTeam](https://x.com/GCResearchTeam).*  
