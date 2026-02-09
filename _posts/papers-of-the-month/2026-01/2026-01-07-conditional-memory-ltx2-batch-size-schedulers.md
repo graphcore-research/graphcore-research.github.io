@@ -25,7 +25,7 @@ This month, our team went through 21 different papers to find the most insightfu
 
 -	*LTX-2: Efficient Joint Audio-Visual Foundation Model.* Here, HaCohen et al. ... <one line summary>
 
--	*How to Set the Batch Size for Large-Scale Pre-training?* Finally, in this last paper, Zhou et al. discuss how to find the optimal batch size for large-scale pretraining and find that dyamically increasing the batch size can improve performance.
+-	*How to Set the Batch Size for Large-Scale Pre-training?* Finally, Zhou et al. discuss in this last paper how to identify the optimal batch size for large-scale pretraining, and find that dyamically increasing the batch size can improve performance.
 
 
 *We hope you enjoy this month’s papers as much as we did! If you have thoughts or questions, please reach out to us at [@GCResearchTeam](https://x.com/GCResearchTeam).*  
