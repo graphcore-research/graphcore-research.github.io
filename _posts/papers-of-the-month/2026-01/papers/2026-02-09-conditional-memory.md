@@ -30,28 +30,28 @@ The authors propose that transformers need a cheap lookup mechanism to retrieve 
 * Constructing n-gram embeddings by hashing sequences of canonical tokens (*Multi-Head Hashing*).
 * Using projections of the embeddings as keys and values for a sigmoidal attention-like gating mechanism taking model hidden state as query (*Context-aware Gating*), along with a dilated depthwise convolution to learn dependencies over local n-grams.
 
-<img src="{{ page.image_dir | append: 'FIG-Methods-Arch.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'FIG-Methods-Arch.png' | relative_url }}" alt="Engram embedding module incorporating input token canonicalisation, hashing, and context-aware gating">
 
 * During training: embedding table is sharded across GPU memory, with embeddings retrieved using an all-to-all
 * During inference: embedding table is stored in Host DRAM and embedding lookups are offloaded to host CPU and transported over PCie.
 * The latency of Host-GPU connections at inference time informs the placement of engram at at the start of the second layer, to allow overlapping of retrieval with computation of the first layer. 
 * Design allows for a naive implementation to incurs just 3% overhead, with plenty of room for improvement by exploiting memory hierarchy since engrams are accessed non-uniformly.
 
-<img src="{{ page.image_dir | append: 'FIG-Methods-Sys.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'FIG-Methods-Sys.png' | relative_url }}" alt="Systems implementation of Engram-augmented large language models during training and inference">
 
 ### Results
 
 Since lookups add no FLOPs, more parameters can be added via embedding tables without incurring computational costs. However, mixture-of-experts models also add parameters without additional computational cost through sparse compute. As such, the authors aim to determine how best to allocate "inactive parameters" across experts and engram tables. Across two compute budgets, they demonstrate an optimal allocation of 25% of inactive parameters to engram tables. Nevertheless in an unconstrained memory setting, larger tables improve results further.
 
-<img src="{{ page.image_dir | append: 'FIG-Results-Iso.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'FIG-Results-Iso.png' | relative_url }}" alt="Iso-flop and Iso-parameter comparison of Engram with Mixture-of-Experts models">
 
 These results bear out at large scale too. Compared with a 27B parameter MoE model trained for 262B tokens, they demonstrate that Engram augmented models provide improvements on retrieval and comprehension tasks and on several reasoning tasks.
 
-<img src="{{ page.image_dir | append: 'TBL-Results-Evals.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'TBL-Results-Evals.png' | relative_url }}" alt="Evaluations of large scale models on knowledge and reasoning tasks">
 
 The authors also include an interesting analysis of the representational similarity between Engram and MoE models, finding that earlier layers of Engram augmented models have representations similar to later layers of MoE models, backing up their claim that Engram frees up capacity for modelling complex long-range dependencies in global context.
 
-<img src="{{ page.image_dir | append: 'TBL-Results-Repr.png' | relative_url }}" alt="">
+<img src="{{ page.image_dir | append: 'TBL-Results-Repr.png' | relative_url }}" alt="Representational similarity of Engram-augmented models to Mixture-of-Experts models">
 
 ### Takeaways
 
