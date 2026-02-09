@@ -19,13 +19,13 @@ author.twitter: "GCResearchTeam"
 ---
 Welcome to the first edition of our Paper of the Month newsletter for 2026! 
 
-This month, our team went through 21 different papers to find the most insightful new pieces of literature that we think have the potential to leave a mark. Out of the bunch, three papers caught our attention in particular:
+This month, our team went through 21 different papers to find the most insightful new pieces of literature that we think have the potential to leave a mark. Out of the bunch, three papers specifically caught our attention:
 
--	Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models. <one line summary>
+-	*Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models.* In this work, Cheng et al. introduce a simple, scalable memory-augmentation for large language models to offload the cost of simple knowledge-based retrieval to embedding lookups.
 
--	LTX-2: Efficient Joint Audio-Visual Foundation Model <one line summary>
+-	*LTX-2: Efficient Joint Audio-Visual Foundation Model.* Here, HaCohen et al. ... <one line summary>
 
--	How to Set the Batch Size for Large-Scale Pre-training? <one line summary>
+-	*How to Set the Batch Size for Large-Scale Pre-training?* Finally, in this last paper, Zhou et al. discuss how to find the optimal batch size for large-scale pretraining and find that dyamically increasing the batch size can improve performance.
 
 
 *We hope you enjoy this month’s papers as much as we did! If you have thoughts or questions, please reach out to us at [@GCResearchTeam](https://x.com/GCResearchTeam).*  
