@@ -51,7 +51,7 @@ These results bear out at large scale too. Compared with a 27B parameter MoE mod
 
 The authors also include an interesting analysis of the representational similarity between Engram and MoE models, finding that earlier layers of Engram augmented models have representations similar to later layers of MoE models, backing up their claim that Engram frees up capacity for modelling complex long-range dependencies in global context.
 
-<img src="{{ page.image_dir | append: 'TBL-Results-Repr.png' | relative_url }}" alt="Representational similarity of Engram-augmented models to Mixture-of-Experts models">
+<img src="{{ page.image_dir | append: 'FIG-Results-Repr.png' | relative_url }}" alt="Representational similarity of Engram-augmented models to Mixture-of-Experts models">
 
 ### Takeaways
 
