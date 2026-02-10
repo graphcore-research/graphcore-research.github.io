@@ -1,4 +1,4 @@
-{#- Modified from templates/partials/nav.html in Material -#}
+{#- Modified from templates/partials/nav.html in Material (differences noted) -#}
 {% import "partials/nav-item.html" as item with context %}
 {% set class = "md-nav md-nav--primary" %}
 {% if "navigation.tabs" in features %}
@@ -22,10 +22,10 @@
     {% endif %}
     <ul class="md-nav__list" data-md-scrollfix>
         {% for nav_item in nav.items %}
-        {% if nav_item.title not in ["Authors", "Categories"] %} {#- custom filter -#}
+        {% if nav_item.title not in ["Authors", "Categories"] %} {#- Added: filter out nav items -#}
         {% set path = "__nav_" ~ loop.index %}
         {{ item.render(nav_item, path, 1) }}
-        {% endif %}
+        {% endif %} {#- Added -#}
         {% endfor %}
     </ul>
 </nav>

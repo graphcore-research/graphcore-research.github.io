@@ -65,14 +65,91 @@ html {
   background-color: #ddd !important;
 }
 
-/* Nav */
-
-.md-header__title {
-  font-family: 'Graphcore Quantized', 'Graphik', 'Roboto', sans-serif;
-}
+/* Nav & Header */
 
 .md-nav {
   font-size: 0.75rem;
+}
+
+.md-header {
+  font-family: 'Graphcore Quantized', 'Graphik', 'Roboto', sans-serif;
+}
+
+.md-search {
+  font-family: 'Graphik', 'Roboto', sans-serif;
+}
+
+.header-custom {
+  font-weight: bold;
+  font-size: .8rem;
+}
+
+/* Show the (mini) search button, unless currently searching */
+[data-md-toggle=search]:not(:checked)~.md-header .md-header__button[for=__search] {
+  display: inline-block;
+}
+
+/* Hide the full search bar, unless currently searching */
+[data-md-toggle=search]:not(:checked)~.md-header .md-search__inner {
+  display: none;
+}
+
+/* Hiring Banner */
+
+.hiring-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0.6rem;
+  display: flex;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.hiring-banner a {
+  cursor: pointer;
+  text-decoration: underline;
+  z-index: 1000;
+  user-select: none;
+  padding: 0.25em;
+}
+
+.hiring-banner i {
+  color: var(--md-primary-bg-color);
+  cursor: pointer;
+}
+
+/* Hiring Banner > (little dance to make put the title over the banner, but keep the banner clickable) */
+
+.md-header__inner {
+  pointer-events: none;
+}
+
+.md-header__inner>* {
+  pointer-events: auto;
+}
+
+.md-header__title {
+  pointer-events: none;
+}
+
+.md-header__topic {
+  background-color: var(--md-primary-fg-color);
+  padding-right: 0.4em;
+  box-shadow: 5px -5px 5px var(--md-primary-fg-color);
+}
+
+/* Footer */
+
+.md-footer {
+  background-color: #444;
+  color: white;
+}
+
+.md-footer-meta>* {
+  padding: 0;
 }
 
 /* Images */
@@ -115,17 +192,6 @@ html {
 
 .md-consent__form {
   font-size: 0.7rem;
-  padding: 0;
-}
-
-/* Footer */
-
-.md-footer {
-  background-color: #444;
-  color: white;
-}
-
-.md-footer-meta>* {
   padding: 0;
 }
 
@@ -193,53 +259,6 @@ html {
 .potm-footer-link {
   color: #444;
   font-size: 0.9em;
-}
-
-/* Hiring Banner */
-
-.hiring-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  padding: 0.6rem;
-  display: flex;
-  justify-content: center;
-  font-size: 0.7rem;
-}
-
-.hiring-banner a {
-  cursor: pointer;
-  text-decoration: underline;
-  z-index: 1000;
-  user-select: none;
-  padding: 0.25em;
-}
-
-.hiring-banner i {
-  color: var(--md-primary-bg-color);
-  cursor: pointer;
-}
-
-/* Hiring Banner > (little dance to make put the title over the banner, but keep the banner clickable) */
-
-.md-header__inner {
-  pointer-events: none;
-}
-
-.md-header__inner>* {
-  pointer-events: auto;
-}
-
-.md-header__title {
-  pointer-events: none;
-}
-
-.md-header__topic {
-  background-color: var(--md-primary-fg-color);
-  padding-right: 0.4em;
-  box-shadow: 5px -5px 5px var(--md-primary-fg-color);
 }
 
 /* Publications page > Filters */
