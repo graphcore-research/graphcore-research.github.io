@@ -33,6 +33,7 @@ plugins:
         - Articles
         - "Papers of the Month"
       authors_profiles: true
+      archive: false
   - search
   - social:
       cards_layout: default
