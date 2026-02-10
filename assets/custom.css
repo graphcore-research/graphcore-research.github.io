@@ -107,7 +107,7 @@ html {
   }
 }
 
-/* Consent overrides */
+/* Cookies consent */
 
 .md-consent__overlay {
   display: none;
@@ -127,6 +127,30 @@ html {
 
 .md-footer-meta>* {
   padding: 0;
+}
+
+/* Blog post excerpts */
+
+/* Disable links inside excerpts */
+.md-post--excerpt>.md-post__content>p a {
+  pointer-events: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Turn "Continue reading" into a pill */
+.md-post__action a {
+  font-weight: bold;
+  font-size: 0.8em;
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--md-primary-fg-color);
+  border-radius: 0.5rem;
+}
+
+.md-post__action a:hover {
+  background-color: var(--md-primary-fg-color);
+  color: #fff;
 }
 
 /* POTM */

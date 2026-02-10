@@ -8,7 +8,7 @@ tags:
 slug: example-post
 ---
 
-Demonstrate/test various formatting features.
+Demonstrate/test various formatting features including [images](#images).
 
 <!-- more -->
 
