@@ -25,6 +25,7 @@ hooks:
   - hooks/notebook_to_markdown.py
   - hooks/render_page_templates.py
   - hooks/generate_redirects.py
+  - hooks/see_also.py
 
 plugins:
   - blog:
