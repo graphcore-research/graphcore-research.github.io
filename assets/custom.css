@@ -18,6 +18,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Graphcore Quantized';
+  src: url('fonts/GraphcoreQuantized-Mixed.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* General styling */
 
 :root {
@@ -31,8 +39,17 @@ html {
   font-size: 20px;
 }
 
+.admonition {
+  /* Slight increase vs theme */
+  font-size: 0.9em !important;
+}
+
 .linkpill {
   white-space: nowrap;
+}
+
+.md-header__title {
+  font-family: 'Graphcore Quantized', 'Graphik', 'Roboto', sans-serif;
 }
 
 .md-nav {

@@ -34,10 +34,15 @@ plugins:
         - "Papers of the Month"
       authors_profiles: true
   - search
-  - social
+  - social:
+      cards_layout: default
+      cards_layout_options:
+        background_color: "#ff6d81"
+        font_family: "Manrope"  # seems close to Graphik; must be a Google Font
   - tags
 
 markdown_extensions:
+  - admonition
   - attr_list
   - md_in_html
   - pymdownx.arithmatex:

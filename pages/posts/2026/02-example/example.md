@@ -43,6 +43,14 @@ def rms_norm(x: Tensor, eps: float = 1e-8) -> Tensor:
     return x / x.pow(2).mean(dim=-1, keepdim=True).add(eps).sqrt()
 ```
 
+!!! note "Big claim"
+
+    This house believes that Markdown is better than RST, in all cases, for all purposes, and that anyone who disagrees is wrong.
+
+    !!! warning "Disclaimer"
+
+        I haven't used RST.
+
 ## Latex
 
 Inline $\boldsymbol{y} = \mathrm{rmsnorm}(\boldsymbol{x})$ and block:

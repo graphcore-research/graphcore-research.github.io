@@ -2,8 +2,8 @@
 *.egg-info
 *.pyc
 .ipynb-checkpoints
+.local
 .venv
 .vscode
 
-/local
 /site
