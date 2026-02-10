@@ -4,9 +4,10 @@ site_url: https://graphcore-research.github.io
 
 nav:
   - Blog: index.md
+  - "↳ Articles": /category/articles
+  - "↳ Papers of the Month": /category/papers-of-the-month
   - "Our Papers": publications.md
   - "About Us": about.md
-  - Tags: tags.md
 
 docs_dir: pages
 

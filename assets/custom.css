@@ -48,14 +48,6 @@ html {
   white-space: nowrap;
 }
 
-.md-header__title {
-  font-family: 'Graphcore Quantized', 'Graphik', 'Roboto', sans-serif;
-}
-
-.md-nav {
-  font-size: 0.75rem;
-}
-
 .md-tags {
   margin-bottom: 1.5rem !important;
 }
@@ -71,6 +63,16 @@ html {
 .md-tag:hover {
   color: #444 !important;
   background-color: #ddd !important;
+}
+
+/* Nav */
+
+.md-header__title {
+  font-family: 'Graphcore Quantized', 'Graphik', 'Roboto', sans-serif;
+}
+
+.md-nav {
+  font-size: 0.75rem;
 }
 
 /* Images */
