@@ -7,17 +7,17 @@ authors:
 
   alexc:
     name: Alex Cunha
-    description: Research Scientist
+    description: ML Engineer
     avatar: img/authors/_default.jpg
 
   alexp:
     name: Alexandre Payot
-    description: Research Scientist
+    description: ML Engineer
     avatar: img/authors/_default.jpg
 
   ariannas:
     name: Arianna Saracino
-    description: Research Scientist
+    description: ML Engineering Manager
     avatar: img/authors/_default.jpg
 
   benoitg:
@@ -30,14 +30,19 @@ authors:
     description: Research Scientist
     avatar: img/authors/_default.jpg
 
+  carlo:
+    name: Carlo Luschi
+    description: VP & Head of Research
+    avatar: img/authors/_default.jpg
+
   charlieb:
     name: Charlie Blake
-    description: Research Scientist
+    description: Research Engineer
     avatar: img/authors/_default.jpg
 
   danielj:
     name: Daniel Justus
-    description: Research Scientist
+    description: Research Lead
     avatar: img/authors/danielj.jpg
 
   dobrikg:
@@ -47,7 +52,7 @@ authors:
 
   douglaso:
     name: Douglas Orr
-    description: Research Scientist
+    description: Research Team Lead
     avatar: img/authors/douglaso.jpg
 
   johannav:
@@ -72,17 +77,17 @@ authors:
 
   lukehg:
     name: Luke Hudlass-Galley
-    description: Research Scientist
+    description: Research Team Lead
     avatar: img/authors/lukehg.jpg
 
   lukep:
     name: Luke Prince
-    description: Research Scientist
+    description: Research Team Lead
     avatar: img/authors/_default.jpg
 
   markp:
     name: Mark Pupilli
-    description: Research Scientist
+    description: Distinguished Engineer
     avatar: img/authors/_default.jpg
 
   michaelp:
@@ -92,7 +97,7 @@ authors:
 
   paulb:
     name: Paul Balanca
-    description: Research Scientist
+    description: Research Team Lead
     avatar: img/authors/_default.jpg
 
   roberthu:
@@ -112,22 +117,22 @@ authors:
 
   seanc:
     name: Seán Comerford
-    description: Research Scientist
+    description: ML Engineer
     avatar: img/authors/_default.jpg
 
   sylvainv:
     name: Sylvain Viguier
-    description: Research Scientist
+    description: Director, Applied AI
     avatar: img/authors/_default.jpg
 
   tomca:
     name: Tom Cashman
-    description: Research Scientist
+    description: Research Team Lead
     avatar: img/authors/_default.jpg
 
   tomp:
     name: Tom Pollak
-    description: Research Scientist
+    description: ML Engineer
     avatar: img/authors/_default.jpg
 
   yemanh:
