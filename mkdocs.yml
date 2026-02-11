@@ -21,10 +21,13 @@ theme:
 
 hooks:
   - hooks/filter_only.py
-  - hooks/merge_potm.py
-  - hooks/notebook_to_markdown.py
-  - hooks/render_page_templates.py
+  # content generation
+  - hooks/render_notebook.py
+  - hooks/render_page_template.py
+  - hooks/render_potm.py
+  - hooks/generate_author_pages.py
   - hooks/generate_redirects.py
+  # other
   - hooks/see_also.py
 
 plugins:

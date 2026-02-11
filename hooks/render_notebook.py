@@ -1,6 +1,5 @@
 """MkDocs hooks to convert `.ipynb` => `.md`."""
 
-import os
 import shutil
 import tempfile
 from pathlib import Path

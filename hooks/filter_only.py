@@ -8,7 +8,6 @@ nothing.
 
 import logging
 import os
-from pathlib import Path
 
 import mkdocs
 import mkdocs.structure.files as mkfiles

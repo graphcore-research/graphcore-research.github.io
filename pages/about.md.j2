@@ -1,4 +1,7 @@
-# About Us
+---
+title: "About Us"
+extra_data: [.authors.yml]
+---
 
 Graphcore Research participates in both fundamental and applied research, to characterise the computational requirements of machine intelligence and to demonstrate how hardware can drive the next generation of innovative AI models.
 
@@ -11,3 +14,17 @@ We're based in the U.K., in London, Bristol and Cambridge.
 To learn more about the Graphcore Research team and the work we've been doing, check out our recent <a class="linkpill" href="/publications"><i class="fa-solid fa-book" aria-hidden="true"></i><span class="label"> papers</span></a>
 and
 <a class="linkpill" href="https://github.com/graphcore-research"><i class="fa-brands fa-github" aria-hidden="true"></i><span class="label"> GitHub</span></a>.
+
+## Meet the Team
+
+<div class="about-authors-grid">
+    {% for id, author in data.authors.items() | sort(attribute='1.name') %}
+    <div class="author-card">
+        <a href="/author/{{ id }}">
+            <img src="/{{ author.avatar }}" alt="{{ author.name }}" class="md-author">
+        </a>
+        <h3><a href="/author/{{ id }}">{{ author.name }}</a></h3>
+        <p>{{ author.description }}</p>
+    </div>
+    {% endfor %}
+</div>
