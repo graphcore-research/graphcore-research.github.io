@@ -26,7 +26,7 @@ The main challenges in quantising to non-power-of-2 values is that GPU registers
 To solve this problem the authors propose a method of ahead-of-time bit-level pre-packing. In which you can combine the memory read of every 32 x-bit weights, resulting in x requests of 4-byte words per GPU thread. In this case, all the memory access would be aligned at the granularity of 32-bit words rather than irregular bit width.
 In order to do this is it required to rearrange the weights in memory but it is only required to do this once and this cost can be amortised over many inference calls.
 
-![](./figure_5.png){:class="constrained_img"}
+![](./figure_5.png){:.img-medium}
 
 The other challenge the authors face is how to best hide the latency of the FP-x to FP16 cast during dequantisation.
 They leverage parallelism by using the SIMT cores to do the dequantisation while the Tensor Cores run the model.

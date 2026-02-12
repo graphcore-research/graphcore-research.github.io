@@ -16,7 +16,7 @@ Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this
 
 **Problem** — Text generation, _conditioned on an image_: take an RGB image (below) and a short string prompt _"What colour shirt is the person to the left of the laptop wearing?"_, then use an already-trained VLM ([Llama-3.2-11B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct) by Meta) to generate an answer to the prompt.
 
-![Image of four people looking at a laptop](./image.png){:class="constrained_img_large"}
+![Image of four people looking at a laptop](./image.png){:.img-large}
 
 <!-- more -->
 
@@ -40,7 +40,7 @@ Learning can be a bit faster if inputs are "whitened", giving them zero mean and
 
 Here's what happens — at first sight, just the x-axis is shifted and scaled, but on close inspection, you can see that each colour component has a slightly different shift and scale value.
 
-![RGB colour component histogram showing original data in the range 0-255, and rescaled data centered around 0, and ranging from -1.5 to 2.0](./pre_rescaling.png){:class="constrained_img_large"}
+![RGB colour component histogram showing original data in the range 0-255, and rescaled data centered around 0, and ranging from -1.5 to 2.0](./pre_rescaling.png){:.img-large}
 
 (Don't worry, we're just warming up — the next components are a bit more interesting!)
 
@@ -63,11 +63,11 @@ embeddings = img @ patch_embedding.T  # shape=(4, 1600, 1290)
 
 The "patched" image looks like this:
 
-![the image above, chopped up with small 14x14 pixel patches](./image_patches.png){:class="constrained_img_large"}
+![the image above, chopped up with small 14x14 pixel patches](./image_patches.png){:.img-large}
 
 The `patch_embedding` takes each patch of 588 scaled-RGB values and converts it to a 1280-vector. This is a dot product (see [transformer walk-through](/posts/2024/04-gemma/gemma.md)), which compares each patch with 1280 different vectors, testing for similarity. These vectors were learned during pre-training to extract useful information from the RGB values. We can visualise them as 1280 14x14-pixel RGB images (note that the intensity scale is somewhat artificial, and for readability, they are sorted by standard deviation since feature ordering is arbitrary):
 
-![a grid of 14x14 pixel patches, which generally look like frequency filters](./patch_embedding.png){:class="constrained_img_large"}
+![a grid of 14x14 pixel patches, which generally look like frequency filters](./patch_embedding.png){:.img-large}
 
 A few brief observations:
 
@@ -75,11 +75,11 @@ A few brief observations:
  - Features seem to correspond to different frequencies - some are broad and flat, some are single edges while others are fine-grained / texture-like.
  - Although full RGB colour is available for every feature, many features appear colour-agnostic.
 
-![standard deviation of patch embedding components, sorted by descending std, starting at ~0.20, dropping sharply from index 200-300, then plateauing at ~0.05 std](./patch_embedding_std.png){:class="constrained_img_small"}
+![standard deviation of patch embedding components, sorted by descending std, starting at ~0.20, dropping sharply from index 200-300, then plateauing at ~0.05 std](./patch_embedding_std.png){.img-small}
 
 Finally, let's take a look at the image after transformation with `patch_embedding`. To visualise this `(4, 40, 40, 1280)` tensor, we'll perform k-means (16 clusters) on the hidden dimension, then map each patch to a unique colour for its closest cluster. This gives us some sense of which areas of the image are nearby in feature space.
 
-![a patch-embedded image, a very blocky version of the image; in feature space (left), it is quite interesting; in pixel space (right), it's a bit dull](./image_embedded_kmeans.png){:class="constrained_img_large"}
+![a patch-embedded image, a very blocky version of the image; in feature space (left), it is quite interesting; in pixel space (right), it's a bit dull](./image_embedded_kmeans.png){:.img-large}
 
 There doesn't seem to be much qualitative difference between clusters in pixel space or feature space; perhaps this is unsurprising for a linear up-projection.
 
@@ -100,7 +100,7 @@ embeddings += params.positional_embedding[aspect_ratio_id]  # shape (4, 1600, 12
 
 It's somewhat hard to visualise the positional embedding, a `(4, 40, 40, 1280)` tensor. The reason for this is that it exists primarily to influence attention between two patches, which is described by a `(4, 40, 40, 4, 40, 40)` attention map. Unfortunately, the effect of the positional embedding on these attention maps is not linearly separable from the input-dependent patch embedding. But if we pretend for an instant that it is, for a selected head in the first layer, we can see the following "average pre-softmax attention map", where the averaging is over all `(4, 40, 40)` query locations:
 
-![a heatmap 2x2 grid of tiles, showing bright vertical lines in the right two tiles, and duller vertical lines in the left two tiles](./positional_embedding_attn_average.png){:class="constrained_img_small"}
+![a heatmap 2x2 grid of tiles, showing bright vertical lines in the right two tiles, and duller vertical lines in the left two tiles](./positional_embedding_attn_average.png){.img-small}
 
 This particular head (layer 0, head 4) has a preference for content appearing in certain vertical bands of the right-hand two tiles. The repeating pattern between the tiles is an artifact of the way the pre-trained image model has been extended using tiles to handle larger images, and it is hard to argue that it's semantically appropriate.
 
@@ -148,7 +148,7 @@ Looking at this, I'm impressed by the implicit image segmentation that has been 
 
 **Residual evolution:** Finally, and mainly for fun, let's look at another k-means clustering that shows how the hidden state evolves during the residual network. The first frame "layer 0" is the input to the first transformer layer. The k-means clusters use Euclidean distance and are trained over the whole sequence of hidden states.
 
-![animation of hidden state evolution - similar areas of the image remain similar, and there is less locality and more diversity in later layers](./vision_transformer_state.gif){:class="constrained_img_large"}
+![animation of hidden state evolution - similar areas of the image remain similar, and there is less locality and more diversity in later layers](./vision_transformer_state.gif){:.img-large}
 
 We observe how areas of the image tend to change together, and there are "jumps" corresponding to certain layers where much of the image changes together. The jump at frame 31 corresponds to the end of one pre-trained transformer network, and the beginning of another.
 

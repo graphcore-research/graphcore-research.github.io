@@ -16,7 +16,7 @@ review_authors:
 
 There has been a growing trend in allowing LLMs to use more inference-time compute to generate answers to harder questions. The [Chain-of-Thought](https://arxiv.org/abs/2201.11903) approach, which pushes the model to self-correct and iteratively revise its answer, has shown significant promise, particularly for tasks involving maths and logic. However, in principle, taking the time to think should be helpful for a broad range of tasks. The authors propose a method to equip existing LLMs with the ability to think and plan before outputting a response through a custom post-training procedure called Thought Process Optimization (TPO). The technique does not require any additional human data, instead leveraging Reinforcement Learning from AI Feedback (RLAIF).
 
-![Thought Preference Optimization training procedure.](./fig1.png){:class="constrained_img_large"}
+![Thought Preference Optimization training procedure.](./fig1.png){:.img-large}
 
 ### Their method
 

@@ -39,7 +39,7 @@ QuIP is comprised of two key components:
 
 Which you can summarise with:
 
-![QuIP equation.](./EQN-QuIP.png){:class="constrained_img"}
+![QuIP equation.](./EQN-QuIP.png){:.img-medium}
 
 QuIP# improves both the method for generating $U$ and $V$ and the quantisation algorithm $Q$.
 
@@ -53,15 +53,15 @@ Compressing to 3-bits introduces very little degradation in perplexity compared 
 
 ![Perplexity at ctx length 2048.](./TBL-perplexity-2048.png)
 
-It's worth noting that the perplexity gains over AQLM are only realised if you use both the lattice codebook and finetune. 
+It's worth noting that the perplexity gains over AQLM are only realised if you use both the lattice codebook and finetune.
 
-![Perplexity at ctx length 4096.](./TBL-perplexity-4096.png){:class="constrained_img_small"}
+![Perplexity at ctx length 4096.](./TBL-perplexity-4096.png){.img-small}
 
 As is often the case, low perplexity doesn't always translate to better zero-shot performance on typical QA tasks, although it looks as though QuIP# stands up well in many cases.
 
 ![Zero shot QA performance.](./TBL-zero-shot.png)
 
-In terms of practical speed-ups that can be gained from using this, a lot seems to depend on how efficiently the Randomized Hadamard transform and lookups into the E8-lattice can be implemented. Both are memory bandwidth bound operations, but might also be difficult to achieve peak bandwidth. Notably, the authors don't publish #tokens/sec for their eye-catching 3-bit compression scenario, only 2- and 4-bit. 
+In terms of practical speed-ups that can be gained from using this, a lot seems to depend on how efficiently the Randomized Hadamard transform and lookups into the E8-lattice can be implemented. Both are memory bandwidth bound operations, but might also be difficult to achieve peak bandwidth. Notably, the authors don't publish #tokens/sec for their eye-catching 3-bit compression scenario, only 2- and 4-bit.
 
 ### Takeaways
 

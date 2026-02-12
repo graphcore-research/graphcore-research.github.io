@@ -26,7 +26,7 @@ The NormalFloat quantisation format, introduced in [QLoRA](https://arxiv.org/abs
 
 NormalFloat is based on quantile quantisation, where the quantised indices should be uniformly distributed. To achieve this, we must distribute centroids in a similar way to the incoming data, with more centroids where the density of data is higher, as illustrated below:
 
-![Quantile quantisation flattens the incoming distribution](./quantile.svg){:class="img"}
+![Quantile quantisation flattens the incoming distribution](./quantile.svg)
 
 To distribute the <span style="color: #7570b3; font-weight:bold">purple centroids</span> to match normally distributed data, we map a uniform range by the inverse cdf of the normal distribution (`ppf` in scipy):
 
@@ -37,7 +37,7 @@ centroids = scipy.stats.norm.ppf(torch.linspace(1/(2*n), 1 - 1/(2*n), n))
 
 Here's an illustration of how this works:
 
-![](./ppf.svg){:class="img"}
+![](./ppf.svg){.img-medium}
 
 By ensuring the cumulative probabilities of the centroids are evenly spaced, roughly the same number of datapoints should fall into each quantisation bin, so the distribution of quantised indices is uniform.
 
@@ -86,7 +86,7 @@ centroids_t = scipy.stats.t.ppf(p, (df-2)/3, scale=sqrt(3))
 
 These centroids come out as:
 
-![](./crd_rms.svg){:class="img"}
+![](./crd_rms.svg)
 
 Note that the Laplace and Student's t centroids are more spread out, due to the heavier tails of these distributions (the incoming data has been scaled to have `RMS=1` in all cases).
 
@@ -94,7 +94,7 @@ Note that the Laplace and Student's t centroids are more spread out, due to the 
 
 Although optimal under the given constraints, the formats described above perform poorly for heavy-tailed distributions. By heavy-tailed we mean there's more probability mass at the extremes than there is for a normal distribution, e.g. Student-t with low `df` parameter:
 
-![](./heavy_tails.svg){:class="img"}
+![](./heavy_tails.svg)
 
 When quantising these distributions, there is a difficult tradeoff between a wide range to represent the extreme values (a few examples causing very large MSE) and a tight range to represent the common values (a small MSE accumulated over many examples).
 
@@ -110,7 +110,7 @@ data = data.flatten(-2)
 
 An example of normally distributed samples, after block absmax scaling:
 
-![](./block_absmax.svg){:class="img"}
+![](./block_absmax.svg)
 
 This looks like a mixture of a <span style="color: #1b9e77; font-weight:bold">truncated normal distribution</span> and a <span style="color: #d95f02; font-weight:bold">two-point distribution</span> at `(-1, 1)`. While not exact, this is intuitive, since every block will contain a value at `+1` or `-1` (the absolute maximum value) and the rest of the block must be less than this extreme value by definition.
 
@@ -161,7 +161,7 @@ centroids_t = t.ppf(torch.linspace(c0, c1, n), df_, scale=scale)
 
 In our paper (Figure 29), we evaluate these formats for direct-cast quantisation of language models from the Llama, Gemma, Qwen and Phi families:
 
-![](./fig29_element_formats.png){:class="img"}
+![](./fig29_element_formats.png){.img-medium}
 
 Note that `E2M1` is `FP4` (4-bit floating point). Each dot corresponds to a different model; lower (scaled KL divergence of model outputs) is better; performance is normalised against the performance of that model under the cube root density block absmax quantiser for the Student's t distribution and averaged over bit widths from 3-5 bits. We see that our normal format is on par with NF4, while the Student's t format consistently outperforms it (note that the Student's t format chooses a `df` parameter for each tensor separately, to minimise MSE.)
 

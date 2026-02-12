@@ -49,7 +49,7 @@ Here, $\boldsymbol{K}$ and $\boldsymbol{V}$ both have the same shape $S \times d
 
 Fetching the full $\boldsymbol{K}$ and $\boldsymbol{V}$ tensors at each generative step is wasteful, as the model generally only attends to small parts of the history when predicting the next token. This is the main idea of the SparQ Attention technique: predict the most important key-value pairs and selectively fetch them from memory at each step.
 
-![](./sparq_schematic_t.png){:class="img"}
+![](./sparq_schematic_t.png)
 
 The algorithm is simple and consists of three main steps:
 
@@ -346,7 +346,7 @@ Finally, we can measure the latency of our implementation and see how it stacks 
 
 We do this by first generating the KV cache for a prefill of a given sequence length, and then measuring the time it takes to generate a single new token. For this experiment we used Llama 2 7B, keeping the model weights in 8-bit, and the KV cache in 16-bit. We chose the `k1` and `k2` hyperparameters such that the data transfer compression is fixed to 1/8 within the attention layer.
 
-![](./sparq-speedup.png){:class="img"}
+![](./sparq-speedup.png){.img-medium}
 
 The blue line in the plot indicates the achieved speed-up of SparQ Attention against the sequence length of the input sequence, while the dashed purple line showcases the *theoretical* speed-up considering only the ratio of data transferred. We can see that as the sequence is increased, our sparse attention implementation is indeed able to showcase significant speed-ups against the default implementation. The gap between the practical and theoretical speed-up indicates the additional latency overheads due to non-memory-bound operations such as top-$k$, and may offer some room for improvement!
 

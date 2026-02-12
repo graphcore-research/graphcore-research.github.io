@@ -19,7 +19,7 @@ critical instability, they present an improved *Smooth-SwiGLU* activation functi
 spikes (outliers) from causing training divergence in LLMs.
 
 
-![Training instability in FP8 due to SwiGLU.](./fp8-training-instable.png){:class="constrained_img"}
+![Training instability in FP8 due to SwiGLU.](./fp8-training-instable.png){:.img-medium}
 <figcaption>Training instability in FP8 due to the SwiGLU activation function.</figcaption>
 
 
@@ -42,14 +42,14 @@ As presented in the figure above, instabilities appear in late FP8 training of l
 to the quadratic form of the *SwiGLU* activation function when combined with weight alignment. Experimental training data shows that
 large outliers appear more often during late training due to the correlation between `w1` and `w2` SwiGLU weights (which are uncorrelated initially).
 
-![SwiGLU weights correlation and outliers.](./fp8-swiglu-hist.png){:class="constrained_img_large"}
+![SwiGLU weights correlation and outliers.](./fp8-swiglu-hist.png){:.img-large}
 <figcaption>SwiGLU weights correlation and outliers.</figcaption>
 
 These outliers will lead to underflow or overflow during FP8 quantization when combined with delayed scaling, as the latter technique relies on
 the previous batch statistics for optimal hardware usage. In order to circumvent this issue, the authors introduce a new *smooth SwiGLU* activation
 function which incorporates channel scaling correction prior to FP8 casting, i.e.:
 
-![Smooth-SwiGLU channel scaling.](./fp8-smooth-swiglu.png){:class="constrained_img_large"}
+![Smooth-SwiGLU channel scaling.](./fp8-smooth-swiglu.png){:.img-large}
 
 As presented by the authors, channel max-scaling is well suited to hardware accelerator as each chunk of data can be treated in parallel, and the resulting
 rescaling can be fused into the FP8 quantization of input activations $x$ and weights $w_3$ (third MLP layer):
@@ -63,7 +63,7 @@ We note that the introduction of the *smooth-SwiGLU* activation preserves the ov
 
 Training experiments on a 7B Llama 2 model show the improved stability of FP8 LLM training when using the smooth-SwiGLU activation: training loss as well as zero-shot downstream tasks match the BF16 baseline. The use of smooth-SwiGLU only leads to a small drop in FP8 training acceleration, from 37% to 34%, due to the cost of channel rescaling.
 
-![FP8 LLM training with Smooth-SwiGLU.](./fp8-smooth-swiglu-training.png){:class="constrained_img"}
+![FP8 LLM training with Smooth-SwiGLU.](./fp8-smooth-swiglu-training.png){:.img-medium}
 <figcaption>FP8 LLM training with Smooth-SwiGLU.</figcaption>
 
 The authors also demonstrate that the FP8 E5M2 format can be used for storing the Adam optimizer second moment (as presented in previous works, the first moment can be represented using E4M3).

@@ -16,7 +16,7 @@ review_authors:
 
 Training and fine-tuning Large Language Models (LLMs) on consumer accelerated hardware has been a challenge due to significant memory requirements as model size increased. As a consequence, a large literature has emerged around low-rank approximation of model weights, including the well-known [LoRA](https://arxiv.org/abs/2106.09685) method. This work proposes a low-rank approximation of gradients instead of weights, leading to similar memory savings while improving accuracy in pre-training applications.
 
-![](./galore-memory.png){:class="constrained_img_large"}
+![](./galore-memory.png){:.img-large}
 
 ### Background
 
@@ -65,7 +65,7 @@ On fine-tuning tasks, GaLore and LoRA achieve close accuracy and memory consumpt
 
 Additionally, GaLore shows much better performance on LLaMA pretraining compared to LoRA and ReLoRA, while using significantly less memory. Interestingly, for pre-training, the subspace rank $r$ can be seen as an hyperparameter trading-off memory and compute budgets (i.e. a smaller rank requires more iterations to achieve similar accuracy).
 
-![](./galore-pretraining.png){:class="constrained_img_large"}
+![](./galore-pretraining.png){:.img-large}
 
 ### Takeaways
 

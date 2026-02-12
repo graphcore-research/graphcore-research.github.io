@@ -18,7 +18,7 @@ review_authors:
 
 If you stare for a while at the mapping from SSM inputs to outputs, it looks a lot like a more expressive form of causal linear attention. If you simplify this general form, you get a new SSM building block for Mamba-2 that scales across devices better than the original, while improving performance on associative recall tasks and maintaining language modelling performance comparable to Transformers up to 2.7B parameters.
 
-![Linking linear attention and state space models via semiseparable matrices](./FIG-Schema.png){:class="constrained_img_small"}
+![Linking linear attention and state space models via semiseparable matrices](./FIG-Schema.png){.img-small}
 <figcaption>The authors demonstrate equivalence between linear attention and state space models under specific conditions for attention masking structure and state-space rank.</figcaption>
 
 ### Background
@@ -59,7 +59,7 @@ By restricting A to be in scalar-diagonal form, the general SSM layer of Mamba c
 
 This also reduces space complexity to be linear (rather than quadratic) in hidden size.
 
-![Mamba-2 has space complexity linear in hidden size](./TBL-Complexity.png){:class="constrained_img_small"}
+![Mamba-2 has space complexity linear in hidden size](./TBL-Complexity.png){.img-small}
 
 They also add a normalisation layer before the final output projection as Mamba was found to be unstable with larger state sizes, and permit B and C to be shared across heads, analogous to multi-/grouped-***value*** attention.
 

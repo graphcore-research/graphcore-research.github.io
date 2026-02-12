@@ -31,7 +31,7 @@ def dot(a, b): return sum(a_i * b_i for a_i, b_i in zip(a, b))
 
 It acts as a test of _agreement_. Here's an example of the dot product between some vectors in 2D:
 
-![Lines emanating from a central point (0, 0). A bold line labelled 'a'. A line in the same direction, but twice as long, labelled 'x . a = 2'. A sequence of lines rotating from those, labelled 'x . a = 1/sqrt(2)' then 'x . a = 0' then 'x . a = -1/sqrt(2)', then 'x . a = -1' in the opposite direction from a.](./dot_product.png){:class="constrained_img_small"}
+![Lines emanating from a central point (0, 0). A bold line labelled 'a'. A line in the same direction, but twice as long, labelled 'x . a = 2'. A sequence of lines rotating from those, labelled 'x . a = 1/sqrt(2)' then 'x . a = 0' then 'x . a = -1/sqrt(2)', then 'x . a = -1' in the opposite direction from a.](./dot_product.png){.img-tiny}
 
 From this, we see that longer lines have larger magnitude dot products, and for a given length of vectors, the dot product will be largest (most positive) when they are in the same direction, zero when perpendicular, and smallest (most negative) when they are in the opposite direction.
 
@@ -96,7 +96,7 @@ As we're about to see, most operations in Gemma are a dot product similarity bet
 
 Since the model attempts to predict words based on similarity, we'd expect words that appear in the same contexts to have similar embeddings. In the figure below, we plot the cosine similarity between a few selected tokens from the vocabulary. Cosine similarity is the dot product with the length of input vectors normalised out, calculated as `dot(a, b) / sqrt(dot(a, a) * dot(b, b))`.
 
-![a grid of coloured squares representing cosine similarity between embeddings; "red" and "green" are similar; "London", "Paris" and "Tokyo" are similar; "pleasant" and "vibrant" are similar; "with" really is on its own](./embeddings.png){:class="constrained_img_small"}
+![a grid of coloured squares representing cosine similarity between embeddings; "red" and "green" are similar; "London", "Paris" and "Tokyo" are similar; "pleasant" and "vibrant" are similar; "with" really is on its own](./embeddings.png){.img-small}
 
 Words with similar functions in language (colours, place names, adjectives) have similar embeddings. It'd be fun to read something into "Tokyo" and "London" being closer than "Paris" to "pleasant" and "vibrant", but that is perhaps a bit risky — this embedding similarity metric is a very blunt tool.
 
@@ -161,7 +161,7 @@ First, some background: when we talk of _representations_, these are the 2048-el
 
 If we call `x` the _skip_ connection, `layer(norm(x))` the _residual_ connection, and use standard deviation ($\sigma_s$, $\sigma_r$ respectively) to give an indication of the scale of the contribution of each, we can look at each layer's residual contribution when the skip and residual are added. Since uncorrelated variances would add, we use $\sqrt{\sigma_r^2 / (\sigma_r^2 + \sigma_s^2)}$ as a metric for the _update scale_ of the residual. If 0, the output is all from the skip connection, the layer doesn't contribute much at all; if 1, the output is all from the layer, the skip connection doesn't contribute much.
 
-![A plot of blue and orange dots for the attention and mlp layer's update scales. Most points hover around the 0.05 mark, with the first layer having a big attention update, and the last layer having a big mlp update.](./residual_updates.png){:class="constrained_img"}
+![A plot of blue and orange dots for the attention and mlp layer's update scales. Most points hover around the 0.05 mark, with the first layer having a big attention update, and the last layer having a big mlp update.](./residual_updates.png){:.img-medium}
 
 For our short example, this shows that most layers make a very small contribution, tweaking the existing representation rather than replacing it. A few layers make a larger contribution, notably the first attention layer and the last MLP layer.
 
@@ -208,7 +208,7 @@ for _ in range(18):
 
 Without a norm, the hidden representation will grow exponentially; with a norm, it grows only linearly. To test this in a more realistic setting, let's look at the scale (standard deviation) of the hidden representation before each attention and MLP layer in Gemma, both in the original model (with RMSNorm) and when all norms are replaced by the identity function (without RMSNorm).
 
-![A log-y linear-x plot of scale with and without RMSNorm. The with-norm line grows slowly and remains under 10^2 for all 18 layers, while the without-norm line grows quickly, exploding to 10^20 after just 3 layers.](./norm_scaling.png){:class="constrained_img"}
+![A log-y linear-x plot of scale with and without RMSNorm. The with-norm line grows slowly and remains under 10^2 for all 18 layers, while the without-norm line grows quickly, exploding to 10^20 after just 3 layers.](./norm_scaling.png){:.img-medium}
 
 Note that removing the norm of an already-trained model wouldn't be allowed in any case, but this plot illustrates how normalisation helps to restrain the scale of the hidden representation across multiple layers. Exploding scale is undesirable: it can cause saturation of nonlinearities in the model, as well as numerical difficulties.
 
@@ -329,7 +329,7 @@ Inserting this transformation between the calculation of `q,k` and the `self_att
 
 Let's start with an example. Imagine we have the same `q` and `k` vectors in each position, `(x, y) = (1, 0)`. Then, after rotary encoding with two different frequencies (the highest with frequency 1, and component 20/128 with frequency 0.24), we get this:
 
-![5 vectors, labelled k_0 to k_4, the first pointing right along the x-axis, the others rotated at regular intervals about (0, 0).](./rotary_example.png){:class="constrained_img"}
+![5 vectors, labelled k_0 to k_4, the first pointing right along the x-axis, the others rotated at regular intervals about (0, 0).](./rotary_example.png){:.img-medium}
 
 The important property to note here is the _rotational invariance_ of the dot product. Since the pre-rotation vectors were the same, the dot product $k_0 \cdot k_1$ is the same as $k_1 \cdot k_2$, and $k_2 \cdot k_3$, etc. (Similarly, $k_0 \cdot k_2 = k_1 \cdot k_3$, etc.) So, the dot product between RoPE-encoded vectors doesn't depend on the absolute position of the tokens `[0, 1, 2, 3, 4]`, but only on the relative offset between them and the original vector before it was rotated.
 
@@ -341,13 +341,13 @@ We may also wish to allow some heads where position matters greatly, requiring h
 
 It's intuitive to look at the _wavelength_ of rotations, calculated as `2*pi/freq`. This is equivalent to the position offset before the rotation starts repeating itself. Here are the wavelengths of Gemma's components:
 
-![A straight line on a linear x-axis of component, ranging from 0 to 128, and a log y-axis of wavelength, ranging from 4 to 65536. And a horizontal line at 8192 labelled "max sequence length".](./rotary_wavelength.png){:class="constrained_img_small"}
+![A straight line on a linear x-axis of component, ranging from 0 to 128, and a log y-axis of wavelength, ranging from 4 to 65536. And a horizontal line at 8192 labelled "max sequence length".](./rotary_wavelength.png){.img-small}
 
 We see from this that Gemma's highest frequency component has a wavelength of about 6, and the lowest has about 60000. This allows the shortest wavelengths to distinguish between individual tokens, while the longest wavelengths can ignore position entirely within the maximum sequence length of 8192.
 
 We can look at how long each q-vector is for every query head and rotary component, over our example text:
 
-![Two heatmaps, with the x scale marked "wavelength" having ticks at 6, 63, 628, 6283, and y scale marked "head", ticks 0 to 7. One heatmap shows layer 0, with quite a lot of high values at short wavelengths, and a stripe around 8k. The other shows layer 15, with quite a lot of high values at long wavelengths, and a similar stripe.](./rotary_heads.png){:class="constrained_img"}
+![Two heatmaps, with the x scale marked "wavelength" having ticks at 6, 63, 628, 6283, and y scale marked "head", ticks 0 to 7. One heatmap shows layer 0, with quite a lot of high values at short wavelengths, and a stripe around 8k. The other shows layer 15, with quite a lot of high values at long wavelengths, and a similar stripe.](./rotary_heads.png){:.img-medium}
 
 Since this is averaged over just 5 tokens of sequence length, it is quite noisy — don't read too much into this, but we can see that heads vary in terms of which query components they use. Some position-agnostic heads use longer wavelength components, while position-sensitive heads use shorter wavelength components. The strong stripe near to the maximum sequence length (8192) is interesting. I'm afraid I can't offer much as to why that sits there.
 
@@ -389,7 +389,7 @@ y = x @ proj
 
 If we look at the first component of the output as a function of the inputs, we see:
 
-![3D surface plot showing a flat slope.](./mlp_linear.png){:class="constrained_img_small"}
+![3D surface plot showing a flat slope.](./mlp_linear.png){.img-small}
 
 This is what a linear projection always looks like — a flat slope. It's certainly possible for this function to capture some interesting properties of the data, especially when it works on 2048-vectors rather than 2-vectors. However, it will become much more powerful with a few additions.
 
@@ -399,7 +399,7 @@ The core idea of the MLP is that we wish to introduce _depth_ into the model, a 
 
 Sequences of dot products need to be broken up if they're going to be any more powerful than the simple linear projection we've already seen. The simplest way to do this is by transforming each element of the vector individually by an elementwise nonlinear function. One such function is the _rectified linear unit_ or ReLU, `relu(a) = max(0, a)`:
 
-![Plot of z = relu(a), with a flat portion below zero, then a linear portion above zero.](./relu.png){:class="constrained_img_small"}
+![Plot of z = relu(a), with a flat portion below zero, then a linear portion above zero.](./relu.png){.img-small}
 
 Our ReLU MLP now runs:
 
@@ -412,13 +412,13 @@ y = z @ down_proj
 
 Since ReLU has two distinct regimes with `z == 0` and `z > 0`, we are interested in which half we're in. If we take each component of `z` and give `z > 0` a different colour (red, green, blue), we can get a map that shows which combination of `z[i] > 0` for each input point `x`:
 
-![A pinwheel map of colours in different triangular segments: green then gray then blue then magenta then off-white then yellow.](./mlp_zmap.png){:class="constrained_img_small"}
+![A pinwheel map of colours in different triangular segments: green then gray then blue then magenta then off-white then yellow.](./mlp_zmap.png){.img-small}
 
 In the top right off-white segment, we have all three components of `z` "active" (not saturating at zero), so in this region, we have `z = x @ gate_proj` (the ReLU disappears). In the yellow region on the left, we know the blue component `z[2]` is saturating, so in this region, we have `z = (x @ gate_proj) * [1, 1, 0]`, effectively removing that component. Within each coloured region, `z` is a linear function of `x`.
 
 Once we run the down-projection, each component of `y` is a dot product between `z` and a vector of trained weights, so the result remains piecewise linear, transitioning at the boundaries we've just seen:
 
-![3D surface plot showing a piecewise linear function of two input components. Each piece is coloured as per the pinwheel map above.](./mlp_relu.png){:class="constrained_img_small"}
+![3D surface plot showing a piecewise linear function of two input components. Each piece is coloured as per the pinwheel map above.](./mlp_relu.png){.img-small}
 
 **C. ReGLU**
 
@@ -431,7 +431,7 @@ y = z @ down_proj
 
 With the same `gate_proj`, the regions in this version are the same as before; the only difference is that within each region, we have a quadratic function of `x`.
 
-![3D surface plot showing a piecewise quadratic function of two input components.](./mlp_reglu.png){:class="constrained_img_small"}
+![3D surface plot showing a piecewise quadratic function of two input components.](./mlp_reglu.png){.img-small}
 
 Notice we can still have sharp edges at the region boundaries, but within each region, the function is now curved.
 
@@ -439,13 +439,13 @@ Notice we can still have sharp edges at the region boundaries, but within each r
 
 The final change is to substitute the Gaussian error linear unit (GELU) for the ReLU. The definition isn't too important for our discussion, just that it looks like a smoother version of ReLU:
 
-![A plot of GELU(a) and ReLU(a). From a=-2 to a=2, GELU starts near zero, then drops before reaching z=0 when a=0 before climbing to approach z=a.](./gelu.png){:class="constrained_img_small"}
+![A plot of GELU(a) and ReLU(a). From a=-2 to a=2, GELU starts near zero, then drops before reaching z=0 when a=0 before climbing to approach z=a.](./gelu.png){.img-small}
 
 The idea of GELU is that it will allow us to build smoother functions than ReLU. I think this is done primarily for the sake of optimisation during training, but it might be that this gives better shapes of function for inference too.
 
 Plugging this into the gated linear unit, we have the full form of a GeGLU MLP as per the original code. It looks quite similar to the ReGLU, but you should be able to see that the transitions between regions are considerably smoother.
 
-![3D surface plot showing a smooth function of two input components.](./mlp_geglu.png){:class="constrained_img_small"}
+![3D surface plot showing a smooth function of two input components.](./mlp_geglu.png){.img-small}
 
 Our approach of considering distinct regions is broken down by the GELU, which doesn't saturate at exactly zero, so does not create strict regions where components of `z` can be discarded. However, since the GELU is quite similar to ReLU, it's still somewhat reasonable to think in terms of piecewise quadratic regions, at least at a coarse enough scale.
 
@@ -453,7 +453,7 @@ Our approach of considering distinct regions is broken down by the GELU, which d
 
 A final figure might help review the journey we've been on, from Linear -> ReLU -> ReGLU -> GeGLU. To make things legible, we're now looking at a slice through the surfaces we've seen so far, setting `x[1]` to a constant value, and just looking at how `y[0]` depends on `x[0]`.
 
-![Four line plots, shown as x[0] varies from -2 to 2. The first, linear is linear. The second, ReLU, is piecewise linear. The third, ReGLU, is piecewise quadratic with gradient discontinuities. The fourth, GeGLU, is smooth but still vaguely quadratic.](./mlp_slice.png){:class="constrained_img"}
+![Four line plots, shown as x[0] varies from -2 to 2. The first, linear is linear. The second, ReLU, is piecewise linear. The third, ReGLU, is piecewise quadratic with gradient discontinuities. The fourth, GeGLU, is smooth but still vaguely quadratic.](./mlp_slice.png){:.img-medium}
 
 So Gemma's MLP, the GeGLU, can be thought of as a piecewise-quadratic function with smooth boundaries between the pieces. Where our example had 6 regions across a 2-vector input, Gemma's MLPs may have a vast number of regions (perhaps $10^{2000}$) across their 2048-vector input.
 
@@ -500,7 +500,7 @@ There's not much to add beyond our earlier discussion _"understanding embedding 
 
 The output of this hidden-embedding product is a score for each token in the vocabulary. We can turn this score into a probability using `probability = softmax(score)`, where `y = softmax(x)` means `z = exp(x)`, `y = z / z.sum()`. For our example, this gives the following top 10 results after each token:
 
-![A plot of prediction probability after each term in the sequence "&lt;bos&gt; I want to move". The predictions have different tokens (e.g. "I" followed by "have") and probabilities.](./predictions.png){:class="constrained_img_large"}
+![A plot of prediction probability after each term in the sequence "&lt;bos&gt; I want to move". The predictions have different tokens (e.g. "I" followed by "have") and probabilities.](./predictions.png){:.img-large}
 
 To follow the predictions in context, read the titles from left to right to a given column, then scan down the plot for a list of possible next words. We see that in some cases the model is very confident, for example after "I want", Gemma is quite confident the next token is "to". Sometimes the output is flatter: after "I want to", Gemma thinks there's a wide range of likely predictions.
 

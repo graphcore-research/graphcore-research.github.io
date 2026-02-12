@@ -20,7 +20,7 @@ The authors modify the scaling laws from the [Chinchilla paper](https://arxiv.or
 The key conclusion they draw from their analysis is:
 > LLM practitioners expecting significant demand (~$10^9$ inference requests) should train models substantially smaller and longer than Chinchilla-optimal.
 
-![A plot demonstrating that as pretraining loss and inference tokens increase, the compute-optimal model size shrinks relative to Chinchilla.](./figure_1b.png){:class="constrained_img"}
+![A plot demonstrating that as pretraining loss and inference tokens increase, the compute-optimal model size shrinks relative to Chinchilla.](./figure_1b.png){.img-small}
 <figcaption>Figure 1(b). The new scaling laws account for the number of inference tokens. As inference demand grows one should train increasingly smaller models than Chinchilla recommends.</figcaption>
 
 ### Background
@@ -49,7 +49,7 @@ In this paper the authors modify the Chinchilla scaling laws to account for infe
 
 This formula reduces the total compute (training + inference) required, relative to the original Chinchilla rules:
 
-![A plot demonstrating that as pretraining loss and inference tokens increase, the cost of the Chinchilla scaling law increases relative to the authors](./figure_1a.png){:class="constrained_img"}
+![A plot demonstrating that as pretraining loss and inference tokens increase, the cost of the Chinchilla scaling law increases relative to the authors](./figure_1a.png){.img-small}
 <figcaption>Figure 1(a). As inference demand grows the total cost of the Chinchilla scaling law increases relative to the authors' new law.</figcaption>
 
 This is an improvement, but there's still a considerable gap between this and the "real world" costs of running such a model. The above doesn't account for:
@@ -63,4 +63,4 @@ To address these points, the authors introduce a second _cost-optimal_ formula, 
 
 ### Takeaways
 
-Of course, one can never know ahead of time how many requests a model will be used for, so there are limits to this approach. It also doesn't account for some practical benefits of smaller models (easier to fit on a single chip, lower latency). Nevertheless, this is still a much-improved model of the real-world costs of practical LLM use. 
+Of course, one can never know ahead of time how many requests a model will be used for, so there are limits to this approach. It also doesn't account for some practical benefits of smaller models (easier to fit on a single chip, lower latency). Nevertheless, this is still a much-improved model of the real-world costs of practical LLM use.

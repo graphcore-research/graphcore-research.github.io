@@ -48,11 +48,11 @@ $$
 $$
 </div>
 
-where 
+where
 
 <div>
 $$
-    prize(x) = 
+    prize(x) =
     \begin{cases}
         k - i, &\textrm{if x is the i-th of top-k nodes (edges)}\\
         0, &\textrm{else}
@@ -68,17 +68,17 @@ is the value of the top-k nodes and edges based on their ranking.
 ### Results
 
 The authors use the pretrained 7 billion parameter LLama2 as LLM to compare three model configurations across different datasets:
-* Prompting a frozen LLM with the textual representation of the subgraph ("Inference-Only"). 
-* Comparing task-specific [prompt tuning](https://arxiv.org/abs/2104.08691) to prompting with the learned graph embedding. In both cases the LLM receives the plain text representation of the subgraph. 
+* Prompting a frozen LLM with the textual representation of the subgraph ("Inference-Only").
+* Comparing task-specific [prompt tuning](https://arxiv.org/abs/2104.08691) to prompting with the learned graph embedding. In both cases the LLM receives the plain text representation of the subgraph.
 * Fine-tuning the LLM to the specific tasks using [Low Rank Adaptation (LoRA)](https://arxiv.org/abs/2106.09685) with and without using the subgraph embeddings.
 
-![Performance comparison of G-Retriever across ExplaGraphs, SceneGraphs, and WebQSP datasets](./G-Retriever_Tab3.png){:class="constrained_img_large"}
+![Performance comparison of G-Retriever across ExplaGraphs, SceneGraphs, and WebQSP datasets](./G-Retriever_Tab3.png){:.img-large}
 
 The results show that with a frozen LLM, G-Retriever achieves results comparable to the fine-tuned models and significantly outperforms the prompt tuning case.
 
 Finally, an ablation study demonstrates the importance of both, the textualised and the embedded subgraph.
 
-![Ablation study on the WebQSP dataset.](./G-Retriever_Tab6.png){:class="constrained_img_small"}
+![Ablation study on the WebQSP dataset.](./G-Retriever_Tab6.png){.img-small}
 
 ### Takeaways
 G-Retriever shows strong results for retrieving information from graphs to augment LLMs. In particular, the interpretation of the subgraph generation as PCST problem and the simultaneous use of textual and GNN-embedded graph attributes appear to benefit model accuracy.

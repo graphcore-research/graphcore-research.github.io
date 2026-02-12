@@ -15,7 +15,7 @@ review_authors:
 
 Our field has an insatiable desire to build ever-larger language models. From this, there's an increasing need to predict how training will behave as model size is scaled up: How do we know that our hyperparameters chosen based on small models will continue to work on large ones? This work builds on the foundation of [muP (Yang et al.)](https://arxiv.org/abs/2203.03466) to explore parameter transfer as transformer model width increases.
 
-![Learning rate transfer over width for Adam, Standard parametrisation, assuming full alignment, showing good transfer.](./headline-figure4-transfer.png){:class="constrained_img_small"}
+![Learning rate transfer over width for Adam, Standard parametrisation, assuming full alignment, showing good transfer.](./headline-figure4-transfer.png){.img-small}
 <figcaption>Figure 4 (part): An LR transfer plot, showing that the same base learning rate can be used as the model width is increased $\times 128$.</figcaption>
 
 ### Their method

@@ -47,7 +47,7 @@ This is a neat result. The LR is much more stable, and there are clear gains to 
 
 The only negative here really is that the benefit is not particularly substantial. They plot the final validation loss for their full LLM training runs at different densities and even for the aggressive 1/128 sparsity the gain is relatively modest:
 
-![For LLMs, SµPar forms the Pareto frontier loss across sparsity levels, with no HP tuning required.](./figure_3.png){:class="constrained_img_small"}
+![For LLMs, SµPar forms the Pareto frontier loss across sparsity levels, with no HP tuning required.](./figure_3.png){.img-small}
 
 ### Takeaways
 

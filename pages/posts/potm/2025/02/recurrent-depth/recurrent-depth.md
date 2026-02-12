@@ -56,9 +56,9 @@ unit, gradient updates also propagate through the prelude).
 
 ### Results
 
-![Results of the authors](./table.png){:class="constrained_img"}
+![Results of the authors](./table.png){:.img-medium}
 
-The authors found that their method outperforms Pythia models and is comparable in performance to first-generation 
+The authors found that their method outperforms Pythia models and is comparable in performance to first-generation
 OLMo models (although falls behind later OLMo models) with just 3.5 billion parameters. As a
 proof-of-concept and the first recurrent-depth LLM to be trained at this scale, these results are promising
 and indicate more work should be carried out in this space.

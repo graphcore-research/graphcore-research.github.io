@@ -13,7 +13,7 @@ review_authors:
 
 ### The key idea
 
-The authors showcase a method for training a *single* quantised model (from a pre-trained checkpoint) that can be used at *different* precision levels. They achieve this by simultaneously training the model to work at `int8`, `int4`, and `int2` precisions, by optimising (at the same time) the eight, four, and two most significant bits of the integer representation, respectively. They show that this approach can be used in conjunction with learning-based quantisation methods, leading to minimal degradation at 8-bit and 4-bit precision levels (compared to optimising for a single precision level), and significantly improving the `int2` baseline. 
+The authors showcase a method for training a *single* quantised model (from a pre-trained checkpoint) that can be used at *different* precision levels. They achieve this by simultaneously training the model to work at `int8`, `int4`, and `int2` precisions, by optimising (at the same time) the eight, four, and two most significant bits of the integer representation, respectively. They show that this approach can be used in conjunction with learning-based quantisation methods, leading to minimal degradation at 8-bit and 4-bit precision levels (compared to optimising for a single precision level), and significantly improving the `int2` baseline.
 
 ![Figure showcasing the nested integer structure utilised by the Matryoshka Quantisation, comparison against the baseline methods, as well as the quantised weight distribution.](./fig1.png)
 
@@ -52,7 +52,7 @@ Main observations:
 * Although training was explicitly conducted using 8/4/2-bit precisions, `int3` and `int6` show similar performance compared to their baselines (that are trained explicitly at these precisions).
 * After training, different precision can be applied to different layers: somewhat surprisingly, the authors find that keeping the middle layers in higher precision improves the trade-off. Figure 2 shows the best mix-and-match results for Gemma-2 9B model.
 
-![Figure showcasing the results for mix-and-matching different integer precisions across model layers.](./fig2.png){:class="constrained_img_small"}
+![Figure showcasing the results for mix-and-matching different integer precisions across model layers.](./fig2.png){.img-small}
 
 ### Takeaways
 

@@ -49,7 +49,7 @@ As some tokens "exit early", they will not have their key-value pairs available 
 
 * Recursion-wise KV caching: Attention is restricted to the tokens that are available at the given recursion depth. This means that the number of available tokens that can be attended to shrinks with each recursive step, leading to a less computationally intensive attention operation at each recursive step.
 
-* Recursive KV sharing: As all tokens pass through the recursive block at least once, another approach is to re-use the key-value pairs after the first recursive depth for each of the consecutive ones. Thus, at each depth the queries can attend to the full sequence, but the key-value pairs are only calculated once, during the first recursive pass. 
+* Recursive KV sharing: As all tokens pass through the recursive block at least once, another approach is to re-use the key-value pairs after the first recursive depth for each of the consecutive ones. Thus, at each depth the queries can attend to the full sequence, but the key-value pairs are only calculated once, during the first recursive pass.
 
 ### Results
 
@@ -61,7 +61,7 @@ The main results are shown in Table 3. The downstream tasks used are LAMBADA (LD
 
 The authors also test the performance of the models at the same compute budget as the size is scaled up, for fixed recursion depth $N_r = 3$ (Figure 3). The results indicate that the MoR architecture can outperform the vanilla transformer, however, the gap decreases as the compute budget is increased, suggesting that the lower number of parameters might be reaching a capacity limit.
 
-![Figure comparing the throughput of the vanilla transformer compared to the mixture-of-recursions architecture.](./fig5.png){:class="constrained_img_small"}
+![Figure comparing the throughput of the vanilla transformer compared to the mixture-of-recursions architecture.](./fig5.png){.img-small}
 <figcaption>Figure 4. Throughput comparison</figcaption>
 
 Finally, the authors showcase how the approach can lead to improvement in throughput compared to the vanilla transformer for a fixed number of effective parameters (360M), shown in Figure 4 (the "maximum" batch size line indicates the throughput when the largest batch size that fits on the GPU is used). As the maximum number of recursion depths is increased, throughput can be increased at the expense of decreased performance.

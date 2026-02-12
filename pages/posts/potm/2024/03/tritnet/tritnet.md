@@ -32,7 +32,7 @@ By restricting weight values to {-1, 0, 1}, matrix multiplications can be comput
 
 Comparing against FP16 Llama 3B pretrained on 100B tokens shows minimal change in validation perplexity and downstream task accuracy
 
-![Comparison of 1.58-Bit LLM to FP16 Llama.](./TBL-ppl-acc.png){:class="constrained_img_large"}
+![Comparison of 1.58-Bit LLM to FP16 Llama.](./TBL-ppl-acc.png){:.img-large}
 
 Even more impressively, 1.58-Bit LLM exceeds the performance StableLM-3B when reproducing training recipe on 2 trillion tokens.
 

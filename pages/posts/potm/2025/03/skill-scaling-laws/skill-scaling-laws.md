@@ -37,7 +37,7 @@ To understand how much this difference is a consequence of the ratio of knowledg
 
 However, even when correcting for the proportion of skill-relevant data, a fundamental difference between knowledge and code remains, with knowledge still being substantially more capacity-hungry (Figure 3). This can be explained by the fact that knowledge is much harder to compress than code.
 
-![CO parameter count as a function of proportion of skill-relevant data](./fig3.png){:class="constrained_img"}
+![CO parameter count as a function of proportion of skill-relevant data](./fig3.png){:.img-medium}
 <figcaption>Figure 3. On average, knowledge-based tasks require more parameters than code, for the same proportion of skill-relevant data seen during pretraining. </figcaption>
 
 Finally, the authors observe that, while it is possible in general to align the COs for the two skills when fixing a specific validation dataset, the optimal parameter count for the same skill varies massively (up to 30%, in low-budget regimes) across validation sets. This highlights the importance of choosing a validation set that adequately represents what the model should be able to capture.

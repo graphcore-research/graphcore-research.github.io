@@ -18,13 +18,13 @@ Traditional sequence models, such as Transformers and recurrent neural networks 
 
 The authors of Titans: Learning to Memorize at Test Time aim to address this challenge by developing a novel memory-augmented architecture that dynamically learns what to store and forget during inference, enhancing both scalability and accuracy in long-sequence tasks. The long-term memory module can be integrated with attention in three different variants proposed in the paper.
 
-![Titans Memory As Context variant.](./mac.png){:class="constrained_img_large"}
+![Titans Memory As Context variant.](./mac.png){:.img-large}
 <figcaption>Figure 1. Titans Memory As Context variant.</figcaption>
 
-![Titans Memory As Gate variant.](./mag.png){:class="constrained_img_large"}
+![Titans Memory As Gate variant.](./mag.png){:.img-large}
 <figcaption>Figure 2. Titans Memory As Gate variant.</figcaption>
 
-![Titans Memory As Layer variant.](./mal.png){:class="constrained_img_large"}
+![Titans Memory As Layer variant.](./mal.png){:.img-large}
 <figcaption>Figure 3. Titans Memory As Layer variant.</figcaption>
 
 To evaluate their approach, the authors conducted experiments across diverse tasks, including language modeling, common-sense reasoning, genomics, and time series analysis.Titans outperformed traditional Transformers and modern recurrent models, particularly in scenarios requiring long-term memory. Notably, in 'needle in a haystack' tasks where models must retrieve specific information from long sequences, Titans demonstrated superior accuracy, even with context windows exceeding 2 million tokens. The results highlight the model’s ability to dynamically store and recall relevant information, making it a promising advancement in sequence modeling.
@@ -77,7 +77,7 @@ Instead we highlight the ablation study of the paper. Starting with the Long-ter
 
 The authors also compared the three architectural variants of Titans—MAC, MAG, and MAL—across language modeling, common-sense reasoning, and long-context needle in a haystack tasks. MAC and MAG showed comparable performance in language modeling and common-sense reasoning tasks. However, MAC outperformed the others significantly on the long-context NIAH task. Both MAC and MAG also surpassed MAL in all tasks.
 
-![Titans ablation study results.](./ablation.png){:class="constrained_img"}
+![Titans ablation study results.](./ablation.png){:.img-medium}
 <figcaption>Figure 4. Titans ablation study results.</figcaption>
 
 To conclude, the authors mention that the Titans code, implemented in PyTorch and JAX, will be released soon, which is an exciting prospect for the research community eager to explore and build upon their work.

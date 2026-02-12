@@ -14,7 +14,7 @@ review_authors:
 
 It turns out that the Shampoo optimiser (explained below), with some minor tweaks, is equivalent to running Adafactor in Shampoo's eigenspace. Since Adafactor is a rank=1 variant of Adam, the proposed method "SOAP" runs Adam in Shampoo's eigenspace instead.
 
-![SOAP performance versus Adam and Shampoo, showing good step-efficiency (due to Adam) and time-efficiency (due to periodic preconditioning). Less frequent preconditioning hurts Shampoo more than SOAP.](./headline.png){:class="constrained_img_large"}
+![SOAP performance versus Adam and Shampoo, showing good step-efficiency (due to Adam) and time-efficiency (due to periodic preconditioning). Less frequent preconditioning hurts Shampoo more than SOAP.](./headline.png){:.img-large}
 <figcaption>Figure 1. SOAP performance versus Adam and Shampoo, showing good step-efficiency (due to Adam) and time-efficiency (due to periodic preconditioning). Less frequent preconditioning hurts Shampoo more than SOAP.</figcaption>
 
 ### Background
@@ -50,7 +50,7 @@ W_t &= W_{t-1} - \eta \cdot Q_L^{\top} \mathrm{Adafactor}(G^{\prime}) Q_R
 
 Based on this link between Shampoo and Adafactor, the authors propose SOAP, which runs full Adam in the Shampoo eigenspace and increases efficiency by only updating the eigenvectors periodically (e.g. every 10 steps).
 
-![SOAP algorithm panel, running Adam in the Shampoo eigenspace.](./algorithm.png){:class="constrained_img_large"}
+![SOAP algorithm panel, running Adam in the Shampoo eigenspace.](./algorithm.png){:.img-large}
 
 The running state of this technique includes $L$, $R$, $Q_L$, $Q_R$, $M$ (in the weight space) and $V$ (in the Shampoo eigenspace). For large projections, such as the final projection layer in an LLM, the corresponding $Q_L$ or $Q_R$ can be fixed to identity. If both are fixed, SOAP reproduces Adam.
 

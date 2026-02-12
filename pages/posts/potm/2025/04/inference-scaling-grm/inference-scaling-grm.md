@@ -17,22 +17,22 @@ review_authors:
 
 ### The key idea
 
-Recent studies have highlighted the critical role of reward models (RMs) in post-training reinforcement learning (RL) in providing high-quality reward signals that help Large Language Models (LLMs) perform well in domains where correctness can be automatically verified, such as coding and mathematics. 
+Recent studies have highlighted the critical role of reward models (RMs) in post-training reinforcement learning (RL) in providing high-quality reward signals that help Large Language Models (LLMs) perform well in domains where correctness can be automatically verified, such as coding and mathematics.
 
 However, generating reliable rewards becomes far more challenging in less structured or open-ended domains where answers cannot be automatically verified. At the same time, there is growing interest in making reward quality scale with available inference-time compute - improving as more sampling or computational resources are used.
 
-This paper addresses both challenges by introducing **Self-Principled Critique Tuning (SPCT)**, a novel learning method that enables **Generalist Reward Models (GRMs)** to generate adaptive, high-quality rewards and effectively leverage increased **inference-time compute**. 
+This paper addresses both challenges by introducing **Self-Principled Critique Tuning (SPCT)**, a novel learning method that enables **Generalist Reward Models (GRMs)** to generate adaptive, high-quality rewards and effectively leverage increased **inference-time compute**.
 
-This approach is implemented in **DeepSeek-GRM-27B**, a Gemma-2-27B-based post-trained with SPCT and enhanced with a secondary Meta Reward Model (MetaRM) to further improve inference-time scaling performance, as shown in Figure 1. 
+This approach is implemented in **DeepSeek-GRM-27B**, a Gemma-2-27B-based post-trained with SPCT and enhanced with a secondary Meta Reward Model (MetaRM) to further improve inference-time scaling performance, as shown in Figure 1.
 
 
-![Inference-time scaling performance tested on RM Bench shows DeepSeek-GRM-27B outperforming strong public models.](./grm-inference-time-scaling-perf.png){:class="constrained_img"}
+![Inference-time scaling performance tested on RM Bench shows DeepSeek-GRM-27B outperforming strong public models.](./grm-inference-time-scaling-perf.png){:.img-medium}
 <figcaption><strong>Figure 1.</strong> Inference-time scaling performance with different RMs on all RM benchmarks. Results are shown with up to 8 samples for each method, and are further scaled to 32 samples for ours. Non-italic font indicates models based on Gemma-2-27B.</figcaption>
 
 
 ### Their method
 
-The authors adopt a **pointwise generative** reward modeling paradigm. Pointwise scoring assigns individual rewards to each response, enabling flexibility across diverse input formats, while the generative approach produces textual judgements or *critiques* from which reward scores are derived. 
+The authors adopt a **pointwise generative** reward modeling paradigm. Pointwise scoring assigns individual rewards to each response, enabling flexibility across diverse input formats, while the generative approach produces textual judgements or *critiques* from which reward scores are derived.
 
 To enhance performance, they apply **sampling-based** aggregation, generating multiple reward sets per query and combining them to produce a final score.
 
@@ -52,20 +52,20 @@ Table 2 show that the post-trained DeepSeek-GRM-27B outperforms the baseline met
 
 ### Results - inference-time scalability
 
-Table 3 and Figure 1 demonstrate that with inference-time scaling (using 32-sample voting) the model achieves the best overall performance, which improves further when combined with MetaRM-guided voting. 
+Table 3 and Figure 1 demonstrate that with inference-time scaling (using 32-sample voting) the model achieves the best overall performance, which improves further when combined with MetaRM-guided voting.
 
-![Inference-time scalability results of different methods on RM benchmarks.](./inference-time-scalability.png){:class="constrained_img"}
+![Inference-time scalability results of different methods on RM benchmarks.](./inference-time-scalability.png){:.img-medium}
 <figcaption><strong>Table 3.</strong> Inference-time scalability results of different methods on RM benchmarks. Settings are the same as Table 2.</figcaption>
 
 
 ### Results - scaling inference vs training costs
 
-Figure 4 compares the benefits of inference-time scaling versus model size scaling. Remarkably, the 27B-parameter DeepSeek-GRM, when paired with 32-sample voting, reaches performance comparable to or better than much larger models, even the 671B MoE model. 
+Figure 4 compares the benefits of inference-time scaling versus model size scaling. Remarkably, the 27B-parameter DeepSeek-GRM, when paired with 32-sample voting, reaches performance comparable to or better than much larger models, even the 671B MoE model.
 
 ![Inference-time scaling vs training-time scaling performance on Reward Bench benchmark.](./inference-vs-training.png)
 
 ### Takeaways
 
-This paper marks an important step toward building a true Generalist Reward Model (GRM), introducing the SPCT learning method to generate high-quality, adaptive rewards across diverse tasks. While the results are promising, the authors acknowledge that challenges remain, particularly in tasks with highly subjective reward criteria or those requiring external knowledge. 
+This paper marks an important step toward building a true Generalist Reward Model (GRM), introducing the SPCT learning method to generate high-quality, adaptive rewards across diverse tasks. While the results are promising, the authors acknowledge that challenges remain, particularly in tasks with highly subjective reward criteria or those requiring external knowledge.
 
 The paper also demonstrates the strong potential of inference-time scaling, showing that smarter use of compute can deliver major performance gains — a promising direction for future research on efficient, scalable reward systems.

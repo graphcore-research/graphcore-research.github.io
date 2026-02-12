@@ -18,7 +18,7 @@ Current generations of LLMs are often "overtrained" on trillions of tokens since
 
 In the headline results (below), the authors take OLMo-1B intermediate checkpoints and show that the best performance after instruction fine-tuning is achieved with the 2.3 trillion token checkpoint, and performance degrades after 3 trillion tokens.
 
-![Two plots of average LLM benchmark performance (y) vs pretraining tokens (x), left: after pretraining, right: after instruction tuning. The left curve is monotonically increasing, while the right one dips down between 2.5 and 3 trillion pre-training tokens.](./fig1.png){:class="constrained_img"}
+![Two plots of average LLM benchmark performance (y) vs pretraining tokens (x), left: after pretraining, right: after instruction tuning. The left curve is monotonically increasing, while the right one dips down between 2.5 and 3 trillion pre-training tokens.](./fig1.png){:.img-medium}
 <figcaption>Figure 1. Language models with extensive pre-training can exhibit catastrophic overtraining, where the performance of post-trained models degrades as the pre-training stage is extended.</figcaption>
 
 ### Results - open checkpoints

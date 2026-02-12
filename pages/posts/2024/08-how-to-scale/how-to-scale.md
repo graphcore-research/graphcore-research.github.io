@@ -18,7 +18,7 @@ My colleagues and I always get excited when, every once in a while, deep learnin
 
 Our lofty goal? To put multipliers in the forward and backward passes of the hardtanh nonlinearity to make it look like this:
 
-![Input and output distributions for the scaled hardtanh nonlinearity, input is Gaussian with RMS=1, output is clipped Gaussian with RMS=1.](./hardtanh_scaled_joint.png){:class="constrained_img"}
+![Input and output distributions for the scaled hardtanh nonlinearity, input is Gaussian with RMS=1, output is clipped Gaussian with RMS=1.](./hardtanh_scaled_joint.png){:.img-medium}
 
 Which might look quite like a regular `hardtanh(x) = clip(x, -1, 1)`, but the eagle-eyed reader will notice it doesn't saturate at ±1. And crucially, the output standard deviation (and RMS) ≈ 1.
 
@@ -66,7 +66,7 @@ This is grand, and a 100% legitimate approach to scaling. But it can get a bit t
 
 For this part, we'll extend the problem to scaling `hardtanh(x, mult) = clip(x, -1/mult, 1/mult)`. Let's eyeball the output distribution when we feed in Gaussian samples:
 
-![Input and output distributions for the hardtanh nonlinearity, input is Gaussian with RMS=1, output is clipped Gaussian with RMS=0.72.](./hardtanh_joint.png){:class="constrained_img_small"}
+![Input and output distributions for the hardtanh nonlinearity, input is Gaussian with RMS=1, output is clipped Gaussian with RMS=0.72.](./hardtanh_joint.png){.img-small}
 
 This joint plot shows a Gaussian distribution coming in (top), the joint distribution which is a line since `F.hardtanh` is deterministic, and the output distribution (right), which is a mixture of two spikes at ±1 and a truncated Gaussian in between.
 
@@ -83,7 +83,7 @@ $\sigma_Y = \sqrt{\alpha^{-2} + (1 - \alpha^{-2})\,\mathrm{erf}(\sqrt{\frac{1}{2
 
 If we use the empirical scaling technique that we saw previously to test this rule, we see:
 
-![Fit between the derived scaling rule and empirical measurement, showing very good fit as mult is swept.](./hardtanh_mult_fit.png){:class="constrained_img_small"}
+![Fit between the derived scaling rule and empirical measurement, showing very good fit as mult is swept.](./hardtanh_mult_fit.png){.img-small}
 
 This looks like an excellent fit - the maths works!
 
@@ -99,7 +99,7 @@ The final piece of the puzzle to get the final code is to apply any _constraints
 
 Our final scaled op looks like this:
 
-![F.hardtanh versus (scaled) hardtanh, and hardtanh(mult=3), showing the up-scaling of hardtanh to keep the output scale =1.](./hardtanh_scaled_functions.png){:class="constrained_img_large"}
+![F.hardtanh versus (scaled) hardtanh, and hardtanh(mult=3), showing the up-scaling of hardtanh to keep the output scale =1.](./hardtanh_scaled_functions.png){:.img-large}
 
 _That's it! We've successfully unit-scaled `hardtanh`, given a light spattering of stats._
 

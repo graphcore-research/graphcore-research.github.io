@@ -25,13 +25,13 @@ The authors achieve this by replacing self-attention with a structured-recurrenc
 
 Following BitNet b1.58, forward-pass weights are quantised to `{-1, 0, +1}` using absmean quantisation, and activations to `int8` using absmax quantisation:
 
-![Definition of activation_quant and weight_quant operations.](./algorithm.png){:class="constrained_img"}
+![Definition of activation_quant and weight_quant operations.](./algorithm.png){:.img-medium}
 
 In the backward pass, the straight-through estimator replaces these with the identity function, such that the weight gradient and master weights are maintained in higher precision.
 
 The authors replace attention with the Matmul-free Linear Gated Recurrent Unit (MLGRU),
 
-![The definition of the MLGRU in terms of input x, forget gate f, candidate c, hidden state h, output gate g and output o.](./mlgru.png){:class="constrained_img_small"}
+![The definition of the MLGRU in terms of input x, forget gate f, candidate c, hidden state h, output gate g and output o.](./mlgru.png){.img-small}
 
 The MLGRU maps a sequence of inputs $\boldsymbol{x}_t$ to a sequence of outputs $\boldsymbol{o}_t$. First, compute three gates: forget gate $\boldsymbol{f}$, output gate $\boldsymbol{g}$ and candidate $\boldsymbol{c}$, which are ternary-weight projections of the input with sigmoid, sigmoid and SiLU nonlinearities respectively. Then use the forget gate to interpolate between the previous hidden state $\boldsymbol{h}$ and the candidate. Finally, use the output gate to mask the hidden state before projecting via a final ternary matmul.
 

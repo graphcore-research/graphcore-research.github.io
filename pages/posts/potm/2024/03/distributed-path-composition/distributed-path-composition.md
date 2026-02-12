@@ -14,16 +14,16 @@ review_authors:
 
 ### The key idea
 
-If the bottleneck to scaling training is communication rather than FLOPs, a recipe that blends together mixture-of-experts models and local optimisation to create a more modular model sort of works. 
+If the bottleneck to scaling training is communication rather than FLOPs, a recipe that blends together mixture-of-experts models and local optimisation to create a more modular model sort of works.
 
-![DiPaCo offers a recipe for training with resources distributed across low bandwidth channels](./FIG-Scheme.png){:class="constrained_img"}
+![DiPaCo offers a recipe for training with resources distributed across low bandwidth channels](./FIG-Scheme.png){:.img-medium}
 <figcaption>A modular network distributed across many regions, where each path is optimised for different tasks or modalities. Shared components between paths are synchronised infrequently.</figcaption>
 
 ### Background
 
 In the near-ish future, we may saturate the number of FLOPs a single datacentre can churn out   largely due to energy requirements to power a datacentre.
 
-If model training requires scaling beyond this saturation point across multiple datacentres, developers will meet a cliff in the bandwidth supported for communicating between datacentres. 
+If model training requires scaling beyond this saturation point across multiple datacentres, developers will meet a cliff in the bandwidth supported for communicating between datacentres.
 
 In this scenario, the key bottleneck to scaling throughput is no longer FLOPs, but communication volume across this low-bandwidth channel between datacentres.
 
@@ -52,8 +52,8 @@ Trying a bunch of different configurations, DiPaCo lies somewhere between these 
 
 They argue that the remaining performance gap can be closed by re-sharding the dataset across workers every 64 tokens during inference. This would surely mean KV caches would need to be recomputed for each re-shard, so this is unlikely to be workable in practice.
 
-![Resharding datasets closes perplexity gap](./TBL-Eval.png){:class="constrained_img_small"}
+![Resharding datasets closes perplexity gap](./TBL-Eval.png){.img-small}
 
 ### Takeaways
 
-An interesting proof-of-concept for how large-scale distributed training may look in future based on the assumption that the cost of communication outweighs the cost of compute. However, this approach may be somewhat premature given advances in long distance networking lowering the cost of communication sufficiently that dense training at large enough scales is feasible. 
+An interesting proof-of-concept for how large-scale distributed training may look in future based on the assumption that the cost of communication outweighs the cost of compute. However, this approach may be somewhat premature given advances in long distance networking lowering the cost of communication sufficiently that dense training at large enough scales is feasible.

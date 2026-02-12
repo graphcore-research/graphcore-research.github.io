@@ -129,9 +129,9 @@ function crdCreatePlot(root) {
 
     const centroidsPlot = new Svg(root.querySelector(".crd-centroids"), 128, 8);
     // centroidsPlot.rect(0, 0, 128, 16, "#f2f2f2");
-    centroidsPlot.line(0, 5.5, 128, 5.5, 1/4, "#000000");
-    centroidsPlot.line(64, 3, 64, 8, 1/4, "#000000");
-    centroidsPlot.text(7.5, 3, 3.5, 0, "#000000", "Centroids");
+    centroidsPlot.line(0, 5.5, 128, 5.5, 1 / 4, "#000000");
+    centroidsPlot.line(64, 3, 64, 8, 1 / 4, "#000000");
+    centroidsPlot.text(8, 3, 3.5, 0, "#000000", "Centroids");
     const centroids = Array.from({ length: 8 }, () => centroidsPlot.circle(0, 5.5, 1.5, "#1b9e77"));
 
     function draw() {

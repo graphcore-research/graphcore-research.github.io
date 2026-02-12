@@ -16,7 +16,7 @@ review_authors:
 
 As large language models (LLMs) are getting increasingly used in many applications, efficient inference (in terms of memory, compute and energy) is a dynamic research field. In this domain, quantisation of models is the predominant technique, as it improves efficiency on all three axes simultaneously: reducing the memory usage for weights and KV cache, and improving compute time (and energy use) by lowering the precision of matrix multiplication.
 
-Nevertheless, one major issue in the LLMs quantisation literature has been how to efficiently handle activation outliers while retaining model accuracy. The QuaRot work presents an elegant way of modifying a pre-trained (frozen) LLM to remove outliers in the distribution of activations, opening the door to accurate and efficient 4-bit weights, activations and KV cache inference. 
+Nevertheless, one major issue in the LLMs quantisation literature has been how to efficiently handle activation outliers while retaining model accuracy. The QuaRot work presents an elegant way of modifying a pre-trained (frozen) LLM to remove outliers in the distribution of activations, opening the door to accurate and efficient 4-bit weights, activations and KV cache inference.
 
 ### Background
 
@@ -26,7 +26,7 @@ In LLMs quantisation, weights and activations are not born equal. A large litera
 
 QuaRot aims to tackle the 4-bit quantisation of activations (and KV cache) by modifying the model definition, adding Hadamard transforms to the attention and linear modules, smoothing in this way the distribution of activations and removing outliers.
 
-![Distribution of activations in Llama pre/post QuaRot.](./quarot-outliers.png){:class="constrained_img_large"}
+![Distribution of activations in Llama pre/post QuaRot.](./quarot-outliers.png){:.img-large}
 <figcaption><i>Distribution of activations in Llama pre/post QuaRot.</i></figcaption>
 
 The Hadamard transforms $H$ have been popular in a few recent publications, as they present the benefit of random orthogonal matrices for "smoothing" tensor distribution while being very cheap and fast to compute on GPUs (a matrix-vector product $Hx$ requiring only $\text{O}(d\,\text{log}(d))$ operations). In short, Walsh-Hadamard transforms are defined recursively by:

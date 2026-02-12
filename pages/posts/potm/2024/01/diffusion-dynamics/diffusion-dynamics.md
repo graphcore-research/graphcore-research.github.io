@@ -16,7 +16,7 @@ review_authors:
 
 The architecture of diffusion models should be modified to ensure training signals are stable and predictable. This leads to a significant improvement in the quality of generated images.
 
-![A plot showing the quality of image generation using this technique versus existing methods from the literature. They get significantly better scores than existing methods and do so using fewer flops-per-evaluation.](./figure_1.png){:class="constrained_img"}
+![A plot showing the quality of image generation using this technique versus existing methods from the literature. They get significantly better scores than existing methods and do so using fewer flops-per-evaluation.](./figure_1.png){.img-small}
 
 The paper also introduces a second innovation: _post-hoc EMA_. To get the best
 final diffusion model it's typical to take the exponential-moving-average (EMA) of
@@ -39,7 +39,7 @@ Their implementation proceeds through a series of steps (or "configs") which the
 
 Their results for each config are as follows:
 
-![A table showing the FID score of each training configuration. Each innovation lowers the FID score, starting at 8.00 and ending at 2.56.](./table_1.png){:class="constrained_img_large"}
+![A table showing the FID score of each training configuration. Each innovation lowers the FID score, starting at 8.00 and ending at 2.56.](./table_1.png){:.img-large}
 
 A few details of these configs are worth highlighting. Config D preserves activation magnitudes by dividing weights by their norm in the forward pass. Because of this, the initialisation-scale of the weights doesn't matter and they can get away with using unit-initialisation.
 
@@ -47,6 +47,6 @@ They take this a step further in config E by permanently normalising the weights
 
 In addition, their exponential-moving-average (EMA) trick also makes a big difference to the final performance. Their method works by taking intermediate moving-averages and linearly combining them after training, to approximate arbitrary-weight schedules:
 
-![A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.](./figure_5a.png){:class="constrained_img_small"}
+![A plot showing the FID quality for each config over a range of EMA percentages. Getting the right EMA is essential to a low FID score, with better configs being more sensitive to the EMA.](./figure_5a.png){.img-small}
 
 It's clear that getting the schedule just right is important, and also hard to predict ahead of time. Until now the only option has been an expensive sweep, doing full training runs with different weightings. This innovation now makes the job of constructing the EMA substantially cheaper and easier — a big win for the community.

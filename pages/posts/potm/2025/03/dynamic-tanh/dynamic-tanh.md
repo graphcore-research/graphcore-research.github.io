@@ -52,7 +52,7 @@ The main takeaway is that it kind of just works for smaller transformers, occasi
 
 Interestingly, $\alpha$ seems to follow the inverse standard deviation of activations throughout training, providing a global rescaling similar to batch-norm without needing to collect activation statistics.
 
-![alpha tracks inverse standard deviation of activations throughout training](./FIG-Alpha.png){:class="constrained_img"}
+![alpha tracks inverse standard deviation of activations throughout training](./FIG-Alpha.png){:.img-medium}
 
 Large language model training with `DynamicTanh` requires heavier tuning. Successful convergence of training depends on the initial value of $\alpha$ and appears to require different values for attention and non-attention layers. The initial value must also decrease with increased model width.
 

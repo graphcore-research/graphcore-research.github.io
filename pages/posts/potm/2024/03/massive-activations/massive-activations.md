@@ -42,7 +42,7 @@ Through a series of steps this leads them to the observation that the massive ac
 
 The key observation here is that the transformer has essentially learned a "hack" to add this bias to the attention output, as it's not present in the original transformer. From this an improved method is derived: add additional trained parameters $\mathbf{k'}, \mathbf{v'} \in \mathcal{R}^d$ as an explicit **attention bias** for each head:
 
-![Equation 3: adding explicit attention biases to the attention operation.](./equation_3.png){:class="constrained_img"}
+![Equation 3: adding explicit attention biases to the attention operation.](./equation_3.png){:.img-medium}
 
 ### Results
 

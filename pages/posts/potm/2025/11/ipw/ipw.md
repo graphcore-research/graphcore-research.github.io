@@ -28,7 +28,7 @@ In order to determine if Local AI models can answer queries, the researchers hav
 
 **The intelligence-per-watt of local AI systems has improved 5.3× over the last two years.** This reflects a combination of better models and better chips – roughly a 3.1× gain from model improvements (architectures, training, distillation) and a 1.7× gain from hardware efficiency. Smaller models are getting smarter, and devices are getting more power-efficient, multiplying their combined impact. Figure 1 below illustrates the jump in IPW from 2023 to 2025, based on the best model-accelerator pair each year.
 
-![Figure1 - Increase in Intelligence per Watt for Local LMs and Accelerators](./fig1.png){:class="constrained_img_large"}
+![Figure1 - Increase in Intelligence per Watt for Local LMs and Accelerators](./fig1.png){:.img-large}
 
 **Cloud still has an efficiency edge.** Despite the progress, today’s purpose-built datacenter accelerators remain 1.4×–2.3× more efficient (higher IPW) than consumer-grade chips when running the same model. The study found that a laptop-class Apple M4 Max delivered about 1.5× lower IPW than an enterprise NVIDIA GPU on identical model inference. This efficiency gap highlights room for improvement in local hardware. The authors note that it “justifies continued hardware specialization for local AI workloads” going forward.
 

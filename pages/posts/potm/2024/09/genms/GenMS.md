@@ -17,7 +17,7 @@ review_authors:
 
 In recent years, machine learning based methods have increasingly been applied to assist the discovery of novel or improved materials with certain desired properties. In this paper, the authors present GenMS, an end-to-end generative model for crystal structures from language instructions. To that end, GenMS combines an LLM to process the user input, a diffusion model to generate molecular structures, and a GNN to predict the structures' properties and select the best candidates.
 
-![End-to-end pipeline for the generation of crystal structures from language instructions.](./GenMS-pipeline.png){:class="constrained_img_large"}
+![End-to-end pipeline for the generation of crystal structures from language instructions.](./GenMS-pipeline.png){:.img-large}
 
 ### Their method
 
@@ -26,7 +26,7 @@ The authors argue that data linking the properties of materials to their crystal
 1. An LLM trained on materials science knowledge from sources such as textbooks is used to sample chemical formulae that satisfy the user's directions. Retrieval augmentation is used to gain additional information and the formulae of crystals from existing databases are provided in the context to avoid generating known crystals.
 2. A diffusion model trained on crystal structure databases then generates crystal structures from these formulae. To improve the efficiency of the diffusion model, a simple representation using the 3D position and atom number of each atom in the crystal is adopted instead of e.g. a graph.
 
-![Diffusion model for crystal structures.](./GenMS-diffusion.png){:class="constrained_img_large"}
+![Diffusion model for crystal structures.](./GenMS-diffusion.png){:.img-large}
 
 As a final step, a pretrained GNN is used to predict the formation energy and potentially other properties of the generated crystal structures and rank them based on this result.
 
@@ -37,7 +37,7 @@ During inference, a tree search is performed to identify low-energy structures t
 The main baseline presented in the study is an LLM that is prompted to directly, i.e. without the chemical formulae as an intermediate representation, generate crystal structures in the form of crystal information files. GenMS significantly improves on this baseline in all investigated quality criteria.
 Furthermore, the authors demonstrate that the model follows simple prompts such as requesting a metal or a material that is not present in a given list.
 
-![GenMS results compared to a prompted LLM.](./GenMS-results.png){:class="constrained_img_large"}
+![GenMS results compared to a prompted LLM.](./GenMS-results.png){:.img-large}
 
 ### Takeaways
 

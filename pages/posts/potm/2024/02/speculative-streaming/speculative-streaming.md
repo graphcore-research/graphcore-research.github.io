@@ -16,7 +16,7 @@ review_authors:
 
 Speculative decoding is great for speeding up LLM inference, but has the downside of requiring a well-aligned external draft model. Speculative streaming addresses this by modifying a model to produce its own tree of draft tokens in one parallel inference step.
 
-![Figure showing the standard operation of speculative decoding (left) and speculative streaming (right). Speculative decoding uses a separate draft model, whereas speculative decoding uses stream insertion to generate an internal set of draft tokens.](./figure_1.png){:class="constrained_img_large"}
+![Figure showing the standard operation of speculative decoding (left) and speculative streaming (right). Speculative decoding uses a separate draft model, whereas speculative decoding uses stream insertion to generate an internal set of draft tokens.](./figure_1.png){:.img-large}
 
 ### Background
 
@@ -47,7 +47,7 @@ Speculative streaming is substantially faster than regular auto-regressive infer
 
 The comparison against standard speculative decoding is harder. Their empirical results show a 2x speedup, but depend on various practical considerations and hyperparameters. More useful is their theoretical analysis showing the regimes in which speculative streaming should give a speedup. There are clearly circumstances in which it's beneficial, though this heavily depends on the relative quality of the draft models:
 
-![Figure showing the speculative streaming speedup over draft-based speculative decoding for different ratios of draft to speculative acceptance. Speculative streaming is consistently faster while this ratio is <=1, and otherwise only at low target/draft latency ratios.](./figure_4.png){:class="constrained_img"}
+![Figure showing the speculative streaming speedup over draft-based speculative decoding for different ratios of draft to speculative acceptance. Speculative streaming is consistently faster while this ratio is <=1, and otherwise only at low target/draft latency ratios.](./figure_4.png){:.img-medium}
 
 ### Takeaways
 

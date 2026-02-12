@@ -24,7 +24,7 @@ Traditional adaptative LLMs methods such as LoRA (low rank adaptation) and MoEs 
 
 ### Method
 
-![Transformer-squared training and inference modes.](./transformer2_arch1.png){:class="constrained_img_large"}
+![Transformer-squared training and inference modes.](./transformer2_arch1.png){:.img-large}
 
 
 The main innovation introduced by Transformer² is Singular Value Fine-tuning (SVF): fine-tuning models in the singular values space of weight matrices. Compared to LoRA, this approach dramatically reduces the additional parameter count, while enabling composability between expert vectors (in LoRA multiple adaptors are not sharing the same linear space). Additionally, the low-dimensionality of this approach allows to directly used reinforcement learning instead of supervised fine-tuning.
@@ -32,9 +32,9 @@ The main innovation introduced by Transformer² is Singular Value Fine-tuning (S
 ### Results
 
 
-![Transformer-squared self-adaptation on unseen tasks.](./transformer2_results.png){:class="constrained_img_large"}
+![Transformer-squared self-adaptation on unseen tasks.](./transformer2_results.png){:.img-large}
 
 
-In Transformer², inference is done in two passes: first an analysis for the task at the end, leading to the selection of an expert vector (or a linear combination of them), and the a second classic inference pass using the selected vector. In this work, the authors implement and evaluate three different adaptation strategies, trading off simplicity and task performance: a direct prompt-based selection, a selection based on a classification expert vector, and finally a few-shot adaptation strategy using a linear combination of all expert vectors. 
+In Transformer², inference is done in two passes: first an analysis for the task at the end, leading to the selection of an expert vector (or a linear combination of them), and the a second classic inference pass using the selected vector. In this work, the authors implement and evaluate three different adaptation strategies, trading off simplicity and task performance: a direct prompt-based selection, a selection based on a classification expert vector, and finally a few-shot adaptation strategy using a linear combination of all expert vectors.
 
 As presented in the result table above, Transformer² achieves similar or improved accuracy on unseen tasks (especially Humaneval and ARC-challenge), showing improved adaptability compared to LoRA fine-tuning.

@@ -15,7 +15,7 @@ review_authors:
 
 The paper introduces grouped lattice vector quantisation (GLVQ), a weight quantisation technique that splits weight tensors into groups, selects a bit width for each group based on a local importance score, compresses their range using a _companding_ nonlinearity, then splits groups into vectors, before rounding to a lattice. The companding function and lattice basis matrix both are trained with a short run on calibration data. This is illustrated below.
 
-![Four-step GLVQ framework: from the LLM weight matrix, 1) divide into groups, 2) allocate bit-width to each group based on salience, 3) apply elementwise group-specific companding functions and 4) encode by rounding to a lattice.](./fig1.png){:class="constrained_img_large"}
+![Four-step GLVQ framework: from the LLM weight matrix, 1) divide into groups, 2) allocate bit-width to each group based on salience, 3) apply elementwise group-specific companding functions and 4) encode by rounding to a lattice.](./fig1.png){:.img-large}
 
 ### Their method - dequantisation
 
@@ -52,13 +52,13 @@ $$
 
 where $\mu > 0$ is a learned parameter per group. For example, for various $\mu$ values, the companding function looks like this:
 
-![Plot of companding function for various mu values, showing increasing nonlinearity as mu increases.](./companding.png){:class="constrained_img_small"}
+![Plot of companding function for various mu values, showing increasing nonlinearity as mu increases.](./companding.png){.img-small}
 
 **4. Lattice vector quantisation** Finally, split each group into vectors (e.g. size 8), and quantise each vector by rounding to the (approximate) nearest point on a learned lattice. The lattice is defined by a basis matrix $G$ (size $8 \times 8$ in this example) as $\\{Gz \| z\in \text{int}\\{b\\}^8\\}$, which is trained using an alternating scheme: first fixing $G$ and optimising the integer indices using the Babai closest-vector algorithm, then fixing the integer indices and optimising $G$ with gradient descent.
 
 Putting everything together, the quantisation procedure for a group of weights follows:
 
-![Algorithm panel for GLVQ, showing the four steps of the quantisation process.](./algorithm.png){:class="constrained_img_large"}
+![Algorithm panel for GLVQ, showing the four steps of the quantisation process.](./algorithm.png){:.img-large}
 
 ### Results
 
@@ -68,7 +68,7 @@ A comparison with other post-training quantisation methods on Llama 2 show compe
 
 Performance benchmarks also show the memory bandwidth achieved for GLVQ dequantisation before matrix-vector product, as well as overall tok/s benchmarks:
 
-![Table of performance benchmarks for GLVQ dequantisation, versus baselines.](./performance.png){:class="constrained_img_large"}
+![Table of performance benchmarks for GLVQ dequantisation, versus baselines.](./performance.png){:.img-large}
 
 The results are also supported by an ablation of each aspect described in the method section, as well as for more fine-grained design decisions. We omit this here for brevity, although they are a valuable part of the paper.
 

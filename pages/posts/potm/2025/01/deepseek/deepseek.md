@@ -136,14 +136,14 @@ mixing. They address this in R1 by initially doing a small about of SFT with "co
 to generate interpreatable reasoning steps. They then training using RL like with R1-Zero, before then creating a new SFT dataset
 upon this RL-trained checkpoint. This dataset can then be used to do further fine-tuning.
 
-![Comparison between DeepSeek-R1 and other representative models.](./r1-results.png){:class="constrained_img-large"}
+![Comparison between DeepSeek-R1 and other representative models.](./r1-results.png){:.img-large}
 <figcaption>Comparison between DeepSeek-R1 and other representative models.</figcaption>
 
 The authors also compared how RL training a smaller model compares with distilling from a larger RL-trained model, and
 found that distillation can yield far better results (although this does require having a larger, more capable reasoning
 model to distill from).
 
-![Comparison of distilled and RL Models on Reasoning-Related Benchmarks.](./r1-distill.png){:class="constrained_img-large"}
+![Comparison of distilled and RL Models on Reasoning-Related Benchmarks.](./r1-distill.png){:.img-large}
 <figcaption>Comparison of distilled and RL Models on Reasoning-Related Benchmarks.</figcaption>
 
 ### Takeaways

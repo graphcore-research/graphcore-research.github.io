@@ -18,7 +18,7 @@ review_authors:
 
 Language models are generally limited to performing well only on sequence lengths seen during training. Building upon this observation and prior work, this paper introduces a method for greatly extending the context length of pretrained language models using RoPE embeddings through a sequence of relatively inexpensive fine-tuning steps.
 
-![Figure 1. Books3 perplexity vs context window size, showing improved performance of LongRoPE compared to alternative methods for extending context length.](./figure_1.png){:class="constrained_img_large"}
+![Figure 1. Books3 perplexity vs context window size, showing improved performance of LongRoPE compared to alternative methods for extending context length.](./figure_1.png){:.img-large}
 
 
 ### Background

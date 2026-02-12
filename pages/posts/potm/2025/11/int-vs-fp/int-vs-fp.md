@@ -40,15 +40,15 @@ i.e. comparing the peak value of a tensor to its $L^2$-norm. Block scale quantiz
 
 A theoretical QSNR modelling is provided on Gaussian random data, showing that floating point quantization is showing better signal-to-noise ratio for large crest factor (the cut-off being around 2).
 
-![Crest analysis of block formats on random Gaussian data.](./gaussian-crest-factor.png){:class="constrained_img"}
+![Crest analysis of block formats on random Gaussian data.](./gaussian-crest-factor.png){:.img-medium}
 
 A similar analysis is done on experimental tensors (activations, weights and gradients):
 
-![Crest analysis of block formats on LLM experimental tensors data. No Hadamard transform.](./tensor-crest-factor-no-hd.png){:class="constrained_img"}
+![Crest analysis of block formats on LLM experimental tensors data. No Hadamard transform.](./tensor-crest-factor-no-hd.png){:.img-medium}
 
 It shows in particular that `int4` is competitive with `fp4` when associated with an FP8 E4M3 floating point scaling factor. Additionally, the combination with random Hadamard rotation on the every block leads to a substantial QSNR improvement on integer formats:
 
-![Crest analysis of block formats on LLM experimental tensors data. With Hadamard transform.](./tensor-crest-factor-with-hd.png){:class="constrained_img"}
+![Crest analysis of block formats on LLM experimental tensors data. With Hadamard transform.](./tensor-crest-factor-with-hd.png){:.img-medium}
 
 
 As observed on the x-axis, applying an Hadamard transform will tend to decrease the crest factor of block, as any large outlier will be "spread" over all values. As a consequence, in the 4-bits scenario, most blocks are moved in a crest range favorable to integer quantization.
@@ -57,14 +57,14 @@ As observed on the x-axis, applying an Hadamard transform will tend to decrease 
 
 The data analysis of the authors is combined with experimental results, on inference and training. On the inference side, a direct-cast comparison in done on a collection of models:
 
-![Direct-cast inference analysis. With and without Hadamard transform.](./inference-direct-cast.png){:class="constrained_img"}
+![Direct-cast inference analysis. With and without Hadamard transform.](./inference-direct-cast.png){:.img-medium}
 
 As argued by the authors, integer block formats match the accuracy of floating point formats when combined with Hadamard transforms. It would interesting to see if these results can be extended to quantization aware training, which is nowadays the standard for the optimal accuracy on quantized models.
 
 
 The authors also validate their approach on LLM pre-training. Training experiments are done on Llama1B and Llama3B models, using the Olmo2 dataset:
 
-![LLM Llama 3B pre-training in MXIn8 and MXFP8.](./training-8bits.png){:class="constrained_img"}
+![LLM Llama 3B pre-training in MXIn8 and MXFP8.](./training-8bits.png){:.img-medium}
 
 As presented in other FP8 and FP4 pre-training papers [2,3], it would be interesting to extend these experimental pre-training runs beyond 100B tokens to validate the result. As seen in these works, using a different numerical precision may have an effect on the training loss curve only later in the training (i.e. after 200-300B tokens).
 

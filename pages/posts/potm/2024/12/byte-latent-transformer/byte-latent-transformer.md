@@ -17,7 +17,7 @@ Tokenization is an essential preprocessing step of modern language models; howev
 
 In this paper, the authors present a new transformer-based architecture called "Byte Latent Transformer" that operates directly on bytes, but avoids the issues associated with a naive byte-level model implementation. Their experiments scale-up the architecture to 8B parameters and show promising results when compared to the standard transformer with tokenization.
 
-![Byte Latent Transformer model schematic.](./fig-schematic.png){:class="constrained_img_large"}
+![Byte Latent Transformer model schematic.](./fig-schematic.png){:.img-large}
 <figcaption>Figure 1. Byte Latent Transformer architecture.</figcaption>
 
 ### Background
@@ -71,7 +71,7 @@ Figure 5 shows the scaling trends for a fixed *inference* budget — note that a
 
 Figure 6 shows further results at the compute-optimal training tokens/model size ratio, where for BLT models this corresponds to the latent transformer size. The results notably show that both "space-patching" (i.e. dividing patches at whitespaces) and entropy-based patching beat the MegaByte approach, while the entropy-based patching performs the best with the average patch size of four bytes.
 
-![Downstream task performance.](./fig-downstream.png){:class="constrained_img_small"}
+![Downstream task performance.](./fig-downstream.png){.img-small}
 
 Finally, extending the training over the compute-optimal point and comparing the results on standard downstream tasks, BLT shows an overall favorable performance compared to the standard Llama 3 architecture. Additional character-level tasks included in the paper also indicate much strong performance in settings where sub-word understanding is required.
 
