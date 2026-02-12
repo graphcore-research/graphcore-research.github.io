@@ -198,7 +198,7 @@ html {
 /* Blog post excerpts */
 
 /* Disable links inside excerpts */
-.md-post--excerpt>.md-post__content>p a {
+.md-post--excerpt>.md-post__content>:not(h2, nav) a {
   pointer-events: none;
   color: inherit;
   text-decoration: none;
