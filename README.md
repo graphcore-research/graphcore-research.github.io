@@ -105,7 +105,7 @@ potm_order: 1
 ---
 ```
 
-There's no need for a `<!-- more -->` excerpt separator in the child pages, as their content is automatically merged into the root. The excerpt separator is optional in the root page; if not included, the entire root page will be used as the excerpt.
+There's no need for a `<!-- more -->` excerpt separator, as this will be appended to the root page automatically (although it may be added if the excerpt would otherwise be too long).
 
 ### Links
 

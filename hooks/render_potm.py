@@ -121,8 +121,10 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
     files = mkfiles.Files(files)
 
     docs_dir = Path(config["docs_dir"]).resolve()
-    template_path = Path(config.theme.dirs[0]) / "potm_review.md.j2"
-    template = jinja2.Template(template_path.read_text())
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(config.theme.dirs[0]), autoescape=False
+    )
+    template = env.get_template("potm.md.j2")
     for file in list(files):
         if not file.src_path.endswith(".md"):
             continue
@@ -132,31 +134,20 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
         potm_content = file_path.read_text(encoding="utf-8")
         potm_body, frontmatter = mkdocs.utils.meta.get_data(potm_content)
         if frontmatter.get("merge_potm") is True:
-            if not re.search(r"<!--\s*more\s*-->", potm_body):
-                potm_body += "\n\n<!-- more -->\n\n"
-            frontmatter.setdefault("slug", "potm")
-            frontmatter.setdefault("categories", ["Papers of the Month"])
-
             # Find all children with the .md extension in the same directory
             reviews = find_potm_reviews(files, file.src_path)
 
-            # Remove original potm.md and children
-            files.remove(file)
-            for review in reviews:
-                files.remove(review.file)
-
-            # Write merged content to temporary directory
+            # Collect frontmatter and fix links for merged post
+            frontmatter.setdefault("slug", "potm")
+            frontmatter.setdefault("categories", ["Papers of the Month"])
             frontmatter.setdefault("authors", [])
             frontmatter.setdefault("tags", [])
             for review in reviews:
-                review_body = rebase_links(
+                review.body = rebase_links(
                     review.body,
                     from_dir=Path(review.file.src_path).parent,
                     to_dir=Path(file.src_path).parent,
                 )
-                data = dict(review.__dict__)
-                data["body"] = review_body
-                potm_body += "\n\n" + template.render(**data) + "\n\n"
                 for author in review.review_authors:
                     if author not in frontmatter["authors"]:
                         frontmatter["authors"].append(author)
@@ -164,9 +155,20 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
                     if tag not in frontmatter["tags"]:
                         frontmatter["tags"].append(tag)
 
+            # Remove original potm.md and children
+            files.remove(file)
+            for review in reviews:
+                files.remove(review.file)
+
+            # Write out merged file
             output_path = TMP_DIR / file.src_path
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(f"---\n{yaml.dump(frontmatter)}\n---\n{potm_body}")
+            output_path.write_text(
+                template.render(
+                    root=dict(frontmatter=yaml.dump(frontmatter), body=potm_body),
+                    reviews=reviews,
+                )
+            )
             files.append(
                 mkfiles.File(
                     file.src_path,

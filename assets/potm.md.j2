@@ -1,0 +1,37 @@
+---
+{{ root.frontmatter }}
+---
+
+{{ root.body }}
+
+<!-- more -->
+
+*We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at [@GCResearchTeam](https://x.com/GCResearchTeam).*
+
+{% for review in reviews %}
+
+---
+
+## {{ review.paper_title }}
+
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+{{ review.paper_authors }}
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+{{ review.paper_orgs }}
+</div>
+<div class="potm-meta">
+<a href="{{ review.paper_link }}" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Read</a>
+</div>
+</div>
+
+{{ review.body }}
+
+<div class="potm-footer-link">
+See <a href="{{ review.paper_link }}" target="_blank">the paper</a> for more.
+</div>
+
+{% endfor %}
