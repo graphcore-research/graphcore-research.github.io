@@ -94,7 +94,7 @@ extra:
     - icon: fontawesome/solid/envelope
       link: https://www.graphcore.ai/graphcore-research-newsletter-1
     - icon: fontawesome/solid/book
-      link: /publications
+      link: /publications/
   analytics:
     provider: google
     property: G-QCZ6T9KWHQ
