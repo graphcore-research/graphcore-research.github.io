@@ -46,9 +46,10 @@ $$\mathcal{L}(\theta) =
 \underset{\underset{t \sim U(0,1)}{Y \sim \mathcal{D}}}{\mathbb{E}}
 \frac{1}{|\mathcal{Y}|}
 \sum_{y_i \in \mathcal{Y}} \Big[
-\mathbb{1}(y_i \in Z), CE\big(f_\theta(y_{<i}, i), y_i\big)
-	•	\frac{1}{t}, \mathbb{1}(y_i \in X), CE\big(f_\theta(M_i(Y_t), i), y_i\big)
-\Big]$$
+\mathbb{1}(y_i \in Z), CE\big(f_{\theta(y_{\lt i}, i)}, y_i\big)
+	•	\frac{1}{t}, \mathbb{1}(y_i \in X), CE\big(f_{\theta(M_i(Y_t), i)}, y_i\big)
+\Big]
+$$
 
 </div>
 

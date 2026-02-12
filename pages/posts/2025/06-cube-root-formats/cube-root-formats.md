@@ -16,9 +16,9 @@ Your boss emails you a point in 128-billion-dimensional space. "Llama 3.1 8B," t
 
 Quantisation comes first, with two problems. First, you must choose a space smaller than a 128-billion-dimensional binary number for the model to sit in. Second, you need to find a good point in that space. In our recent work on [optimal formats for weight quantisation](https://arxiv.org/abs/2505.12988), we've had a crack at the first question.
 
-<!-- more -->
-
 In this post, we'll learn how to construct optimal formats for known scalar distributions via the "cube root rule". We'll start with a recap of an existing format that claims optimality for the normal distribution. Then we'll explore the cube root rule — a non-intuitive result from the 1950s — and use it to build our own quantisation formats for scaled normal, Laplace and Student's t distributions.
+
+<!-- more -->
 
 ## NormalFloat (NF4)
 
@@ -61,7 +61,7 @@ To optimise MSE, the density of our centroids should be proportional to the cube
 
 Taking the cube root of a pdf flattens it out somewhat, making it less "spiky". We can explore this effect if we generalise the rule using an exponent `alpha`, so `centroid_density ∝ pdf ** alpha`. In this plot, we can vary `alpha`, with `1/3` corresponding to the cube root rule and `1` corresponding to quantile quantisation.
 
-<script src="/assets/js/posts/2025-06/cube-root-formats/crd_iplot_alpha.js"></script>
+<script src="/2025/06-cube-root-formats/crd_iplot_alpha.js"></script>
 <div id="crd-iplot-alpha" style="width: 32em"></div>
 
 Note that the distribution of quantised values isn't uniform at the optimum (`alpha=1/3`), and the centroids are more spread out than they would be under quantile quantisation (`alpha=1`). At `alpha=1` we would expect the bin counts to be uniform, but the end bin locations are approximate, causing more values to fall into the these bins. We see that the cube root rule (`alpha=1/3`) results in lower MSE for standard normal data.

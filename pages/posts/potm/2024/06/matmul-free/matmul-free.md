@@ -15,7 +15,7 @@ review_authors:
 
 ### The key idea
 
-Building upon [BitNet b1.58](/papers-of-the-month/low-rank-galore-and-1_58-bit-weights/#the-era-of-1-bit-llms-all-large-language-models-are-in-158-bits), which quantises all parameter matrices in a LM into a ternary format, the authors describe a "matmul-free" LM where **all forward pass matrix multiplies are ternary**.
+Building upon [BitNet b1.58](https://arxiv.org/abs/2402.17764), which quantises all parameter matrices in a LM into a ternary format, the authors describe a "matmul-free" LM where **all forward pass matrix multiplies are ternary**.
 
 The authors achieve this by replacing self-attention with a structured-recurrence RNN, which contains only parametric matmuls and elementwise operations, and replace these parametric matmuls with ternary matmuls (shown below).
 

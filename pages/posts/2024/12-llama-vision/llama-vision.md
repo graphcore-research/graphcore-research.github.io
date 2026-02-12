@@ -14,11 +14,11 @@ slug: llama-vision
 
 Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this post, we'll walk through the model changes needed to turn an LLM into a VLM for inference. To understand the LLM starting point, please see [A transformer walk-through with Gemma](/posts/2024/04-gemma/gemma.md), as we shall assume that content here.
 
-<!-- more -->
-
 **Problem** — Text generation, _conditioned on an image_: take an RGB image (below) and a short string prompt _"What colour shirt is the person to the left of the laptop wearing?"_, then use an already-trained VLM ([Llama-3.2-11B-Vision-Instruct](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct) by Meta) to generate an answer to the prompt.
 
 ![Image of four people looking at a laptop](./image.png){:class="constrained_img_large"}
+
+<!-- more -->
 
 **Code** — This post is accompanied by an [IPython notebook](https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2024-12-LlamaVision.ipynb), which requires 40 GB of accelerator memory to run. It includes a barebones implementation of the Llama 3.2 VLM in pure PyTorch (and code to generate the plots).
 
@@ -141,7 +141,7 @@ The remaining differences - _non-gated MLP_ and using _layer norm_ instead of RM
 
 **Self-attention:** To inspect what the self-attention attention layers are doing, we can visualise the attention weights (each in the range [0, 1]) of layer 16, head 3, for the top-left tile. Note that the transparency is log-scaled between `1/(4*40*40)` (opaque) and `1` (transparent). Hover over the picture to select different "query patches" and see which "key-value patches" they attend to.
 
-<script src="/assets/js/posts/2024-12/llama-vision/attention_interactive.js"></script>
+<script src="/2024/12-llama-vision/viz/attention_interactive.js"></script>
 <canvas id="attention-interactive" class="constrained_img_large" style="margin-bottom: 1em;"></canvas>
 
 Looking at this, I'm impressed by the implicit image segmentation that has been learnt (try hovering over each person, the laptop, floor or wall).
