@@ -167,16 +167,20 @@ html {
   margin: 0;
 }
 
+.md-typeset img.img-tiny {
+  max-width: 250px;
+}
+
 .md-typeset img.img-small {
-  max-width: 300px;
+  max-width: 400px;
 }
 
 .md-typeset img.img-medium {
-  max-width: 600px;
+  max-width: 500px;
 }
 
 .md-typeset img.img-large {
-  max-width: 900px;
+  max-width: 600px;
 }
 
 /* Cookies consent */

@@ -77,7 +77,7 @@ slug: my-post-slug              # recommended: gives a permalink of /YYYY/MM/DD/
 
 The **excerpt separator** `<!-- more -->` must be included, typically after the first paragraph, although it can be placed after the leading image. This is required to generate the blog index correctly.
 
-**Images** should be placed in the same folder as the markdown file, and linked using markdown syntax, e.g. `![Alt text](my_image.png)`. By default, images are scaled to min(original size, text width), but this can look too large for high-res square images. In this case, use the classes `.img-small`, `.img-medium` or `.img-large` to limit the maximum size, e.g. `![Alt text](my_image.png){.img-small}`.
+**Images** should be placed in the same folder as the markdown file, and linked using markdown syntax, e.g. `![Alt text](my_image.png)`. By default, images are scaled to min(original size, text width), but this can look too large for high-res square images. In this case, use the classes `.img-tiny`, `.img-small`, `.img-medium` or `.img-large` to limit the maximum size, e.g. `![Alt text](my_image.png){:.img-small}`.
 
 ### POTM
 
@@ -115,7 +115,7 @@ To link images or javascript files _using HTML not Markdown_, e.g. for `pages/po
 
 Markdown links such as images `![Alt text](my_image.png)` are automatically updated to use the _relative path_ to the image from the markdown file, so life is easier if you use markdown not HTML.
 
-Note that you can add attributes to markdown images using [attribute lists](https://python-markdown.github.io/extensions/attr_list/), appending `{}`, e.g. `![Alt text](my_image.png{.img-small style="padding: 10px;"}`.
+Note that you can add attributes to markdown images using [attribute lists](https://python-markdown.github.io/extensions/attr_list/), appending `{:}`, e.g. `![Alt text](my_image.png){:.img-small style="padding: 10px;"}`.
 
 ### Notebooks as posts
 
