@@ -154,34 +154,29 @@ html {
 
 /* Images */
 
-.md-content img:not(.md-author *) {
+.md-typeset img {
   display: block;
   margin: 0.75rem auto;
   max-width: 100%;
+  max-inline-size: 100%;
+  width: auto;
   height: auto;
 }
 
-.img-responsive {
-  display: block;
-  max-width: 100%;
-  height: auto;
+.md-typeset .md-author img {
+  margin: 0;
 }
 
-.img-small {
-  max-width: 40% !important;
+.md-typeset img.img-small {
+  max-width: 300px;
 }
 
-.img-medium {
-  max-width: 60% !important;
+.md-typeset img.img-medium {
+  max-width: 600px;
 }
 
-@media (max-width: 640px) {
-
-  .img-small,
-  .img-medium {
-    max-width: 100%;
-    width: auto;
-  }
+.md-typeset img.img-large {
+  max-width: 900px;
 }
 
 /* Cookies consent */
