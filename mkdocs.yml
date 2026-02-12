@@ -62,6 +62,16 @@ markdown_extensions:
   - toc:
       toc_depth: "2-2"
 
+validation:
+  absolute_links: relative_to_docs
+  anchors: warn
+  nav:
+    not_found: ignore  # for /category/articles
+
+not_in_nav: |
+  tags.md
+  author/*
+
 extra_css:
   - custom.css
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css
