@@ -4,8 +4,8 @@ site_url: https://graphcore-research.github.io
 
 nav:
   - Blog: index.md
-  - "↳ Articles": /category/articles
-  - "↳ Papers of the Month": /category/papers-of-the-month
+  - "↳ Articles": /category/articles/
+  - "↳ Papers of the Month": /category/papers-of-the-month/
   - "Our Papers": publications.md
   - "About Us": about.md
 
@@ -65,8 +65,12 @@ markdown_extensions:
 validation:
   absolute_links: relative_to_docs
   anchors: warn
+  omitted_files: warn
+  unrecognized_links: warn
   nav:
-    not_found: ignore  # for /category/articles
+    not_found: ignore  # for /category/articles/
+  links:
+    not_found: warn
 
 not_in_nav: |
   tags.md
