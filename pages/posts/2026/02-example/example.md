@@ -1,5 +1,5 @@
 ---
-title: "Example post"
+title: "Example post - typically with quite a longer title, yeah"
 date: 2026-02-01
 categories: ["Articles"]
 authors: [douglaso]

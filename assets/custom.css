@@ -218,6 +218,13 @@ html {
   color: #fff;
 }
 
+/* Post sidebar > See also */
+
+.md-post__meta+.md-post__meta .md-nav__link {
+  font-size: 0.9em;
+  color: #444;
+}
+
 /* POTM */
 
 .potm-title {
@@ -236,6 +243,8 @@ html {
 }
 
 .potm-meta-row {
+  margin-top: -0.5em;
+  margin-bottom: 1.5em;
   font-size: 0.9em;
   color: #444;
   display: flex;
@@ -251,7 +260,7 @@ html {
 
 .potm-meta-icon {
   margin-right: 0.35rem;
-  min-width: 1.5em;
+  min-width: 1em;
   color: #666;
 }
 
