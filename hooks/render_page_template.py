@@ -1,6 +1,4 @@
-"""MkDocs hooks to render .md.j2 templates with adjacent .data.yml context.
-
-The content of the {name}.data.yml file is available as `data` to the Jinja2 template.
+"""MkDocs hooks to render .md.j2 templates, which can import data using `data: path.yml`.
 
 Only render templates from the docs_dir.
 """
@@ -34,29 +32,25 @@ def on_files(files: mkfiles.Files, config: mkdocs.config.Config) -> mkfiles.File
             continue
 
         template_path = Path(file.abs_src_path)
-        data = {}
-        # Load implicit data file if it exists
-        data_path = template_path.parent / (
-            template_path.name.split(".")[0] + ".data.yml"
-        )
-        if data_path.exists():
-            data.update(yaml.safe_load(data_path.read_text()))
-
-        # Load extra data files specified in frontmatter
         _, frontmatter = mkdocs.utils.meta.get_data(template_path.read_text())
-        extra_data_files = frontmatter.get("extra_data", [])
-        for extra_file in extra_data_files:
-            if extra_file.startswith("/"):
-                extra_path = docs_dir / extra_file.lstrip("/")
-            else:
-                extra_path = template_path.parent / extra_file
+        data_files = frontmatter.get("data")
+        if data_files is None:
+            data_files = []
+        if isinstance(data_files, str):
+            data_files = [data_files]
 
-            if extra_path.exists():
-                data.update(yaml.safe_load(extra_path.read_text()))
+        data = {}
+        for data_file in data_files:
+            if data_file.startswith("/"):
+                data_path = docs_dir / data_file.lstrip("/")
             else:
+                data_path = template_path.parent / data_file
+            if not data_path.exists():
                 LOGGER.warning(
-                    f"File extra_data = {extra_file} specified in {template_path} was not found."
+                    f"File `data: {data_file}` specified in {template_path} was not found."
                 )
+                continue
+            data.update(yaml.safe_load(data_path.read_text()))
 
         rendered = env.get_template(file.src_path).render(data=data)
 
