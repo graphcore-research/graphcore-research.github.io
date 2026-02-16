@@ -51,7 +51,7 @@ Now build (just your page, for speed):
 ./dev.sh MM-my-blog-post
 ```
 
-You should be able to open http://localhost:8000/, and your post should be at http://localhost:8000/YYYY/MM/DD/my-blog-post/. If you edit your markdown file, the page should automatically reload with your changes.
+You should be able to open http://localhost:8000/, and your post should be at http://localhost:8000/YYYY-MM-DD-my-blog-post/. If you edit your markdown file, the page should automatically reload with your changes.
 
 That's it & you're all set! You can probably get where you need to yourself from here, but see the [guide](#guide) below for some tips, gotchas and how to write a post as a notebook.
 
@@ -71,7 +71,7 @@ date: YYYY-MM-DD
 categories: [Articles]          # must be in categories_allowed in mkdocs.yml
 authors: [alias1, alias2, ...]  # must exist in config/authors.yml
 tags: [tag1, tag2, ...]         # see <server>/tags
-slug: my-post-slug              # recommended: gives a permalink of /YYYY/MM/DD/my-post-slug
+slug: my-post-slug              # recommended: gives a permalink of /YYYY-MM-DD-my-post-slug
 ---
 ```
 
