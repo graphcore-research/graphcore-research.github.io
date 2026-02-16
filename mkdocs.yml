@@ -33,6 +33,8 @@ hooks:
 plugins:
   - blog:
       blog_dir: "."
+      post_url_date_format: yyyy-MM-dd
+      post_url_format: "{date}-{slug}"
       post_excerpt: required
       categories_allowed:
         - Articles
