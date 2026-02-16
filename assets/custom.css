@@ -84,6 +84,12 @@ html {
   font-size: .8rem;
 }
 
+@media screen and (max-width: 44.984375em) {
+  [data-md-component="header-title"] {
+    visibility: hidden;
+  }
+}
+
 /* Show the (mini) search button, unless currently searching */
 [data-md-toggle=search]:not(:checked)~.md-header .md-header__button[for=__search] {
   display: inline-block;
@@ -96,15 +102,21 @@ html {
 
 /* Hiring Banner */
 
-.hiring-banner {
+.hiring-banner-wrap {
   position: fixed;
   top: 52px;
-  left: auto;
-  right: auto;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+  pointer-events: none;
+}
 
+.hiring-banner {
+  pointer-events: auto;
   background-color: var(--md-default-bg-color);
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 1em;
@@ -115,9 +127,11 @@ html {
 
   color: #666;
   padding: 0.5em 1em;
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-family: 'Graphcore Quantized', 'Graphik', 'Roboto', sans-serif;
 }
 

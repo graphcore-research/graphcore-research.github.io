@@ -20,6 +20,9 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderBanner = (config) => {
+    const wrap = document.createElement("div");
+    wrap.className = "hiring-banner-wrap";
+
     const banner = document.createElement("div");
     banner.className = "hiring-banner";
 
@@ -37,11 +40,12 @@ window.addEventListener("DOMContentLoaded", () => {
     close.setAttribute("aria-label", "Dismiss hiring banner");
     close.innerHTML = `<i class="fa fa-times" aria-hidden="true"></i>`;
     close.addEventListener("click", () => {
-      banner.remove();
+      wrap.remove();
       localStorage.setItem("dismiss-hiring-banner", config.label);
       localStorage.setItem("dismiss-hiring-banner-time", Date.now().toString());
     });
     banner.appendChild(close);
+    wrap.appendChild(banner);
 
     window.addEventListener("scroll", () => {
       if (window.scrollY > 60) {
@@ -50,7 +54,7 @@ window.addEventListener("DOMContentLoaded", () => {
         banner.classList.remove("scrolled");
       }
     });
-    document.body.prepend(banner);
+    document.body.prepend(wrap);
   };
 
   if (shouldShowBanner()) {
