@@ -359,6 +359,17 @@ html {
   line-clamp: 2;
 }
 
+/* About Us */
+
+.about-links {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: 0.8em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75em;
+}
+
 /* About Us > Author Grid */
 
 .about-authors-grid {

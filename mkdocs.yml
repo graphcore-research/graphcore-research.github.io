@@ -90,13 +90,11 @@ extra:
   generator: false
   social:
     - icon: fontawesome/brands/twitter
-      link: https://twitter.com/GCResearchTeam
-    - icon: fontawesome/brands/github
-      link: https://github.com/graphcore-research
+      link: https://x.com/GCResearchTeam
     - icon: fontawesome/solid/envelope
       link: https://www.graphcore.ai/graphcore-research-newsletter-1
-    - icon: fontawesome/solid/book
-      link: /publications/
+    - icon: fontawesome/brands/github
+      link: https://github.com/graphcore-research
   analytics:
     provider: google
     property: G-QCZ6T9KWHQ
