@@ -1,141 +1,193 @@
 authors:
 
+  # Research
+
   albertoc:
     name: Alberto Cattaneo
     description: Research Scientist
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/albertoc.jpg
+    team: Research
 
-  alexc:
-    name: Alex Cunha
-    description: ML Engineer
-    avatar: img/authors/_default.jpg
-
-  alexp:
-    name: Alexandre Payot
-    description: ML Engineer
-    avatar: img/authors/_default.jpg
-
-  ariannas:
-    name: Arianna Saracino
-    description: ML Engineering Manager
-    avatar: img/authors/_default.jpg
+  awf:
+    name: Andrew Fitzgibbon
+    description: Engineering Fellow
+    avatar: img/authors/awf.jpg
+    team: Research
 
   benoitg:
     name: Benoit Gaujac
     description: Research Scientist
     avatar: img/authors/_default.jpg
+    team: Research
 
   callumm:
     name: Callum McLean
     description: Research Scientist
     avatar: img/authors/_default.jpg
+    team: Research
 
   carlo:
     name: Carlo Luschi
     description: VP & Head of Research
     avatar: img/authors/_default.jpg
-
-  charlieb:
-    name: Charlie Blake
-    description: Research Engineer
-    avatar: img/authors/_default.jpg
+    team: Research
 
   danielj:
     name: Daniel Justus
     description: Research Lead
     avatar: img/authors/danielj.jpg
+    team: Research
 
   dobrikg:
     name: Dobrik Georgiev
     description: Research Scientist
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/dobrikg.jpg
+    team: Research
 
   douglaso:
     name: Douglas Orr
     description: Research Team Lead
     avatar: img/authors/douglaso.jpg
+    team: Research
+
+  erikaa:
+    name: Erika Aranas
+    description: Research Scientist
+    avatar: img/authors/erikaa.jpg
+    team: Research
+
+  federicom:
+    name: Federico Monti
+    description: Research Scientist
+    avatar: img/authors/federicom.jpg
+    team: Research
 
   johannav:
     name: Johanna Vielhaben
     description: Research Scientist
-    avatar: img/authors/_default.jpg
-
-  josefd:
-    name: Josef Dean
-    description: Research Scientist
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/johannav.jpg
+    team: Research
 
   kheerann:
     name: Kheeran Naidu
     description: Research Scientist
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/kheerann.jpg
+    team: Research
 
   lukar:
     name: Luka Ribar
     description: Research Scientist
     avatar: img/authors/lukar.jpg
+    team: Research
 
   lukehg:
     name: Luke Hudlass-Galley
     description: Research Team Lead
     avatar: img/authors/lukehg.jpg
+    team: Research
 
   lukep:
     name: Luke Prince
     description: Research Team Lead
-    avatar: img/authors/_default.jpg
-
-  markp:
-    name: Mark Pupilli
-    description: Distinguished Engineer
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/lukep.jpg
+    team: Research
 
   michaelp:
     name: Michael Pearce
     description: Research Scientist
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/michaelp.jpg
+    team: Research
 
   paulb:
-    name: Paul Balanca
+    name: Paul Balança
     description: Research Team Lead
     avatar: img/authors/_default.jpg
+    team: Research
 
   roberthu:
     name: Robert Hu
     description: Research Scientist
-    avatar: img/authors/_default.jpg
-
-  samho:
-    name: Sam Hosegood
-    description: Research Scientist
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/roberthu.jpg
+    team: Research
 
   samot:
     name: Sam Olesker-Taylor
     description: Research Scientist
-    avatar: img/authors/_default.jpg
-
-  seanc:
-    name: Seán Comerford
-    description: ML Engineer
-    avatar: img/authors/_default.jpg
-
-  sylvainv:
-    name: Sylvain Viguier
-    description: Director, Applied AI
-    avatar: img/authors/_default.jpg
+    avatar: img/authors/samot.jpg
+    team: Research
 
   tomca:
     name: Tom Cashman
     description: Research Team Lead
+    avatar: img/authors/tomca.jpg
+    team: Research
+
+  yemanh:
+    name: Yeman Brhane Hagos
+    description: Research Scientist
+    avatar: img/authors/yemanh.jpg
+    team: Research
+
+  # Applied AI
+
+  alexc:
+    name: Alex Cunha
+    description: ML Engineer
     avatar: img/authors/_default.jpg
+    team: Applied AI
+
+  alexp:
+    name: Alexandre Payot
+    description: ML Engineer
+    avatar: img/authors/_default.jpg
+    team: Applied AI
+
+  ariannas:
+    name: Arianna Saracino
+    description: ML Engineering Manager
+    avatar: img/authors/_default.jpg
+    team: Applied AI
+
+  seanc:
+    name: Seán Comerford
+    description: ML Engineer
+    avatar: img/authors/seanc.jpg
+    team: Applied AI
+
+  sylvainv:
+    name: Sylvain Viguier
+    description: Director, Applied AI
+    avatar: img/authors/sylvainv.jpg
+    team: Applied AI
 
   tomp:
     name: Tom Pollak
     description: ML Engineer
     avatar: img/authors/_default.jpg
+    team: Applied AI
 
-  yemanh:
-    name: Yeman Brhane Hagos
+  # Alumni
+
+  charlieb:
+    name: Charlie Blake
+    description: Research Engineer
+    avatar: img/authors/_default.jpg
+    team: Alumni
+
+  josefd:
+    name: Josef Dean
     description: Research Scientist
     avatar: img/authors/_default.jpg
+    team: Alumni
+
+  markp:
+    name: Mark Pupilli
+    description: Distinguished Engineer
+    avatar: img/authors/_default.jpg
+    team: Alumni
+
+  samho:
+    name: Sam Hosegood
+    description: Research Scientist
+    avatar: img/authors/_default.jpg
+    team: Alumni
