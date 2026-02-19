@@ -6,7 +6,7 @@ title: "{{ author.name }}"
   <img src="/{{ author.avatar }}" class="md-author" alt="{{ author.name }}">
   <div class="author-profile-info">
     <h1>{{ author.name }}</h1>
-    <p>{{ author.description }}</p>
+    <p>{{ author.description if author.team != "Alumni" else "Graphcore Alumni" }}</p>
   </div>
 </div>
 
