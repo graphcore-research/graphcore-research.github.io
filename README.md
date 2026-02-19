@@ -145,6 +145,7 @@ File/folder structure:
 ├── pyproject.toml              # Dependencies only
 ├── mkdocs.yml                  # Main configuration file
 ├── assets/                     # Static assets for direct-copy (e.g. images, js) and templates
+    ├── papers/                 # Non-arXiv paper hosting
 ├── hooks/                      # Our custom hooks for notebooks, POTM, etc.
 ├── pages/                      # Main content: posts, POTM.
     ├── posts/                  # Blog posts
