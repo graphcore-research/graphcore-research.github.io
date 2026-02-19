@@ -79,6 +79,8 @@ The **excerpt separator** `<!-- more -->` must be included, typically after the 
 
 **Images** should be placed in the same folder as the markdown file, and linked using markdown syntax, e.g. `![Alt text](my_image.png)`. By default, images are scaled to min(original size, text width), but this can look too large for high-res square images. In this case, use the classes `.img-tiny`, `.img-small`, `.img-medium` or `.img-large` to limit the maximum size, e.g. `![Alt text](my_image.png){:.img-small}`.
 
+To **publish** when you're happy with your post, push it to a branch on [draft-graphcore-research.github.io](https://github.com/graphcore-research/draft-graphcore-research.github.io) for review. When it's merged into `main`, push it to [graphcore-research.github.io](https://github.com/graphcore-research/graphcore-research.github.io), e.g. if the remotes are `public` and `origin`: `git push public origin/main:main`.
+
 ### POTM
 
 Papers-of-the-month are special, consisting of a **root** page at `pages/posts/potm/YYYY/MM/potm.md`, and multiple **child** pages at `pages/posts/potm/YYYY/MM/paper-slug/paper-slug.md`. They should have specific frontmatter:
@@ -125,11 +127,11 @@ You can write a post as a notebook. It will not be executed by the build process
  - The excerpt separator `<!-- more -->` must be included in a markdown cell near the top.
  - All markdown features should work as they do for posts (e.g. relative links to images).
  - By default **code cell content is not rendered**, only the outputs. There are two ways to render an individual cell's code: (a) use the "Add Tag" feature to add the cell tag "show_input" or (b) write `# SHOW_INPUT` on the first line (which will be stripped for display).
- - If using exotic output formats, you may need to update the hook in [hooks/notebook_to_markdown.py](hooks/notebook_to_markdown.py).
+ - If using exotic output formats, you may need to update the hook in [hooks/render_notebook.py](hooks/render_notebook.py).
 
 ### Our Papers
 
-To add a paper to the "Our Papers" page, add it to [pages/publications.data.yml](pages/publications.data.yml), as described in the file.
+To add a paper to the "Our Papers" page, add it to [pages/.publications.yml](pages/.publications.yml), as described in the file.
 
 ### Hiring Banner
 
@@ -152,7 +154,7 @@ File/folder structure:
     ├── posts/potm/             # Papers of the month, with special handling ([hooks/merge_potm.py](hooks/merge_potm.py)) to merge children into root
     ├── .authors.yml            # Author information, required for every author alias
     ├── .redirects.json         # Generate redirects to keep old links working (by [hooks/generate_redirects.py](hooks/generate_redirects.py))
-    ├── publications.md.j2      # "Our Papers" page template, rendered by [hooks/render_page_templates.py](hooks/render_page_templates.py)
+    ├── publications.md.j2      # "Our Papers" page template, rendered by [hooks/render_page_template.py](hooks/render_page_template.py)
     ├── publications.data.yml   # "Our Papers" data
     ├── *.md                    # Other standalone pages
 ├── site/                       # Generated static site (after `mkdocs build`)
