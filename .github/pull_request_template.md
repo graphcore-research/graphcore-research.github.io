@@ -31,13 +31,14 @@ Authors should make an effort to satisfy these criteria, but it is the _editor's
 - [ ] Add title to frontmatter
 - [ ] Write intro blurb
 - [ ] Quickly double-check Summary PR criteria look like they're still satisfied
-- [ ] Make sure it looks ok on temporary version of public mirror, at https://graphcore-research.github.io/graphcore-research.github.io-internal/
+- [ ] Make sure it looks ok on a local server with `./dev.sh`
 - [ ] Double check nothing sensitive has been mentioned
 
 ---
 
 ## Blog Post Checklist
 
+- [ ] (Author) make sure it looks ok on a local server with `./dev.sh`
 - [ ] Check required frontmatter, including `slug`
 - [ ] Check tags are aligned with existing tags at https://graphcore-research.github.io/tags/
 - [ ] Check for image alt text
@@ -45,5 +46,4 @@ Authors should make an effort to satisfy these criteria, but it is the _editor's
 - [ ] Check plots look the right size and scale properly by resizing window; if not, use `![Alt text](my_image.png){:.img-medium}`, or `.img-tiny .img-small .img-large` from `assets/custom.css`, or set a specific size with `{:style="max-width: Xpx;"}`.
 - [ ] Review the contents
 - [ ] Spellcheck
-- [ ] Make sure it looks ok on temporary version of public mirror, at https://graphcore-research.github.io/graphcore-research.github.io-internal/
 - [ ] Double check nothing sensitive has been mentioned
