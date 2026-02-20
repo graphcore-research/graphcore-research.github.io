@@ -1,6 +1,6 @@
 ---
 title: "UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG"
-date: 2026-02-06
+date: 2026-02-20
 categories: [Articles]
 authors: [dobrikg]
 tags: [RAG, knowledge-graphs, graph foundational models]
@@ -126,17 +126,17 @@ _Et voilà!_ Shall we start cooking? Ingredients? Let's see, we might already ha
 
 What if we told you that you don't need to train anything from scratch? <span style="font-variant: small-caps;">UltRAG-OTS</span> (off-the-shelf) is our implementation using readily available components with **zero task-specific training**:
 
-* **for query generation**: your favorite llm. We used gpt-5, but others (deepseek, gpt-5-mini) work too (see paper).
+* **for query generation**: your favourite LLM. We used GPT-5, but others (DeepSeek, GPT-5-mini) work too (see paper).
 * **for entity linking**:  L2-distance between mention and entities worked well. For efficiency, an approximate nearest neighbours approach can be used.
 * **for neural query execution**: [<span style="font-variant: small-caps;">UltraQuery</span>](https://arxiv.org/abs/2404.07198) &mdash; a graph foundational model that:
     * deals with missing links (handles incomplete kgs gracefully).
-    * obtains similar embeddings for relations that are used in a similar fashion (the llm does not need to resolve ambiguities up-front).
+    * obtains similar embeddings for relations that are used in a similar fashion (the LLM does not need to resolve ambiguities up-front).
     * is inductive and generalizes to unseen relation types (no retraining needed for new knowledge graphs).
-* **for arbitration**: again gpt-5, but we also found combinations (gpt-5 then gpt-5-mini or vice versa) to work well too!
+* **for arbitration**: again GPT-5, but we also found combinations (GPT-5 then GPT-5-mini or vice versa) to work well too!
 
 Even the best recipe needs good ingredients for a perfect dish &mdash; and <span style="font-variant: small-caps;">UltraQuery</span>'s unique capabilities make it the perfect executor for our framework.
 
-## Bon appétit! state-of-the-art results
+## Bon appétit! State-of-the-art results
 
 <span style="font-variant: small-caps;">UltRAG-OTS</span> achieves **zero-shot state-of-the-art** results on various KGQA benchmarks.
 
