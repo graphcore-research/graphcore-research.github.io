@@ -83,7 +83,19 @@ To **publish** when you're happy with your post, push it to a branch on [draft-g
 
 ### POTM
 
-Papers-of-the-month are special, consisting of a **root** page at `pages/posts/potm/YYYY/MM/potm.md`, and multiple **child** pages at `pages/posts/potm/YYYY/MM/paper-slug/paper-slug.md`. They should have specific frontmatter:
+Papers-of-the-month are special, consisting of a **root** page at `pages/posts/potm/YYYY/MM/potm.md`, and multiple **child** pages at `pages/posts/potm/YYYY/MM/paper-slug/paper-slug.md`.
+
+To simplify creation, use the helper script `tools/create_potm.py`:
+
+```sh
+# Create a new POTM root page for February 2026
+python tools/create_potm.py --month 2026-02
+
+# Create a new POTM child page for a paper with slug 'muon' in the most recent POTM month
+python tools/create_potm.py --paper muon
+```
+
+If creating these pages manually, note that they should have specific frontmatter:
 
 **Frontmatter for a POTM root page**
 
