@@ -11,6 +11,9 @@ nav:
 
 docs_dir: pages
 
+exclude_docs: |
+  posts/*/*/scripts/*
+
 theme:
   name: material
   custom_dir: assets
