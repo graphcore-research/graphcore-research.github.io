@@ -32,6 +32,7 @@ hooks:
   - hooks/generate_redirects.py
   # other
   - hooks/see_also.py
+  - hooks/review_annotations.py
 
 plugins:
   - blog:
@@ -85,11 +86,13 @@ not_in_nav: |
 
 extra_css:
   - custom.css
+  - review-comments.css
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - hiring_banner.js
+  - review-comments.js
 
 extra:
   generator: false
