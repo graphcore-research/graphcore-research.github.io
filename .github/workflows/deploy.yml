@@ -1,28 +1,30 @@
-name: Build and Deploy
+name: Build, Deploy, and On-Demand Preview
 
-on:
+"on":
   push:
     branches:
       - main
   pull_request:
     branches:
       - main
+  issue_comment:
+    types:
+      - created
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+env:
+  PREVIEW_ROOT: pr-preview
 
 jobs:
-  build:
+  build-pr:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Install uv
         uses: astral-sh/setup-uv@v2
@@ -33,19 +35,285 @@ jobs:
       - name: Build site
         run: uv run mkdocs build --strict
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-
-  deploy:
+  deploy-main:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: false
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Build site
+        run: uv run mkdocs build --strict
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Deploy main site to gh-pages
+        run: |
+          set -euo pipefail
+
+          find gh-pages -mindepth 1 -maxdepth 1 \
+            ! -name .git \
+            ! -name "${PREVIEW_ROOT}" \
+            -exec rm -rf {} +
+          cp -a site/. gh-pages/
+
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+
+          if git diff --cached --quiet; then
+            echo "No gh-pages changes to deploy."
+          else
+            git commit -m "Deploy main site"
+            git push origin HEAD:gh-pages
+          fi
+
+  preview-command:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association) &&
+      (
+        startsWith(github.event.comment.body, '/preview') ||
+        startsWith(github.event.comment.body, '/unpreview')
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      action: ${{ steps.preview.outputs.action }}
+      head_sha: ${{ steps.preview.outputs.head_sha }}
+      pr_number: ${{ steps.preview.outputs.pr_number }}
+      preview_url: ${{ steps.preview.outputs.preview_url }}
+    steps:
+      - name: Read command and PR metadata
+        id: preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+
+          body="$(jq -r '.comment.body' "$GITHUB_EVENT_PATH" | tr -d '\r')"
+          body="$(printf '%s' "$body" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+          case "$body" in
+            /preview)
+              action=deploy
+              ;;
+            /unpreview)
+              action=remove
+              ;;
+            *)
+              action=ignore
+              ;;
+          esac
+
+          repo_name="${GITHUB_REPOSITORY#*/}"
+          if [ "$repo_name" = "${GITHUB_REPOSITORY_OWNER}.github.io" ]; then
+            preview_url="https://${repo_name}/${PREVIEW_ROOT}/pr-${PR_NUMBER}/"
+          else
+            preview_url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${repo_name}/${PREVIEW_ROOT}/pr-${PR_NUMBER}/"
+          fi
+          {
+            echo "action=${action}"
+            echo "pr_number=${PR_NUMBER}"
+            echo "preview_url=${preview_url}"
+          } >> "$GITHUB_OUTPUT"
+
+          if [ "$action" != "deploy" ]; then
+            exit 0
+          fi
+
+          pr_json="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}")"
+          head_repo="$(printf '%s' "$pr_json" | jq -r '.head.repo.full_name')"
+          base_repo="$(printf '%s' "$pr_json" | jq -r '.base.repo.full_name')"
+          head_sha="$(printf '%s' "$pr_json" | jq -r '.head.sha')"
+
+          if [ "$head_repo" != "$base_repo" ]; then
+            echo "::error::PR previews are only supported for branches in this repository."
+            exit 1
+          fi
+
+          if [ -z "$head_sha" ] || [ "$head_sha" = "null" ]; then
+            echo "::error::Could not determine the PR head SHA."
+            exit 1
+          fi
+
+          echo "head_sha=${head_sha}" >> "$GITHUB_OUTPUT"
+
+  build-preview:
+    if: needs.preview-command.outputs.action == 'deploy'
+    needs: preview-command
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.preview-command.outputs.head_sha }}
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Build site
+        run: uv run mkdocs build --strict
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-preview-${{ needs.preview-command.outputs.pr_number }}
+          path: site
+          if-no-files-found: error
+
+  deploy-preview:
+    if: needs.preview-command.outputs.action == 'deploy'
+    needs:
+      - preview-command
+      - build-preview
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Download preview artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-preview-${{ needs.preview-command.outputs.pr_number }}
+          path: preview-site
+
+      - name: Deploy PR preview
+        env:
+          PR_NUMBER: ${{ needs.preview-command.outputs.pr_number }}
+        run: |
+          set -euo pipefail
+
+          preview_dir="gh-pages/${PREVIEW_ROOT}/pr-${PR_NUMBER}"
+          rm -rf "$preview_dir"
+          mkdir -p "$preview_dir"
+          cp -a preview-site/. "$preview_dir"/
+
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all "${PREVIEW_ROOT}"
+
+          if git diff --cached --quiet; then
+            echo "No preview changes to deploy."
+          else
+            git commit -m "Deploy PR ${PR_NUMBER} preview"
+            git push origin HEAD:gh-pages
+          fi
+
+      - name: Comment with preview URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ needs.preview-command.outputs.pr_number }}
+          PREVIEW_URL: ${{ needs.preview-command.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+
+          marker="<!-- pr-preview:${PR_NUMBER} -->"
+          body="$(printf '%s\n%s\n' "$marker" "Preview published: ${PREVIEW_URL}")"
+
+          comment_id="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" --paginate \
+            | jq -r --arg marker "$marker" '.[] | select(.user.login == "github-actions[bot]" and (.body | contains($marker))) | .id' \
+            | tail -n 1)"
+
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}" -f body="$body"
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="$body"
+          fi
+
+  remove-preview:
+    if: needs.preview-command.outputs.action == 'remove'
+    needs: preview-command
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Remove PR preview
+        env:
+          PR_NUMBER: ${{ needs.preview-command.outputs.pr_number }}
+        run: |
+          set -euo pipefail
+
+          preview_dir="gh-pages/${PREVIEW_ROOT}/pr-${PR_NUMBER}"
+          rm -rf "$preview_dir"
+          mkdir -p "gh-pages/${PREVIEW_ROOT}"
+
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all "${PREVIEW_ROOT}"
+
+          if git diff --cached --quiet; then
+            echo "No preview changes to remove."
+          else
+            git commit -m "Remove PR ${PR_NUMBER} preview"
+            git push origin HEAD:gh-pages
+          fi
+
+      - name: Comment that preview was removed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ needs.preview-command.outputs.pr_number }}
+        run: |
+          set -euo pipefail
+
+          marker="<!-- pr-preview:${PR_NUMBER} -->"
+          body="$(printf '%s\n%s\n' "$marker" "Preview removed for PR #${PR_NUMBER}.")"
+
+          comment_id="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" --paginate \
+            | jq -r --arg marker "$marker" '.[] | select(.user.login == "github-actions[bot]" and (.body | contains($marker))) | .id' \
+            | tail -n 1)"
+
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}" -f body="$body"
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="$body"
+          fi
