@@ -81,15 +81,6 @@ The **excerpt separator** `<!-- more -->` must be included, typically after the 
 
 To **publish** when you're happy with your post, push it to a branch on [draft-graphcore-research.github.io](https://github.com/graphcore-research/draft-graphcore-research.github.io) for review. When it's merged into `main`, push it to [graphcore-research.github.io](https://github.com/graphcore-research/graphcore-research.github.io), e.g. if the remotes are `public` and `origin`: `git push public origin/main:main`.
 
-### PR previews
-
-The draft repo supports on-demand PR previews via PR comments:
-
-- comment `/preview` on a PR to publish a preview
-- comment `/unpreview` to remove it again
-
-The workflow posts the exact preview URL back to the PR. Note that the preview will be visible on the internet, so make sure you are ready to preview, and have checked for any secrets before you do it.
-
 ### POTM
 
 Papers-of-the-month are special, consisting of a **root** page at `pages/posts/potm/YYYY/MM/potm.md`, and multiple **child** pages at `pages/posts/potm/YYYY/MM/paper-slug/paper-slug.md`.
