@@ -1,3 +1,5 @@
+Optional preview: after opening the PR, comment `/preview` to publish a public preview and `/unpreview` to remove it. The workflow will reply with the preview URL. Please check for secrets before publishing a preview.
+
 This template includes 3 checklists, only 1 of which is needed for your PR. Please **delete as appropriate** before submitting the PR.
 
 For _Papers of the Month_, there are two types of PR:
