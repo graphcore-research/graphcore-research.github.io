@@ -86,7 +86,12 @@
       const legendgroup = trace.legendgroup;
       if (legendgroup === "MLP FP8-RTN" || legendgroup === "MLP FP6-RTN") {
         trace.visible = state.rtn;
-      } else if (legendgroup === "MLP FP8-SR" || legendgroup === "MLP FP6-SR") {
+      } else if (
+        legendgroup === "MLP FP8-SR" ||
+        legendgroup === "MLP FP6-SR" ||
+        legendgroup === "MLP FP8-SR16" ||
+        legendgroup === "MLP FP6-SR16"
+      ) {
         trace.visible = state.sr;
       } else {
         trace.visible = true;
@@ -339,11 +344,21 @@
         trace.visible = true;
       } else if (legendgroup === "FP8-RTN" || legendgroup === "FP6-RTN") {
         trace.visible = state.rtn;
-      } else if (legendgroup === "FP8-SR" || legendgroup === "FP6-SR") {
+      } else if (
+        legendgroup === "FP8-SR" ||
+        legendgroup === "FP6-SR" ||
+        legendgroup === "FP8-SR16" ||
+        legendgroup === "FP6-SR16"
+      ) {
         trace.visible = state.sr;
       } else if (legendgroup === "FP8-SR4 floor" || legendgroup === "FP6-SR4 floor") {
         trace.visible = state.srf;
-      } else if (legendgroup === "FP8-SR4 mid" || legendgroup === "FP6-SR4 mid") {
+      } else if (
+        legendgroup === "FP8-SR4 mid" ||
+        legendgroup === "FP6-SR4 mid" ||
+        legendgroup === "FP8-SR4 centered" ||
+        legendgroup === "FP6-SR4 centered"
+      ) {
         trace.visible = state.src;
       } else {
         trace.visible = true;

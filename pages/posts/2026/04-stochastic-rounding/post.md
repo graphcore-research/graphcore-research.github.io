@@ -7,7 +7,7 @@ tags: [stochastic-rounding, number-formats, optimisation]
 slug: stochastic-rounding
 ---
 
-At Graphcore we love compact numeric formats (see Doug's post last month on "1-bit-wonder").  Why? Because they are more efficient, in terms of FLOPs/sec and FLOPs/Joule, and we do hate to inconvenience electrons.
+At Graphcore we love compact numeric formats (see Doug's recent post on [1-bit Wonderful Weights for LLMs](https://ideal-potato-5loe1oj.pages.github.io/2026-03-11-1-bit-wonder/)).  Why? Because they are more efficient, in terms of FLOPs/sec and FLOPs/Joule, and we do hate to inconvenience electrons.
 
 This post is on how stochastic rounding helps us to do more with fewer bits.
 
@@ -46,7 +46,7 @@ So how well does that work?  Let's try it out on a classic optimization problem,
 
 ----
 
-This is the Rosenbrock function, and we first show minimization with FP32 parameters, and 200 steps of Adam:
+This is the Rosenbrock function, and we first show minimization with FP32 parameters, and 200 steps of Adam.  Feel free to fiddle with the learning rate and momentum parameters, and hit "Run" for a cutesy little animation.
 <style>
 @import url("../2026/04-stochastic-rounding/sr-rosenbrock.css");
 </style>
@@ -146,7 +146,7 @@ Here's a nanochat d12 run where we quantise the MLP weights to FP6 (this is just
 </figure>
 </div>
 
-As we can see, the FP6 curve tracks the BF16 early on, but starts to drift away as optimization proceeds.
+As we can see, the FP6 curve tracks the BF16 early on, but starts to drift away as optimization proceeds, ending up .1 bpb adrift.
 
 
 # Getting better: stochastic rounding
@@ -169,37 +169,23 @@ And stochastic rounding says
 
 where $\text{Random}$ returns a random number between zero and 1.
 
-In the context of our training loop above, it is applied when we add our $\Delta W$ to the current $W$, and we hope that over hundreds of learning steps, we will on average get to the high-precision result.
-But let's first explore SR before jumping to the optimization problem.
-
 In practice of course, you'll know that there are lots of subtleties in implementing a good random number function, and that there are questions of seeding and repeatability.
-So let's punt all of those questions to the user of our rounding function, and require them to supply us with an $R$-bit random integer:
+So let's punt all of those questions to the user of our rounding function, and require them to supply us with the random number,
+drawn from the uniform distribution $U[0,1]$
 
 \[
-    \text{RoundStochastic}(x : \mathbb R, r : \mathbb N) = \left\lfloor x + \frac{r}{2^R} \right\rfloor
+    \text{RoundStochastic}(x : \mathbb R, r : \mathbb R) : \mathbb Z = \lfloor x + r \rfloor
 \]
 
-Now it's the caller's job to keep track of seeding and RNG quality.
-But it's still our job to ensure that the definition works and makes sense.
+## Unbiased in expectation
 
-## Sensible stochastic rounding
-
-So what might it mean to "make sense"?
-Well, a key property we would like is that in expectation, $\text{RoundStochastic}(x) = x$, that is
+This formulation also helps us to show a key property of SR: if you round the same number many times, you will, in expectation, get the number you started with.  To put that more mathematically, we say
 
 \[
-    \mathbb{E}_r[\text{RoundStochastic}(x, r)] = x
+    \mathbb{E}_{r \sim U[0,1]}[\text{RoundStochastic}(x, r)] = x
 \]
 
-For the case where we wrote $\lfloor x + \text{Random}() \rfloor$, where we were working in the real numbers, it is a fairly straightforward calculation to show this:
-
-\[
-    E_r[\text{RoundStochastic}(x, r)] = \int_0^1 \left\lfloor x + r \right\rfloor\,dr = x
-\]
-
-<details markdown>
-<summary>Expand to see derivation, continuous case</summary>
-
+and it is quite easy to show:
 
 \[
     \begin{aligned}
@@ -207,16 +193,28 @@ For the case where we wrote $\lfloor x + \text{Random}() \rfloor$, where we were
     & = \int_0^1 \left\lfloor x + r \right\rfloor\,dr\\
     & \text{and letting } f = x - \left\lfloor x \right\rfloor \in [0, 1),\\
     & = \int_0^1 \left(\left\lfloor x \right\rfloor + \mathbf{1}[f + r \geq 1]\right)\,dr\\
+    & = \left\lfloor x \right\rfloor + \int_0^1 \mathbf{1}[r \geq 1 - f]\,dr\\
     & = \left\lfloor x \right\rfloor + \int_{1-f}^1 1\,dr\\
     & = \left\lfloor x \right\rfloor + f\\
     & = x.
     \end{aligned}
 \]
-</details>
 
-For the realistic finite-precision case, it's a little more fiddly, so let's just run some experiments to build our intuition.
 
-If we look at a concrete implementation, we can see what "equal in expectation" looks like in practice.
+In the context of our training loop above, it is applied when we add our $\Delta W$ to the current $W$, and we hope that over hundreds of learning steps, we will on average get to the high-precision result.
+
+## Real-world SR with a fixed number of random bits
+
+But let's first explore SR before jumping to the optimization problem.
+
+The first thing to fix is that we don't have infinite-precision random numbers, as we used above.  Our real rounding function takes as argument an $R$-bit random integer:
+
+\[
+    \text{RoundStochastic}(x : \mathbb R, r : \mathbb N) = \left\lfloor x + \frac{r}{2^R} \right\rfloor
+\]
+
+It's now a little more fiddly to derive the expectation, so let's just run a simple simulation to build our intuition.
+
 For bfloat16 values between 3 and 7, we round them to an FP6 format, E3M2 to be precise.
 <script defer src="../2026/04-stochastic-rounding/sr-rosenbrock.js"></script>
 <script defer src="../2026/04-stochastic-rounding/sr-mlp-plot.js"></script>
@@ -321,13 +319,13 @@ Here, we are training the same d12 nanochat, but with `RoundToFP6` using stochas
 </figure>
 </div>
 
-RTNE wasn't spectacularly wrong, but this is clearly better: SR follows the BF16 curve almost exactly.
+RTNE wasn't spectacularly wrong, but this is clearly better: SR follows the BF16 curve much more closely.
 
 ---
 
-# The finite-randomness case in theory
+## The finite-randomness case in theory
 
-So, are we done?  Well, maybe not.  The experiment above used oodles of randomness, that is, $R = \text{oodles}$, where, to be precise, $\text{oodles}$ was 32 bits.
+So, are we done?  Well, maybe not.  The experiment above used oodles of randomness, that is, $R = \text{oodles}$, where, to be precise, $\text{oodles}$ was effectively 16 bits.
 Now, we know how to make good random numbers in silicon [1], to the tune of 128 bits per clock cycle per core;
 but we are adding a lot more than four numbers per cycle.
 It would be a lot nicer to use 8 bits per add, or even fewer if possible.
@@ -383,7 +381,7 @@ So let's see what's the worst that could happen.  The simulation above used 16 b
 In normalized binary form, that's $1.1 \times 2^1$ to $1.11 \times 2^2$, 
 with a typical input value being say $1.1101001 \times 2^1$, with 7 binary digits after the point, which is an integer times $2^{1-7} = 2^{-6}$.  (The values above 4 are integers times $2^{-5}$.)
 
-This tells us that R=5 should show no issues on this range - you can set R=5 in the simulator and check.
+This tells us that R=5 should show no issues on this range - you can set R=5 in the simulator and check:
 
 <figure class="sr-rounding-demo" aria-label="Integer rounding comparison" data-hide-mode="true">
   <div class="sr-rounding-toolbar">
@@ -408,7 +406,7 @@ This tells us that R=5 should show no issues on this range - you can set R=5 in 
     </fieldset>
     <label class="sr-rounding-param">
       R
-      <input data-role="sr-rounding-rbits" type="number" min="0" max="24" step="1" value="16" inputmode="numeric" />
+      <input data-role="sr-rounding-rbits" type="number" min="0" max="24" step="1" value="5" inputmode="numeric" />
     </label>
     <span data-role="sr-rounding-seed">no SR yet</span>
   </div>
@@ -423,7 +421,7 @@ This tells us that R=5 should show no issues on this range - you can set R=5 in 
 So I'm guessing you've come back here having tried $R=4$ or lower?
 
 If you tried $R=4$ you may have seen a slight deviation from the plots we've seen up to now.
-Here's a snapshot.  It doesn't look like much at $R=4$, but it's definitely not lining up on the Y=X line, and at $R=2$, you can clearly see it: the SR values, even averaged over thousands of samples, are all above the Y=X line, so they are not in any way "unbiased" projections of the inputs.
+Here's a snapshot.  It doesn't look like there's a big problem at $R=4$, but it's definitely not lining up on the Y=X line, and at $R=2$, you can clearly see it: the SR values, even averaged over thousands of samples, are all above the Y=X line, so they are not in any way "unbiased" projections of the inputs.
 
 <div class="snapshot-grid">
   <img src="../2026/04-stochastic-rounding/img/sr-rbits-floor-r5.png" alt="Static snapshot of the scalar SR demo in floor mode with R equals 5">

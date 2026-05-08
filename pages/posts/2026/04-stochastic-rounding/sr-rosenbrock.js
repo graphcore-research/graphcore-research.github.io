@@ -32,10 +32,22 @@
       const SR_SEEDS = Array.from({ length: 16 }, (_, i) => i + 1);
       const SR_TRACE_COUNT = 10;
       const AUTO_RELOAD_POLL_MS = 1000;
-      const settings = {
+      const fullSettings = {
         lr: DEFAULT_ADAM_LR,
         beta1: DEFAULT_ADAM_BETA1,
-        beta2: DEFAULT_ADAM_BETA2,
+        beta2: DEFAULT_ADAM_BETA2
+      };
+      const fp6Settings = {
+        lr: DEFAULT_ADAM_LR,
+        beta1: DEFAULT_ADAM_BETA1,
+        beta2: DEFAULT_ADAM_BETA2
+      };
+      const fp6SrSettings = {
+        lr: DEFAULT_ADAM_LR,
+        beta1: DEFAULT_ADAM_BETA1,
+        beta2: DEFAULT_ADAM_BETA2
+      };
+      const viewSettings = {
         colormap: "plasma"
       };
 
@@ -75,33 +87,6 @@
       let srLrValue = null;
       let srBeta1Value = null;
       let srBeta2Value = null;
-
-      function adamControlGroups() {
-        const present = (items) => items.filter((item) => item !== null);
-        return [
-          {
-            key: "lr",
-            sliders: present([fullLrSlider, lrSlider, srLrSlider]),
-            readouts: present([fullLrValue, lrValue, srLrValue]),
-            formatValue: (value) => value.toFixed(1),
-            parseInput: Number
-          },
-          {
-            key: "beta1",
-            sliders: present([fullBeta1Slider, beta1Slider, srBeta1Slider]),
-            readouts: present([fullBeta1Value, beta1Value, srBeta1Value]),
-            formatValue: formatBeta,
-            parseInput: Number
-          },
-          {
-            key: "beta2",
-            sliders: present([fullBeta2Slider, beta2Slider, srBeta2Slider]),
-            readouts: present([fullBeta2Value, beta2Value, srBeta2Value]),
-            formatValue: formatBeta,
-            parseInput: Number
-          }
-        ];
-      }
 
       const colors = {
         ink: "#15161a",
@@ -1220,7 +1205,7 @@
         draw();
       }
 
-      function runAdam(rounding, seed) {
+      function runAdam(rounding, seed, adamSettings) {
         const rng = rounding === "sr" ? mulberry32(seed) : null;
         let theta = [f32(START[0]), f32(START[1])];
         let m = [f32(0.0), f32(0.0)];
@@ -1231,18 +1216,18 @@
         for (let step = 1; step <= STEPS; step += 1) {
           const grad = rosenbrockGrad(theta);
           for (let i = 0; i < 2; i += 1) {
-            m[i] = f32(f32(settings.beta1 * m[i]) + f32(f32(1.0 - settings.beta1) * grad[i]));
+            m[i] = f32(f32(adamSettings.beta1 * m[i]) + f32(f32(1.0 - adamSettings.beta1) * grad[i]));
             v[i] = f32(
-              f32(settings.beta2 * v[i])
-              + f32(f32(1.0 - settings.beta2) * f32(grad[i] * grad[i]))
+              f32(adamSettings.beta2 * v[i])
+              + f32(f32(1.0 - adamSettings.beta2) * f32(grad[i] * grad[i]))
             );
           }
           const next = [f32(0.0), f32(0.0)];
           for (let i = 0; i < 2; i += 1) {
-            const mHat = f32(m[i] / f32(1.0 - settings.beta1 ** step));
-            const vHat = f32(v[i] / f32(1.0 - settings.beta2 ** step));
+            const mHat = f32(m[i] / f32(1.0 - adamSettings.beta1 ** step));
+            const vHat = f32(v[i] / f32(1.0 - adamSettings.beta2 ** step));
             const denom = f32(f32(Math.sqrt(vHat)) + ADAM_EPS);
-            next[i] = f32(theta[i] - f32(settings.lr * f32(mHat / denom)));
+            next[i] = f32(theta[i] - f32(adamSettings.lr * f32(mHat / denom)));
           }
           theta = rounding === null ? [f32(next[0]), f32(next[1])] : roundFp6(next, rounding, rng);
           trajectory.push([theta[0], theta[1]]);
@@ -1266,104 +1251,129 @@
       }
 
       let full = null;
-      let rtn = null;
-      let srRuns = [];
-      let srTraceRuns = [];
+      let fp6Rtn = null;
+      let fp6SrRtn = null;
+      let fp6Runs = [];
+      let fp6TraceRuns = [];
+      let fp6SrRuns = [];
+      let fp6SrTraceRuns = [];
       let singleSrRun = null;
       let nextSingleSrSeed = 1;
       let singleSrPanelRun = null;
       let nextSingleSrPanelSeed = 1;
-      let srBestByRun = [];
-      let srMedianFinal = 0.0;
-      let srMedianBest = 0.0;
-      let rtnBestLoss = 0.0;
-      let srBetterCount = 0;
+      let fp6BestByRun = [];
+      let fp6MedianFinal = 0.0;
+      let fp6MedianBest = 0.0;
+      let fp6RtnBestLoss = 0.0;
+      let fp6SrBetterCount = 0;
 
-      function recomputeTrajectories() {
-        full = runAdam(null, 0);
-        rtn = runAdam("rtn", 0);
-        srRuns = SR_SEEDS.map((seed) => ({ seed, ...runAdam("sr", seed) }));
-        srTraceRuns = srRuns.slice(0, SR_TRACE_COUNT);
-        srBestByRun = srRuns.map((run) => minValue(run.loss));
-        srMedianFinal = median(srRuns.map((run) => run.loss[STEPS]));
-        srMedianBest = median(srBestByRun);
-        rtnBestLoss = minValue(rtn.loss);
-        srBetterCount = srBestByRun.filter((value) => value < rtnBestLoss).length;
+      function syncControlGroup(slider, readout, value, formatter) {
+        slider.value = formatter(value);
+        readout.textContent = formatter(value);
       }
 
-      function updateControlReadouts() {
-        for (const group of adamControlGroups()) {
-          const formatted = group.formatValue(settings[group.key]);
-          for (const readout of group.readouts) {
-            readout.textContent = formatted;
-          }
+      function syncAllControlGroups() {
+        syncControlGroup(fullLrSlider, fullLrValue, fullSettings.lr, (value) => value.toFixed(1));
+        syncControlGroup(fullBeta1Slider, fullBeta1Value, fullSettings.beta1, formatBeta);
+        syncControlGroup(fullBeta2Slider, fullBeta2Value, fullSettings.beta2, formatBeta);
+        syncControlGroup(lrSlider, lrValue, fp6Settings.lr, (value) => value.toFixed(1));
+        syncControlGroup(beta1Slider, beta1Value, fp6Settings.beta1, formatBeta);
+        syncControlGroup(beta2Slider, beta2Value, fp6Settings.beta2, formatBeta);
+        if (srLrSlider !== null && srLrValue !== null) {
+          syncControlGroup(srLrSlider, srLrValue, fp6SrSettings.lr, (value) => value.toFixed(1));
+        }
+        if (srBeta1Slider !== null && srBeta1Value !== null) {
+          syncControlGroup(srBeta1Slider, srBeta1Value, fp6SrSettings.beta1, formatBeta);
+        }
+        if (srBeta2Slider !== null && srBeta2Value !== null) {
+          syncControlGroup(srBeta2Slider, srBeta2Value, fp6SrSettings.beta2, formatBeta);
         }
       }
 
-      function syncAdamControls() {
-        for (const group of adamControlGroups()) {
-          const formatted = group.formatValue(settings[group.key]);
-          for (const slider of group.sliders) {
-            slider.value = formatted;
-          }
-        }
+      function recomputeFullTrajectory() {
+        full = runAdam(null, 0, fullSettings);
       }
 
-      function applyControlValues(event) {
+      function recomputeFp6Trajectories() {
+        fp6Rtn = runAdam("rtn", 0, fp6Settings);
+        fp6Runs = SR_SEEDS.map((seed) => ({ seed, ...runAdam("sr", seed, fp6Settings) }));
+        fp6TraceRuns = fp6Runs.slice(0, SR_TRACE_COUNT);
+        fp6BestByRun = fp6Runs.map((run) => minValue(run.loss));
+        fp6MedianFinal = median(fp6Runs.map((run) => run.loss[STEPS]));
+        fp6MedianBest = median(fp6BestByRun);
+        fp6RtnBestLoss = minValue(fp6Rtn.loss);
+        fp6SrBetterCount = fp6BestByRun.filter((value) => value < fp6RtnBestLoss).length;
+      }
+
+      function recomputeFp6SrTrajectories() {
+        fp6SrRtn = runAdam("rtn", 0, fp6SrSettings);
+        fp6SrRuns = SR_SEEDS.map((seed) => ({ seed, ...runAdam("sr", seed, fp6SrSettings) }));
+        fp6SrTraceRuns = fp6SrRuns.slice(0, SR_TRACE_COUNT);
+      }
+
+      function updateFullControls() {
+        fullSettings.lr = f32(Number(fullLrSlider.value));
+        fullSettings.beta1 = f32(Number(fullBeta1Slider.value));
+        fullSettings.beta2 = f32(Number(fullBeta2Slider.value));
+        syncControlGroup(fullLrSlider, fullLrValue, fullSettings.lr, (value) => value.toFixed(1));
+        syncControlGroup(fullBeta1Slider, fullBeta1Value, fullSettings.beta1, formatBeta);
+        syncControlGroup(fullBeta2Slider, fullBeta2Value, fullSettings.beta2, formatBeta);
+        recomputeFullTrajectory();
+        if (fullRunStarted) {
+          fullRunStartedAt = performance.now() - FP6_ANIMATION_MS;
+        }
+        requestDraw();
+      }
+
+      function updateFp6Controls() {
+        fp6Settings.lr = f32(Number(lrSlider.value));
+        fp6Settings.beta1 = f32(Number(beta1Slider.value));
+        fp6Settings.beta2 = f32(Number(beta2Slider.value));
+        syncControlGroup(lrSlider, lrValue, fp6Settings.lr, (value) => value.toFixed(1));
+        syncControlGroup(beta1Slider, beta1Value, fp6Settings.beta1, formatBeta);
+        syncControlGroup(beta2Slider, beta2Value, fp6Settings.beta2, formatBeta);
+        recomputeFp6Trajectories();
         const shownMode = fp6RunStarted ? fp6RunMode : null;
         const shownSeed = shownMode === "sr" && singleSrRun !== null ? singleSrRun.seed : null;
-        const shownSrMode = fp6SrRunStarted ? fp6SrRunMode : null;
-        const shownSrSeed = shownSrMode === "sr" && singleSrPanelRun !== null ? singleSrPanelRun.seed : null;
-        const target = event === undefined ? null : event.target;
-        let updatedFromTarget = false;
-        if (target !== null) {
-          for (const group of adamControlGroups()) {
-            if (group.sliders.includes(target)) {
-              settings[group.key] = f32(group.parseInput(target.value));
-              updatedFromTarget = true;
-              break;
-            }
-          }
-        }
-        if (!updatedFromTarget) {
-          for (const group of adamControlGroups()) {
-            settings[group.key] = f32(group.parseInput(group.sliders[1].value));
-          }
-        }
-        syncAdamControls();
-        updateControlReadouts();
-        recomputeTrajectories();
         if (shownMode === "sr") {
           if (shownSeed === null) {
             throw new Error("shown SR seed is missing");
           }
-          singleSrRun = { seed: shownSeed, ...runAdam("sr", shownSeed) };
-          fp6RunMode = "sr";
-          fp6RunStarted = true;
+          singleSrRun = { seed: shownSeed, ...runAdam("sr", shownSeed, fp6Settings) };
           fp6RunStartedAt = performance.now() - FP6_ANIMATION_MS;
-        } else if (shownMode !== null) {
-          singleSrRun = null;
-          fp6RunMode = shownMode;
-          fp6RunStarted = true;
+        } else if (shownMode === "rn") {
           fp6RunStartedAt = performance.now() - FP6_ANIMATION_MS;
-        } else {
-          resetFp6Run(true);
         }
-        if (shownSrMode === "sr") {
-          if (shownSrSeed === null) {
+        requestDraw();
+      }
+
+      function updateFp6SrControls() {
+        if (
+          srLrSlider === null || srLrValue === null
+          || srBeta1Slider === null || srBeta1Value === null
+          || srBeta2Slider === null || srBeta2Value === null
+        ) {
+          throw new Error("FP6 SR controls are missing");
+        }
+        fp6SrSettings.lr = f32(Number(srLrSlider.value));
+        fp6SrSettings.beta1 = f32(Number(srBeta1Slider.value));
+        fp6SrSettings.beta2 = f32(Number(srBeta2Slider.value));
+        syncControlGroup(srLrSlider, srLrValue, fp6SrSettings.lr, (value) => value.toFixed(1));
+        syncControlGroup(srBeta1Slider, srBeta1Value, fp6SrSettings.beta1, formatBeta);
+        syncControlGroup(srBeta2Slider, srBeta2Value, fp6SrSettings.beta2, formatBeta);
+        recomputeFp6SrTrajectories();
+        const shownMode = fp6SrRunStarted ? fp6SrRunMode : null;
+        const shownSeed = shownMode === "sr" && singleSrPanelRun !== null ? singleSrPanelRun.seed : null;
+        if (shownMode === "sr") {
+          if (shownSeed === null) {
             throw new Error("shown SR panel seed is missing");
           }
-          singleSrPanelRun = { seed: shownSrSeed, ...runAdam("sr", shownSrSeed) };
-          fp6SrRunMode = "sr";
-          fp6SrRunStarted = true;
+          singleSrPanelRun = { seed: shownSeed, ...runAdam("sr", shownSeed, fp6SrSettings) };
           fp6SrRunStartedAt = performance.now() - FP6_ANIMATION_MS;
-        } else if (shownSrMode !== null) {
-          singleSrPanelRun = null;
-          fp6SrRunMode = shownSrMode;
-          fp6SrRunStarted = true;
+        } else if (shownMode === "rn") {
           fp6SrRunStartedAt = performance.now() - FP6_ANIMATION_MS;
-        } else {
-          resetFp6SrRun(true);
+        } else if (shownMode === "sr-ensemble") {
+          fp6SrRunStartedAt = performance.now() - FP6_ANIMATION_MS;
         }
         requestDraw();
       }
@@ -1372,7 +1382,7 @@
         if (colormapSelect === null) {
           return;
         }
-        settings.colormap = colormapSelect.value;
+        viewSettings.colormap = colormapSelect.value;
         requestDraw();
       }
 
@@ -1507,9 +1517,9 @@
       };
 
       function colorRamp(t) {
-        const ramp = colorRamps[settings.colormap];
+        const ramp = colorRamps[viewSettings.colormap];
         if (ramp === undefined) {
-          throw new Error(`unknown colormap: ${settings.colormap}`);
+          throw new Error(`unknown colormap: ${viewSettings.colormap}`);
         }
         const scaled = clamp(t, 0.0, 1.0) * (ramp.length - 1);
         const lo = Math.floor(scaled);
@@ -1525,9 +1535,9 @@
       }
 
       function curvePalette() {
-        const palette = curvePalettes[settings.colormap];
+        const palette = curvePalettes[viewSettings.colormap];
         if (palette === undefined) {
-          throw new Error(`unknown curve palette: ${settings.colormap}`);
+          throw new Error(`unknown curve palette: ${viewSettings.colormap}`);
         }
         return palette;
       }
@@ -1932,8 +1942,8 @@
 
         const values = [
           ...full.loss,
-          ...rtn.loss,
-          ...srRuns.flatMap((run) => run.loss)
+          ...fp6Rtn.loss,
+          ...fp6Runs.flatMap((run) => run.loss)
         ].map(logLoss);
         const yMin = Math.min(...values);
         const yMax = Math.max(...values);
@@ -1963,14 +1973,14 @@
         ctx.restore();
 
         if (mode === "sr") {
-          for (const run of srTraceRuns) {
+          for (const run of fp6TraceRuns) {
             drawLossLine(run.loss, progress, box, palette.srHalo, 0.18, 2.35, yMin, yMax);
             drawLossLine(run.loss, progress, box, palette.sr, 0.42, 1.25, yMin, yMax);
           }
-          drawContrastLossLine(rtn.loss, progress, box, palette.rn, 0.92, 1.8, yMin, yMax, palette.rnHalo);
+          drawContrastLossLine(fp6Rtn.loss, progress, box, palette.rn, 0.92, 1.8, yMin, yMax, palette.rnHalo);
         } else if (mode === "rtn") {
           drawLossLine(full.loss, progress, box, palette.full, 0.55, 1.5, yMin, yMax);
-          drawContrastLossLine(rtn.loss, progress, box, palette.rn, 1.0, 2.3, yMin, yMax, palette.rnHalo);
+          drawContrastLossLine(fp6Rtn.loss, progress, box, palette.rn, 1.0, 2.3, yMin, yMax, palette.rnHalo);
         } else {
           drawContrastLossLine(full.loss, progress, box, palette.rn, 1.0, 2.5, yMin, yMax, palette.rnHalo);
         }
@@ -2076,7 +2086,7 @@
       function startFp6Run(mode) {
         if (mode === "sr") {
           const seed = nextSingleSrSeed;
-          singleSrRun = { seed, ...runAdam("sr", seed) };
+          singleSrRun = { seed, ...runAdam("sr", seed, fp6Settings) };
           nextSingleSrSeed += 1;
         } else {
           singleSrRun = null;
@@ -2090,7 +2100,7 @@
       function startFp6SrRun(mode) {
         if (mode === "sr") {
           const seed = nextSingleSrPanelSeed;
-          singleSrPanelRun = { seed, ...runAdam("sr", seed) };
+          singleSrPanelRun = { seed, ...runAdam("sr", seed, fp6SrSettings) };
           nextSingleSrPanelSeed += 1;
         } else {
           singleSrPanelRun = null;
@@ -2150,7 +2160,7 @@
         fullStat.textContent = `f=${full.loss[step].toFixed(4)}`;
       }
 
-      function drawFp6LossInset(progress, runMode, singleRun) {
+      function drawFp6LossInset(progress, runMode, singleRun, rtnRun, panelRuns, panelTraceRuns) {
         const palette = curvePalette();
         const insetWidth = Math.min(220, plot.width * 0.34);
         const insetHeight = Math.min(68, plot.height * 0.20);
@@ -2160,9 +2170,9 @@
           width: insetWidth,
           height: insetHeight
         };
-        const srLossRuns = runMode === "sr" && singleRun !== null ? [singleRun] : srRuns;
+        const srLossRuns = runMode === "sr" && singleRun !== null ? [singleRun] : panelRuns;
         const values = [
-          ...rtn.loss,
+          ...rtnRun.loss,
           ...srLossRuns.flatMap((run) => run.loss)
         ].map(logLoss);
         const yMin = Math.min(...values);
@@ -2199,17 +2209,17 @@
           drawLossLine(run.loss, progress, box, palette.srHalo, 0.18, 2.35, yMin, yMax);
           drawLossLine(run.loss, progress, box, palette.sr, 0.72, 1.7, yMin, yMax);
         } else if (runMode === "sr-ensemble") {
-          for (const run of srTraceRuns) {
+          for (const run of panelTraceRuns) {
             drawLossLine(run.loss, progress, box, palette.srHalo, 0.18, 2.35, yMin, yMax);
             drawLossLine(run.loss, progress, box, palette.sr, 0.42, 1.25, yMin, yMax);
           }
         }
         if (runMode === "rn") {
-          drawContrastLossLine(rtn.loss, progress, box, palette.rn, 0.92, 1.8, yMin, yMax, palette.rnHalo);
+          drawContrastLossLine(rtnRun.loss, progress, box, palette.rn, 0.92, 1.8, yMin, yMax, palette.rnHalo);
         }
       }
 
-      function drawFp6FigureOn(targetCanvas, targetCtx, statElement, runStarted, runMode, progress, singleRun) {
+      function drawFp6FigureOn(targetCanvas, targetCtx, statElement, runStarted, runMode, progress, singleRun, rtnRun, panelRuns, panelTraceRuns) {
         setRenderTarget(targetCanvas, targetCtx);
         const palette = curvePalette();
         drawBackground();
@@ -2219,7 +2229,7 @@
           if (runMode === "sr" && singleRun === null) {
             throw new Error("single SR run is missing");
           }
-          const visibleSrRuns = runMode === "sr" ? [singleRun] : srTraceRuns;
+          const visibleSrRuns = runMode === "sr" ? [singleRun] : panelTraceRuns;
           for (const run of visibleSrRuns) {
             drawPath(run.trajectory, progress, palette.srHalo, 0.32, runMode === "sr" ? 3.6 : 3.0);
           }
@@ -2241,8 +2251,8 @@
           ctx.restore();
         }
         if (runStarted && runMode === "rn") {
-          drawContrastPath(rtn.trajectory, progress, palette.rn, 0.96, 2.2, palette.rnHalo);
-          drawComet(rtn.trajectory, progress, palette.rn, {
+          drawContrastPath(rtnRun.trajectory, progress, palette.rn, 0.96, 2.2, palette.rnHalo);
+          drawComet(rtnRun.trajectory, progress, palette.rn, {
             tail: 22,
             lineWidth: 3.2,
             radius: 5.8,
@@ -2251,7 +2261,7 @@
           });
         }
         if (runStarted && runMode !== null) {
-          drawFp6LossInset(progress, runMode, singleRun);
+          drawFp6LossInset(progress, runMode, singleRun, rtnRun, panelRuns, panelTraceRuns);
         }
         drawMarkers(false, true);
         drawLegend("fp6", runMode, singleRun);
@@ -2270,11 +2280,33 @@
           const fullStepProgress = fullProgress(now);
           drawFullFigure(fullStepProgress);
           const fp6StepProgress = fp6Progress(now);
-          drawFp6FigureOn(fp6Canvas, fp6Ctx, fp6Stat, fp6RunStarted, fp6RunMode, fp6StepProgress, singleSrRun);
+          drawFp6FigureOn(
+            fp6Canvas,
+            fp6Ctx,
+            fp6Stat,
+            fp6RunStarted,
+            fp6RunMode,
+            fp6StepProgress,
+            singleSrRun,
+            fp6Rtn,
+            fp6Runs,
+            fp6TraceRuns
+          );
           let fp6SrStepProgress = 0;
           if (fp6SrCanvas !== null && fp6SrCtx !== null && fp6SrStat !== null) {
             fp6SrStepProgress = fp6SrProgress(now);
-            drawFp6FigureOn(fp6SrCanvas, fp6SrCtx, fp6SrStat, fp6SrRunStarted, fp6SrRunMode, fp6SrStepProgress, singleSrPanelRun);
+            drawFp6FigureOn(
+              fp6SrCanvas,
+              fp6SrCtx,
+              fp6SrStat,
+              fp6SrRunStarted,
+              fp6SrRunMode,
+              fp6SrStepProgress,
+              singleSrPanelRun,
+              fp6SrRtn,
+              fp6SrRuns,
+              fp6SrTraceRuns
+            );
           }
           if (
             (fullRunStarted && fullStepProgress < STEPS)
@@ -2298,10 +2330,20 @@
           return;
         }
 
-        for (const group of adamControlGroups()) {
-          for (const slider of group.sliders) {
-            slider.addEventListener("input", applyControlValues);
-          }
+        fullLrSlider.addEventListener("input", updateFullControls);
+        fullBeta1Slider.addEventListener("input", updateFullControls);
+        fullBeta2Slider.addEventListener("input", updateFullControls);
+        lrSlider.addEventListener("input", updateFp6Controls);
+        beta1Slider.addEventListener("input", updateFp6Controls);
+        beta2Slider.addEventListener("input", updateFp6Controls);
+        if (srLrSlider !== null) {
+          srLrSlider.addEventListener("input", updateFp6SrControls);
+        }
+        if (srBeta1Slider !== null) {
+          srBeta1Slider.addEventListener("input", updateFp6SrControls);
+        }
+        if (srBeta2Slider !== null) {
+          srBeta2Slider.addEventListener("input", updateFp6SrControls);
         }
         runFull.addEventListener("click", () => {
           startFullRun();
@@ -2328,9 +2370,10 @@
           colormapSelect.addEventListener("change", applyColormapValue);
         }
 
-        syncAdamControls();
-        updateControlReadouts();
-        recomputeTrajectories();
+        syncAllControlGroups();
+        recomputeFullTrajectory();
+        recomputeFp6Trajectories();
+        recomputeFp6SrTrajectories();
         window.addEventListener("resize", () => {
           requestDraw();
         });
@@ -2339,20 +2382,26 @@
 
         console.log({
           scale: SCALE,
-          lr: settings.lr,
-          beta1: settings.beta1,
-          beta2: settings.beta2,
+          fullLr: fullSettings.lr,
+          fullBeta1: fullSettings.beta1,
+          fullBeta2: fullSettings.beta2,
+          fp6Lr: fp6Settings.lr,
+          fp6Beta1: fp6Settings.beta1,
+          fp6Beta2: fp6Settings.beta2,
+          fp6SrLr: fp6SrSettings.lr,
+          fp6SrBeta1: fp6SrSettings.beta1,
+          fp6SrBeta2: fp6SrSettings.beta2,
           start: START,
           optimum: OPTIMUM,
           fp6Minimum: FP6_MINIMUM,
           fp6Values: FP6.length,
           fullFinal: full.trajectory[STEPS],
           fullFinalLoss: full.loss[STEPS],
-          rnFinal: rtn.trajectory[STEPS],
-          rnBestLoss: rtnBestLoss,
-          srMedianFinal,
-          srMedianBest,
-          srRunsBeatingRn: `${srBetterCount}/${srRuns.length}`
+          rnFinal: fp6Rtn.trajectory[STEPS],
+          rnBestLoss: fp6RtnBestLoss,
+          srMedianFinal: fp6MedianFinal,
+          srMedianBest: fp6MedianBest,
+          srRunsBeatingRn: `${fp6SrBetterCount}/${fp6Runs.length}`
         });
       } catch (error) {
         reportStartupError(error);
