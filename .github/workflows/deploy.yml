@@ -271,7 +271,7 @@ jobs:
 
           marker="<!-- pr-preview:${PR_NUMBER} -->"
           body="$(printf '%s\n%s\n' "$marker" "Preview published: ${PREVIEW_URL}")"
-          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "$body"
+          gh pr comment "$PR_NUMBER" --body "$body"
 
   remove-preview:
     if: needs.preview-command.outputs.action == 'remove'
@@ -333,4 +333,4 @@ jobs:
 
           marker="<!-- pr-preview:${PR_NUMBER} -->"
           body="$(printf '%s\n%s\n' "$marker" "Preview removed for PR #${PR_NUMBER}.")"
-          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "$body"
+          gh pr comment "$PR_NUMBER" --body "$body"
