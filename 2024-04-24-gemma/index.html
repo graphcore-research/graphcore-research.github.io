@@ -1,0 +1,1264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-04-24-gemma/">
+      
+      
+        <link rel="prev" href="../2024-03-30-potm/">
+      
+      
+        <link rel="next" href="../2024-04-30-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>A transformer walk-through, with Gemma - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="A transformer walk-through, with Gemma - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-04-24-gemma.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-04-24-gemma/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="A transformer walk-through, with Gemma - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-04-24-gemma.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tokenization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        A transformer walk-through, with Gemma
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tokenization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedding-lookup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Embedding lookup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-embedding-rescaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-embedding rescaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transformer-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformer layer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rmsnorm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RMSNorm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rotary-positional-encoding-rope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotary positional encoding (RoPE)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-layer-perceptron-mlp-geglu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-layer perceptron (MLP, GeGLU)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-norm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final norm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output projection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thats-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        That's it!
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-04-24 00:00:00+00:00" class="md-ellipsis">April 24, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/articles/">Articles</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              25 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:transformers" class="md-tag">transformers</a>
+      
+    
+  </nav>
+
+
+
+  <h1>A transformer walk-through, with Gemma</h1>
+
+<p>Transformer-based LLMs seem mysterious, but they don't need to. In this post, we'll walk through a modern transformer LLM, Google's Gemma, providing bare-bones PyTorch code and some intuition for why each step is there. If you're a programmer and casual ML enthusiast, this is written for you.</p>
+<!-- more -->
+
+<p><strong>Our problem</strong> is <em>single-step prediction</em>: take a string e.g. "I want to move", and use an already-trained language model (LM) to predict what could come next. This is the core component of chatbots, coding assistants, etc, since we can easily chain these predictions together to generate long strings.</p>
+<p>We'll walk through this example using <strong>Gemma 2B</strong>, with an accompanying <strong>notebook (<a href="https://github.com/DouglasOrr/DouglasOrr.github.io/blob/examples/2024-04-transformers/gemma_walkthrough.ipynb">github</a>, <a href="https://colab.research.google.com/github/DouglasOrr/DouglasOrr.github.io/blob/examples/2024-04-transformers/gemma_walkthrough.ipynb">Colab</a>)</strong> which provides unadorned code for everything we'll see.</p>
+<p>There are two ways to read this post: the main text describes the implementation, or what is required to run Gemma. The expandable sections add details about why the code does this, with some of the machine learning intuition behind the code.</p>
+<details>
+<summary>Understanding preliminaries (dot product)</summary>
+<p>To follow some of the optional "understanding" sections in this post, it's worth recapping the dot product between two vectors:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a_i</span> <span class="o">*</span> <span class="n">b_i</span> <span class="k">for</span> <span class="n">a_i</span><span class="p">,</span> <span class="n">b_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+</span></code></pre></div>
+<p>It acts as a test of <em>agreement</em>. Here's an example of the dot product between some vectors in 2D:</p>
+<p><img alt="Lines emanating from a central point (0, 0). A bold line labelled 'a'. A line in the same direction, but twice as long, labelled 'x . a = 2'. A sequence of lines rotating from those, labelled 'x . a = 1/sqrt(2)' then 'x . a = 0' then 'x . a = -1/sqrt(2)', then 'x . a = -1' in the opposite direction from a." class="img-tiny" src="../2024/04-gemma/dot_product.png" /></p>
+<p>From this, we see that longer lines have larger magnitude dot products, and for a given length of vectors, the dot product will be largest (most positive) when they are in the same direction, zero when perpendicular, and smallest (most negative) when they are in the opposite direction.</p>
+<p>Dot products between 2-vectors are quite easy to visualise. But Gemma involves dot products between 2048-, 256- and 16384-vectors, which are a bit more challenging! However, we can still think of these high-dimensional dot products as rating the agreement between two vectors.</p>
+</details>
+<h2 id="tokenization">Tokenization</h2>
+<p>Tokenize the input string, splitting &amp; mapping it to token IDs.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">transformers</span><span class="o">.</span><span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;google/gemma-2b&quot;</span><span class="p">)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&quot;I want to move&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># input_ids = [2, 235285, 1938, 577, 3124]</span>
+</span></code></pre></div>
+<p>The model works on sequences of <em>subword tokens</em>, represented as integers in the range [0, 256000), such as 1938 (=&gt; "▁want"). Since the input comes in as a single long string, we use a tokenizer to first split the string into tokens, second to map these tokens to numeric IDs.</p>
+<details>
+<summary>Understanding tokenisation</summary>
+<p>Tokenisation is defined via a <em>vocabulary</em>, a large set of tokens that are understood by the model. These tokens might be whole words e.g. "The" or parts of words, e.g. " superlative" is split into ["▁super", "lative"].</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&quot;The superlative&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_ids_to_tokens</span><span class="p">(</span><span class="n">input_ids</span><span class="p">))</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># =&gt; [&#39;&lt;bos&gt;&#39;, &#39;The&#39;, &#39;▁super&#39;, &#39;lative&#39;]</span>
+</span></code></pre></div>
+<p>This illustrates a few interesting things about the tokenizer.</p>
+<ul>
+<li>It is <em>subword</em>, able to split long words. (Since most characters are included, it can tokenize even gibberish "nvdkjsv" =&gt; ["n", "vd", "k", "js", "v"].)</li>
+<li>It doesn't throw whitespace away, mapping " " to "▁".</li>
+<li>It doesn't normalise capitalisation (651 =&gt; "The", 1175 =&gt; "the").</li>
+<li>It prepends a special "beginning of sequence" token, 2 =&gt; "&lt;bos&gt;".</li>
+<li>The vocabulary is very large, <code>len(tokenizer.vocab)</code> is 256000.</li>
+</ul>
+<p>All but the last point are standard for modern LLMs. We use subword tokenization since it gives great coverage of any input text. We include whitespace and don't normalise capitalisation to avoid all the cases where these rules have exceptions and ambiguities, passing these down to the model to figure out (e.g. when is the token "apple" the same thing as "Apple"?)</p>
+<p>With subword tokenization, vocabulary size is a free choice of the model designer. Many modern models use vocabularies in the 30-60k range, while Gemma's is much larger at 256k. Large vocabularies can help coverage of the long tail of language, and there is a mild efficiency trade-off between larger vocabularies and shorter sequences versus smaller vocabularies and longer sequences.</p>
+<p>Since this article aims at understanding the algorithm, I must apologise at this point. We're just going to treat subword tokenization as a black box. If you want to learn more, Gemma's tokenizer uses byte pair encoding (BPE), and at inference time the problem is a search through the vocabulary for a sequence of tokens that match the input string (there are generally multiple possible tokenizations of a given input).</p>
+</details>
+<h2 id="embedding-lookup">Embedding lookup</h2>
+<p>Convert token IDs to 2048-element vectors by looking them up in an <em>embedding</em> table.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">hiddens</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">embedding</span><span class="p">[</span><span class="n">input_ids</span><span class="p">]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># p.embedding.shape = (256000, 2048)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># input_ids.shape = (5,)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># hiddens.shape = (5, 2048)</span>
+</span></code></pre></div>
+<p>For each input token ID (e.g. 1938 =&gt; "▁want"), select the corresponding row from the large embedding table. The result, which we'll call <code>hiddens</code>, has shape (5, 2048), where there are 5 tokens along the sequence dimension and 2048 components along the hidden dimension.</p>
+<details>
+<summary>Understanding embedding</summary>
+<p>As we're about to see, most operations in Gemma are a dot product similarity between high-dimensional vectors. On one level, embedding lookup is just the simplest way to get from IDs to high-dimensional vectors. Note also that the numeric IDs associated with tokens are arbitrary (5000 =&gt; "画像", 5001 =&gt; "▁fish", 5002 =&gt; "mento"); an embedding table is desirable as it has no sense of locality or smoothness between consecutive IDs.</p>
+<p>Since the model attempts to predict words based on similarity, we'd expect words that appear in the same contexts to have similar embeddings. In the figure below, we plot the cosine similarity between a few selected tokens from the vocabulary. Cosine similarity is the dot product with the length of input vectors normalised out, calculated as <code>dot(a, b) / sqrt(dot(a, a) * dot(b, b))</code>.</p>
+<p><img alt="a grid of coloured squares representing cosine similarity between embeddings; &quot;red&quot; and &quot;green&quot; are similar; &quot;London&quot;, &quot;Paris&quot; and &quot;Tokyo&quot; are similar; &quot;pleasant&quot; and &quot;vibrant&quot; are similar; &quot;with&quot; really is on its own" class="img-small" src="../2024/04-gemma/embeddings.png" /></p>
+<p>Words with similar functions in language (colours, place names, adjectives) have similar embeddings. It'd be fun to read something into "Tokyo" and "London" being closer than "Paris" to "pleasant" and "vibrant", but that is perhaps a bit risky — this embedding similarity metric is a very blunt tool.</p>
+</details>
+<h2 id="post-embedding-rescaling">Post-embedding rescaling</h2>
+<p>Scale up <code>hiddens</code> by <code>sqrt(2048)</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">hiddens</span> <span class="o">*=</span> <span class="n">hiddens</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mf">0.5</span>
+</span></code></pre></div>
+<p>In Gemma, embedding parameters are shared between the input embedding lookup and the output embedding projection. This is a reasonable design, but some care is required to give appropriate scale to inputs and outputs. The scaling factor of <code>sqrt(hidden_size)</code> makes inputs larger without interfering with the output projection.</p>
+<details>
+<summary>Understanding post-embedding rescaling</summary>
+<p>To see the need for a scaling factor, we have to skip ahead and consider the final output projection as well as the input embedding lookup. The final projection looks like this:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">logits</span> <span class="o">=</span> <span class="n">hiddens</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">T</span>
+</span></code></pre></div>
+<p>So each element of <code>logits</code> comes from a dot product between <code>hiddens</code> and an embedding vector of length 2048. Typically, we initialise operations to preserve the <em>scale</em> or standard deviation of their inputs. In this case, this means the scale of <code>embedding</code> should be <code>1/sqrt(2048)</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">hiddens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">embedding_init</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2048</span><span class="o">**</span><span class="mf">0.5</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">logits</span> <span class="o">=</span> <span class="n">hiddens</span> <span class="o">@</span> <span class="n">embedding_init</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># hiddens.std() = 1.005</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># logits.std() = 1.02</span>
+</span></code></pre></div>
+<p>Returning to the input embedding lookup, this rule means that <code>hiddens</code> coming out of the embedding lookup also have scale <code>1/sqrt(2048)</code>. This isn't an immediate problem: as we shall see, the next operation that happens is a normalisation that resets the scale. The problem occurs when we add the contribution of the first attention layer to <code>hiddens</code>. At this point, a small incoming scale would mean that <code>hiddens</code> are in-effect replaced by the output of the first attention operation.</p>
+<p>Post-embedding scaling therefore preserves the idea of a residual network, that the contributions of attention and MLP layers should be additive. After the first attention layer:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># With scaling</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">hiddens</span> <span class="o">=</span> <span class="n">embeddings</span> <span class="o">+</span> <span class="n">attention</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Without scaling</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">hiddens</span> <span class="err">≈</span> <span class="n">attention</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+<h2 id="transformer-layer">Transformer layer</h2>
+<p>For each of Gemma's 18 transformer layers, add <code>attention(norm(hiddens))</code> then <code>mlp(norm(hiddens))</code> back into <code>hiddens</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">for</span> <span class="n">p_attn</span><span class="p">,</span> <span class="n">p_mlp</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">hiddens</span> <span class="o">+=</span> <span class="n">attention</span><span class="p">(</span><span class="n">p_attn</span><span class="p">,</span> <span class="n">rms_norm</span><span class="p">(</span><span class="n">p_attn</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span> <span class="n">hiddens</span><span class="p">))</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">hiddens</span> <span class="o">+=</span> <span class="n">mlp</span><span class="p">(</span><span class="n">p_mlp</span><span class="p">,</span> <span class="n">rms_norm</span><span class="p">(</span><span class="n">p_mlp</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span> <span class="n">hiddens</span><span class="p">))</span>
+</span></code></pre></div>
+<p>Here, Gemma uses the concept of <em>residual layers</em>, which build deep (many-layered) functions using the iteration <code>x = x + layer(norm(x))</code> rather than the simpler MLP iteration <code>x = layer(x)</code>.</p>
+<details>
+<summary>Understanding residual layers</summary>
+<p>First, some background: when we talk of <em>representations</em>, these are the 2048-element vectors that pass through Gemma's operations. The idea of a residual layer is that every layer shouldn't create an entirely new type of representation, replacing the old one with <code>x = layer(x)</code>. It should instead just tweak the existing representation with an update <code>x = x + layer(norm(x))</code>.</p>
+<p>If we call <code>x</code> the <em>skip</em> connection, <code>layer(norm(x))</code> the <em>residual</em> connection, and use standard deviation (<span class="arithmatex">\(\sigma_s\)</span>, <span class="arithmatex">\(\sigma_r\)</span> respectively) to give an indication of the scale of the contribution of each, we can look at each layer's residual contribution when the skip and residual are added. Since uncorrelated variances would add, we use <span class="arithmatex">\(\sqrt{\sigma_r^2 / (\sigma_r^2 + \sigma_s^2)}\)</span> as a metric for the <em>update scale</em> of the residual. If 0, the output is all from the skip connection, the layer doesn't contribute much at all; if 1, the output is all from the layer, the skip connection doesn't contribute much.</p>
+<p><img alt="A plot of blue and orange dots for the attention and mlp layer's update scales. Most points hover around the 0.05 mark, with the first layer having a big attention update, and the last layer having a big mlp update." class="img-medium" src="../2024/04-gemma/residual_updates.png" /></p>
+<p>For our short example, this shows that most layers make a very small contribution, tweaking the existing representation rather than replacing it. A few layers make a larger contribution, notably the first attention layer and the last MLP layer.</p>
+</details>
+<h2 id="rmsnorm">RMSNorm</h2>
+<p>Divide out the root-mean-squared "RMS" from each token to reset it to 1. Then multiply each element by a learned scaling parameter.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">rms_norm</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="c1"># x.shape = (5, 2048)</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">z</span> <span class="o">/=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="n">z</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="c1"># p.weight.shape = (2048,)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="k">return</span> <span class="n">z</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="c1"># return.shape = (5, 2048)</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">z</span> <span class="o">=</span> <span class="n">rms_norm</span><span class="p">(</span><span class="n">hiddens</span><span class="p">)</span>
+</span></code></pre></div>
+<p>It's worth considering shapes and data types carefully. If the input shape <code>x.shape</code> is (5, 2048), then the normaliser <code>torch.sqrt(...)</code> has shape (5, 1). This is because we're doing a mean over the last axis, processing each token in the sequence independently. The division <code>z /= torch.sqrt(...)</code> performs <em>broadcasting</em>, dividing each element of a 2048-vector by the same value (different for each token).</p>
+<p>Since some data types have limited range (e.g. 65e3 in float16 versus 3e48 in float32), it may not be safe to do <code>x ** 2</code> directly. If <code>abs(x) &gt; 256</code>, this will overflow and cause an error. Therefore, we cast to <code>float32</code> at the beginning, and back to the original <code>x.dtype</code> at the end of the op. There is also a small epsilon value added to the denominator as <code>sqrt(... + p.eps)</code>, which helps protect against division by a very small number.</p>
+<details>
+<summary>Understanding RMSNorm</summary>
+<p>To understand why Gemma has <code>rms_norm</code> at every layer, consider the update <code>hiddens = hiddens + layer(rms_norm(hiddens))</code>. The layers aren't linear, but they also don't saturate when inputs are large, so if we're just thinking about scale, we could imagine something like the following:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Without norm</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">hiddens</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">18</span><span class="p">):</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">hiddens</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">hiddens</span>  <span class="c1"># layer(x) = 2 * x</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># hiddens = 387420489</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># With norm</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">hiddens</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">18</span><span class="p">):</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="n">hiddens</span> <span class="o">+=</span> <span class="mi">2</span>  <span class="c1"># layer(norm(x)) = 2</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1"># hiddens = 37</span>
+</span></code></pre></div>
+<p>Without a norm, the hidden representation will grow exponentially; with a norm, it grows only linearly. To test this in a more realistic setting, let's look at the scale (standard deviation) of the hidden representation before each attention and MLP layer in Gemma, both in the original model (with RMSNorm) and when all norms are replaced by the identity function (without RMSNorm).</p>
+<p><img alt="A log-y linear-x plot of scale with and without RMSNorm. The with-norm line grows slowly and remains under 10^2 for all 18 layers, while the without-norm line grows quickly, exploding to 10^20 after just 3 layers." class="img-medium" src="../2024/04-gemma/norm_scaling.png" /></p>
+<p>Note that removing the norm of an already-trained model wouldn't be allowed in any case, but this plot illustrates how normalisation helps to restrain the scale of the hidden representation across multiple layers. Exploding scale is undesirable: it can cause saturation of nonlinearities in the model, as well as numerical difficulties.</p>
+</details>
+<h2 id="attention">Attention</h2>
+<p>The first type of residual layer in Gemma is <em>attention</em>. It combines representations across the sequence dimension.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">self_attn</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="c1"># t=target, s=source, n=kv-heads, m=q-heads-per-kv, d=head-dim</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;tnmd, snd -&gt; nmts&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">a</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">tril_</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;nmts, snd -&gt; tnmd&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">attention</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="c1"># x.shape = (5, 2048)</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">q_proj</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">k_proj</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">v_proj</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="c1"># q.shape = (5, 1, 8, 256)</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="c1"># k.shape = (5, 1, 256)</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="c1"># v.shape = (5, 1, 256)</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>    <span class="n">o</span> <span class="o">=</span> <span class="n">self_attn</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    <span class="c1"># o.shape = (5, 1, 8, 256)</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">o_proj</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>    <span class="c1"># return.shape = (5, 2048)</span>
+</span></code></pre></div>
+<p>The first step in attention is a projection (dot product with a parameter matrix) from the 2048-dimension input to 8 separate 256-dimension <em>query heads</em>, one 256-dimension <em>key</em> and one 256-dimension <em>value</em>. This projection is done independently but in parallel for each token using the dot product operator <code>@</code>. Note that PyTorch typically keeps projections in transposed layout, so we need to transpose <code>q_proj</code> etc via <code>q_proj.T</code> before the dot product.</p>
+<p>The 8 query heads are processed independently but in parallel by <code>self_attn</code>.</p>
+<ol>
+<li>(Einsum does a dot product but allows dimensions to be reordered.) Einsum <code>tnmd, snd -&gt; nmts</code> to take the first argument of shape <code>(target, kv-heads, q-heads-per-kv, head-dim)</code> and second of shape <code>(source, kv-heads, head-dim)</code> and run dot product over head-dim (256) to get a result of shape <code>(kv-heads, q-heads-per-kv, target, source)</code>. We can think of this as a <code>(target, source)</code> <em>attention matrix</em> per query head.</li>
+<li>Scale the attention matrix by <code>/sqrt(256)</code>.</li>
+<li>Create a <em>causal mask</em> using <code>torch.full(...)</code>, setting all source positions that are to the right of (i.e. after) target in the <code>(target, source)</code> matrix to <code>-infinity</code>. This prevents future tokens from influencing past ones.</li>
+<li>Use <code>softmax(x)</code> to exponentiate <code>z = exp(x)</code> then normalise <code>z /= sum(z)</code> to get attention weights in the range [0, 1]. This is run independently for each target, normalising to sum to 1 over all sources. The causal-masked positions are now <code>exp(-infinity) == 0</code>.</li>
+<li>Run a final einsum, <code>nmts, snd -&gt; tnmd</code> to take the first argument of shape <code>(kv-heads, q-heads-per-kv, target, source)</code> and second of shape <code>(source, kv-heads, head-dim)</code> and run dot product over source (of size sequence length, i.e. 5), to get a result of shape <code>(target, kv-heads, q-heads-per-kv, head-dim)</code>. This is a weighted sum over the sequence, where the weights come from the <code>(target, source)</code> attention matrix.</li>
+</ol>
+<p>Finally, the outputs of the heads are mixed by flattening them from (5, 1, 8, 256) -&gt; (5, 2048) then following a final output projection, <code>o_proj</code>.</p>
+<details>
+<summary>Understanding Attention</summary>
+<p>Multi-query attention in Gemma can be thought of as 8 independent attention operations, which share some parameters (more on that later). The first step is projection by <code>q_proj</code>, <code>k_proj</code> and <code>v_proj</code>, which are trained model parameter matrices of shape <code>(2048, 256)</code>. This means picking 256 directions to test each 2048-vector in, then creating a 256-vector containing the result of each of these tests. From this, we get 5 <em>query</em> vectors, 5 <em>key</em> vectors and 5 <em>value</em> vectors, all of 256 dimensions.</p>
+<p>A high-level understanding of the next bit has an analogy to databases: there is a database of key-&gt;value mappings, and we want to retrieve them based on a query. Rather than just retrieving one (e.g. the closest match between query and key), however, we're going to get a weighted mixture of everything.</p>
+<p>First, we use dot product to test for similarity between queries and keys (step 1 above). This matches queries against keys, producing a score for each (q, k) pair. We scale the result by <code>1/sqrt(256)</code>, which compensates for the sum inside the dot product over 256 entries.</p>
+<p>The next step, causal masking, ensures that in the remaining steps, each token can only "see" itself and past tokens. This is essential for generative autoregressive models - if a token had to see future tokens before the next one was generated, you'd immediately get into a chicken-and-egg problem.</p>
+<p><strong>Attention weights:</strong> Next, softmax turns these scores into weights, which are in the range [0, 1] and always sum to 1 over all keys corresponding to a single query. The difference between the scores for two tokens going into a softmax becomes the ratio between the weights of those two tokens after the softmax. For example, if you have softmax over two tokens X and Y, with scores 0 and -0.693 respectively, you'd know that Y must have 1/2 the weight of X, so the softmax would output 2/3 for X and 1/3 for Y.</p>
+<p>These weights are quite fun to visualise, so I expect you've seen them before. Here they are for our example, for every head (8 per layer) in every layer (18):</p>
+<p><img alt="A grid of 5 by 5 pixel images, showing lower-left triangles filled with various patterns. Some are dense (all pixels dark), some are sparse, usually with either a diagonal dark stripe or one on the far left." src="../2024/04-gemma/attention.png" style="width: 100%;" /></p>
+<p>Each square represents an attention weight matrix after the softmax. Dark pixels are high weight, and light pixels are low weight. The x-axis is the source position, corresponding to the key. The y-axis is the target position, corresponding to the query. The lower-diagonal pattern shows the causal mask — a source must have zero weight for all targets to the right of it. The leading diagonal is the score for the token's own key. The ordering of layers is not arbitrary, as layers are executed in sequence. Attention head ordering is arbitrary since heads are executed in parallel. We have therefore reordered the heads in the plot above; the "flatter" heads are at the top, and the "spikier" heads are at the bottom.</p>
+<p>Even from such a simple sequence of just 5 tokens, we can see some patterns. Some heads are flat, taking a broad average. Many look at the first token. Some consistently look one token to the left. However, the general point is that these attention weight matrices illustrate the power of attention. The model contains a large number of attention heads, each of which can move information between tokens flexibly, depending on position and/or content.</p>
+<p><strong>Mixing:</strong> These weights are then used to perform a weighted sum of the value vectors that were generated earlier. This is also just a dot product, this time over the sequence axis (5 tokens). The attention weights we looked at are important because they determine how much of the output comes from each source token in this step.</p>
+<p>At this point, there are 8 sequence-mixed outputs of shape <code>(5, 256)</code>, one for each head. The final step is to mix across heads. This involves projecting up with the output projection <code>o_proj</code> so that each head produces a 2048-vector, then adding up the results over all heads. (When the heads are computed in parallel, this is equivalent to reshaping and then projecting, as per the code.)</p>
+<p><strong>Grouped-query attention:</strong> Gemma includes a modification to the above scheme which is called <em>grouped-query attention</em>, where each head is not fully independent, but shares the key and value projection across 8 query heads. In Gemma 2B, this is all the query heads. This is why <code>k_proj</code> and <code>v_proj</code> are of shape <code>(2048, 256)</code> while <code>q_proj</code> is of shape <code>(2048, 8*256)</code>. This turns out to be very useful for the efficiency of token-by-token generation, which has to re-download keys and values at each generation step. But grouped-query attention doesn't change the picture much as we seek to understand attention.</p>
+<p><strong>Dimensions:</strong> There are a few design choices in attention:</p>
+<ul>
+<li>Head dimension (256) - typically set in the range [64, 256]. The idea is to have enough space to express interesting interactions while leaving space for enough query heads given a fixed compute budget.</li>
+<li>Number of query heads (8) - typically set so that the product of number of query heads and head dimension is equal to the hidden dimension (2048). Each head has its own attention weight matrix over the context, so increasing this number gives more flexibility to the model, at the cost of being more expensive to compute.</li>
+<li>Number of query heads per key-value head (8) - a trade-off between the model performance (best with a key-value head per query head) and efficiency at inference time (best with all query heads sharing a single key-value head).</li>
+<li>Value head dimension (256) - in principle, this is independent of the query-key head dimension, but it's usually set to the same value.</li>
+</ul>
+</details>
+<h2 id="rotary-positional-encoding-rope">Rotary positional encoding (RoPE)</h2>
+<p>When we described attention, we omitted one line from the definition, so we could talk about it now. After projecting to get <code>q</code> and <code>k</code>, Gemma replaces them using rotary positional encoding, which allows attention to vary depending on relative position.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">cos</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">sin</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">zx</span><span class="p">,</span> <span class="n">zy</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">movedim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">zx</span> <span class="o">*</span> <span class="n">cos</span> <span class="o">-</span> <span class="n">zy</span> <span class="o">*</span> <span class="n">sin</span><span class="p">,</span> <span class="n">zy</span> <span class="o">*</span> <span class="n">cos</span> <span class="o">+</span> <span class="n">zx</span> <span class="o">*</span> <span class="n">sin</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">embed_rotate</span><span class="p">(</span><span class="n">q</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="c1"># q.shape = (5, 1, 8, 256)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="c1"># k.shape = (5, 1, 256)</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="n">d</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    <span class="n">freq</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">**</span> <span class="o">-</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span><span class="p">)</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="n">angle</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">freq</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>    <span class="n">cos</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">cos</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>    <span class="n">sin</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">sin</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="k">return</span> <span class="p">(</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>        <span class="n">rotate</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">cos</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">sin</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]),</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        <span class="n">rotate</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">cos</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">sin</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]),</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>    <span class="p">)</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="c1"># In attention()</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="n">q</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">embed_rotate</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">rope_theta</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Rotary positional encoding transforms <code>q</code> and <code>k</code>, keeping them the same shape. It does the same thing for every attention head, so we can think of it as mapping from <code>(5, 256) -&gt; (5, 256)</code>. It transforms these in pairs, treating the 256-vector as 128 <span class="arithmatex">\(\times\)</span> 2-vectors.</p>
+<ol>
+<li>Generate an array of 128 different angular frequencies from 1 to <code>1/theta = 1/10000</code>.</li>
+<li>For each frequency and position in the sequence, calculate the phase angle <code>freq * position</code>. This is the angle (in radians) that we will rotate the corresponding 2-vector by.</li>
+<li>Compute <code>cos</code> and <code>sin</code> of that angle for the rotation.</li>
+<li>Rotate each head within <code>q</code> and <code>k</code> independently. Use the first 128 components of each head as x-coordinates, and the second 128 components as y-coordinates to give the 2-vectors to be rotated. Then use trigonometry <code>x' = x cos a - y sin a</code>, <code>y' = y cos a + x sin a</code> to calculate the rotation.</li>
+<li>Concatenate <code>x'</code> and <code>y'</code> back into their original position in <code>q</code> or <code>k</code>.</li>
+</ol>
+<p>Inserting this transformation between the calculation of <code>q,k</code> and the <code>self_attn</code> function that uses them to compute attention is sufficient to give Gemma the ability to deliberately attend to tokens based on position, not just content.</p>
+<details>
+<summary>Understanding rotary positional encoding</summary>
+<p>Let's start with an example. Imagine we have the same <code>q</code> and <code>k</code> vectors in each position, <code>(x, y) = (1, 0)</code>. Then, after rotary encoding with two different frequencies (the highest with frequency 1, and component 20/128 with frequency 0.24), we get this:</p>
+<p><img alt="5 vectors, labelled k_0 to k_4, the first pointing right along the x-axis, the others rotated at regular intervals about (0, 0)." class="img-medium" src="../2024/04-gemma/rotary_example.png" /></p>
+<p>The important property to note here is the <em>rotational invariance</em> of the dot product. Since the pre-rotation vectors were the same, the dot product <span class="arithmatex">\(k_0 \cdot k_1\)</span> is the same as <span class="arithmatex">\(k_1 \cdot k_2\)</span>, and <span class="arithmatex">\(k_2 \cdot k_3\)</span>, etc. (Similarly, <span class="arithmatex">\(k_0 \cdot k_2 = k_1 \cdot k_3\)</span>, etc.) So, the dot product between RoPE-encoded vectors doesn't depend on the absolute position of the tokens <code>[0, 1, 2, 3, 4]</code>, but only on the relative offset between them and the original vector before it was rotated.</p>
+<p>Since the dot product (einsum) between the 256-vectors <code>q</code> and <code>k</code> is identical to the sum over all 128 <span class="arithmatex">\(\times\)</span> 2-vectors, the rotational invariance property of each 2-vector is carried over into the attention matrix, which means that the attention weights can only depend on the original projected <code>q</code>, <code>k</code> and the relative offset in their positions.</p>
+<p><strong>Different frequencies:</strong> Note that rotary encoding doesn't just use a single frequency for all of the 128 <span class="arithmatex">\(\times\)</span> 2-vectors. This is critical. With dot product, it's impossible to tell whether a vector has been rotated by <code>a</code> or <code>2*pi - a</code> or <code>2*pi + a</code> or <code>4*pi - a</code>, etc. But even though a single component might be ambiguous, if enough different frequencies are used every position can be distinguished.</p>
+<p>We may also wish to allow some heads where position matters greatly, requiring high-frequency rotations, and some other heads where position doesn't matter at all and the head just looks for certain tokens, wherever they appear in the sequence, requiring low-frequency rotations.</p>
+<p>It's intuitive to look at the <em>wavelength</em> of rotations, calculated as <code>2*pi/freq</code>. This is equivalent to the position offset before the rotation starts repeating itself. Here are the wavelengths of Gemma's components:</p>
+<p><img alt="A straight line on a linear x-axis of component, ranging from 0 to 128, and a log y-axis of wavelength, ranging from 4 to 65536. And a horizontal line at 8192 labelled &quot;max sequence length&quot;." class="img-small" src="../2024/04-gemma/rotary_wavelength.png" /></p>
+<p>We see from this that Gemma's highest frequency component has a wavelength of about 6, and the lowest has about 60000. This allows the shortest wavelengths to distinguish between individual tokens, while the longest wavelengths can ignore position entirely within the maximum sequence length of 8192.</p>
+<p>We can look at how long each q-vector is for every query head and rotary component, over our example text:</p>
+<p><img alt="Two heatmaps, with the x scale marked &quot;wavelength&quot; having ticks at 6, 63, 628, 6283, and y scale marked &quot;head&quot;, ticks 0 to 7. One heatmap shows layer 0, with quite a lot of high values at short wavelengths, and a stripe around 8k. The other shows layer 15, with quite a lot of high values at long wavelengths, and a similar stripe." class="img-medium" src="../2024/04-gemma/rotary_heads.png" /></p>
+<p>Since this is averaged over just 5 tokens of sequence length, it is quite noisy — don't read too much into this, but we can see that heads vary in terms of which query components they use. Some position-agnostic heads use longer wavelength components, while position-sensitive heads use shorter wavelength components. The strong stripe near to the maximum sequence length (8192) is interesting. I'm afraid I can't offer much as to why that sits there.</p>
+</details>
+<h2 id="multi-layer-perceptron-mlp-geglu">Multi-layer perceptron (MLP, GeGLU)</h2>
+<p>The second type of residual layer in Gemma is the <em>multi-layer perceptron</em> (MLP), specifically the Gaussian error gated linear unit (GeGLU). This is a bit simpler than attention:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mlp</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="c1"># x.shape = (5, 2048)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="n">gate</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">gate_proj</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="n">up</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">up_proj</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="n">gate</span><span class="p">)</span> <span class="o">*</span> <span class="n">up</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="c1"># {gate, up, z}.shape = (5, 16384)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="k">return</span> <span class="n">z</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">down_proj</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="c1"># return.shape = (5, 2048)</span>
+</span></code></pre></div>
+<p>The MLP takes input representations for each token as a 2048-vector and then applies the same transformation to each of the tokens independently.</p>
+<p>First, make two separate projections (dot products with trained parameter matrices) to get two 16384-vectors. One of these vectors, called the <em>gate</em> is passed through a nonlinear function called <em>gelu</em> that applies to each element. We'll treat the function as a black box, but to a first approximation, <code>gelu(x)</code> is quite close to <code>max(0, x)</code>. The gate and other vector are multiplied element by element, then another trained down-projection produces the result, a 2048-vector.</p>
+<details>
+<summary>Understanding the MLP</summary>
+<p>The MLP is a function from a 2048-vector representing a single token to a 2048-vector. The code shown above runs in parallel over the sequence axis, but unlike in attention, each token is processed independently. In this section, we'll build up the complex behaviour of Gemma's GeGLU MLP with a tiny example based on 2-vectors (and a 3-vector inside the MLP).</p>
+<p><em>Note that the acronym MLP stands for multi-layer perceptron, which is slightly old-fashioned language to talk about a chain of dot product (projections) and nonlinearities.</em></p>
+<p><strong>A. Linear</strong></p>
+<p>We start with a simple linear projection (dot product) from input to output, specified by a random <span class="arithmatex">\(2 \times 2\)</span> matrix. Each output component is a weighted sum of the inputs. The code is simply:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">proj</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># x.shape = y.shape = (2,)</span>
+</span></code></pre></div>
+<p>If we look at the first component of the output as a function of the inputs, we see:</p>
+<p><img alt="3D surface plot showing a flat slope." class="img-small" src="../2024/04-gemma/mlp_linear.png" /></p>
+<p>This is what a linear projection always looks like — a flat slope. It's certainly possible for this function to capture some interesting properties of the data, especially when it works on 2048-vectors rather than 2-vectors. However, it will become much more powerful with a few additions.</p>
+<p><strong>B. ReLU</strong></p>
+<p>The core idea of the MLP is that we wish to introduce <em>depth</em> into the model, a sequence of layers that transform the input in steps. However, the dot product has the property that a sequence of dot products can be reduced to a single dot product, i.e. there exists a <code>proj_b</code> such that <code>(x @ proj_1) @ proj_2 == x @ proj_b</code>.</p>
+<p>Sequences of dot products need to be broken up if they're going to be any more powerful than the simple linear projection we've already seen. The simplest way to do this is by transforming each element of the vector individually by an elementwise nonlinear function. One such function is the <em>rectified linear unit</em> or ReLU, <code>relu(a) = max(0, a)</code>:</p>
+<p><img alt="Plot of z = relu(a), with a flat portion below zero, then a linear portion above zero." class="img-small" src="../2024/04-gemma/relu.png" /></p>
+<p>Our ReLU MLP now runs:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">z</span> <span class="o">=</span> <span class="n">relu</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">gate_proj</span><span class="p">)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">z</span> <span class="o">@</span> <span class="n">down_proj</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1"># x.shape = y.shape = (2,)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># z.shape = (3,)</span>
+</span></code></pre></div>
+<p>Since ReLU has two distinct regimes with <code>z == 0</code> and <code>z &gt; 0</code>, we are interested in which half we're in. If we take each component of <code>z</code> and give <code>z &gt; 0</code> a different colour (red, green, blue), we can get a map that shows which combination of <code>z[i] &gt; 0</code> for each input point <code>x</code>:</p>
+<p><img alt="A pinwheel map of colours in different triangular segments: green then gray then blue then magenta then off-white then yellow." class="img-small" src="../2024/04-gemma/mlp_zmap.png" /></p>
+<p>In the top right off-white segment, we have all three components of <code>z</code> "active" (not saturating at zero), so in this region, we have <code>z = x @ gate_proj</code> (the ReLU disappears). In the yellow region on the left, we know the blue component <code>z[2]</code> is saturating, so in this region, we have <code>z = (x @ gate_proj) * [1, 1, 0]</code>, effectively removing that component. Within each coloured region, <code>z</code> is a linear function of <code>x</code>.</p>
+<p>Once we run the down-projection, each component of <code>y</code> is a dot product between <code>z</code> and a vector of trained weights, so the result remains piecewise linear, transitioning at the boundaries we've just seen:</p>
+<p><img alt="3D surface plot showing a piecewise linear function of two input components. Each piece is coloured as per the pinwheel map above." class="img-small" src="../2024/04-gemma/mlp_relu.png" /></p>
+<p><strong>C. ReGLU</strong></p>
+<p>These piecewise linear functions are surprisingly powerful already — the pretraining procedure can manipulate the transitions as well as the slopes of each region. But we might propose more power by making each region quadratic rather than linear. This idea gives us the <em>gated linear unit</em> (GLU):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">z</span> <span class="o">=</span> <span class="n">relu</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">gate_proj</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="n">up_proj</span><span class="p">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">z</span> <span class="o">@</span> <span class="n">down_proj</span>
+</span></code></pre></div>
+<p>With the same <code>gate_proj</code>, the regions in this version are the same as before; the only difference is that within each region, we have a quadratic function of <code>x</code>.</p>
+<p><img alt="3D surface plot showing a piecewise quadratic function of two input components." class="img-small" src="../2024/04-gemma/mlp_reglu.png" /></p>
+<p>Notice we can still have sharp edges at the region boundaries, but within each region, the function is now curved.</p>
+<p><strong>D. GeGLU</strong></p>
+<p>The final change is to substitute the Gaussian error linear unit (GELU) for the ReLU. The definition isn't too important for our discussion, just that it looks like a smoother version of ReLU:</p>
+<p><img alt="A plot of GELU(a) and ReLU(a). From a=-2 to a=2, GELU starts near zero, then drops before reaching z=0 when a=0 before climbing to approach z=a." class="img-small" src="../2024/04-gemma/gelu.png" /></p>
+<p>The idea of GELU is that it will allow us to build smoother functions than ReLU. I think this is done primarily for the sake of optimisation during training, but it might be that this gives better shapes of function for inference too.</p>
+<p>Plugging this into the gated linear unit, we have the full form of a GeGLU MLP as per the original code. It looks quite similar to the ReGLU, but you should be able to see that the transitions between regions are considerably smoother.</p>
+<p><img alt="3D surface plot showing a smooth function of two input components." class="img-small" src="../2024/04-gemma/mlp_geglu.png" /></p>
+<p>Our approach of considering distinct regions is broken down by the GELU, which doesn't saturate at exactly zero, so does not create strict regions where components of <code>z</code> can be discarded. However, since the GELU is quite similar to ReLU, it's still somewhat reasonable to think in terms of piecewise quadratic regions, at least at a coarse enough scale.</p>
+<p><strong>Summary</strong></p>
+<p>A final figure might help review the journey we've been on, from Linear -&gt; ReLU -&gt; ReGLU -&gt; GeGLU. To make things legible, we're now looking at a slice through the surfaces we've seen so far, setting <code>x[1]</code> to a constant value, and just looking at how <code>y[0]</code> depends on <code>x[0]</code>.</p>
+<p><img alt="Four line plots, shown as x[0] varies from -2 to 2. The first, linear is linear. The second, ReLU, is piecewise linear. The third, ReGLU, is piecewise quadratic with gradient discontinuities. The fourth, GeGLU, is smooth but still vaguely quadratic." class="img-medium" src="../2024/04-gemma/mlp_slice.png" /></p>
+<p>So Gemma's MLP, the GeGLU, can be thought of as a piecewise-quadratic function with smooth boundaries between the pieces. Where our example had 6 regions across a 2-vector input, Gemma's MLPs may have a vast number of regions (perhaps <span class="arithmatex">\(10^{2000}\)</span>) across their 2048-vector input.</p>
+<p>The purpose of the MLP in Gemma is to use this function to independently transform each token, ready to form another attention query or ready to match against output tokens. Although MLPs cannot fuse information from across the context by themselves (which is the fundamental task of a language model), our experience shows that including the MLP makes attention much more efficient at doing exactly this.</p>
+</details>
+<h2 id="final-norm">Final norm</h2>
+<p>Before we predict the output tokens, we run RMSNorm one final time on the token representations:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">hiddens</span> <span class="o">=</span> <span class="n">rms_norm</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">final_norm</span><span class="p">,</span> <span class="n">hiddens</span><span class="p">)</span>
+</span></code></pre></div>
+<details>
+<summary>Understanding the final norm</summary>
+<p>We include a final norm because, even though the RMSNorm on the residual branches has stopped the hidden scale from exploding exponentially, it still may have grown considerably. High RMS values going into the output projection would cause very spiky (over-confident) softmax outputs, so a final norm allows the model to use large scale within the body of the transformer without propagating them to become over-confident outputs.</p>
+<p>For our example:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Token:</th>
+<th style="text-align: center;">&lt;bos&gt;</th>
+<th style="text-align: center;">I</th>
+<th style="text-align: center;">▁want</th>
+<th style="text-align: center;">▁to</th>
+<th style="text-align: center;">▁move</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">Before RMSNorm, RMS:</td>
+<td style="text-align: center;">88.5</td>
+<td style="text-align: center;">16.3</td>
+<td style="text-align: center;">14.4</td>
+<td style="text-align: center;">12.9</td>
+<td style="text-align: center;">12.6</td>
+</tr>
+<tr>
+<td style="text-align: right;">After RMSNorm, RMS:</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: center;">2.2</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="output-projection">Output projection</h2>
+<p>Finally, project the representation 2048-vector up to a 256000-vector, independently but in parallel for each token in the sequence, producing a score for every possible next-token prediction.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">logits</span> <span class="o">=</span> <span class="n">hiddens</span> <span class="o">@</span> <span class="n">p</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># hiddens.shape = (5, 2048)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="c1"># logits.shape = (5, 256000)</span>
+</span></code></pre></div>
+<p>This operation shares the same parameters <code>embedding</code> used in the embedding lookup step earlier. This is just as well, as it consumes a chunky 0.5B parameters of the 2B parameter model.</p>
+<details>
+<summary>Understanding the output projection</summary>
+<p>There's not much to add beyond our earlier discussion <em>"understanding embedding lookup"</em>. In the same way as embedding lookup, the 2048-vector space gives enough freedom to predict 256000 tokens, since it can exploit commonalities between words, placing similar words together in embedding space.</p>
+<p>The output of this hidden-embedding product is a score for each token in the vocabulary. We can turn this score into a probability using <code>probability = softmax(score)</code>, where <code>y = softmax(x)</code> means <code>z = exp(x)</code>, <code>y = z / z.sum()</code>. For our example, this gives the following top 10 results after each token:</p>
+<p><img alt="A plot of prediction probability after each term in the sequence &quot;&lt;bos&gt; I want to move&quot;. The predictions have different tokens (e.g. &quot;I&quot; followed by &quot;have&quot;) and probabilities." class="img-large" src="../2024/04-gemma/predictions.png" /></p>
+<p>To follow the predictions in context, read the titles from left to right to a given column, then scan down the plot for a list of possible next words. We see that in some cases the model is very confident, for example after "I want", Gemma is quite confident the next token is "to". Sometimes the output is flatter: after "I want to", Gemma thinks there's a wide range of likely predictions.</p>
+<p>At this point, it's up to the application to do what it wants with these predictions, so our journey is at an end. Gemma thinks that "I want to move" predicts " my".</p>
+</details>
+<h2 id="thats-it">That's it!</h2>
+<p>Congratulations, you've done it — you've made it to the end of Gemma. I hope it has been a fun ride (I have certainly enjoyed it!) There's not much of a conclusion, but if forced, I'd offer:</p>
+<ol>
+<li>Much of the transformer's operation comes down to the humble dot product.</li>
+<li>As algorithms go, the transformer isn't all that complex.</li>
+</ol>
+<p>That said, this was just a taster; here are a few out-of-scope topics I think are very interesting, in no particular order:</p>
+<ul>
+<li>Training/fine-tuning.</li>
+<li>Efficient implementation (especially parallel and distributed).</li>
+<li>Low-precision computation (training and inference).</li>
+<li>Integration into a full inference system, with batching, masking &amp; search.</li>
+<li>Evaluation methods.</li>
+<li>Sparse computation.</li>
+<li>Alternative architectures (e.g. RNN, S4).</li>
+<li>Application to other domains.</li>
+<li>Practical applications &amp; alignment.</li>
+</ul>
+<p>There's plenty to learn, then. I hope that we can make some progress together!</p>
+<hr>
+
+<p><i>This article was originally published by Graphcore researcher Douglas Orr on his personal blog, <a href="https://douglasorr.github.io/2024-04-transformers/article.html">Doug's Diversions</a> in April 2024. It is reproduced here with his permission.</i></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

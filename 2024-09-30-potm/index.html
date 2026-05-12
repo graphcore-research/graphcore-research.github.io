@@ -1,0 +1,1158 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-09-30-potm/">
+      
+      
+        <link rel="prev" href="../2024-09-08-llama-cpp-sparq/">
+      
+      
+        <link rel="next" href="../2024-10-09-hiring/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>September Papers: Proper Conditioning - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="September Papers: Proper Conditioning - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-09-30-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-09-30-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="September Papers: Proper Conditioning - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-09-30-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#training-language-models-to-self-correct-via-reinforcement-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        September Papers: Proper Conditioning
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#training-language-models-to-self-correct-via-reinforcement-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training Language Models to Self-Correct via Reinforcement Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling-fp8-training-to-trillion-token-llms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling FP8 training to trillion-token LLMs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generative-hierarchical-materials-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generative Hierarchical Materials Search
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soap-improving-and-stabilizing-shampoo-using-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SOAP: Improving and Stabilizing Shampoo using Adam
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Charlie Blake">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/charlieb/">Charlie Blake</a>
+                        
+                      </strong>
+                      <br>
+                      Research Engineer
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Paul Balança">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/paulb/">Paul Balança</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/danielj.jpg" alt="Daniel Justus">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/danielj/">Daniel Justus</a>
+                        
+                      </strong>
+                      <br>
+                      Research Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-09-30 00:00:00+00:00" class="md-ellipsis">September 30, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              12 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:gnns" class="md-tag">GNNs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:materials" class="md-tag">materials</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:optimisation" class="md-tag">optimisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantisation" class="md-tag">quantisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:self-correction" class="md-tag">self-correction</a>
+      
+    
+  </nav>
+
+
+
+  <h1>September Papers: Proper Conditioning</h1>
+
+<p>We're pleased to share four papers from different domains: LLM self-correction, FP8 training, generative crystals and optimisation. They are united, somewhat tenuously, by the importance of <em>proper conditioning</em>:</p>
+<ol>
+<li>DeepMind researchers explain how <em>conditioning on the wrong distribution</em> during supervised fine-tuning for self-correction is harmful but can be overcome using RL.</li>
+<li>A novel Smooth-SwiGLU activation <em>"conditions" the numerics</em> by inserting a scaling factor in just the right place, preventing late-training instability in FP8.</li>
+<li>The GenMS architecture that generates crystal structures for materials <em>conditions on high-level textual and low-level structural information</em> for high-quality generation.</li>
+<li>SOAP is an evolution of Shampoo, with conditioners in the name and <em>preconditioners forming the eigenbasis</em> for optimisation.</li>
+</ol>
+<p>You can be the judge of how tenuous the connection is, but we'd encourage you to check out the summaries first or despite this.</p>
+<p><em>I hope you enjoy these as much as we did. Tell us we're wrong; tell us we're right <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="training-language-models-to-self-correct-via-reinforcement-learning">Training Language Models to Self-Correct via Reinforcement Learning</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Aviral Kumar, Vincent Zhuang, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google DeepMind
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2409.12917" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Users of LLMs will be aware that sometimes they can recognise and correct their own mistakes. This prompts the question: if the model has the capability to identify some of its own failures, can we leverage this to improve the model?</p>
+<p>This is easier said than done. This paper shows that supervised fine-tuning (SFT) --- the dominant post-training approach for LLMs --- has some inevitable failure modes when trying to teach a model to self-correct. What's needed, and what they demonstrate, is that an RL-based approach can prevail.</p>
+<p>This is significant: <em>true RL</em> has only just broken into the LLM training space, in the form of <a href="https://openai.com/index/learning-to-reason-with-llms/">OpenAI's o1 model</a>, but few details have been released. This work presents a significant step towards realising the benefits of RL in helping language models to reason better.</p>
+<p><img alt="An overview of the method, named SCoRe. Supervised approaches can lead to distributional mismatch or never-correcting behaviours. SCoRe addresses this via a 2-stage RL process, where stage 1 encourages the model to produce effective corrections and stage 2 focuses on both initial response and correction." src="../potm/2024/09/llm-correction-via-rl/figure-6.png" /></p>
+<figcaption>An overview of the method, named SCoRe. Supervised approaches can lead to distributional mismatch or never-correcting behaviours. SCoRe addresses this via a 2-stage RL process, where stage 1 encourages the model to produce effective corrections and stage 2 focuses on both initial response and correction.</figcaption>
+
+<h3 id="background">Background</h3>
+<p>The most straightforward approach to solving the self-correction problem is simply:</p>
+<ol>
+<li>Take a dataset of question-answer pairs for some reasoning task</li>
+<li>For each, prompt the model to generate a solution</li>
+<li>Evaluate each and remove those solutions which are <em>correct</em></li>
+<li>Then prompt the model to generate a correction to the incorrect solution</li>
+<li>Evaluate the final solutions, and now filter out the <em>incorrect</em> ones</li>
+<li>Take this dataset of 2-stage "corrected" answers and train the model on it</li>
+</ol>
+<p>This is the basis of the <a href="https://arxiv.org/abs/2203.14465">STaR method</a>, which the authors use as a baseline, alongside PairSFT, which works similarly but uses arbitrary pairs of incorrect-correct responses to a given prompt as training data.</p>
+<p>The authors test these methods and see the following:</p>
+<p><img alt="An evaluation of the STaR and PairSFT baselines shows that neither is able to offer significant improvements." src="../potm/2024/09/llm-correction-via-rl/table-1.png" /></p>
+<p>STaR slightly improves the initial attempt, but is poor at correcting --- so much so that it tends to make answers worse, not better! Pair-SFT offers a modest accuracy improvement, though this is largely down to a drop in the value of the final column, which indicates the fraction of correct responses the model ruins via wrong "corrections". So in summary: the only improvement we really see is the model learning to be much more cautious in correcting itself.</p>
+<p>They trace these difficulties down to two problems:</p>
+<ol>
+<li>The model tends towards a <strong>minimal edit</strong> policy, where it tries to change as little as possible to avoid degrading the original response.</li>
+<li>The model is trained on data from its original distribution over responses, yet training causes this distribution to change, leading to <strong>distribution mismatch</strong>.</li>
+</ol>
+<h3 id="their-method">Their method</h3>
+<p>The two-stage RL-based method they design aims to target the problems outlined in turn.</p>
+<p><strong>Stage 1:</strong> The first stage uses RL to maximise the following objective:</p>
+<div>
+$$
+\mathcal{E}\left[ \hat{r}(\mathbf{y}_2, \mathbf{y}^*) - \alpha D_{KL} \left( \pi_{\theta}(\cdot \| \mathbf{x}_1) \| \pi_{\text{ref}}(\cdot | \mathbf{x}_1) \right) \right],
+$$
+</div>
+
+<p>Here <span class="arithmatex">\(\hat{r} (\mathbf{y_2}, \mathbf{y^*})\)</span> is some "correctness" function that acts as a reward, which crucially is based on <span class="arithmatex">\(\mathbf{y_2}\)</span>, the model's <em>second</em> attempt at the problem. The KL term acts on the <em>first</em> attempt, encouraging the model to keep its first guess the same as the original ("reference") model.</p>
+<p>We can see from this that the aim is to encourage the model to learn strong correction behaviour, by fixing the first attempt and optimizing just the second (approximately). This addresses the minimal edit problem.</p>
+<p><strong>Stage 2:</strong> Having encouraged strong correction in stage 1, the full problem is addressed in stage 2, which maximises:</p>
+<div>
+$$
+\mathcal{E}\left[ \sum_{i=1}^{2} \hat{r}(\mathbf{y}_i, \mathbf{y}^*) - \beta D_{KL} \left( \pi_{\theta}(\cdot | \mathbf{x}_i) \| \pi_{\text{ref}}(\cdot | \mathbf{x}_i) \right) \right]
+$$
+</div>
+
+<p>Here the RL objective is over both attempts, with a weaker KL penalty over both acting as a mild regulariser. A reward-shaping step is also used here to up-weight examples where incorrect first attempts are successfully corrected.</p>
+<p>The key difference between this and SFT is that the data used to update the model is always generated by the current model. This avoids the distribution mismatch problem.</p>
+<h3 id="results">Results</h3>
+<p>In short, it works. Results are good on maths problems, and even better on coding tasks:</p>
+<p><img alt="An evaluation of the base model, Self-refine and PairSFT versus SCoRe on the HumanEval coding benchmark. SCoRe is much better at correcting itself than other methods." src="../potm/2024/09/llm-correction-via-rl/table-4.png" /></p>
+<p>The first-attempt accuracy is slightly degraded, but the second attempt is substantially better than any other attempt by other methods. The main reason for this is shown in the second-to-last column: a large increase in incorrect answers becoming correct, which is the key objective.</p>
+<p>The paper shows several other evaluations and ablations, making a strong case for the method.</p>
+<h3 id="takeaways">Takeaways</h3>
+<p>This paper makes a compelling case for why supervised fine-tuning is limited as a post-training procedure, and for some problems (such as self-correction), some kind of on-policy RL is required. Carefully designed objectives are required to make this work, but it appears to significantly boost a model's ability to reason at inference time.</p>
+<p>This is just the start. The authors consider a fairly simple problem setting: a single correction attempt on a zero-shot answer, with no supervision as to the source of error. One could imagine a similar approach with many correction attempts, possibly on chain-of-thought responses, and with more granular feedback. This promises to be a significant direction of future LLM research, with significant computational and algorithmic implications.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2409.12917" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="scaling-fp8-training-to-trillion-token-llms">Scaling FP8 training to trillion-token LLMs</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Maxim Fishman, Brian Chmiel, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Habana Labs, Technion
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2409.12517" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Building upon recent literature on low-precision FP8 training, the authors investigate the FP8 training
+stability of trillion-token LLMs (a ~20-fold increase over previous published work). Uncovering a new form of
+critical instability, they present an improved <em>Smooth-SwiGLU</em> activation function which prevents activation
+spikes (outliers) from causing training divergence in LLMs.</p>
+<p><img alt="Training instability in FP8 due to SwiGLU." class="img-medium" src="../potm/2024/09/fp8-smooth-swiglu/fp8-training-instable.png" /></p>
+<figcaption>Training instability in FP8 due to the SwiGLU activation function.</figcaption>
+
+<h3 id="background_1">Background</h3>
+<p>Machine learning researchers, especially in AI hardware companies, have been investigating for the last couple of years which
+8-bit floating formats are suitable for neural network training and inference. The literature on the subject converges towards
+the definition of two formats: <strong>E4M3</strong> and <strong>E5M2</strong>. The former is used to represent weights and activations, while the latter
+is used for gradients, which require a higher dynamic range.</p>
+<p>Due to the much smaller dynamic range compared to BF16 (which is commonly used in LLM training), FP8 LLM training requires ad-hoc
+per tensor scaling using data statistics (usually the absolute-max) in order to keep training stable.</p>
+<p>Most of the FP8 literature has focused on small to mid-scale experiments (at most 100B tokens training), and presented in this work,
+late-stage LLMs training also presents numerical stability challenges, with large outliers appearing in the transformer feed-forward layer.</p>
+<h3 id="their-method_1">Their method</h3>
+<p>As presented in the figure above, instabilities appear in late FP8 training of large LLMs. In this work, the authors narrow down the issue
+to the quadratic form of the <em>SwiGLU</em> activation function when combined with weight alignment. Experimental training data shows that
+large outliers appear more often during late training due to the correlation between <code>w1</code> and <code>w2</code> SwiGLU weights (which are uncorrelated initially).</p>
+<p><img alt="SwiGLU weights correlation and outliers." class="img-large" src="../potm/2024/09/fp8-smooth-swiglu/fp8-swiglu-hist.png" /></p>
+<figcaption>SwiGLU weights correlation and outliers.</figcaption>
+
+<p>These outliers will lead to underflow or overflow during FP8 quantization when combined with delayed scaling, as the latter technique relies on
+the previous batch statistics for optimal hardware usage. In order to circumvent this issue, the authors introduce a new <em>smooth SwiGLU</em> activation
+function which incorporates channel scaling correction prior to FP8 casting, i.e.:</p>
+<p><img alt="Smooth-SwiGLU channel scaling." class="img-large" src="../potm/2024/09/fp8-smooth-swiglu/fp8-smooth-swiglu.png" /></p>
+<p>As presented by the authors, channel max-scaling is well suited to hardware accelerator as each chunk of data can be treated in parallel, and the resulting
+rescaling can be fused into the FP8 quantization of input activations <span class="arithmatex">\(x\)</span> and weights <span class="arithmatex">\(w_3\)</span> (third MLP layer):</p>
+<p><img alt="Smooth-SwiGLU definition." src="../potm/2024/09/fp8-smooth-swiglu/fp8-smooth-swiglu2.png" /></p>
+<figcaption>Smooth-SwiGLU definition.</figcaption>
+
+<p>We note that the introduction of the <em>smooth-SwiGLU</em> activation preserves the overall FFN definition (from a mathematical point of view): additional channel scaling factors are compensated later in the network in the third MLP layer. We at Graphcore Research have proposed a similar approach in our recent <a href="https://github.com/graphcore-research/jax-scalify/">Scalify</a> work: incorporating additional scaling in neural networks to improve numerical stability while keeping the same model definition.</p>
+<h3 id="results_1">Results</h3>
+<p>Training experiments on a 7B Llama 2 model show the improved stability of FP8 LLM training when using the smooth-SwiGLU activation: training loss as well as zero-shot downstream tasks match the BF16 baseline. The use of smooth-SwiGLU only leads to a small drop in FP8 training acceleration, from 37% to 34%, due to the cost of channel rescaling.</p>
+<p><img alt="FP8 LLM training with Smooth-SwiGLU." class="img-medium" src="../potm/2024/09/fp8-smooth-swiglu/fp8-smooth-swiglu-training.png" /></p>
+<figcaption>FP8 LLM training with Smooth-SwiGLU.</figcaption>
+
+<p>The authors also demonstrate that the FP8 E5M2 format can be used for storing the Adam optimizer second moment (as presented in previous works, the first moment can be represented using E4M3).</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2409.12517" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="generative-hierarchical-materials-search">Generative Hierarchical Materials Search</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Sherry Yang, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google DeepMind
+</div>
+<div class="potm-meta">
+<a href="https://www.arxiv.org/abs/2409.06762" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>In recent years, machine learning based methods have increasingly been applied to assist the discovery of novel or improved materials with certain desired properties. In this paper, the authors present GenMS, an end-to-end generative model for crystal structures from language instructions. To that end, GenMS combines an LLM to process the user input, a diffusion model to generate molecular structures, and a GNN to predict the structures' properties and select the best candidates.</p>
+<p><img alt="End-to-end pipeline for the generation of crystal structures from language instructions." class="img-large" src="../potm/2024/09/genms/GenMS-pipeline.png" /></p>
+<h3 id="their-method_2">Their method</h3>
+<p>The authors argue that data linking the properties of materials to their crystal structure exists at two different abstraction levels: high-level information is available as text, while lower-level structural information such as atom positions exists in crystal databases. To reflect this, the generative model is split into two components with the chemical formulae of candidate materials serving as intermediate representation:</p>
+<ol>
+<li>An LLM trained on materials science knowledge from sources such as textbooks is used to sample chemical formulae that satisfy the user's directions. Retrieval augmentation is used to gain additional information and the formulae of crystals from existing databases are provided in the context to avoid generating known crystals.</li>
+<li>A diffusion model trained on crystal structure databases then generates crystal structures from these formulae. To improve the efficiency of the diffusion model, a simple representation using the 3D position and atom number of each atom in the crystal is adopted instead of e.g. a graph.</li>
+</ol>
+<p><img alt="Diffusion model for crystal structures." class="img-large" src="../potm/2024/09/genms/GenMS-diffusion.png" /></p>
+<p>As a final step, a pretrained GNN is used to predict the formation energy and potentially other properties of the generated crystal structures and rank them based on this result.</p>
+<p>During inference, a tree search is performed to identify low-energy structures that satisfy the natural language instructions. Here, the number of generated intermediate chemical formulae and crystal structures are hyperparameters to trade off compute cost for result quality.</p>
+<h3 id="results_2">Results</h3>
+<p>The main baseline presented in the study is an LLM that is prompted to directly, i.e. without the chemical formulae as an intermediate representation, generate crystal structures in the form of crystal information files. GenMS significantly improves on this baseline in all investigated quality criteria.
+Furthermore, the authors demonstrate that the model follows simple prompts such as requesting a metal or a material that is not present in a given list.</p>
+<p><img alt="GenMS results compared to a prompted LLM." class="img-large" src="../potm/2024/09/genms/GenMS-results.png" /></p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>The possibility of sampling materials based on natural language instructions in an end-to-end fashion is a promising direction for improving materials generation and making it more accessible. However, the authors acknowledge a few shortcomings that require further work. In particular, more specific user input (e.g. "generate a semiconductor"), the generation of more complex crystal structures and the inclusion of further criteria such as synthesizability of the generated material remain challenging.</p>
+<div class="potm-footer-link">
+See <a href="https://www.arxiv.org/abs/2409.06762" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="soap-improving-and-stabilizing-shampoo-using-adam">SOAP: Improving and Stabilizing Shampoo using Adam</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Nikhil Vyas, Depen Morwani, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Harvard University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2409.11321" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>It turns out that the Shampoo optimiser (explained below), with some minor tweaks, is equivalent to running Adafactor in Shampoo's eigenspace. Since Adafactor is a rank=1 variant of Adam, the proposed method "SOAP" runs Adam in Shampoo's eigenspace instead.</p>
+<p><img alt="SOAP performance versus Adam and Shampoo, showing good step-efficiency (due to Adam) and time-efficiency (due to periodic preconditioning). Less frequent preconditioning hurts Shampoo more than SOAP." class="img-large" src="../potm/2024/09/soap/headline.png" /></p>
+<figcaption>Figure 1. SOAP performance versus Adam and Shampoo, showing good step-efficiency (due to Adam) and time-efficiency (due to periodic preconditioning). Less frequent preconditioning hurts Shampoo more than SOAP.</figcaption>
+
+<h3 id="background_2">Background</h3>
+<p><a href="https://arxiv.org/abs/1802.09568">Shampoo</a> for matrices looks like this:</p>
+<div>$$\begin{aligned}
+L_t &= L_{t-1} + G_t G_t^{\top} \\
+R_t &= R_{t-1} + G_t^{\top} G_t \\
+W_t &= W_{t-1} - \eta \cdot L_t^{-1/4} G_t R_t^{-1/4}
+\end{aligned}$$</div>
+
+<p>Where <span class="arithmatex">\(W \in \Re^{m \times n}\)</span> is a weight matrix, <span class="arithmatex">\(L\in \Re^{m \times m}\)</span>, <span class="arithmatex">\(R\in \Re^{n \times n}\)</span> are "preconditioners", behaving a bit like optimiser state and <span class="arithmatex">\(G\)</span> is the minibatch gradient of a loss with respect to <span class="arithmatex">\(W\)</span>.</p>
+<p>A slightly different variant is considered here: idealised Shampoo with power <span class="arithmatex">\(1/2\)</span>,</p>
+<div>$$\begin{aligned}
+L &= \mathbb{E}(G G^{\top}) \\
+R &= \mathbb{E}(G^{\top} G) \\
+W_t &= W_{t-1} - \eta \cdot L^{-1/2} G_t R^{-1/2} \,/\, \mathrm{tr}(L)
+\end{aligned}$$</div>
+
+<p>Note that this <em>idealised</em> variant takes an expectation over gradients from the dataset, rather than a running average as per practical implementations. The authors show that the last line is equivalent to idealised Adafactor in the <em>Shampoo eigenspace</em>:</p>
+<div>$$\begin{aligned}
+Q_L &= \mathrm{Eigenvectors}(L) \\
+Q_R &= \mathrm{Eigenvectors}(R) \\
+G^{\prime} &= Q_L^{\top} G Q_R \\
+W_t &= W_{t-1} - \eta \cdot Q_L^{\top} \mathrm{Adafactor}(G^{\prime}) Q_R
+\end{aligned}$$</div>
+
+<h3 id="their-method_3">Their method</h3>
+<p>Based on this link between Shampoo and Adafactor, the authors propose SOAP, which runs full Adam in the Shampoo eigenspace and increases efficiency by only updating the eigenvectors periodically (e.g. every 10 steps).</p>
+<p><img alt="SOAP algorithm panel, running Adam in the Shampoo eigenspace." class="img-large" src="../potm/2024/09/soap/algorithm.png" /></p>
+<p>The running state of this technique includes <span class="arithmatex">\(L\)</span>, <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(Q_L\)</span>, <span class="arithmatex">\(Q_R\)</span>, <span class="arithmatex">\(M\)</span> (in the weight space) and <span class="arithmatex">\(V\)</span> (in the Shampoo eigenspace). For large projections, such as the final projection layer in an LLM, the corresponding <span class="arithmatex">\(Q_L\)</span> or <span class="arithmatex">\(Q_R\)</span> can be fixed to identity. If both are fixed, SOAP reproduces Adam.</p>
+<h3 id="results_3">Results</h3>
+<p>Results on language modelling (see figure above) show good step-efficiency of SOAP since it is based on Adam rather than Adafactor, and time-efficiency since the eigenvectors can be periodically updated without substantially harming performance. Like Shampoo, the extra optimisation cost can be reduced by using a large batch size.</p>
+<p>Stepping back for a moment, I'm excited about this progress using Shampoo variants and am eager to see experiments over long training runs of LLMs. So I hope we'll see plenty more shower-related puns on arXiv over the next year!</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2409.11321" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

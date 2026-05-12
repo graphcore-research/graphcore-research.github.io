@@ -1,0 +1,1047 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-05-07-potm/">
+      
+      
+        <link rel="prev" href="../2025-04-06-potm/">
+      
+      
+        <link rel="next" href="../2025-06-02-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>April Papers: Motion Prompting, Mamba Reasoning and Modeling Rewards - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="April Papers: Motion Prompting, Mamba Reasoning and Modeling Rewards - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-05-07-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-05-07-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="April Papers: Motion Prompting, Mamba Reasoning and Modeling Rewards - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-05-07-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#motion-prompting-controlling-video-generation-with-motion-trajectories" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        April Papers: Motion Prompting, Mamba Reasoning and Modeling Rewards
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motion-prompting-controlling-video-generation-with-motion-trajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motion Prompting: Controlling Video Generation with Motion Trajectories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inference-time-scaling-for-generalist-reward-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inference-Time Scaling for Generalist Reward Modeling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#m1-towards-scalable-test-time-compute-with-mamba-reasoning-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        M1: Towards Scalable Test-Time Compute with Mamba Reasoning Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Alex Cunha">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/alexc/">Alex Cunha</a>
+                        
+                      </strong>
+                      <br>
+                      ML Engineer
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Arianna Saracino">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/ariannas/">Arianna Saracino</a>
+                        
+                      </strong>
+                      <br>
+                      ML Engineering Manager
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/kheerann.jpg" alt="Kheeran Naidu">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/kheerann/">Kheeran Naidu</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-05-07 00:00:00+00:00" class="md-ellipsis">May 7, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              10 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:generative-models" class="md-tag">generative-models</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:inference-time-compute" class="md-tag">inference-time-compute</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:mamba" class="md-tag">mamba</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reasoning" class="md-tag">reasoning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reward-modeling" class="md-tag">reward-modeling</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:test-time-compute" class="md-tag">test-time-compute</a>
+      
+    
+  </nav>
+
+
+
+  <h1>April Papers: Motion Prompting, Mamba Reasoning and Modeling Rewards</h1>
+
+<p>April has been a busy month for the AI research community, with ICLR (the first of the "big three" AI conferences of the year)
+taking place in Singapore. We're pleased to share summaries of a few of our favourite papers we've seen this month.</p>
+<p>First up, <a href="#motion-prompting-controlling-video-generation-with-motion-trajectories">Motion Prompting</a> introduces flexible spatio-temporal trajectories, or "motion prompts", as a powerful new way to
+control nuanced dynamic actions and motion in video generation, overcoming the limitations of text prompts.
+This is followed by <a href="#inference-time-scaling-for-generalist-reward-modeling">Inference-Time Scaling for Generalist Reward Modeling</a>, which presents Self-Principled Critique Tuning (SPCT),
+a method that powers DeepSeek-GRM—a generalist reward model capable of generating adaptive, high-quality rewards and achieving
+strong performance gains through scalable inference-time compute.
+Finally, <a href="#m1-towards-scalable-test-time-compute-with-mamba-reasoning-models">M1</a> looks at using a Mamba-based architecture to tackle reasoning problems, as a more computationally-efficient approach
+when compared to transformers with chains-of-thought.</p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="motion-prompting-controlling-video-generation-with-motion-trajectories">Motion Prompting: Controlling Video Generation with Motion Trajectories</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Daniel Geng et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google Deepmind, University of Michigan and Brown University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2412.02700" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>The central concept of Motion Prompting is to gain fine-grained control over video generation by conditioning a video diffusion model on spatio-temporally sparse or dense motion trajectories. These trajectories, termed "motion prompts", are presented as a powerful complementary control scheme to text, which often struggles to convey the complex nuances of motion. The goal is to achieve more expressive and precise control over the generated video content by enabling users to specify desired movements directly.</p>
+<p><img alt="Motion prompting system overview." src="../potm/2025/04/motion-prompting/motion-prompting.png" /></p>
+<figcaption>Motion Prompting system overview and results: 1) Diffusion model system is conditioned on a single image, motion tracks and text. 2) The different capabilities of the trained model: object control, camera control, simultaneous object and camera control, motion transfer, and model probing</figcaption>
+
+<h3 id="background">Background</h3>
+<p>Significant progress has been made in generative models for images and videos using diffusion models. While text prompts can generate impressive visuals, they are limited in controlling specific spatial compositions in images or intricate motions in videos. To address spatial control, ControlNet was introduced. This architecture enhances pretrained text-to-image diffusion models by adding spatial conditioning. ControlNet works by keeping the original model's parameters locked and creating a trainable copy of its encoding layers, connected by "zero convolutions" - zero initialized layers such that the conditioning signal doesn't affect the diffusion process at the beginning of training. This design allows learning various spatial conditions while preserving the backbone's quality. In parallel, models like Lumiere advanced text-to-video generation by synthesising the entire temporal duration of a video in a single pass using a Space-Time U-Net architecture built on a pretrained text-to-image model. This contrasts with methods that rely on generating keyframes and using temporal super-resolution, which can struggle with global temporal consistency. Motion Prompting builds directly on these foundations, adapting the ControlNet approach to provide granular motion control within a video diffusion model framework like Lumiere.</p>
+<h3 id="their-method">Their method</h3>
+<p>The Motion Prompting approach trains a ControlNet adapter on top of a pretrained video diffusion model, specifically leveraging Lumiere. The conditioning signal is provided through motion trajectories, or point tracks, which encode the movement and visibility of points across time. This allows for flexible control over any number of points, applying to objects, the camera, or the entire scene, and supporting temporally sparse constraints. The motion prompts are encoded into a space-time volume and fed into a trainable copy of the base model's encoder, similar to the original ControlNet design, while the pretrained backbone remains fixed. The training procedure follows ControlNet principles and exhibits a "sudden convergence phenomenon" where the model quickly learns to follow the condition. To make specifying motion easier, they propose motion prompt expansion, which converts simple user inputs like mouse drags into more detailed motion tracks.</p>
+<h3 id="results">Results</h3>
+<p>The Motion Prompting framework demonstrates versatility through various applications enabled by this single trained model:</p>
+<ul>
+<li>Object and camera control.</li>
+<li>"Interacting" with an image using mouse drags to manipulate content like hair or sand.</li>
+<li>Motion transfer, applying motion from a source video to a different first frame.</li>
+<li>Drag-based image editing.</li>
+</ul>
+<p>The approach also reveals emergent behaviors, such as realistic physics, suggesting its utility for probing the underlying video model's understanding of the world. Failures can be used to identify limitations in the model's learned representations and its grasp of physics. Quantitative evaluations were performed on the DAVIS dataset using various metrics. These tests measured how accurately the generated video matched the desired motion and assessed the overall visual quality and realism. The results showed that the Motion Prompting model generally outperformed baseline methods across these different measures.A human study using a two-alternative forced choice protocol also indicated that users preferred the results of Motion Prompting over baselines in terms of motion adherence, realistic motion quality, and visual quality.
+To see dynamic examples of these capabilities, readers are encouraged to explore the gallery of results on the paper's website: https://motion-prompting.github.io/.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2412.02700" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="inference-time-scaling-for-generalist-reward-modeling">Inference-Time Scaling for Generalist Reward Modeling</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Zijun Liu et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+DeepSeek-AI, Dept. of ComputerSci & Tech. Tsinghua University, Institute for AI Industry Research (AIR) Tsinghua University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2504.02495" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Recent studies have highlighted the critical role of reward models (RMs) in post-training reinforcement learning (RL) in providing high-quality reward signals that help Large Language Models (LLMs) perform well in domains where correctness can be automatically verified, such as coding and mathematics.</p>
+<p>However, generating reliable rewards becomes far more challenging in less structured or open-ended domains where answers cannot be automatically verified. At the same time, there is growing interest in making reward quality scale with available inference-time compute - improving as more sampling or computational resources are used.</p>
+<p>This paper addresses both challenges by introducing <strong>Self-Principled Critique Tuning (SPCT)</strong>, a novel learning method that enables <strong>Generalist Reward Models (GRMs)</strong> to generate adaptive, high-quality rewards and effectively leverage increased <strong>inference-time compute</strong>.</p>
+<p>This approach is implemented in <strong>DeepSeek-GRM-27B</strong>, a Gemma-2-27B-based post-trained with SPCT and enhanced with a secondary Meta Reward Model (MetaRM) to further improve inference-time scaling performance, as shown in Figure 1.</p>
+<p><img alt="Inference-time scaling performance tested on RM Bench shows DeepSeek-GRM-27B outperforming strong public models." class="img-medium" src="../potm/2025/04/inference-scaling-grm/grm-inference-time-scaling-perf.png" /></p>
+<figcaption><strong>Figure 1.</strong> Inference-time scaling performance with different RMs on all RM benchmarks. Results are shown with up to 8 samples for each method, and are further scaled to 32 samples for ours. Non-italic font indicates models based on Gemma-2-27B.</figcaption>
+
+<h3 id="their-method_1">Their method</h3>
+<p>The authors adopt a <strong>pointwise generative</strong> reward modeling paradigm. Pointwise scoring assigns individual rewards to each response, enabling flexibility across diverse input formats, while the generative approach produces textual judgements or <em>critiques</em> from which reward scores are derived.</p>
+<p>To enhance performance, they apply <strong>sampling-based</strong> aggregation, generating multiple reward sets per query and combining them to produce a final score.</p>
+<p>This setup lays the foundation for their core innovation — the <strong>Self-Principled Critique Tuning (SPCT)</strong> method, which further improves reward quality and scalability. As suggested from previous studies, the authors incorporate "<em>principles</em>" generated by the GRM to guide the RM and crucially they treat these not as a pre-processing step, but as part of the reward generation itself. The GRM generates <em>principles</em> based on the input query and answers, and then produces <em>critiques</em> and assigns rewards according to these generated <em>principles</em>. This adaptive approach allows the reward generation process to align with different inputs contexts and nuances.</p>
+<p>As shown in Figure 3, SPCT begins with rejective fine-tuning to train the model on properly formatted principles and critiques, followed by rule-based online RL (via GRPO) to refine output quality and improve the model’s ability to distinguish between high- and low-quality responses.</p>
+<p><img alt="Illustration of SPCT including cold-start rejective fine-tuning, rule-based RL and corresponding scalable behaviours during inference." src="../potm/2025/04/inference-scaling-grm/SPCT.png" /></p>
+<p>To scale reward quality at inference time, the authors use sampling-based strategies: the model generates multiple reward samples per query, assigns pointwise scores, and aggregates them — typically by summing — to obtain a robust final reward. This approach leverages diverse judgments to approximate a consensus, reducing bias from any single sample. Finally, a <strong>Meta Reward Model (MetaRM)</strong> filters the sampled rewards, selecting only the highest-quality critiques for aggregation, further improving reliability and reducing bias.</p>
+<h3 id="results-rm-benchmarks">Results - RM benchmarks</h3>
+<p>Table 2 show that the post-trained DeepSeek-GRM-27B outperforms the baseline methods (reimplemented by the authors) and matches or exceeds the performance of leading models like GPT-4o and Nemotron-4-340B-Reward.</p>
+<p><img alt="Overall results on RM Benchmarks." src="../potm/2025/04/inference-scaling-grm/RMBench.png" /></p>
+<h3 id="results-inference-time-scalability">Results - inference-time scalability</h3>
+<p>Table 3 and Figure 1 demonstrate that with inference-time scaling (using 32-sample voting) the model achieves the best overall performance, which improves further when combined with MetaRM-guided voting.</p>
+<p><img alt="Inference-time scalability results of different methods on RM benchmarks." class="img-medium" src="../potm/2025/04/inference-scaling-grm/inference-time-scalability.png" /></p>
+<figcaption><strong>Table 3.</strong> Inference-time scalability results of different methods on RM benchmarks. Settings are the same as Table 2.</figcaption>
+
+<h3 id="results-scaling-inference-vs-training-costs">Results - scaling inference vs training costs</h3>
+<p>Figure 4 compares the benefits of inference-time scaling versus model size scaling. Remarkably, the 27B-parameter DeepSeek-GRM, when paired with 32-sample voting, reaches performance comparable to or better than much larger models, even the 671B MoE model.</p>
+<p><img alt="Inference-time scaling vs training-time scaling performance on Reward Bench benchmark." src="../potm/2025/04/inference-scaling-grm/inference-vs-training.png" /></p>
+<h3 id="takeaways">Takeaways</h3>
+<p>This paper marks an important step toward building a true Generalist Reward Model (GRM), introducing the SPCT learning method to generate high-quality, adaptive rewards across diverse tasks. While the results are promising, the authors acknowledge that challenges remain, particularly in tasks with highly subjective reward criteria or those requiring external knowledge.</p>
+<p>The paper also demonstrates the strong potential of inference-time scaling, showing that smarter use of compute can deliver major performance gains — a promising direction for future research on efficient, scalable reward systems.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2504.02495" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="m1-towards-scalable-test-time-compute-with-mamba-reasoning-models">M1: Towards Scalable Test-Time Compute with Mamba Reasoning Models</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Junxiong Wang et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+TogetherAI, Cornell University, University of Geneva, Princeton University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2504.10449" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>Language models applied to reasoning have recently been shown to benefit from longer chain-of-thought sequences, which require the model to process a longer context.
+However, transformer-based models suffer from a quadratic increase in computational complexity with respect to context length.
+The authors tackle this problem using a novel hybrid reasoning model (M1) based on Mamba, which has been shown to be computationaly more efficient than transformers <a href="https://arxiv.org/abs/2312.00752">[Gu and Dao, COLM 2024]</a>. In doing so, they give the first hybrid Mamba-based reasoning model whose performance on math reasoning tasks outperforms transformer-based reasoning models.</p>
+<h3 id="their-method_2">Their method</h3>
+<p>The authors adapt the multi-step approach proposed in <a href="https://arxiv.org/abs/2408.15237">[Wang et al., NeurIPS 2024]</a> to design their 3B parameter M1 model:
+1. <em>Initialisation &amp; Distillation.</em> Beginning with the pre-trained Llama-3.2-3B model, they replace transformer attention heads with Mamba-based ones and initialise them with the corresponding transformer weights.
+See Figure 1 for the procedure. Then, they distil the hybrid model using the reverse KL divergence.</p>
+<div class="language-text highlight"><pre><span></span><code>![An algorithm detailing the procedure used to obtain a Mamba-based attention head from a transformer attention head.](mamba-reasoning/fig1.png)
+&lt;figcaption&gt;&lt;strong&gt;Figure 1.&lt;/strong&gt; An outline of the MambaInLlama initialisation procedure used in the M1 model, which is from [Wang et al., NeurIPS 2024].&lt;/figcaption&gt;
+</code></pre></div>
+<ol>
+<li>
+<p><em>Supervised Finetuning.</em> They finetune the resulting model from step 1 in two ways. First, on the large set of math problems OpenMathInstruct-2. Then, on math problems and solutions generated by reasoning models, which includes OpenR1-Math-220k, OpenThoughts-114k-math, and ServiceNow-AI/R1-Distill.</p>
+</li>
+<li>
+<p><em>Reinforcement Learning.</em> They subsequently enhance performance using an altered Group Relative Policy Optimization (GRPO) strategy. In particular, they remove the KL term that penalises policies that are different to the original, and they add an entropy term to encourage diversity in the policy. The altered GPRO loss they use is</p>
+<div class="arithmatex">\[L_\text{GPRO}(\Theta) = \mathbb{E}\left[\frac{\pi_{\Theta}(a \mid s)}{\pi_{\Theta_\text{old}}(a \mid s)} \cdot \hat{A}(s, a)\right] + \eta \cdot H(\pi_\Theta).\]</div>
+</li>
+</ol>
+<h3 id="results_1">Results</h3>
+<p>The authors evaluate the performance of their M1-3B model in terms of reasoning (Table 1), inference speed (Figure 2), and test-time scaling (Figure 3):</p>
+<ol>
+<li>
+<p><em>Reasoning.</em> M1-3B outperforms all non-reasoning language models and the Qwen2.5-Math-7B-Instruct reasoning model in all benchmarks. It slightly underperforms against the DeepSeek-R1-Distill-Qwen-1.5B reasoning model in almost all benchmarks.</p>
+<p><img alt="Reasoning performance results for the hybrid Mamba-based M1-3B model and various transformer-based models." class="img-medium" src="../potm/2025/04/mamba-reasoning/tab1.png" />
+<figcaption><strong>Table 1.</strong>Reasoning performance results. Pass@1 refers to a percentage mark using a single sample per question and Maj@32 refers to a majority vote on 32 samples per question. </figcaption></p>
+</li>
+<li>
+<p><em>Inference Speed.</em> As batch size and generation length are scaled up, M1-3B shows better speedups compared to other models of similar and even smaller size, with up to a 3x speed up when compared to the Llama-3.2-3B model, which M1-3B is based on.</p>
+<p><img alt="Inference speed results for the hybrid Mamba-based M1-3B model and various transformer-based models." class="img-medium" src="../potm/2025/04/mamba-reasoning/fig2.png" />
+<figcaption><strong>Figure 2.</strong>Inference speed results when using prompt length 256 and decoding length 4096 (left) and when using batch size 128 (right).</figcaption></p>
+</li>
+<li>
+<p><em>Test-Time Scaling.</em> Given a fixed compute-time budget, M1-3B ultimately outperforms DeepSeek-R1-Distill-Qwen-1.5B on math reasoning tasks when allowed to scale either the number of scoring samples or the length of the context/chain-of-thought.</p>
+<p><img alt="Inference speed results for the hybrid Mamba-based M1-3B model and various transformer-based models." class="img-medium" src="../potm/2025/04/mamba-reasoning/fig3.png" />
+<figcaption><strong>Figure 3.</strong>Results for test-time scaling with a fixed compute time budget (x-axis) when allowed to vary number of samples (left) and length of context (right).</figcaption></p>
+</li>
+</ol>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>The M1-3B model shows that transformers are not the only good option for reasoning models. This hybrid model built on Mamba obtains improved computational efficiency and performance over even the larger Qwen2.5-Math-7B-Instruct reasoning model. However, for the smaller DeepSeek-R1-Distill-Qwen-1.5B model, it is only able to gain an improved reasoning performance by taking advantage of the more efficient inference time, that is, allowing for 'more reasoning' in a fixed amount of time.</p>
+<p>...</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2504.10449" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

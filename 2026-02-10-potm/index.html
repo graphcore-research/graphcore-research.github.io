@@ -1,0 +1,1039 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2026-02-10-potm/">
+      
+      
+        <link rel="prev" href="../2026-01-13-potm/">
+      
+      
+        <link rel="next" href="../2026-02-20-ultrag/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>January Papers: Conditional Memories for LMs, Audio-Visual FMs, and Batch Size Schedulers - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="January Papers: Conditional Memories for LMs, Audio-Visual FMs, and Batch Size Schedulers - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2026-02-10-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2026-02-10-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="January Papers: Conditional Memories for LMs, Audio-Visual FMs, and Batch Size Schedulers - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2026-02-10-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#conditional-memory-via-scalable-lookup-a-new-axis-of-sparsity-for-large-language-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        January Papers: Conditional Memories for LMs, Audio-Visual FMs, and Batch Size Schedulers
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-memory-via-scalable-lookup-a-new-axis-of-sparsity-for-large-language-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ltx-2-efficient-joint-audio-visual-foundation-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LTX-2: Efficient Joint Audio-Visual Foundation Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-set-the-batch-size-for-large-scale-pre-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Set the Batch Size for Large-Scale Pre-training?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukep.jpg" alt="Luke Prince">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukep/">Luke Prince</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Benoit Gaujac">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/benoitg/">Benoit Gaujac</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Callum McLean">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/callumm/">Callum McLean</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-02-10 00:00:00+00:00" class="md-ellipsis">February 10, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              9 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llm" class="md-tag">LLM</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:audio-visual-generation" class="md-tag">audio-visual generation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion-transformer" class="md-tag">diffusion transformer</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llm" class="md-tag">llm</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:memory" class="md-tag">memory</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:pretraining" class="md-tag">pretraining</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:sparsity" class="md-tag">sparsity</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:training-dynamics" class="md-tag">training dynamics</a>
+      
+    
+  </nav>
+
+
+
+  <h1>January Papers: Conditional Memories for LMs, Audio-Visual FMs, and Batch Size Schedulers</h1>
+
+<p>Welcome to the first edition of our Paper of the Month newsletter for 2026! </p>
+<p>This month, our team went through 21 different papers to find the most insightful new pieces of literature that we think have the potential to leave a mark. From this selection, three papers stood out in particular: </p>
+<ul>
+<li>
+<p><em>Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models.</em> Cheng et al. introduce a simple, scalable memory-augmentation for large language models to offload the cost of simple knowledge-based retrieval to embedding lookups.</p>
+</li>
+<li>
+<p><em>LTX-2: Efficient Joint Audio-Visual Foundation Model.</em> HaCohen et al. propose a joint text-conditioned audio-visual generation framework built using modality-specific VAEs, a refined text-conditioning module, and an asymmetric dual-stream diffusion transformer.</p>
+</li>
+<li>
+<p><em>How to Set the Batch Size for Large-Scale Pre-training?</em> Zhou et al. discuss how to identify the optimal batch size for large-scale pretraining, and find that dyamically increasing the batch size through time can improve performance.</p>
+</li>
+</ul>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="conditional-memory-via-scalable-lookup-a-new-axis-of-sparsity-for-large-language-models">Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Xin Cheng, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Peking University, Deepseek-AI
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2601.07372" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Offloading local dependencies between tokens with lookups to a massive embedding table improves large language model capabilities by freeing up attention capacity to model global context.</p>
+<h3 id="their-method">Their method</h3>
+<p>The authors propose that transformers need a cheap lookup mechanism to retrieve simple local dependencies between tokens, otherwise these dependencies will need to be learned and retrieved by expensive computation over model depth. As a result they design "Engram": a new module built around a lookup primitive with the following components:</p>
+<ul>
+<li>Canonicalisation of input tokens ("canonical tokens"), reducing redundancy by mapping tokens to a smaller set of semantically unique tokens by e.g., merging separate tokens for upper- and lower-case words (<em>Tokenizer Compression</em>).</li>
+<li>Constructing n-gram embeddings by hashing sequences of canonical tokens (<em>Multi-Head Hashing</em>).</li>
+<li>Using projections of the embeddings as keys and values for a sigmoidal attention-like gating mechanism taking model hidden state as query (<em>Context-aware Gating</em>), along with a dilated depthwise convolution to learn dependencies over local n-grams.</li>
+</ul>
+<p><img alt="Engram embedding module incorporating input token canonicalisation, hashing, and context-aware gating" src="../potm/2026/01/conditional-memory/FIG-Methods-Arch.png" /></p>
+<ul>
+<li>During training: embedding table is sharded across GPU memory, with embeddings retrieved using an all-to-all</li>
+<li>During inference: embedding table is stored in Host DRAM and embedding lookups are offloaded to host CPU and transported over PCie.</li>
+<li>The latency of Host-GPU connections at inference time informs the placement of engram at at the start of the second layer, to allow overlapping of retrieval with computation of the first layer. </li>
+<li>Design allows for a naive implementation to incurs just 3% overhead, with plenty of room for improvement by exploiting memory hierarchy since engrams are accessed non-uniformly.</li>
+</ul>
+<p><img alt="Systems implementation of Engram-augmented large language models during training and inference" src="../potm/2026/01/conditional-memory/FIG-Methods-Sys.png" /></p>
+<h3 id="results">Results</h3>
+<p>Since lookups add no FLOPs, more parameters can be added via embedding tables without incurring computational costs. However, mixture-of-experts models also add parameters without additional computational cost through sparse compute. As such, the authors aim to determine how best to allocate "inactive parameters" across experts and engram tables. Across two compute budgets, they demonstrate an optimal allocation of 25% of inactive parameters to engram tables. Nevertheless in an unconstrained memory setting, larger tables improve results further.</p>
+<p><img alt="Iso-flop and Iso-parameter comparison of Engram with Mixture-of-Experts models" src="../potm/2026/01/conditional-memory/FIG-Results-Iso.png" /></p>
+<p>These results bear out at large scale too. Compared with a 27B parameter MoE model trained for 262B tokens, they demonstrate that Engram augmented models provide improvements on retrieval and comprehension tasks and on several reasoning tasks.</p>
+<p><img alt="Evaluations of large scale models on knowledge and reasoning tasks" src="../potm/2026/01/conditional-memory/TBL-Results-Evals.png" /></p>
+<p>The authors also include an interesting analysis of the representational similarity between Engram and MoE models, finding that earlier layers of Engram augmented models have representations similar to later layers of MoE models, backing up their claim that Engram frees up capacity for modelling complex long-range dependencies in global context.</p>
+<p><img alt="Representational similarity of Engram-augmented models to Mixture-of-Experts models" src="../potm/2026/01/conditional-memory/FIG-Results-Repr.png" /></p>
+<h3 id="takeaways">Takeaways</h3>
+<p>Engram is a well-validated, simple, scalable extension of transformers that considers the systems impact of needing to store and retrieve from a massive embedding table in a non-blocking manner during inference. Without having validated the idea myself (yet!), I'm reasonably convinced this is a good addition to the transformer architecture, albeit it is somewhat worrying that manifold-constrained hyper-connections appear necessary for good performance. General adoption of the idea would appear to depend on whether Engram can work without Deepseek architectural variants and whether the 25% parameter allocation continues as models move towards a predicted shift of finer-grained mixture-of-experts models. The design space of memory augmented models is likely to evolve further and indeed <a href="https://arxiv.org/abs/2601.10639">concurrent work</a> proposes an alternative method of including large embedding tables to replace FFN up-projections to improve knowledge storage. Additionally, systems with tighter CPU-GPU coupling will open up the feasibility of lower latency, more computationally intense lookup functions as scalable primitives.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2601.07372" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="ltx-2-efficient-joint-audio-visual-foundation-model">LTX-2: Efficient Joint Audio-Visual Foundation Model</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Yoav HaCohen, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Lightricks
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2601.03233" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>LTX-2 is a text-conditioned generative model for joint audio-visual generation. Unlike prior approaches that generate video and audio separately or in sequential pipelines, LTX-2 directly models their joint distribution, enabling temporally aligned and semantically coherent audiovisual outputs.</p>
+<p>LTX-2 is composed of modality-specific Variational Autoencoders (VAEs) that encode audio and video into separate latent tracks, a novel text-conditioning module for improved semantic understanding, and an asymmetric dual-stream Diffusion Transformer (DiT) backbone.</p>
+<p><img alt="Overview of the LTX-2 architecture." src="../potm/2026/01/ltx2/ltx2.png" /></p>
+<h3 id="method">Method</h3>
+<h4 id="architecture">Architecture</h4>
+<p>Video inputs are encoded using a spatiotemporal causal VAE, while audio inputs are encoded by a separate causal audio VAE operating on 16 kHz mel spectrograms.
+Text conditioning relies on a modified Gemma3-12B backbone, followed by a multi-layer feature extractor and a text connector module that refines the extracted representations using thinking tokens.
+The DiT backbone consists of a 14B-parameter video stream and a 5B-parameter audio stream. Each stream sequentially applies self-attention, text cross-attention for prompt conditioning, audio-visual cross-attention for inter-modal exchange, and a feed-forward network (FFN) for refinement.</p>
+<p><img alt="Dual stream DiT architecture." src="../potm/2026/01/ltx2/dual_dit.png" /></p>
+<h4 id="inference">Inference</h4>
+<p>At inference time, LTX-2 uses multimodal classifier-free guidance, where each modality is simultaneously guided by a text-based term and a cross-modality alignment term.
+A multi-scale, multi-tile inference strategy enables high-resolution audiovisual generation while avoiding the high memory costs typical of large-scale video diffusion models.</p>
+<h3 id="results_1">Results</h3>
+<h4 id="data">Data</h4>
+<p>The model is trained on a collection of publicly available datasets, filtered to retain video clips with significant and informative audio content.
+The captioning of the video is done with a proprietary new video captioning system.</p>
+<h4 id="results_2">Results</h4>
+<p>The authors evaluate LTX-2 across three dimensions: audio-visual quality, video generation performance, and inference efficiency.
+They claimed that LTX-2 significantly outperforms open-source alternatives on audio-visual performances based on an internal benchmark as well as being ranked in the top five in image-to-video and text-to-video according to the Artificial Analysis public rankings.
+Finally, they compare runtime performance against Wan 2.2-14B, reporting up to an 18× speed improvement.</p>
+<h3 id="limits">Limits</h3>
+<p>In addition to the limitations acknowledged by the authors, including poor mutli-speaker audio performances, limited temporal scalability for sequences longer than 20 seconds, and a lack of reasoning capabilities, the proprietary nature of the training data and the limited evaluation undermine any reproducility attents.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2601.03233" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="how-to-set-the-batch-size-for-large-scale-pre-training">How to Set the Batch Size for Large-Scale Pre-training?</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Yunhua Zhou et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Shanghai AI Laboratory, Shanghai JiaoTong University, Fudan University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2601.05034" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<p>The batch size is an important hyperparameter in large-scale pretraining. Larger batch sizes provide less noisy gradients at each step and allow for better parallelisation. However, training on the same data multiple times gives diminishing returns, and large batch sizes consume more data per optimisation step.</p>
+<p>The resulting tradeoffs can be expressed in terms of a relationship between the amount of data consumed and the number of optimisation steps. <a href="https://arxiv.org/abs/1812.06162">McCandlish et al. (2018)</a> identified a relationship between the data consumption <span class="arithmatex">\(E\)</span> (for “efficiency”, confusingly) and the number of optimisation steps <span class="arithmatex">\(S\)</span> given by</p>
+<p>\[\left(\frac{S}{S_{min}} - 1\right)\left(\frac{E}{E_{min}} - 1\right) = 1\]</p>
+<p>where <span class="arithmatex">\(S_{min}\)</span> and <span class="arithmatex">\(E_{min}\)</span> are the minimum values of <span class="arithmatex">\(S\)</span> and <span class="arithmatex">\(E\)</span> respectively that are required to achieve a certain target loss. If <span class="arithmatex">\(B\)</span> is the (constant) batch size, then using the relation <span class="arithmatex">\(E = BS\)</span> this can be rearranged to give</p>
+<p>\[E = E_{min} + BS_{min}\]</p>
+<p>Since <span class="arithmatex">\(S_{min}\)</span> and <span class="arithmatex">\(E_{min}\)</span> are constants, this would imply that using a larger batch size always requires the use of more data. However, the authors find that this contradicts empirical results - while this is true for the early stages of training, it is not true for later stages. They show this in Figure 1 of the paper, which compares loss curves for training runs with different batch sizes (note that the x-axis is number of tokens here, not number of training steps).</p>
+<p><img alt="Loss curves for models trained with different batch sizes and constant learning rate. In the early stages of training, more data is needed to reach the same loss when using a larger batch size, but this is not true for the later stages of training." src="../potm/2026/01/batch-size-pretraining/bspt-fig1.png" /></p>
+<p>To create a theory that matches these results, they conduct a theoretical analysis and find that for large <span class="arithmatex">\(S\)</span>, the amount of data required to reach a certain target loss is actually affine in <span class="arithmatex">\(S\)</span>, i.e. <span class="arithmatex">\(E = A_1 S + A_0\)</span> for some constants <span class="arithmatex">\(A_0, A_1\)</span>. Taken together with the previous result that <span class="arithmatex">\(E\)</span> gets very large as <span class="arithmatex">\(S\)</span> gets increasingly closer to <span class="arithmatex">\(S_{min}\)</span>, this suggests is that the function <span class="arithmatex">\(E(S)\)</span> is convex in <span class="arithmatex">\(S\)</span>. The authors thus assume that the function is roughly quadratic around the optimum, giving the following piecewise expression for <span class="arithmatex">\(E(S)\)</span>:</p>
+<p>\[ E(S) = \begin{cases} 
+      B_{-1} / (S - S_{min}) + B_0 &amp; \text{if } S_{min} \le S &lt; S_1 \cr
+      C(S - S_{opt})^2 + E_{min} &amp; \text{if } S_1 \le S &lt; S_2 \cr
+      A_1 S + A_0 &amp; \text{if } S &gt; S_2
+   \end{cases}
+\]</p>
+<p>This gives ten parameters to fit, with the dimensionality of the search space reduced by requiring <span class="arithmatex">\(E(S)\)</span> to be continuous and have a contiunuous first derivative. A great number of data points can be generated by assuming that the loss follows a given scaling law with respect to the number of training steps.</p>
+<p>The payoff is that, for a given target loss, we can compute the optimal batch size as</p>
+<p>\[B_{opt} = \frac{E_{min}}{S_{opt}}\]</p>
+<p>The authors use their model to compute the optimal batch size for a range of model sizes and loss values, and find that the optimal batch size tends to be larger for smaller target losses. This suggests that increasing the batch size over the course of training may be beneficial.</p>
+<p><img alt="Plot of \(B_{opt}\) vs target loss for a range of models, showing that optimal batch size increasing with decreasing loss." src="../potm/2026/01/batch-size-pretraining/bspt-fig3.png" /></p>
+<p>To investigate this, they compare training a Qwen3 MoE model with a constant batch size of 4M to training with batch sizes of [2M, 4M, 5M, 6M], increasing the batch size at regular intervals. The increasing batch size schedule performs better with a cosine learning rate schedule, and performs better during the “stable” phase of the WSD schedule until most of its advantage is eliminated during the critically important decay phase.</p>
+<p><img alt="Loss curves for two Qwen3 MoE models trained with a cosine learning rate schedule, one trained with constant batch size and one trained with increasing batch size." src="../potm/2026/01/batch-size-pretraining/bspt-fig4.png" /></p>
+<p>Overall, this paper provides a useful framework for thinking about how the batch size affects pretraining performance. One important limitation of this work is that determining the correct parameters for a given target loss requires conducting several training runs to that loss value with varying batch size, which would likely consume much more time and compute than the planned pretraining run. We hope that future work will provide reliable scaling laws that allow practitioners to extrapolate the optimal batch size for a larger run from data from smaller runs.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2601.05034" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

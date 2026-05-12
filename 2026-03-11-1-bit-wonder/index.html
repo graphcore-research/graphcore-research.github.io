@@ -1,0 +1,971 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2026-03-11-1-bit-wonder/">
+      
+      
+        <link rel="prev" href="../2026-03-03-potm/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>1-bit Wonderful Weights for LLMs - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="1-bit Wonderful Weights for LLMs - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2026-03-11-1-bit-wonder.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2026-03-11-1-bit-wonder/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="1-bit Wonderful Weights for LLMs - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2026-03-11-1-bit-wonder.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#putting-the-squeeze-on" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        1-bit Wonderful Weights for LLMs
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#putting-the-squeeze-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting the squeeze on
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-03-11 00:00:00+00:00" class="md-ellipsis">March 11, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/articles/">Articles</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              8 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-10-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    January Papers: Conditional Memories for LMs, Audio-Visual FMs, and Batch Size Schedulers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:number-formats" class="md-tag">number-formats</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantisation" class="md-tag">quantisation</a>
+      
+    
+  </nav>
+
+
+
+  <h1>1-bit Wonderful Weights for LLMs</h1>
+
+<p>Would you rather use 1 million <span class="arithmatex">\(\times\)</span> 16-bit weights, 4 million <span class="arithmatex">\(\times\)</span> 4-bit weights, or even 16 million <span class="arithmatex">\(\times\)</span> 1-bit weights?</p>
+<p>In joint work between Aleph Alpha Research and Graphcore, we asked this question of LLMs — the answer encouraged us to embrace the wonder ✨ of 1-bit weights, which can outperform 4-bit and 16-bit weights on a fixed weight memory budget.</p>
+<p><img alt="1-bit weights rule!" src="../2026/03-1bitwonder/img/1bitwonderful.jpg" /></p>
+<!-- more -->
+
+<p>Starting from a custom quantisation-aware training recipe, the work proceeds in three parts. First, a scaling laws evaluation prompts us to consider very low-bit formats. Second, scaled-up tests show the power of memory-matched models with 1-bit weights. Finally, kernel benchmarking demonstrates their feasibility for autoregressive inference.</p>
+<p>With our <a href="https://arxiv.org/abs/2602.15563" target="_blank">paper</a>, we also release the <a href="https://github.com/Aleph-Alpha-Research/1-Bit-Wonder" target="_blank">code</a>, quantised weights and fused dequantisation kernels. Here's our favourite 1-bit model in action, doing some maths:</p>
+<video controls autoplay muted loop preload="metadata" style="border-bottom: 8px solid #161616;">
+  <source src="/2026/03-1bitwonder/img/demo.mp4" type="video/mp4">
+</video>
+
+<h2 id="putting-the-squeeze-on">Putting the squeeze on</h2>
+<p>Let's start with our recipe for low-bit quantisation. We adopt modern block-scaled formats, which use shared scales across blocks of weights in order to capture their full range.</p>
+<p><strong>Dequantisation</strong></p>
+<p>We can think of the format in terms of what is stored and how the data is reconstructed. For a nonlinear block-scaled format, we store a table of <span style="color: #647687; font-weight: bold;">centroids</span> for each weight tensor, a <span style="color: #0050EF; font-weight: bold;">scale</span> for each block of weights and small integers as <span style="color: #008A00; font-weight: bold;">quantised indices</span> for each weight. To reconstruct a given weight, we first lookup the centroid from the stored index, then multiply by the shared block scale.</p>
+<p><img alt="A diagram of the mapping from quantised blocks of data to dequantised elements" class="img-large" src="../2026/03-1bitwonder/img/dequant.png" /></p>
+<p><em>Quantisation and reconstruction of a 2-bit format with illustrative block size B = 4. Note: our practical formats use B = 64 and store the scale in <code>bf16</code> for an overhead of 0.25 bits per element.</em></p>
+<p><strong>Quantisation</strong></p>
+<p>To quantise the flattened weight tensor <span class="arithmatex">\(w\)</span>:</p>
+<ol>
+<li>Split <span class="arithmatex">\(w\)</span> into blocks of <span class="arithmatex">\(B=64\)</span> elements.</li>
+<li>For each block, calculate the absolute maximum value (if targeting <span class="arithmatex">\(n&gt;2\)</span> bits) or absolute mean value (if targeting <span class="arithmatex">\(n\leq 2\)</span> bits), as the <span style="color: #0050EF; font-weight: bold;">scale</span>. <em>Note: switching to absmean for low-bit formats is helpful since absmax quantisation would flush most values to zero in this regime.</em></li>
+<li>Divide the block elements by the scale and round these to the nearest of the <span class="arithmatex">\(2^n\)</span> <span style="color: #647687; font-weight: bold;">centroids</span>.</li>
+<li>Store the centroid <span style="color: #008A00; font-weight: bold;">index</span> (<span class="arithmatex">\(n\)</span> bits per value) and <span style="color: #0050EF; font-weight: bold;">scale</span> (<code>bf16</code>).</li>
+</ol>
+<p><img alt="A diagram of the mapping from original data to quantised blocks" class="img-large" src="../2026/03-1bitwonder/img/quant.png" /></p>
+<p><strong>QAT</strong></p>
+<p>To train a quantised model from scratch, we use quantisation-aware training (QAT) with the straight-through estimator, which performs an artificial version of the quantisation-dequantisation procedures shown above in the forward pass, but propagates the gradient unchanged to the underlying unquantised weight in the backward pass.</p>
+<div class="admonition note">
+<p class="admonition-title">Artificial quantisation and the straight-through estimator</p>
+<p>Artificial quantisation takes a <code>bf16</code> input and produces a <code>bf16</code> output, quantising the values but not casting them to the compact format, so that the following kernel can use regular <code>bf16</code> operations. The straight-through estimator acts as if this is the identity operation, allowing the deep learning training procedure to search for good quantised weights.</p>
+</div>
+<p><strong id="training-schedule">Training Schedule</strong></p>
+<p>We perform 1000 steps of regular (non-QAT) training, before quantising the model. At this point, we evaluate two alternatives:</p>
+<ol>
+<li>Create a uniform (integer) quantisation grid of centroids <span class="arithmatex">\(\{-(2^{n-1}-1), \ldots, 0, \ldots, (2^{n-1}-1)\}\)</span>.</li>
+<li>Train a nonlinear quantisation grid of <span class="arithmatex">\(2^n\)</span> centroids by running scalar K-means on the flattened weight tensor.</li>
+</ol>
+<p>We then continue training with QAT enabled for the remainder of the training run. Consistent with standard practice, we maintain embedding and final projection weights in high-precision (<code>bf16</code>).</p>
+<hr />
+<h2 id="results">Results</h2>
+<p>Our goal in this work is to identify the best use of a fixed parameter memory budget with quantisation. We also wish to test the efficacy of nonlinear quantisation using K-means versus uniform integer quantisation.</p>
+<div class="admonition question">
+<p class="admonition-title">Research Question</p>
+<p>What is the best use of a fixed parameter memory budget: a high-precision model with fewer parameters, or a highly quantised model with more parameters?</p>
+</div>
+<h3 id="part-1-go-small-or-go-home">Part 1: Go small or go home</h3>
+<p>We conduct a scaling law analysis, based on a broad sweep of model size, training budget and weight precision. We test both symmetric integer quantisation and K-means nonlinear quantisation, as <a href="#training-schedule">described above</a>.</p>
+<p><em>Expand the section below for details, or continue reading for the main conclusions.</em></p>
+<details>
+<summary>Scaling Law Analysis</summary>
+<p>We sweep model sizes <span class="arithmatex">\(N\)</span>, training token budgets <span class="arithmatex">\(D\)</span> and average weight precisions <span class="arithmatex">\(P_w\)</span> (for both uniform and K-means variants). We use these results to fit scaling laws that model the loss as:</p>
+<div class="arithmatex">\[
+\mathcal{L}(N,D,P_w)
+\;=\;
+A\,N_{\mathrm{eff}}(N,P_w)^{-\alpha}
+\;+\;
+B\,D^{-\beta}
+\;+\;
+E,
+\]</div>
+<p>where <span class="arithmatex">\(A,B,E,\alpha,\beta&gt;0\)</span> are fitted constants. The effective parameter count <span class="arithmatex">\(N_{\mathrm{eff}}\)</span> is defined in terms of the average precision <span class="arithmatex">\(P_w\)</span>:</p>
+<div class="arithmatex">\[
+N_{\mathrm{eff}}(N, P_w)
+\;=\;
+N \left(1-\exp\!\left(-\frac{P_w}{\gamma_w}\right)\right),
+\]</div>
+<p>with fitted slope <span class="arithmatex">\(\gamma_w\)</span>. We obtain:</p>
+<table>
+<thead>
+<tr>
+<th>Centroids</th>
+<th><span class="arithmatex">\(\alpha\)</span></th>
+<th><span class="arithmatex">\(\beta\)</span></th>
+<th><span class="arithmatex">\(\gamma_w\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uniform</td>
+<td>0.55</td>
+<td>0.46</td>
+<td>3.71</td>
+</tr>
+<tr>
+<td>K-means</td>
+<td>0.63</td>
+<td>0.40</td>
+<td>3.32</td>
+</tr>
+</tbody>
+</table>
+<p>Importantly, the larger value of <span class="arithmatex">\(\alpha\)</span> for K-means implies stronger scaling of loss with model size, and smaller <span class="arithmatex">\(\gamma_w\)</span> means faster saturation of capacity with increasing bit-width. Both of these show K-means to be stronger than uniform quantisation.</p>
+<p>We also see this in an isoloss contour plot of our scaling law (each line corresponds to a fixed loss, showing a set of configurations with the same task performance):</p>
+<p><img alt="isoloss contours for \(P_w\) and \(N\), showing K-means lines to the left of uniform lines" class="img-large" src="../2026/03-1bitwonder/img/isoloss_n.png" /></p>
+<p><em>Isoloss contours from our scaling laws, where the background colour shows the predicted gap between loss using K-means centroids and that using uniform centroids (red means lower loss for K-means).</em></p>
+</details>
+<p>Our scaling law fit for K-means and integers highlights the advantage of K-means quantisation:</p>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway 1</p>
+<p>K-means quantisation achieves uniformly lower loss than uniform integer quantisation across all precision–budget tradeoffs, with the largest improvements in the ultra-low-bit regime.</p>
+</div>
+<p>Given the scaling law, we can now ask our main question "given a memory budget <span class="arithmatex">\(M\)</span>, what precision minimises loss". This yields the exciting conclusion that budgets <span class="arithmatex">\(\geq 8\)</span> GB would perform better with ultra-low-precision 1-bit weights:</p>
+<p><img alt="figure showing effective parameters \(N_{\mathrm{eff}}\) against precision \(P_w\), with families of lines for different memory budgets and peaks shifting left towards 1-bit weights as memory budget increases" class="img-large" src="../2026/03-1bitwonder/img/memory_budget.png" /></p>
+<p><em>The optimal precision shifts left as memory budget increases. This is because the embedding and final projection, which are maintained in <code>bf16</code>, dominate the memory consumption for small memory budgets, so there is less saving to be had in quantising the remainder of the model.</em></p>
+<p>We therefore conclude that:</p>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway 2</p>
+<p>Under fixed memory, the best regime is the lowest stable precision, balanced by scaling up parameters.</p>
+</div>
+<h3 id="part-2-economies-of-scale">Part 2: Economies of scale</h3>
+<p>In order to gain confidence in this prediction, we conduct a scaled-up test. We compare a 16-bit <code>bf16</code> baseline against 4-bit and 1-bit models using K-means quantisation, setting the number of parameters to 4B, 12B and 31B respectively such that all models consume approximately 7.8 GB of weight storage.</p>
+<p>After training on 150B tokens and evaluating on a suite of downstream tasks, we observe strong performance for the 4-bit and especially for the 1-bit model:</p>
+<p><img alt="table of downstream results, showing a 31B 1-bit model outperforming a 12B 4-bit model and 4B 16-bit model" class="img-medium" src="../2026/03-1bitwonder/img/table_main.png" /></p>
+<p><em>Our scaled-up test highlights the strength of memory-matched (7.8 GB) 1-bit and 4-bit models when compared against a 16-bit baseline. Both outperform the 16-bit model on "log-probability" (top) and "generative" (bottom) downstream tasks, with the 1-bit model performing best across most tasks.</em></p>
+<h3 id="part-3-keeping-the-pipe-full">Part 3: Keeping the pipe full</h3>
+<p>Our research question assumes a fixed weight memory budget. However, inference speed is also an important practical consideration. If compute is maintained in <code>bf16</code>, the relative speed of a fused kernel consuming reduced-precision weights depends on whether the kernel is <strong>compute-bound</strong> or <strong>memory-bound</strong>. In the compute-bound setting (large batch size), the reduced-precision kernel cannot outperform a <code>bf16</code> baseline, since they involve approximately the same amount of compute work. In the memory-bound setting (small batch size), the reduced memory bandwidth requirement can yield a speedup.</p>
+<details>
+<summary>Benchmarking Analysis</summary>
+<p>We developed fused dequantise-multiply kernels for the nonlinear block-scaled formats described above, and tested them on an inference GPU. In microbenchmarks, we observe at batch size 1:</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(P_w\)</span></th>
+<th>Time (Speedup)</th>
+<th>Effective BW</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(16\)</span></td>
+<td><span class="arithmatex">\(175.6\)</span> μs (<span class="arithmatex">\(1.0\times\)</span>)</td>
+<td><span class="arithmatex">\(764\)</span> GB/s</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(4\)</span></td>
+<td><span class="arithmatex">\(49.5\)</span> μs (<span class="arithmatex">\(3.7\times\)</span>)</td>
+<td><span class="arithmatex">\(721\)</span> GB/s</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(24.0\)</span> μs (<span class="arithmatex">\(7.6\times\)</span>)</td>
+<td><span class="arithmatex">\(438\)</span> GB/s</td>
+</tr>
+</tbody>
+</table>
+<p>This shows near-ideal speedups for the 4-bit format (see memory bandwidth), but some overhead for the 1-bit format.</p>
+<p>In whole-model token generation benchmarks, also at batch size 1, the 4B 16-bit model achieves 89 tokens/s, the 12B 4-bit model achieves 79 tokens/s and the 31B 1-bit model achieves 61 tokens/s. These figures show that the fixed memory budget does not perfectly transfer into a fixed inference time, even at batch size 1. Nevertheless careful kernel choice and optimisation can deliver a significant fraction of the available speedup. We recommend balancing hardware-specific and practical considerations against the fundamental advantage of very low-bit formats.</p>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway 3</p>
+<p>Weight compression can yield significant inference speedups at small batch size, but good practical formats must balance available hardware capabilities against fundamental advantages of very low-bit formats.</p>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p>We were pleased (and somewhat surprised) that the simple recipe we have described was able to effectively train 1-bit weights. With this recipe, we saw the advantage of reducing weight precision in order to increase parameter count on a fixed memory budget. Based on this and our scaling laws, we encourage you to consider QAT, block-scaled formats and, especially, very low-precision weights in your next inference optimisation project!</p>
+<p>Thanks for sharing our wonder! Find out more in our full paper: <strong><a href="https://arxiv.org/abs/2602.15563">1-Bit Wonder: Improving QAT Performance in the Low-Bit Regime through K-Means Quantization</a></strong>.</p>
+<div style="font-weight: 500; margin-top: 2em; margin-bottom: 6em;">
+By Sohir Maskey, Constantin Eichenberg, Johannes Messner and Douglas Orr.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1010 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-09-01-potm/">
+      
+      
+        <link rel="prev" href="../2024-08-16-how-to-scale/">
+      
+      
+        <link rel="next" href="../2024-09-08-llama-cpp-sparq/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>August Papers: Hallucinations, Quantisations and Test-Time Computations - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="August Papers: Hallucinations, Quantisations and Test-Time Computations - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-09-01-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-09-01-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="August Papers: Hallucinations, Quantisations and Test-Time Computations - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-09-01-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spectra-a-comprehensive-study-of-ternary-quantized-and-fp16-language-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        August Papers: Hallucinations, Quantisations and Test-Time Computations
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#spectra-a-comprehensive-study-of-ternary-quantized-and-fp16-language-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spectra: A Comprehensive Study of Ternary, Quantized, and FP16 Language Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scaling-llm-test-time-compute-optimally-can-be-more-effective-than-scaling-model-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#training-language-models-on-the-knowledge-graph-insights-on-hallucinations-and-their-detectability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training Language Models on the Knowledge Graph: Insights on Hallucinations and Their Detectability
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukar.jpg" alt="Luka Ribar">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukar/">Luka Ribar</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukep.jpg" alt="Luke Prince">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukep/">Luke Prince</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/danielj.jpg" alt="Daniel Justus">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/danielj/">Daniel Justus</a>
+                        
+                      </strong>
+                      <br>
+                      Research Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-09-01 00:00:00+00:00" class="md-ellipsis">September 1, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              10 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:hallucinations" class="md-tag">hallucinations</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantisation" class="md-tag">quantisation</a>
+      
+    
+  </nav>
+
+
+
+  <h1>August Papers: Hallucinations, Quantisations and Test-Time Computations</h1>
+
+<p>If there's one thing you can count on from Graphcore Research, it's tireless enthusiasm for effective compute utilsation!  Our favourite papers from August include:</p>
+<ul>
+<li>
+<p><em>Spectra</em>, an open suite of 54 LLMs and 500+ intermediate checkpoints from 0.1B to 3.9B, spanning FP16 training, ternary training, and post-training quantisation to 3, 4, 6, and 8 bits. The proposed ternary architecture - TriLM - outperforms BitNet b1.58 models of similar size.</p>
+</li>
+<li>
+<p>An investigation into two methods for allowing LLMs to improve task performance on challenging prompts by expending more test-time compute. As a result, the authors demonstrate compute-optimal scaling strategies to allocate compute on a per-prompt basis, and show that thoughtful increases in the test-time compute budget for a small model can be more effective than training larger models.</p>
+</li>
+<li>
+<p>A training dataset derived from a Knowledge Graph where correct answers can always be known, enabling accurate measurement of hallucinations in LLMs. This facilitates an analysis of hallucincation rates and hallucaination detectability as training compute is scaled. So you see, we don't only think about compute!</p>
+</li>
+</ul>
+<p><em>I hope you enjoy these as much as we did. If you have thoughts or questions, keep the conversation going <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="spectra-a-comprehensive-study-of-ternary-quantized-and-fp16-language-models">Spectra: A Comprehensive Study of Ternary, Quantized, and FP16 Language Models</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Ayush Kaushal, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Nolano AI, UC Riverside
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2407.12327" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>An open-source <a href="https://github.com/NolanoOrg/SpectraSuite">LLM suite</a> comparing models trained in 16-bit precision, post-training quantised models, and pretrained <em>ternary</em> models. The suite consists of models in the 99M - 3.9B parameter range trained on 300B tokens.</p>
+<p><img alt="TriLM commonsense &amp; reasoning task performance." src="../potm/2024/08/spectra/fig1.png" /></p>
+<center><figcaption>Figure 1. Commonsense & Reasoning tasks performance.</figcaption></center>
+
+<h3 id="background">Background</h3>
+<p>Recent work on pretrained <a href="https://arxiv.org/abs/2402.17764">ternary models</a> (see our <a href="https://graphcore-research.github.io/papers-of-the-month/low-rank-galore-and-1_58-bit-weights/#the-era-of-1-bit-llms-all-large-language-models-are-in-158-bits">March post</a>!) has offered an exciting avenue for models trained in extremely low precision that can almost fully retain the accuracy of their higher-precision counterparts when trained from scratch. This is in contrast to the commonly-used quantisation techniques that take models trained in higher precision and compress them for inference. However, the trade-offs between the techniques have not been fully studied and understood.</p>
+<h3 id="their-method">Their method</h3>
+<p>In the Spectra suite, the authors train/quantise 54 models that are either:</p>
+<ul>
+<li>FloatLM: Llama-style standard transformer architecture trained in half-precision.</li>
+<li>QuantLM: Post-training quantised FloatLM using GPTQ (quantised to 3/4/6/8 bits).</li>
+<li>TriLM: Ternary model (values either -1, 0, or 1) similar to the BitNet b1.58  LM architecture.</li>
+</ul>
+<h4 id="trilm">TriLM</h4>
+<p>TriLM (similarly to the BitNet b1.58 architecture) uses ternary {-1, 0, 1} values for linear layer weights, with an additional floating point scale per weight tensor. Full floating-point representations of the values are kept during training and quantised during each forward pass: the scale is computed as the absolute mean of the tensor, and the value is quantised to the nearest ternary state after scaling. Additionally, when using weight sharding across devices, each device computes a scale for its own shard to avoid additional communication.</p>
+<h3 id="results">Results</h3>
+<p>The models were evaluated on commonly-used benchmarks covering commonsense and reasoning, as well as knowledge-based tasks. It was generally observed that TriLM outperforms the other models on per-bit performance, while the gap between TriLM and FloatLM/QuantLM on per-parameter performance decreases as the model size is increased.</p>
+<p><img alt="TriLM knowledge-based task performance." src="../potm/2024/08/spectra/fig2.png" /></p>
+<center><figcaption>Figure 9. Knowledge-based tasks performance.</figcaption></center>
+<p><img alt="TriLM MMLU performance." src="../potm/2024/08/spectra/fig3.png" /></p>
+<center><figcaption>Figure 10. MMLU performance.</figcaption></center>
+
+<h3 id="takeaways">Takeaways</h3>
+<p>The original BitNet b1.58 paper showcased very promising results on training highly-quantised models without a significant performance degradation, which is why having open-source suites reproducing the results and comparing different architectures such as Spectra is invaluable for researchers looking into analysing and developing low-precision models.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2407.12327" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="scaling-llm-test-time-compute-optimally-can-be-more-effective-than-scaling-model-parameters">Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Snell et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Berkeley, Google DeepMind
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2408.03314" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>When choosing between deployment of a small or large model, consider whether the compute saving made from choosing a small model can be reallocated to improving model outputs at runtime and still retain a net compute gain.</p>
+<h3 id="their-method_1">Their method</h3>
+<p>The authors consider how to reallocate compute along two axes:</p>
+<p>1) Modifying the proposal distribution by augmenting context with additional tokens. To tie this to model compute (rather than independent sources of additional tokens like retrieval), they study <strong>self-critique</strong>, in which models augment their context with a sequence of incorrect answers to guide themselves towards the correct answer. This requires a bit of fine-tuning, using sequences of incorrect answers followed by correct answers as training data. At inference time, models may generate a correct answer in the middle of the sequence, so they pool all outputs for generating a final answer (e.g., take majority).</p>
+<p><img alt="Schematic for how revisions can be generated in parallel or in sequence" class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Revision-Schema.png" /></p>
+<p><strong>Example</strong>:</p>
+<p><img alt="Example of model generating multiple revisions that guide towards a correct answer" class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Revision-Example.png" /></p>
+<p>2) Improving the model output verifier with a reward model used to score each generation step in beam search decoding. They use beam search with lookahead as a means to parameterise a fixed compute budget, since number of beams (independent parallel searches), beam width (parallel search with a shared history), and lookahead steps (rollout of search path to evaluate beam at current step) can all be used to scale compute at inference time with many parallel and sequential executions of the model.</p>
+<p><img alt="Defining search space to accept/reject generated outputs by learned verifier using beam search with lookahead" class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Verifier-Schema.png" /></p>
+<p><strong>Example</strong>:</p>
+<p><img alt="At each step the reward model returns a score that guides search amongst possible outputs" class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Verifier-Example.png" /></p>
+<p>They evaluate each of these approaches independently on high school maths problems (MATH benchmark) binned into 5 separate difficulty brackets based on accuracy rate of a base LLM (PaLM-2).</p>
+<h3 id="results_1">Results</h3>
+<p>For each approach, they first define the "compute-optimal" strategy. This amounts to finding the right setting of sequential and parallel compute given estimated question difficulty (as measured by a learned reward model).</p>
+<p>For improving verifiers with a learned reward model + beam search, they find that increasing the number of lookahead steps is worse than simply allocating more/wider beams, i.e, the overhead of lookahead didn't provide enough of a gain compared to expanding beam search. They also find for easier questions that there appears to be some evidence of reward-hacking, since increasing compute budget made accuracy slightly worse on the easiest questions than with lightweight strategies for verifying outputs. However, for medium difficulty questions, increasing compute budget improved accuracy, albeit from a low bar. On the most difficult questions where simple strategies completely failed, there looks to be a very marginal gain.</p>
+<p><img alt="Using reward models to guide search appears to help most for middle difficulty problems with low compute budget. Easy questions are prone to reward model hacking" class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Verifier-Sweep.png" /></p>
+<p>Balancing across these findings to produce a compute-optimal strategy picking the best settings for each compute budget, they show a 4x improvement at lower compute budgets, although this appears to saturate. Interestingly, using estimated rather than "actual" difficulty to pick strategy doesn't appear to harm accuracy much at all.</p>
+<p><img alt="Learned verifiers can maintain accuracy with 4x less compute in the compute optimal regime" class="img-small" src="../potm/2024/08/inference-compute-scaling/FIG-Verifier-Optimal.png" /></p>
+<p>For improving the proposal distribution with sequential revisions they need to find the right balance between spinning up independent sequences of revisions in parallel, and increasing the length of the revision chain. They show that as compute budget increases, more compute should be allocated to generating sequential revisions. Indeed it looks like there might be an easily saturated benefit from generating multiple revision chains (expanding search space), but that the greatest improvement comes from following a chain further down the path (refining search path). Additionally, easy questions seem to benefit more from revisions, but harder questions benefit from a bit more coverage of search space.</p>
+<p><img alt="Increasing chain of sequential revisions appears to offer most of the gain as you increase compute budget, although difficult problems do gain some benefit from evaluating parallel chains" class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Revision-Sweep.png" /></p>
+<p>Once again they propose a compute-optimal strategy choosing the best settings for each budget and question difficulty. This time it appears that accuracy continues improving as budget increases.</p>
+<p><img alt="Learned verifiers can maintain accuracy with 4x less compute in the compute optimal regime" class="img-small" src="../potm/2024/08/inference-compute-scaling/FIG-Revision-Optimal.png" /></p>
+<p>Finally, they examine the trade-off compared with using a larger pretrained model under three different assumptions for how long it would be deployed, i.e., whether the total number of inference token is much less than, similar to, or much greater than the total number of pretraining tokens. Firstly, there doesn't seem to be much benefit to just improving the verifier: using a larger pretrained model appears to win almost every time. However, allowing the model to revise answers does appear to help, at least in some cases. In particular, you can save compute at test time using a smaller model with sequential revisions for easier questions, especially when number of inference tokens is much less than the total number of pretraining tokens. As you tip the ratio in favour of more inference tokens, the difficulty bar appears to raise meaning fewer medium difficult questions obtain a compute saving from smaller model with revisions. For the most difficult questions, a larger pretrained model always works best. It appears there are diminishing returns for improving a model distribution without a more expressive model in the first place.</p>
+<p><img alt="Pretraining larger models appears to be the most compute-efficient method of improving responses on most difficult questions. Easier questions gain some benefit from increasing compute budget of smaller models at inference time using sequential revisions over larger pretrained models." class="img-large" src="../potm/2024/08/inference-compute-scaling/FIG-Pretraining-Comparison.png" /></p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>A question we have been asking for a while in the research team is how to strike the right balance between in-context learning and finetuning. This paper takes that a step further and also asks whether you should simply improve your pretraining recipe. Of course, in the real world you need to do both since you'll deploy your current model to the best of its ability before the next one is available. Even in this vastly simplified setting (no consideration of interaction with the myriad other ways to modify models during deployment: RAG, tool-use, quantisation, distillation), you can see some benefit to adding FLOPs at inference time.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2408.03314" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="training-language-models-on-the-knowledge-graph-insights-on-hallucinations-and-their-detectability">Training Language Models on the Knowledge Graph: Insights on Hallucinations and Their Detectability</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Jiri Hron, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google DeepMind
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2408.07852" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>One of the key challenges for large language models (LLMs) is the reliability of the model output. By strictly controlling the training data the authors investigate how hallucinations and the performance of hallucination detectors change with the size of the model and the dataset.</p>
+<h3 id="background_1">Background</h3>
+<p>Since LLMs are typically trained on vast amounts of data with unclear information content, and since natural language can be ambiguous, it is hard to decide which LLM output counts as hallucination. Knowledge graphs capture relational information in the form of (subject, predicate, object) triples, where subject and object are represented by nodes of the graph, and predicates correspond to directed edges.</p>
+<h3 id="their-method_2">Their method</h3>
+<p>To have full control over the information that the language model digests during training, the authors train decoder-only Transformers of different sizes to predict the object of triples of a knowledge graph. This approach guarantees that a model prediction can unequivocally be identified as correct or hallucination, depending on whether the prediction is indeed an object of (subject, predicate, ?) in the knowledge graph.</p>
+<p><img alt="Training a language model on a Knowledge Graph" class="img-large" src="../potm/2024/08/training-on-kg/kg-dataset.png" /></p>
+<p>In this constrained setting, the occurrence of hallucinations can be analysed for different model scales, dataset fractions, and training durations. Furthermore, the performance of hallucination detectors can be measured for two different detection tasks:
+* sentence: Given the original (subject, predicate) pair and the predicted object, the detector judges if the object is hallucinated.
+* token: Given the embedding of a token from the LM, the detector judges whether it is hallucinated.</p>
+<h3 id="results_2">Results</h3>
+<h4 id="scaling-behaviour-of-the-hallucination-rate">Scaling behaviour of the hallucination rate</h4>
+<p>The proposed task relies heavily on the memorisation of facts during training, therefore the model performance on unseen data is generally quite weak and increasing the model size or the training duration hardly impacts the rate of hallucinations, with some signs of overfitting in the case of large models/many training epochs. In contrast, when testing on facts seen during training, a better memorisation performance can be achieved with larger models and a longer training duration resulting in a lower hallucination rate. Since, in contrast to typical datasets for LLM training, the KG dataset contains no repeated information, several (~20) training epochs are required for a low hallucination rate.</p>
+<p><img alt="Hallucination rate improves with training FLOPs" class="img-large" src="../potm/2024/08/training-on-kg/hallucination-vs-flops.png" /></p>
+<figcaption><i>Hallucination rate on examples seen (top) and unseen (bottom) during training plotted against training FLOPs.</i></figcaption>
+
+<p>Furthermore, a tradeoff between precision (<span class="arithmatex">\(1 - \text{hallucination rate}\)</span>) and recall (the proportion of objects that are generated at least once when multiple objects exist for a (subject, predicate) pair) can be observed when varying the sampling temperature: A low temperature reduces the rate of hallucinations but prevents the generation of some facts.</p>
+<p><img alt="Hallucination rate improves with training FLOPs" class="img-large" src="../potm/2024/08/training-on-kg/precision-recall-vs-temperature.png" /></p>
+<h4 id="hallucination-detectors">Hallucination detectors</h4>
+<p>When finetuning the pretrained LMs for hallucination detection, it can be observed that low hallucination rates impede the detectability of hallucinations. In particular, the detection of the remaining hallucinations of larger, longer trained models becomes increasingly hard.</p>
+<p><img alt="AUC-OR of hallucination detectors for the output of LMs of different size" class="img-large" src="../potm/2024/08/training-on-kg/hallucination-detector-AUC-PR.png" /></p>
+<figcaption><i>Area under the precision-recall curve for hallucination detectors applied to the output generated by LMs of different sizes, trained for 100 (20) epochs on 1% (10%) of the data.</i></figcaption>
+
+<h3 id="takeaways_2">Takeaways</h3>
+<p>A better understanding and detection of hallucinations will certainly remain a key challenge for research on LMs. The strict control of the training data enables the authors to perform a rigorous investigation of the memorisation capability of language models and its dependency on model scale and training duration, thereby yielding interesting insights into the hallucination rate and detectability. However, it remains an open question how well these results translate into the traditional setting of training LMs on more messy datasets.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2408.07852" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

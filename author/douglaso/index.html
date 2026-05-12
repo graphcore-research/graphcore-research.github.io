@@ -1,0 +1,1111 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/author/douglaso/">
+      
+      
+        <link rel="prev" href="../../about/">
+      
+      
+        <link rel="next" href="../lukehg/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Douglas Orr - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Douglas Orr - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/author/douglaso.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/author/douglaso/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Douglas Orr - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/author/douglaso.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#posts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href="../.." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        Douglas Orr
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href="../.." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#posts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Posts
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content" data-md-component="content">
+    <div class="md-content__inner">
+      <header class="md-typeset">
+        <div class="author-profile">
+  <img src="/img/authors/douglaso.jpg" class="md-author" alt="Douglas Orr">
+  <div class="author-profile-info">
+    <h1>Douglas Orr</h1>
+    <p>Research Team Lead</p>
+  </div>
+</div>
+
+<h2 id="posts">Posts</h2>
+      </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-03-11 00:00:00+00:00">March 11, 2026</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              8 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="1-bit-wonderful-weights-for-llms"><a class="toclink" href="../../2026-03-11-1-bit-wonder/">1-bit Wonderful Weights for LLMs</a></h2>
+<p>Would you rather use 1 million <span class="arithmatex">\(\times\)</span> 16-bit weights, 4 million <span class="arithmatex">\(\times\)</span> 4-bit weights, or even 16 million <span class="arithmatex">\(\times\)</span> 1-bit weights?</p>
+<p>In joint work between Aleph Alpha Research and Graphcore, we asked this question of LLMs — the answer encouraged us to embrace the wonder ✨ of 1-bit weights, which can outperform 4-bit and 16-bit weights on a fixed weight memory budget.</p>
+<p><img alt="1-bit weights rule!" src="../../2026/03-1bitwonder/img/1bitwonderful.jpg" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026-03-11-1-bit-wonder/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/lukehg.jpg" alt="Luke Hudlass-Galley">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-03-03 00:00:00+00:00">March 3, 2026</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              12 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="february-papers-thinking-depth-latent-actions-quantization-and-riemannian-flows"><a class="toclink" href="../../2026-03-03-potm/">February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows</a></h2>
+<p>The stream of papers never ends, even so, in February our team found 4 we'd like to share:</p>
+<ul>
+<li>
+<p><em>Think Deep, Not Just Long: Measuring LLM Reasoning Effort via Deep-Thinking Tokens</em> investigates how many layers are actually needed for each token during autoregressive LM rollouts.</p>
+</li>
+<li>
+<p><em>Factored Latent Action World Models</em> takes videos that contain multiple objects, and instead of encoding them into one latent state for the <em>whole scene</em>, employs one latent state <em>per object</em>.</p>
+</li>
+<li>
+<p><em>LATMiX: Learnable Affine Transformations for Microscaling Quantization of LLMs</em> generalises Hadamard transforms to better handle outliers when block-quantizing LLMs.</p>
+</li>
+<li>
+<p><em>Riemannian Mean Flow</em> extends <a href="https://arxiv.org/pdf/2505.13447">MeanFlow</a> for generating proteins within the corresponding structured spaces, e.g. the space of all residue positions and orientations.</p>
+</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026-03-03-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2025-11-04 00:00:00+00:00">November 4, 2025</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              12 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="october-papers-fast-and-smart-language-models"><a class="toclink" href="../../2025-11-04-potm/">October Papers: Fast and Smart Language Models</a></h2>
+<p>October was packed with insights into making language models faster and smarter. We reviewed four of our favorite papers for you in detail:</p>
+<ul>
+<li>First up, <a href="../../2025-11-04-potm/#learning-grouped-lattice-vector-quantizers-for-low-bit-llm-compression">Grouped Lattice Vector Quantisation</a> introduces a novel technique for a fine-grained post-training quantisation of LLMs, retaining good performance even at low bit widths.</li>
+<li><a href="../../2025-11-04-potm/#planned-diffusion">Planned Diffusion</a> combines autoregressive planning with text diffusion, achieving low-latency text generation.</li>
+<li><a href="../../2025-11-04-potm/#rethinking-thinking-tokens-llms-as-improvement-operators">Rethinking Thinking</a> addresses the problem of long reasoning chains by distilling intermediate results into a bounded workspace for faster answers.</li>
+<li>Finally, <a href="../../2025-11-04-potm/#when-structure-doesnt-help-llms-do-not-read-text-attributed-graphs-as-effectively-as-we-expected">When Structure Doesn’t Help</a> compares techniques for encoding graphs for consumption by LLMs with surprising results.</li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2025-11-04-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/samot.jpg" alt="Sam Olesker-Taylor">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2025-10-07 00:00:00+00:00">October 7, 2025</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              18 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="september-papers-the-l-in-ml-stands-for-llms"><a class="toclink" href="../../2025-10-07-potm/">September Papers: The L in ML Stands for LLMs</a></h2>
+<p>For September, the research team reviewed a whopping 22 papers! Needless to say, competition was fierce, and only four made the final cut for this month’s edition, which is LLM-themed:  </p>
+<ul>
+<li><a href="../../2025-10-07-potm/#flowrl-matching-reward-distributions-for-llm-reasoning">FlowRL</a> uses GFlowNets to train LLMs on full reward distributions, promoting diverse reasoning paths instead of just reward maximization.  </li>
+<li><a href="../../2025-10-07-potm/#soft-tokens-hard-truths">Soft Tokens, Hard Truths</a> proposes using continuous “soft” tokens with injected noise to enable reinforcement learning fine-tuning of LLM reasoning.  </li>
+<li><a href="../../2025-10-07-potm/#set-block-decoding-is-a-language-model-inference-accelerator">Set Block Decoding</a> accelerates LLM inference by generating multiple tokens in parallel using non-causal attention and iterative entropy-based sampling.  </li>
+<li><a href="../../2025-10-07-potm/#metacognitive-reuse-turning-recurring-llm-reasoning-into-concise-behaviors">Metacognitive Reuse</a> enables LLMs to extract and reuse concise reasoning “behaviors” to improve efficiency and reduce repeated computation.  </li>
+</ul>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2025-10-07-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2025-06-11 00:00:00+00:00">June 11, 2025</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              8 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="optimal-formats-and-the-cube-root-of-the-pdf"><a class="toclink" href="../../2025-06-11-cube-root-formats/">Optimal Formats and the Cube Root of the PDF</a></h2>
+<p>Your boss emails you a point in 128-billion-dimensional space. "Llama 3.1 8B," the message reads. "A not-so-large language model in <code>bfloat16</code>. But it's too big. Trim the fat (ASAP)." You open up your toolbox: quantisation, sparsity, distillation.</p>
+<p>Quantisation comes first, with two problems. First, you must choose a space smaller than a 128-billion-dimensional binary number for the model to sit in. Second, you need to find a good point in that space. In our recent work on <a href="https://arxiv.org/abs/2505.12988">optimal formats for weight quantisation</a>, we've had a crack at the first question.</p>
+<p>In this post, we'll learn how to construct optimal formats for known scalar distributions via the "cube root rule". We'll start with a recap of an existing format that claims optimality for the normal distribution. Then we'll explore the cube root rule — a non-intuitive result from the 1950s — and use it to build our own quantisation formats for scaled normal, Laplace and Student's t distributions.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2025-06-11-cube-root-formats/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/lukep.jpg" alt="Luke Prince">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2025-04-06 00:00:00+00:00">April 6, 2025</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              16 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="march-papers-de-norming-skill-scaling-over-training-and-drug-generating"><a class="toclink" href="../../2025-04-06-potm/">March Papers: De-Norming, Skill-Scaling, Over-Training and Drug-Generating</a></h2>
+<p>We've enjoyed March, bringing improving weather and many excellent ML papers to keep us busy. As usual, we're here to share summaries of four of our favourites.</p>
+<p>First, Meta share their work that successfully removes the need for <code>LayerNorm</code> in transformers, replacing them with a reduction-free <span class="arithmatex">\(\tanh\)</span> (<a href="../../2025-04-06-potm/#transformers-without-normalisation">de-norming</a>). This is followed by two papers on scaling - studying the different scaling laws for skill-based vs knowledge-based downstream tasks (<a href="../../2025-04-06-potm/#compute-optimal-scaling-of-skills-knowledge-vs-reasoning">skill-scaling</a>), and whether pretraining can go on too long, making downstream performance worse (<a href="../../2025-04-06-potm/#overtrained-language-models-are-harder-to-fine-tune">over-training</a>). Finally, EPFL share a flow-matching GNN model for generating small molecules for drug design (<a href="../../2025-04-06-potm/#multi-domain-distribution-learning-for-de-novo-drug-design">drug-generating</a>).</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2025-04-06-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-12-30 00:00:00+00:00">December 30, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              10 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="llama-32-vision-a-deep-dive"><a class="toclink" href="../../2024-12-30-llama-vision/">Llama 3.2 Vision — A Deep Dive</a></h2>
+<p>Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this post, we'll walk through the model changes needed to turn an LLM into a VLM for inference. To understand the LLM starting point, please see <a href="/posts/2024/04-gemma/gemma.md">A transformer walk-through with Gemma</a>, as we shall assume that content here.</p>
+<p><strong>Problem</strong> — Text generation, <em>conditioned on an image</em>: take an RGB image (below) and a short string prompt <em>"What colour shirt is the person to the left of the laptop wearing?"</em>, then use an already-trained VLM (<a href="https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct">Llama-3.2-11B-Vision-Instruct</a> by Meta) to generate an answer to the prompt.</p>
+<p><img alt="Image of four people looking at a laptop" class="img-large" src="../../2024/12-llama-vision/image.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-12-30-llama-vision/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/lukar.jpg" alt="Luka Ribar">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-12-30 00:00:00+00:00">December 30, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              17 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="december-papers-spend-your-flops-wisely"><a class="toclink" href="../../2024-12-30-potm/">December Papers: Spend Your FLOPs Wisely</a></h2>
+<p>Welcome to Papers of the Month — Graphcore Research's effort to bring you our pick of the most interesting ML papers.
+In December we noted a collection of papers which took innovative approaches to allocating compute (FLOPs) to input data.</p>
+<p>We start with the Byte Latent Transformer. This modifies the standard transformer to operate on <em>patches</em>, which comprise a variable number of input bytes, as determined by an entropy metric. The consequence of this is that compute is dynamically allocated towards "harder input data". This has some similarities with the Concept Model architecture, which also uses a flexible intermediate representation. The model performs autoregressive sentence generation in this modality-agnostic space, rather than token space. </p>
+<p>The Memory Layers architecture allows extra parameters to be added to a model without increasing FLOPs. Decoupling these resources gives model designers more control (e.g. for co-design, to fit their hardware resources) and potentially facilitates more effective models in general.</p>
+<p>Finally, the Phi-4 paper presents a rather different FLOPs angle: spending compute in the data-generation process to create higher quality data, leading to "student" models that (in some domains) out-perform their "teachers".</p>
+<p><em>We hope you enjoy these month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-12-30-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/_default.jpg" alt="Charlie Blake">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-09-30 00:00:00+00:00">September 30, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              12 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="september-papers-proper-conditioning"><a class="toclink" href="../../2024-09-30-potm/">September Papers: Proper Conditioning</a></h2>
+<p>We're pleased to share four papers from different domains: LLM self-correction, FP8 training, generative crystals and optimisation. They are united, somewhat tenuously, by the importance of <em>proper conditioning</em>:</p>
+<ol>
+<li>DeepMind researchers explain how <em>conditioning on the wrong distribution</em> during supervised fine-tuning for self-correction is harmful but can be overcome using RL.</li>
+<li>A novel Smooth-SwiGLU activation <em>"conditions" the numerics</em> by inserting a scaling factor in just the right place, preventing late-training instability in FP8.</li>
+<li>The GenMS architecture that generates crystal structures for materials <em>conditions on high-level textual and low-level structural information</em> for high-quality generation.</li>
+<li>SOAP is an evolution of Shampoo, with conditioners in the name and <em>preconditioners forming the eigenbasis</em> for optimisation.</li>
+</ol>
+<p>You can be the judge of how tenuous the connection is, but we'd encourage you to check out the summaries first or despite this.</p>
+<p><em>I hope you enjoy these as much as we did. Tell us we're wrong; tell us we're right <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-09-30-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-08-16 00:00:00+00:00">August 16, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              5 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="scale-preserving-nonlinearities-for-u-p"><a class="toclink" href="../../2024-08-16-how-to-scale/">Scale-preserving nonlinearities for u-μP</a></h2>
+<p>My colleagues and I always get excited when, every once in a while, deep learning research throws up a fun little maths problem. Our recent work on <a href="https://arxiv.org/abs/2407.17465">u-μP</a> does just this, and in a reasonably systematic way, since we need to work out how to compensate for changes in scale (standard deviation) through deep learning ops. In this post and the <a href="https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale_op.ipynb">accompanying notebook</a>, we explore this problem.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-08-16-how-to-scale/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+      
+        
+          
+
+
+
+<nav class="md-pagination">
+  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="page/2/">2</a>
+</nav>
+        
+      
+    </div>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

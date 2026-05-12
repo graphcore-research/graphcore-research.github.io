@@ -1,0 +1,1068 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-05-31-potm/">
+      
+      
+        <link rel="prev" href="../2024-04-30-potm/">
+      
+      
+        <link rel="next" href="../2024-06-28-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>May Papers: xLSTM, Schedule-Free Optimizers, and Multi-token prediction - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="May Papers: xLSTM, Schedule-Free Optimizers, and Multi-token prediction - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-05-31-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-05-31-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="May Papers: xLSTM, Schedule-Free Optimizers, and Multi-token prediction - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-05-31-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#xlstm-extended-long-short-term-memory" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        May Papers: xLSTM, Schedule-Free Optimizers, and Multi-token prediction
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#xlstm-extended-long-short-term-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xLSTM: Extended Long Short-Term Memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-road-less-scheduled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Road Less Scheduled
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#better-faster-large-language-models-via-multi-token-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Better &amp; Faster Large Language Models via Multi-token Prediction
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukep.jpg" alt="Luke Prince">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukep/">Luke Prince</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukar.jpg" alt="Luka Ribar">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukar/">Luka Ribar</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-05-31 00:00:00+00:00" class="md-ellipsis">May 31, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              9 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:rnns" class="md-tag">RNNs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:learning-rate-schedules" class="md-tag">learning-rate-schedules</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:not-transformers" class="md-tag">not-transformers</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:optimization" class="md-tag">optimization</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:training-dynamics" class="md-tag">training-dynamics</a>
+      
+    
+  </nav>
+
+
+
+  <h1>May Papers: xLSTM, Schedule-Free Optimizers, and Multi-token prediction</h1>
+
+<p>May is always an eventful time of year for ML researchers, with final ICML paper decisions and ICLR taking place in early May, and NeurIPS submission deadlines closing the month. As ever, arXiv submissions continue to grow!</p>
+<p>This month we take a look at three papers exploring new techniques to challenge the mainstream large-scale pretraining setup: transformers trained with next-token prediction optimized with Adam/AdamW.</p>
+<p>The first paper, xLSTM, is a long-awaited deep dive into Sepp Hochreiter's new, improved RNN architecture, nearly 30 years after the original LSTM was published. Drawing inspiration from linear attention, the authors demonstrate scaling comparable to transformers up to 1.3B parameters.</p>
+<p>We then take a look at Schedule-Free optimizers from a team at FAIR. The authors propose a new class of optimizers that require no finicky learning rate scheduling. By replacing gradient momentum terms in standard optimizers with parameter averages, the authors show faster convergence than scheduled optimizers on a wide battery of small-scale deep learning tasks.</p>
+<p>A further paper from FAIR extends the standard pretraining setup for large language models from next-token to multi-token prediction. This particularly seems to improve performance for larger models and offers a natural choice of model to use for speculative sampling to accelerate inference. </p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="xlstm-extended-long-short-term-memory">xLSTM: Extended Long Short-Term Memory</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Maximilian Beck, Korbinian Pöppel, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+NXAI, Johannes Kepler University Linz
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2405.04517" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Recurrent neural networks based on Long Short-Term Memory units were the backbone of NLP models before the advent of the now-ubiquitous transformer. This work seeks to close the gap between LSTM and transformer in the crucial model-scaling regime of LLMs. They do this by extending the LSTM in two ways to create sLSTM and mLSTM, then incorporating these layers into a deep residual architecture, called xLSTM.</p>
+<p><img alt="Scaling trends for two variants of xLSTM (xLSTM 7:1 and xLSTM 1:0) vs Llama, Mamba and RWKV-4, for models of 125M to 1.3B parameters. The xLSTM lines are similar and are roughly parallel to Mamba, which is parallel to Llama, then RWKV (in descending order of performance)." src="../potm/2024/05/xlstm/scaling.png" /></p>
+<h3 id="their-method">Their method</h3>
+<p>We'll focus on the mLSTM variant, as the sLSTM variant is omitted from many of the best-performing models in their results. I think the best way to understand the architecture is to stare at a wall of maths for a while:</p>
+<p><img alt="mLSTM definition. Define input, forget and output gates as linear functions of the input + bias and activation (the activation is exponential for the input gate, sigmoid for the output and either exponential or sigmoid for the output gate). Define query, key and value as linear functions of the input. The cell state is updated from forget gate times previous plus input gate times the value-key outer product. There is also a normaliser that is similar but without the value. The output is output gate times the cell-query inner product divided by the maximum of normaliser-query inner product and 1." src="../potm/2024/05/xlstm/mlstm_definition.png" /></p>
+<p>To give an intuition for this, there's:</p>
+<ul>
+<li>Inputs <span class="arithmatex">\(\mathbf{x}\)</span> and parameters <span class="arithmatex">\(\mathbf{W_{q,k,v,o}}\)</span>, <span class="arithmatex">\(\mathbf{b_{q,k,v,o}}\)</span>, <span class="arithmatex">\(\mathbf{w_{i,f}}\)</span>, <span class="arithmatex">\(\mathbf{b_{i,f}}\)</span>.</li>
+<li>Six linear + activation ops, depending only on the inputs: <span class="arithmatex">\(\textbf{q}, \textbf{k}, \textbf{v}, i, f, \textbf{o}\)</span>. The <span class="arithmatex">\(f\)</span> (forget) and <span class="arithmatex">\(\textbf{o}\)</span> (output) gates have sigmoid activation, giving outputs in the range <span class="arithmatex">\([0, 1]\)</span>, but <span class="arithmatex">\(i\)</span> (input) has an exponential activation. <span class="arithmatex">\(\textbf{q}, \textbf{k}, \textbf{v}\)</span> are linear.</li>
+<li>A "cell" <span class="arithmatex">\(\textbf{C}\)</span>: a decayed and weighted sum of <span class="arithmatex">\(\textbf{v} \textbf{k}^\top\)</span> (which I'll call KV mapping) over time. At each step, the state is decayed according to the forget gate <span class="arithmatex">\(f\)</span> and the KV mapping is weighted according to the input gate <span class="arithmatex">\(i\)</span>. The cell maps queries to values by matching them against keys.</li>
+<li>A normalizer <span class="arithmatex">\(\textbf{n}\)</span>: similar, but sums just <span class="arithmatex">\(\textbf{k}\)</span> instead of KV mapping.</li>
+<li>An output <span class="arithmatex">\(\textbf{o}\)</span>, the inner product of query <span class="arithmatex">\(\textbf{q}\)</span> and cell, divided by the magnitude of the inner product of <span class="arithmatex">\(\textbf{q}\)</span> and normaliser, and multiplied by the output gate.</li>
+</ul>
+<p>Like softmax dot product self-attention, this involves a normalised sum of exponentials; a key difference is that the input to <code>exp</code> depends only on the "source" (key, value), not on the "target" (query). It bears some similarities to linear attention, <a href="https://arxiv.org/abs/2312.00752">Mamba</a> and <a href="https://arxiv.org/abs/2305.13048">RWKV</a>, permitting a parallel scan over the inputs since time dependency is linear. It retains the RNN's advantage of summarising the context in a fixed-size representation, <span class="arithmatex">\(\textbf{C}\)</span>, for efficient autoregressive inference.</p>
+<p>In the xLSTM architecture, this is used in a custom residual block that performs positionwise up projection before the multi-headed mLSTM.</p>
+<h3 id="results">Results</h3>
+<p>Downstream results for LLMs of up to 1.3B parameters, trained on 300B SlimPajama tokens:</p>
+<p><img alt="Results for xLSTM with pure mLSTM and 7:1 mLSTM:sLSTM ratios, against baselines of RWKV, Llama and Mamba on multiple downstream tasks and for models up to 1.3B. The pure mLSTM version of xLSTM performs best in most cases, across SlimPajama validation perplexity, LAMBADA, HellaSwag, PIQA, ARC and WinoGrande." src="../potm/2024/05/xlstm/results.png" /></p>
+<p><em>(I haven't been able to confirm if these are zero-shot or few-shot results.)</em> Here, xLSTM[1:0] uses only the mLSTM layer described above, while xLSTM[7:1] includes 7 mLSTM layers per 1 sLSTM layer. These results appear to demonstrate the sufficiency of mLSTM for LLMs. The paper also includes a helpful set of ablations and synthetic tasks.</p>
+<h3 id="takeaways">Takeaways</h3>
+<p>It's refreshing to see non-transformer LLMs trained at scale, and that the xLSTM architecture appears competitive with transformers. More research could help us understand the benefits of these alternatives, and whether the scaling properties are robust.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2405.04517" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="the-road-less-scheduled">The Road Less Scheduled</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Aaron Defazio, Xingyu (Alice) Yang, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+FAIR at Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2405.15682" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Deep learning practitioners use often use two key hacks to make optimisation of deep neural networks work in practice:</p>
+<ol>
+<li>Learning rate schedules</li>
+<li>Weight averaging for evaluation.</li>
+</ol>
+<p>Here the authors propose a principled approach that replaces estimates of first-order gradient moments with an averaged parameter state to adapt commonly used optimisers to avoid the need for either of these hacks with no overhead.</p>
+<p><img alt="Schedule-free optimizers combine Polyak (divergent) and Primal (slow) averaging to improve on scheduled optimizers" src="../potm/2024/05/schedule-free-optimizers/FIG-Polyak-vs-Primal.png" /></p>
+<h3 id="their-method_1">Their method</h3>
+<p>We'll present scheduled and schedule-free AdamW side-by-side, identify key differences, and explain how they are motivated.</p>
+<p><strong>Algorithm comparison</strong> </p>
+<p>Given:
+* initial parameter state <span class="arithmatex">\(x_1\)</span>,
+* learning rate <span class="arithmatex">\(\gamma\)</span>, 
+* weight decay <span class="arithmatex">\(\lambda\)</span>, 
+* warmup steps <span class="arithmatex">\(T_{warmup}\)</span>, 
+* AdamW hyperparameters (<span class="arithmatex">\(\beta_1\)</span>, <span class="arithmatex">\(\beta_2\)</span>, <span class="arithmatex">\(\epsilon\)</span>)</p>
+<p>We compute:</p>
+<table>
+<thead>
+<tr>
+<th>Scheduled AdamW</th>
+<th>Schedule-Free AdamW</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Init <span class="arithmatex">\(z_0 = 0\)</span>, <span class="arithmatex">\(v_0 = 0\)</span></td>
+<td>Init <span class="arithmatex">\(z_1 = x_1\)</span>, <span class="arithmatex">\(v_0 = 0\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\texttt{for t = 1 to T do}\)</span></td>
+<td><span class="arithmatex">\(\texttt{for t = 1 to T do}\)</span></td>
+</tr>
+<tr>
+<td><strong>1:</strong> <span class="arithmatex">\(g_t = \nabla f(x_t)\)</span></td>
+<td><strong>1:</strong> <span class="arithmatex">\(y_t = (1 - \beta_1)z_t + \beta_1x_t\)</span></td>
+</tr>
+<tr>
+<td><strong>2:</strong> <span class="arithmatex">\(z_t = (1 - \beta_1)z_{t-1} + \beta_1g_t\)</span></td>
+<td><strong>2:</strong> <span class="arithmatex">\(g_t = \nabla f(y_t)\)</span></td>
+</tr>
+<tr>
+<td><strong>3:</strong> <span class="arithmatex">\(v_t = (1 - \beta_2) v_{t-1} + \beta_2g_t^2\)</span></td>
+<td><strong>3:</strong> <span class="arithmatex">\(v_t = (1 - \beta_2) v_{t-1} + \beta_2g_t^2\)</span></td>
+</tr>
+<tr>
+<td><strong>4:</strong> <span class="arithmatex">\(\hat{z}_t = z_t/(1 - \beta_1^t)\)</span>, <span class="arithmatex">\(\hat{v}_t = v_t/(1 - \beta_2^t)\)</span></td>
+<td><strong>4:</strong> <span class="arithmatex">\(\hat{v}_t = v_t/(1 - \beta_2^t)\)</span></td>
+</tr>
+<tr>
+<td><strong>5:</strong> <span class="arithmatex">\(\gamma_t = \gamma \textrm{min}(1, t/T_{warmup})\)</span></td>
+<td><strong>5:</strong> <span class="arithmatex">\(\gamma_t = \gamma \textrm{min}(1, t/T_{warmup})\)</span></td>
+</tr>
+<tr>
+<td><strong>6:</strong></td>
+<td><strong>6:</strong> <span class="arithmatex">\(z_{t+1} = z_t - \gamma_t g_t/(\sqrt{\hat{v}_t} + \epsilon) - \gamma_t \lambda y_t\)</span></td>
+</tr>
+<tr>
+<td><strong>7:</strong> <span class="arithmatex">\(\alpha_t = \textrm{schedule}(t)\)</span></td>
+<td><strong>7:</strong> <span class="arithmatex">\(c_{t+1} = \gamma_t^2 / \sum^t_{i=1}{\gamma_i^2}\)</span></td>
+</tr>
+<tr>
+<td><strong>8:</strong> <span class="arithmatex">\(x_{t+1} = (1 - \alpha_t \gamma_t \lambda)x_t - \gamma_t\alpha_t \hat{z}_t/(\sqrt{\hat{v}_t} + \epsilon)\)</span></td>
+<td><strong>8:</strong> <span class="arithmatex">\(x_{t+1} = (1 - c_{t+1})x_t + c_{t+1}z_{t+1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Let's go through line by line:
+* <strong>Initialisation</strong>: Standard scheduled AdamW initialises gradient moment variables <span class="arithmatex">\(z\)</span> and <span class="arithmatex">\(v\)</span> at <span class="arithmatex">\(0\)</span>. Schedule-free AdamW stores the second gradient moment variable <span class="arithmatex">\(v\)</span>, and <span class="arithmatex">\(z\)</span> now represents a raw un-averaged parameter state, and is initialised to be the same as an averaged parameter state <span class="arithmatex">\(x_t\)</span>
+* <strong>Optimizer state updates (Lines 1-4)</strong>: Standard scheduled AdamW computes gradients given current parameter state <span class="arithmatex">\(x_t\)</span> (Line 1) and update moments as an exponential moving average with temperatures <span class="arithmatex">\(\beta_1\)</span> and <span class="arithmatex">\(\beta_2\)</span> (Lines 2-3), and correct moment estimation bias (Line 4). Schedule-free AdamW  first computes an interpolation <span class="arithmatex">\(y_t\)</span> between the raw <span class="arithmatex">\(z_t\)</span> and averaged <span class="arithmatex">\(x_t\)</span> parameter state (Line 1). We then compute gradients at this interpolated point (Line 2) and update the second moment (Line 3), and correct moment estimation bias (Line 4).
+* <strong>Parameter state updates (Lines 5-8)</strong>: Scheduled AdamW first determines learning rate coefficients given warmup and decay schedule (Lines 5-7), before applying the standard update rule using moments <span class="arithmatex">\(z_t\)</span>, <span class="arithmatex">\(v_t\)</span>  with weight decayed from <span class="arithmatex">\(x_t\)</span> (Line 8). Schedule-free AdamW likewise applies a warmup to the learning rate (Line 5), then updates the non-averaged parameter state <span class="arithmatex">\(z_t\)</span> using gradient estimate <span class="arithmatex">\(g_t\)</span>, second moment <span class="arithmatex">\(v_t\)</span>, and decays from interpolated weights <span class="arithmatex">\(y_t\)</span> (Line 6). We then update our weighted average of parameters <span class="arithmatex">\(x_t\)</span> with weights computed to discount parameters during warmup (Lines 7-8).</p>
+<p><strong>What motivates these changes?</strong></p>
+<p>Previous work by the same group illustrated a connection between learning rate schedules and Polyak-Ruppert parameter averaging, a theoretically optimal technique for ensuring convergence in stochastic optimisation. Polyak-Ruppert parameter averaging is simple to compute (effectively just line 6-8 of our schedule-free algorithm), but appears to perform worse than cosine decay schedules in practice.</p>
+<p>The authors propose combining Polyak-Ruppert averaging with Primal averaging. In Primal averaging, we evaluate gradients at a slow moving average parameter value rather than a fast moving immediate parameter value (standard practice). Likewise, Primal averaging on its own also appears to perform worse in practice as parameters change too slowly.</p>
+<p>The combined solution is to effectively try to get the Primal average parameters to move a bit faster, by interpolating them with a Polyak-Ruppert average. This interpolated parameter is our <span class="arithmatex">\(y_t\)</span> term computed on Line 1. Given that when <span class="arithmatex">\(\beta_1=1\)</span> is pure Primal averaging, and <span class="arithmatex">\(\beta_1=0\)</span> is pure Polyak-Ruppert averaging, the authors' recommended <span class="arithmatex">\(\beta_1=0.9\)</span> is still pretty close to Primal averaging.</p>
+<p>Two other changes appear to be less theoretically motivated: using <span class="arithmatex">\(y_t\)</span> for decaying weights (rather than <span class="arithmatex">\(x_t\)</span> or <span class="arithmatex">\(z_t\)</span>), and Polyak-Ruppert averaging coefficients <span class="arithmatex">\(c_t\)</span> that discounts parameter states visited during learning rate warmup. Warmup-free optimisers are a step too far it seems... </p>
+<h3 id="results_1">Results</h3>
+<p>The authors test schedule-free optimiser on a battery of different small models of different types (Transformers, RNNs, CNNs, GNNs, Recommenders), different datasets and objective functions, In each case they show comparable convergence as carefully tuned learning rate schedules, with faster training dynamics in many cases.</p>
+<p><img alt="Experiments across a wide range of architectures, datasets, and objective functions shows general applicability of schedule-free optimizers to a range of small-scale problems." src="../potm/2024/05/schedule-free-optimizers/FIG-Results.png" /></p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>As hacks go, learning rate schedules are an enduring one. Given the drastic effect they can have on your model performance when implemented in a training pipeline you omit them at your peril. However, they never seemed particularly well motivated other than for their empirical effect. This looks like a step in the right direction for hack-free optimisation in deep learning.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2405.15682" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="better-faster-large-language-models-via-multi-token-prediction">Better &amp; Faster Large Language Models via Multi-token Prediction</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Fabian Gloeckle, et al
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+FAIR at Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2404.19737" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>Large language models are usually trained using the next-token prediction loss. The authors propose training the model to predict <em>multiple</em> tokens at a time instead, while still generating a single token at a time at inference as usual. By training models up to 13B parameters in size, they show that this can lead to models with better performance, particularly at coding tasks.</p>
+<p><img alt="Overview of multi-token prediction." src="../potm/2024/05/multi-token-prediction/figure_1.png" /></p>
+<figcaption>Multi-token prediction: Each output head predicts a token (4-token prediction shown), while only the first head is employed during inference. The training scheme improves performance on MBPP coding task as models get larger.</figcaption>
+
+<h3 id="their-method_2">Their method</h3>
+<p>In order to enable multi-token prediction, the authors propose a simple modification to the standard transformer architecture. The final output embedding is fed into <span class="arithmatex">\(n\)</span> parallel output heads, each a single standard transformer layer. This effectively means that the final transformer layer is replaced by <span class="arithmatex">\(n\)</span> parallel transformer layers. The outputs of each head are then passed through a shared unembedding projection, generating a probability distribution over the whole vocabulary for each head. During training, each head is then trained to predict one of the next <span class="arithmatex">\(n\)</span> tokens for each training example. In order to minimise maximum memory usage during training, the forward/backward passes on each head are performed sequentially (Figure 2).</p>
+<p><img alt="Forward/backward pass for multi-token prediction." src="../potm/2024/05/multi-token-prediction/figure_2.png" /></p>
+<p>During inference, all but the output of the first head are discarded, and tokens are generated one-by-one as with the standard transformer architecture. However, multiple-token prediction can be used to speed-up inference using <em>self-speculative decoding</em>, i.e. by using the <span class="arithmatex">\(n\)</span> generated tokens as an initial sequence draft, and validating the sequence with just the next-token head in parallel.</p>
+<h3 id="results_2">Results</h3>
+<ul>
+<li>Improvement was only observed <em>at scale</em> - improvements were strongest for the largest models.</li>
+<li>Observed 3x speedup using speculative decoding with 7B 4-token prediction model.</li>
+<li>Optimal <span class="arithmatex">\(n\)</span> was empirically found to be 4 for token-based models, and 8 for byte-based models.</li>
+<li>Unlike coding tasks, on natural language tasks the performance does degrade compared to the next-token baseline.</li>
+</ul>
+<h3 id="takeaways_2">Takeaways</h3>
+<p>The results of the paper are promising, as they show multi-token prediction can indeed lead to improved performance at scale, particularly at coding tasks, while at the same time providing a more suitable drafting model for speculative-sampling inference. The results hint at the possible benefits of teaching the model to "plan ahead" compared to the standard next-token prediction, and may lead to exciting alternatives to the widely-adopted token-by-token generation.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2404.19737" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1207 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-12-30-potm/">
+      
+      
+        <link rel="prev" href="../2024-12-03-potm/">
+      
+      
+        <link rel="next" href="../2024-12-30-llama-vision/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>December Papers: Spend Your FLOPs Wisely - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="December Papers: Spend Your FLOPs Wisely - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-12-30-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-12-30-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="December Papers: Spend Your FLOPs Wisely - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-12-30-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#byte-latent-transformer-patches-scale-better-than-tokens" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        December Papers: Spend Your FLOPs Wisely
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#byte-latent-transformer-patches-scale-better-than-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Byte Latent Transformer: Patches Scale Better Than Tokens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#large-concept-models-language-modeling-in-a-sentence-representation-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Concept Models: Language Modeling in a Sentence Representation Space
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-layers-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Layers at Scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phi-4-technical-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phi-4 Technical Report
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukar.jpg" alt="Luka Ribar">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukar/">Luka Ribar</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukep.jpg" alt="Luke Prince">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukep/">Luke Prince</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Alexandre Payot">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/alexp/">Alexandre Payot</a>
+                        
+                      </strong>
+                      <br>
+                      ML Engineer
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-12-30 00:00:00+00:00" class="md-ellipsis">December 30, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              17 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:byte-level" class="md-tag">byte-level</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:embedding-models" class="md-tag">embedding-models</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:generative-models" class="md-tag">generative-models</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:language-models" class="md-tag">language-models</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reasoning" class="md-tag">reasoning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:sparsity" class="md-tag">sparsity</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:synthetic-data" class="md-tag">synthetic data</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:training" class="md-tag">training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:transformers" class="md-tag">transformers</a>
+      
+    
+  </nav>
+
+
+
+  <h1>December Papers: Spend Your FLOPs Wisely</h1>
+
+<p>Welcome to Papers of the Month — Graphcore Research's effort to bring you our pick of the most interesting ML papers.
+In December we noted a collection of papers which took innovative approaches to allocating compute (FLOPs) to input data.</p>
+<p>We start with the Byte Latent Transformer. This modifies the standard transformer to operate on <em>patches</em>, which comprise a variable number of input bytes, as determined by an entropy metric. The consequence of this is that compute is dynamically allocated towards "harder input data". This has some similarities with the Concept Model architecture, which also uses a flexible intermediate representation. The model performs autoregressive sentence generation in this modality-agnostic space, rather than token space. </p>
+<p>The Memory Layers architecture allows extra parameters to be added to a model without increasing FLOPs. Decoupling these resources gives model designers more control (e.g. for co-design, to fit their hardware resources) and potentially facilitates more effective models in general.</p>
+<p>Finally, the Phi-4 paper presents a rather different FLOPs angle: spending compute in the data-generation process to create higher quality data, leading to "student" models that (in some domains) out-perform their "teachers".</p>
+<p><em>We hope you enjoy these month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="byte-latent-transformer-patches-scale-better-than-tokens">Byte Latent Transformer: Patches Scale Better Than Tokens</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Artidoro Pagnoni, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2412.09871" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Tokenization is an essential preprocessing step of modern language models; however, it requires independent training and inference stages and can often lead to unexpected and undesired behaviors (see for example <a href="https://x.com/karpathy/status/1657949234535211009">comment by Karpathy</a>). On the other hand, training directly on characters (bytes) is inefficient and leads to processing exceedingly long sequence lengths.</p>
+<p>In this paper, the authors present a new transformer-based architecture called "Byte Latent Transformer" that operates directly on bytes, but avoids the issues associated with a naive byte-level model implementation. Their experiments scale-up the architecture to 8B parameters and show promising results when compared to the standard transformer with tokenization.</p>
+<p><img alt="Byte Latent Transformer model schematic." class="img-large" src="../potm/2024/12/byte-latent-transformer/fig-schematic.png" /></p>
+<figcaption>Figure 1. Byte Latent Transformer architecture.</figcaption>
+
+<h3 id="background">Background</h3>
+<p>The first stage of processing a string of text with a language model is <em>tokenization</em>: sentences are split into sub-words using previously learned rules (e.g. <a href="https://en.wikipedia.org/wiki/Byte_pair_encoding">byte pair encoding</a>), and the model generates the output one token at a time. However, using sub-words as elementary units can lead to surprising behaviors, such as susceptibility to spelling errors and difficulties operating with numbers. Byte-level models avoid this by operating directly on characters, however this can be highly inefficient as the full model needs to be run for every generated character.</p>
+<p>A closely-related previous paper <a href="https://arxiv.org/abs/2305.07185">MegaByte</a> tries to find a balance between the two worlds through a hierarchical approach: use a "big" transformer to predict groups of bytes (<em>patches</em>) together with a "small" transformer that generates the individual bytes using the big model's prediction. Byte Latent Transformer builds upon similar ideas and aims to extend this approach, by allowing <em>dynamic</em> patch sizes, as well as scaling-up the architecture.</p>
+<h3 id="their-method">Their method</h3>
+<p>The architecture of the Byte Latent Transformer follows a hierarchical approach (Figure 1): the initial local byte-level encoder encodes groups of bytes (patches), feeding these patch embeddings into a large latent transformer. The latent transformer predicts the next <em>patch</em>, and these next-patch embeddings are finally fed into a local decoder which generates the next-byte predictions. Let's now take a look at the individual stages in more depth.</p>
+<p><strong>Patching</strong></p>
+<p><img alt="Various byte-patching schemes." src="../potm/2024/12/byte-latent-transformer/fig-patching.png" /></p>
+<figcaption>Figure 2. Different byte-patching schemes (entropy-based applied here).</figcaption>
+
+<p>The first stage is grouping bytes into patches that will be individually processed by the large transformer. In MegaByte, the authors chose a fixed pre-defined number of bytes to group (e.g. 4 or 8). Ideally, however, patches should be equally "information-dense" and bytes should be grouped so that they can be effectively predicted together by the latent transformer.</p>
+<p><img alt="Entropy-based patching." src="../potm/2024/12/byte-latent-transformer/fig-entropy-patching.png" /></p>
+<figcaption>Figure 3. Entropy-based patching.</figcaption>
+
+<p>In order to do this dynamically, the authors chose to train a separate small character-level LLM that estimates the probability distribution over the next character. Then, the patch boundary is chosen as the point where the next-character entropy jumps, i.e., we separate patches as soon as the next character is "hard enough" to predict. This is done by either setting a global entropy threshold that needs to be exceeded, or when the entropy change between the steps is sufficiently large.</p>
+<p><strong>Local encoder</strong></p>
+<p><img alt="Local encoder and decoder architectures." src="../potm/2024/12/byte-latent-transformer/fig-encoder-decoder.png" /></p>
+<figcaption>Figure 4. Local encoder and decoder architectures.</figcaption>
+
+<p>The job of the local encoder (Figure 4, left) is to take the input byte sequence and output the sequence of patch embeddings to be processed by the latent transformer. The byte sequence is passed through a set of standard transformer layers (self-attention with a local window + feed-forward network); after each transformer layer, a cross-attention layer is added whose role is to pool the byte-representations into the patch representations (i.e., patch representations are the queries, and byte representations are the keys/values). Each patch representation only cross-attends to the bytes within its patch boundaries.</p>
+<p><strong>Latent transformer</strong></p>
+<p>Latent transformer takes the patch embedding sequence generated by the local encoder, and outputs "next-patch" embeddings. This is the standard transformer architecture that consumes the bulk of the model FLOPs, with the main difference being that its output is a patch embedding vector, instead of a probability distribution over the next token.</p>
+<p><strong>Local decoder</strong></p>
+<p>Finally, the local decoder (Figure 4, right) takes both the final byte encoder hidden states, and the patch embeddings output by the latent transformer, and generates the next byte one-by-one.</p>
+<p>Its architecture is very similar to the local encoder with a combination of the standard transformer layers and cross-attention layers, but the roles are inverted: the byte sequence now act as queries, and the key/value pairs are projected from the final latent transformer patch embeddings. The byte sequence embeddings thus pass through a sequence of cross-attention layers, followed by standard self-attention transformer layers.</p>
+<h3 id="results">Results</h3>
+<p><img alt="Bits-per-byte at fixed inference budget." src="../potm/2024/12/byte-latent-transformer/fig-bpb.png" /></p>
+<figcaption>Figure 5. Scaling results for a fixed inference budget.</figcaption>
+
+<p>Figure 5 shows the scaling trends for a fixed <em>inference</em> budget — note that as patch sizes can be larger than the average token size, the BLT models can have more parameters than an equivalent standard transformer architecture (as the bulk of the parameters is in the latent transformer that is called per-patch). This also means that the number of parameters can be increased by increasing the average patch size while fixing the total FLOPs consumed. The scaling curves show that, while at the "Chinchilla compute-optimal" point (left vertical line) the standard Llama architecture beats BLT, further training leads to a crossover point where BLT yields a lower loss.</p>
+<p><img alt="Bits-per-byte at compute-optimal ratio." src="../potm/2024/12/byte-latent-transformer/fig-bpb-compute-optimal.png" /></p>
+<figcaption>Figure 6. Scaling results at compute-optimal ratio.</figcaption>
+
+<p>Figure 6 shows further results at the compute-optimal training tokens/model size ratio, where for BLT models this corresponds to the latent transformer size. The results notably show that both "space-patching" (i.e. dividing patches at whitespaces) and entropy-based patching beat the MegaByte approach, while the entropy-based patching performs the best with the average patch size of four bytes.</p>
+<p><img alt="Downstream task performance." class="img-small" src="../potm/2024/12/byte-latent-transformer/fig-downstream.png" /></p>
+<p>Finally, extending the training over the compute-optimal point and comparing the results on standard downstream tasks, BLT shows an overall favorable performance compared to the standard Llama 3 architecture. Additional character-level tasks included in the paper also indicate much strong performance in settings where sub-word understanding is required.</p>
+<p>Overall, Byte Latent Transformer shows that a tokenizer-free hierarchical approach could be a promising direction for future language models as the authors show strong performance compared to the standard transformer-based Llama architecture.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2412.09871" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="large-concept-models-language-modeling-in-a-sentence-representation-space">Large Concept Models: Language Modeling in a Sentence Representation Space</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Loic Barrault, Paul-Ambroise Duquenne, Maha Elbayad, Artyom Kozhevnikov et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+FAIR at Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2412.08821" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Language models get the <a href="https://openreview.net/pdf?id=BZ5a1r-kVsf">Joint Embedding Predictive Architecture (JEPA)</a> treatment (gets JEPA-dised?)! The authors develop a proof-of-concept model that tries to break a document into a set of concepts based on sentence structure. Using a predictive encoder-decoder model, they train the model to predict the embedding of the next concept in the sequence. They show promising signs of a model that can efficiently produce coherent summaries of long documents without the need for autoregressive token generation.</p>
+<p><img alt="Schema representing the high level idea motivating large concept models. One use case is summarising long reasoning chains." src="../potm/2024/12/large-concept-models/FIG-LCM-Schema.png" /></p>
+<h3 id="background_1">Background</h3>
+<p>The core intuition motivating the design of this model is that tokens are not the best representation to learn high-level structure in natural language data. In particular, they argue that since the typical generating process for documents is that a human sits down to write a bullet point plan of the points they want to make, then expands upon each of these points to provide additional context and fluency, then refines until they are happy with the result. They point out that this generative process appears to start from something closer to an abstract concept space (bullet point plan), then fills details in token space. If they could capture this process in a generative model this should also improve language model efficiency, since we would not need to use a wasteful auto-regressive process to generate text, but could reduce the number of auto-regressive steps by at least an order of magnitude by sampling sequentially in a more compact latent concept space instead.</p>
+<h3 id="their-method_1">Their method</h3>
+<p>There is an inherent challenge in both defining a concept space and a generative process that maps concepts to tokens. The authors address each of these challenges in turn.</p>
+<p>Starting with the concept space, the authors use a sentence-level encoder-decoder transformer model trained as on a variety of tasks (machine translation, denoising, text-to-speech). They reason that concepts are better represented by phrases or sentences (10 - 20 tokens each), and that each of these tasks would be able to distil phrases into a common vector space that can represent concepts and be decoded back into semantically similar text.</p>
+<p><img alt="The SONAR model used for embedding sentences of tokens to concepts." src="../potm/2024/12/large-concept-models/FIG-SONAR.png" /></p>
+<p>For simplicity, we'll only provide a detailed outline of the concept predictor the authors use for large scale experiments as the authors played around with a number of different variants. They settled on a "Two-Tower" architecture comprised of a <em>contextualiser</em> and a <em>denoiser</em>. The <em>contextualiser</em> is a decoder-only transformer model that takes a sequence of concept vectors and encodes them into the last hidden state by a causal mask in self-attention layers. The output of the <em>contextualiser</em> is fed to the <em>denoiser</em> via a cross-attention in each transformer block, which is used to transform noise into a clean prediction of the next concept via diffusion.</p>
+<p><img alt="The two model architecture used to predict and generate concepts" src="../potm/2024/12/large-concept-models/FIG-Two-Tower.png" /></p>
+<h3 id="results_1">Results</h3>
+<p>The authors evaluate the model on summarisation tasks and compare with similarly sizes large language models with 7-8B parameters. Summarisation quality is a notoriously tricky capability to evaluate, so a mixture of n-gram based metrics and model-based metrics are used. In general the authors find that their large concept model performs similarly to large language models, although notably take a hit on fluency metrics (CoLA) for short-form summaries, and model-based source attribution metrics (SH-4). This is somewhat difficult to draw conclusions about since fluency is a core competency of large language models and model-based source attribution metrics are highly sensitive to data leakage.</p>
+<p><img alt="Performance on summarisation of short form documents compared to large language models." class="img-large" src="../potm/2024/12/large-concept-models/TBL-Short.png" /></p>
+<p><img alt="Performance on summarisation of long form documents compared to large language models." class="img-large" src="../potm/2024/12/large-concept-models/TBL-Long.png" /></p>
+<p>The authors also demonstrate that they can exploit the multi-lingual encoder model to perform zero-shot summarisation in many more languages than Llama 3.1, trained on a much smaller set of languages, demonstrating useful generalisation properties.
+<img alt="Generalisation of summarisation performance of the model to many languages." src="../potm/2024/12/large-concept-models/FIG-Multilingual.png" /></p>
+<h3 id="takeaways">Takeaways</h3>
+<p>I can believe that this is a step in the right direction for incorporating useful notions of hierarchy into generative language models. This was an interesting proof-of-concept study (I wish there was a different phrase in this case) of large concept models. There is clearly a lot of room for improvement, from stronger capturing of "concept" vectors via improved encoders, to more believable benchmarks of summarisation quality, extensions to other natural language tasks (e.g., reasoning, long-form question answering), and hyperparameter stability and quality of the generation process.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2412.08821" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="memory-layers-at-scale">Memory Layers at Scale</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Vincent-Pierre Berges, Barlas Oğuz, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta FAIR
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2412.09764" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>When scaling up LLMs, we usually increase the number of trainable parameters and the amount of training/inference compute together. This is what happens if you increase transformer width or depth since each parameter is used once per input token. In contrast to this, <em>memory layers</em> add a large but sparsely accessed "memory" parameter, allowing a vast increase in trainable parameters with a minimal increase in training and inference compute. This paper adapts previous ideas for memory layers to produce a model architecture that works at scale and compares favourably to the dense Llama 2 and Llama 3 families.</p>
+<p><img alt="On the left, two sets of boxes labelled k00 to k04 and k10 to k14, then two topk operations, indexing a grid of v00 to v44 (25 boxes). On the right: s11+s00, s11+s03, s14+s00, s14+s03 (all sums of selected scores), then top-k, softmax, and mixing with v40 and v43 (selected by top-k) to produce the output." class="img-large" src="../potm/2024/12/memory-layers/memory-layers-diagram.png" /></p>
+<figcaption>An illustration of a product key memory. A query is compared against two sets of keys, $K_1$ and $K_2$, yielding score vectors $s_0$ and $s_1$. The Cartesian product of the top-k indices of these $s_0$ and $s_1$ gives a set of $k^2$ values to consider. A final top-k of the sum of each pair of scores selects the values to mix, weighted by a softmax of their scores. This example uses $N=5^2, k=2$ and shows a single query head. (Diagram by reviewer.)</figcaption>
+
+<h3 id="background-memory-layers">Background - memory layers</h3>
+<p>A memory layer resembles sparse multi-head attention, except that the keys and values are directly trainable parameters, rather than projections of an input activation. The process follows:</p>
+<ol>
+<li>Derive a <em>query</em> from the input via a small query MLP.</li>
+<li>For each head, compute <em>scores</em> via dot product of query with every key.</li>
+<li><em>Select</em> the top-k scores.</li>
+<li>Softmax selected scores to get <em>weights</em>.</li>
+<li>Compute the weighted sum of selected <em>values</em> as the output.</li>
+</ol>
+<p>Unfortunately, this design has a high compute cost as the memory size is increased, since the query-key dot product is exhaustive. This is remedied using <em>product keys</em>, which compute similarity against two distinct sets of keys <span class="arithmatex">\(K_1\)</span> and <span class="arithmatex">\(K_2\)</span> to give score vectors <span class="arithmatex">\(s_1\)</span> and <span class="arithmatex">\(s_2\)</span>, then the score for a given value <span class="arithmatex">\(V_{ij}\)</span> is <span class="arithmatex">\(s_{1i} + s_{2j}\)</span>. This means the amount of compute scales as <span class="arithmatex">\(\sqrt{N}\)</span> for memory size <span class="arithmatex">\(N\)</span>. The process is illustrated in the figure above.</p>
+<h3 id="their-technique">Their technique</h3>
+<p>This work makes a few architectural modifications to the product key memory layer to produce a <code>Memory+</code> layer and trains it at scale in a modern Llama transformer architecture. The changes are:</p>
+<ul>
+<li>Wrap multi-head product key memory <strong>within a swiglu-gated MLP</strong>. The memory layer replaces the linear up-projection.</li>
+<li><strong>Replace 3 MLP layers</strong>, equally spaced in the transformer stack, with memory layers, which have distinct query MLPs and keys, but <strong>shared memory values</strong>.</li>
+<li>Use a <strong>small key dimension</strong>. For hidden size <span class="arithmatex">\(H\)</span>, the value dimension is set to <span class="arithmatex">\(H\)</span>, while each product key is size <span class="arithmatex">\(H/4\)</span>.</li>
+</ul>
+<p>For example, the largest model they train is based on Llama 3, replacing 3 MLPs with product key memories with <span class="arithmatex">\(2 \times 4096\)</span> keys, so the number of memory items (shared between all memory layers) is <span class="arithmatex">\(4096^2 = 16\textrm{M}\)</span>. Each value is a vector of size <span class="arithmatex">\(4096\)</span>, so the number of memory parameters (which is dominated by values) is <span class="arithmatex">\(4096^3 = 64\textrm{B}\)</span>.</p>
+<h3 id="results_2">Results</h3>
+<p>To test their architecture, the authors train autoregressive language models and evaluate multiple downstream tasks. They show improvements with training FLOP parity across models from 134M to 8B parameters, compared against mixture-of-expert models as well as dense models and vanilla product key memory layers.</p>
+<p>Their headline result shows task performance improvement as the memory layer is scaled, allowing a 1.3B model with <code>Memory+</code> layers to approach the performance of a 7B model without memory layers (dashed line).</p>
+<p><img alt="" src="../potm/2024/12/memory-layers/figure-1.png" /></p>
+<p>Their largest model (8B) follows the Llama 3 architecture, and generally outperforms the dense baseline after 1T training tokens, although not consistently across all downstream tasks.</p>
+<p><img alt="" src="../potm/2024/12/memory-layers/table-2.png" /></p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>The work shows promise for product key memory layers at scale. As the authors note, gains are more pronounced in early training, so it will be important to confirm the benefit for inference-optimised overtrained LLMs. They also highlight the challenge of optimising and co-evolving sparse techniques such as this with ML hardware.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2412.09764" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="phi-4-technical-report">Phi-4 Technical Report</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Marah Abdin et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Microsoft Research
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2412.08905" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>Can a small model be trained using synthetic data and exceed performance of its teacher model?</p>
+<p>The authors present a data generation recipe that allows them to train a state of the art 14B parameter model. They combine "organic" seed text, prompting, and a teacher model (GPT-4o), to train a model which outperforms its teacher on 3 reasoning benchmarks. Synthetic data is not a "cheap" substitute for organic data but offers:</p>
+<ul>
+<li>structured and gradual learning, better suited to the auto-regressive nature of the model ("organic" text is not written linearly).</li>
+<li>better alignment with inference contexts during pretraining.</li>
+</ul>
+<h3 id="their-method_2">Their method</h3>
+<p>"Phi" is a family of small models developed by Microsoft Research. The focus for these models is to maximise reasoning performance through the selection of an "optimal data mixture".
+Phi-3, the previous model in the family, was found to have very good (in class) performance up to a size of 7B but did not compare favourably at higher model sizes.
+That model was already trained on synthetic data, but only during the latter parts of pretraining, in contrast Phi-4 uses synthetic data from the very beginning of the pretraining process.</p>
+<p>To train Phi-4, the authors created 50 broad types of datasets for approximately 400B tokens of synthetic data.
+Synthetic data is not created out of thin air by prompting the teacher model: the authors use chunks of "organic" text and use those to "seed" multi-turn LLM based workflows that generate the synthetic data used to train Phi-4. The authors describe their approach to find high-quality seed texts:</p>
+<ul>
+<li>Identify web and code-based seeds, which are chunked and filtered for factual and reasoning content</li>
+<li>Collect question datasets from forums and websites: questions are filtered by difficulty by generating answers and assessing how consistent responses are across multiple generations, very easy and very hard questions are dropped</li>
+</ul>
+<p>Once identified, "organic" seeds are processed by pipelines which:</p>
+<ol>
+<li>augment them by rewriting the content into exercises, discussions or structured reasoning tasks</li>
+<li>iterates with self-revision to improve the answers provided in those exercises</li>
+<li>checks code and other scientific data through execution loops and tests</li>
+</ol>
+<p>Specifically the authors describe pipelines that:</p>
+<ul>
+<li>create question and answer pairs from other text forms by identifying logical progressions in the text</li>
+<li>and generate instructions from code snippets in a process they call "instruction reversal"</li>
+</ul>
+<p>The authors emphasize the importance of clean and correct organic text to act as seeds for synthetic data. As a consequence they invested in:</p>
+<ul>
+<li>Targeted acquisition of reasoning dense documents (arXiv, PubMed, GitHub, books)</li>
+<li>Filtered web dumps with non-LLM classifiers trained on 1M LLM generated annotations</li>
+<li>Created multi-lingual datasets with the same classifiers</li>
+<li>and custom extraction and cleaning pipelines to ensure uniformity between heterogeneous data sources</li>
+</ul>
+<p>To select their data mixture, the authors varied the proportion of each type of data used to train a 7B model with 1 trillion tokens. The final data mixture is shown in Table 5, reproduced below.</p>
+<p><img alt="Table showing the proportion of each data type used in the final data mixture. Overall more than 50% of data is synthetic in some way." class="img-medium" src="../potm/2024/12/phi-4/tab5-datamix.png" /></p>
+<p>The other interesting contribution of this report targets post-training: they introduce "Pivotal Token Search" (PTS). The authors' insight is that the generation of correct answers is dependent on the generation of a few key tokens. If those tokens can be identified from samples generated by the pretrained model, they can be used during DPO to provide token-level preference information. This method requires the generation of many alternative answers from the pretrained model to get an accurate assessment of the probability. While the reader is referred to the paper for a detailed description of the algorithm, Figure 3, reproduced below, plots the change in the probability of a correct answer during the answer to a math question.</p>
+<p><img alt="Illustration of the Pivotal token search process for an answer of GPT4o to a Math question. The image shows the generation text coloured with the probability of the final answer being correct. The probability starts low and shows 4 jumps, each marking a pivotal token." src="../potm/2024/12/phi-4/fig3-pts.png" /></p>
+<h3 id="results_3">Results</h3>
+<p>The training pipeline described in the report leads to a 14B parameter model with surprising performance on GPQA and MATH benchmarks, and the November 2024 AMC 10/12 test (a math competition held after the model was trained).
+Phi-4's score of 91.8 is higher than all other non-reasoning models, including its teacher model, GPT-4o.
+However, long chain-of-thought models, like OpenAI-o1, score above 120 (out of 150) in the AMC benchmark, but at a much greater inference cost, suggesting a trade-off between the two approaches.</p>
+<p><img alt="Result of Phi-4 and a selection of open and proprietary models (including GPT4o) on the AMC 10/12 November 2024 Math test. Phi4 performs best with a score of 91.8." src="../potm/2024/12/phi-4/fig1-amc-benchmark.png" /></p>
+<p>Beyond the final model, comparison with Phi-3 and the ablations of the data mixture show that relying on more than 50% of synthetic data in the early phases of pretraining lead to significant improvements on reasoning heavy benchmarks. The table below selects a few columns of tables 2 and 3 from the paper which compare performance of models at the end of pretraining to the previous generation phi-3-medium (pretrained only).</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>MMLU pro</th>
+<th>MBPP (Code)</th>
+<th>MATH</th>
+<th>TQA (Knowledge)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>phi-4 (4k)</td>
+<td>+10.3</td>
+<td>+6.8</td>
+<td>+8.9</td>
+<td>-0.7</td>
+</tr>
+<tr>
+<td>phi-4 (16k)</td>
+<td>+8.9</td>
+<td>+9.6</td>
+<td>+8.4</td>
+<td>-1.5</td>
+</tr>
+<tr>
+<td>Synthetic (13B)</td>
+<td>+4.0</td>
+<td>+5.0</td>
+<td>+4.9</td>
+<td>-14.8</td>
+</tr>
+<tr>
+<td>Synthetic + Web Rewrites (13B)</td>
+<td>+4.1</td>
+<td>+7.6</td>
+<td>+8.1</td>
+<td>-7.7</td>
+</tr>
+</tbody>
+</table>
+<p>The results table highlights the effectiveness of synthetic data on language understanding, code and math benchmarks: models pretrained mostly on synthetic data are several points above Phi-3 which saw much more web data. Meanwhile web data remains necessary for performance on general knowledge tests.</p>
+<p>Finally the authors observe that their post-training technique of chat SFT, pivotal token DPO, and judge guided DPO create a model which refuses to answer in many situations where it would have been wrong. Figure 6 from the report shows that PTS (labelled DPO Stage 1) reduces the rate of hallucination on the SimpleQA benchmark from 38.7% to 17.4%.</p>
+<p><img alt="Bar plot showing the performance of the model at different stages of training on SimpleQA. The pretrained model always answers with an error rate of 90%, the SFT, PST and Judge DPO stages increase refusal rate to 59, 79 and 82% respectively." src="../potm/2024/12/phi-4/fig6-hallucinations.png" /></p>
+<h3 id="takeaways_2">Takeaways</h3>
+<p>Far from triggering model collapse [<a href="https://www.nature.com/articles/s41586-024-07566-y">Shumailov et al.</a>] the Phi team manages to improve the performance of their model family.
+The authors present a comprehensive case for <em>carefully curated</em> synthetic data.
+They demonstrate that it can be used to train a model at scale, close to SOTA performance on reasoning benchmarks.
+The claim that Phi-4 is surpassing its GPT4o teacher is exciting but less convincing: the evaluations on which it outperforms the teacher are fairly constrained benchmarks where the emphasis of Q&amp;A in the training mix might give it an unfair advantage.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2412.08905" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

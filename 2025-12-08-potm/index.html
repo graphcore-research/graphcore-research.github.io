@@ -1,0 +1,1048 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-12-08-potm/">
+      
+      
+        <link rel="prev" href="../2025-11-05-the-role-of-graph-topology/">
+      
+      
+        <link rel="next" href="../2026-01-13-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>November Papers: Perspectives on efficiency - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="November Papers: Perspectives on efficiency - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-12-08-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-12-08-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="November Papers: Perspectives on efficiency - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-12-08-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-scale-second-order-optimization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        November Papers: Perspectives on efficiency
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-scale-second-order-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Scale Second-Order Optimization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intelligence-per-watt-measuring-intelligence-efficiency-of-local-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intelligence per Watt: Measuring Intelligence Efficiency of Local AI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#int-vs-fp-a-comprehensive-study-of-fine-grained-low-bit-quantization-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INT v.s. FP: A comprehensive study of fine-grained low-bit quantization formats
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/tomca.jpg" alt="Tom Cashman">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/tomca/">Tom Cashman</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/sylvainv.jpg" alt="Sylvain Viguier">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/sylvainv/">Sylvain Viguier</a>
+                        
+                      </strong>
+                      <br>
+                      Director, Applied AI
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Paul Balança">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/paulb/">Paul Balança</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-12-08 00:00:00+00:00" class="md-ellipsis">December 8, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              11 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficiency" class="md-tag">efficiency</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:inference" class="md-tag">inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llm" class="md-tag">llm</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:mup" class="md-tag">mup</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:optimisation" class="md-tag">optimisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:optimization" class="md-tag">optimization</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:power" class="md-tag">power</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantization" class="md-tag">quantization</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:scaling-laws" class="md-tag">scaling-laws</a>
+      
+    
+  </nav>
+
+
+
+  <h1>November Papers: Perspectives on efficiency</h1>
+
+<p>November is back to a favourite topic of ours: efficiency. We reviewed three of our favorite papers looking on LLM efficiency from different angles:</p>
+<ul>
+<li>First up, <a href="#how-to-scale-second-order-optimization">How to Scale Second-Order Optimization</a> is looking at optimal tuning of second order optimizers such as Muon. </li>
+<li><a href="#intelligence-per-watt-measuring-intelligence-efficiency-of-local-ai">Intelligence per Watt</a> discusses our favorite metric on large language models: energy efficiency. And how to take advantage of edge AI inference.</li>
+<li>Finally, <a href="#int-vs-fp-a-comprehensive-study-of-fine-grained-low-bit-quantization-formats">Int vs FP</a> is contributing to an old-timer topic in quantization: integer vs floating (block) point formats.</li>
+</ul>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="how-to-scale-second-order-optimization">How to Scale Second-Order Optimization</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Zixi Chen, Shikai Qiu, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+NYU
+</div>
+<div class="potm-meta">
+<a href="https://openreview.net/pdf?id=Ei6IsmxYrb" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Now we know that optimizers like Muon can train LLMs more efficiently than Adam, let's learn how to tune them for optimal efficiency.
+That will show us the difference between well-tuned Adam and well-tuned second-order optimizers.</p>
+<h4 id="background">Background</h4>
+<p>Throughout a decade of transformation in deep learning, Adam dominated as the <em>de facto</em> default optimizer of choice for neural network training.
+Although there have been many and various optimizers proposed, Adam's combination of momentum and normalized gradients with per-parameter adaptivity has proven hard to beat.
+However, this status quo is being challenged: <a href="https://kellerjordan.github.io/posts/muon/">Muon</a> was shown to be the most efficient optimizer for training LLMs in the <a href="https://github.com/KellerJordan/modded-nanogpt">nanogpt speed-run</a>, and then scaled up successfully to <a href="https://arxiv.org/abs/2502.16982">16B-parameter models</a>.
+In this context comes <a href="https://openreview.net/pdf?id=Ei6IsmxYrb">How to Scale Second-Order Optimization</a>, presented at NeurIPS 2025 in San Diego last week.</p>
+<p>The key idea in this paper is to analyse the hyperparameters and scaling laws that are applied with second-order optimizers, to find best practice for these new optimizers rather than simply reusing the rules and patterns that have proven to be successful for Adam.</p>
+<p>The paper presents several key findings:
+1. They derive the <a href="https://arxiv.org/abs/2011.14522">maximal update parameterization (<span class="arithmatex">\(\mu P\)</span>)</a> for second-order optimizers to transfer learning rate and other hyperparameters from small-scale runs. This includes a recommended scaling factor of <span class="arithmatex">\(1/L\)</span> for residual blocks in <span class="arithmatex">\(L\)</span>-layer transformers, as per <a href="https://arxiv.org/abs/2505.01618">'CompleteP'</a>.
+2. They show that under 'compute-optimal' training, following scaling laws like <a href="https://arxiv.org/abs/2203.15556">Chinchilla's 20 tokens per parameter</a>, the weight decay parameter <span class="arithmatex">\(\lambda\)</span> should be scaled inversely to the model depth <span class="arithmatex">\(D\)</span>, so that <span class="arithmatex">\(\lambda D\)</span> is roughly constant.
+3. They show that the optimal number of tokens per parameter is smaller for Muon: they find ~7 tokens per parameter to be compute-optimal for Muon and 11-14 for Adam. If holding the total training compute fixed, this means that we can train a larger/wider model with Muon than we can with Adam, leading to lower loss overall.</p>
+<h3 id="results">Results</h3>
+<p>Taken together, these recommendations show that well-tuned Muon can train LLMs with 1.4x less compute than a well-tuned Adam run requires to reach the same loss.</p>
+<p><img alt="Adam vs Muon training for compute vs loss. Muon training runs reach lower loss with equivalent compute." src="../potm/2025/11/scaling-second-order/figure_7a.png" /></p>
+<p>This figure from the paper shows Adam compared to Muon for training LLaMA-architecture LLMs at 190M-1.4B parameters.
+The 'Compute Optimal' curves (with triangle markers) use fewer tokens per parameter, so the fixed compute budget can be deployed to widen the model architecture, thus leading to lower loss compared to the runs with 20 tokens per parameter (with circle markers).
+For example, the smallest compute-optimal Adam run, at ~<span class="arithmatex">\(6 \times 10^{16}\)</span> FLOPs, uses model width of 576, whereas the Muon run uses a width of 704.
+Note that the <a href="https://openreview.net/forum?id=Ei6IsmxYrb">NeurIPS review discussion</a> suggests that the FLOP count excludes the additional compute required for the Muon optimizer steps, which the <a href="https://kellerjordan.github.io/posts/muon/">Muon blog post</a> estimates as an overhead of below 1% total FLOPs.</p>
+<p><img alt="Relative amount of compute required for Muon to reach the same loss as Adam. Muon is shown to need approx. 1.4x times compute." src="../potm/2025/11/scaling-second-order/figure_7b.png" /></p>
+<p>This plot corresponds to the graph above, and ablates each of the recommendations in the paper, showing the reduction in compute for Muon compared to Adam under their recommended scaling rules.
+The key takeaway is that when scaled correctly (circle markers), Muon maintains a constant 1.4x reduction in compute compared to Adam.
+Less-careful deployment of Muon (e.g. in the SP runs with square markers) leads to much smaller reductions in compute at larger model scale, reaching as little as a ~1.1x advantage for models at ~640M parameters.</p>
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>Second-order optimizers have a real and practical advantage over Adam for training LLMs at a range of model scales.</li>
+<li>Getting optimal efficiency from new optimizers requires some care: if we just swap out Adam for Muon, we're leaving potential efficiency gains on the table.</li>
+</ul>
+<div class="potm-footer-link">
+See <a href="https://openreview.net/pdf?id=Ei6IsmxYrb" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="intelligence-per-watt-measuring-intelligence-efficiency-of-local-ai">Intelligence per Watt: Measuring Intelligence Efficiency of Local AI</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Jon Saad-Falcon, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Standford University, Together AI
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2511.07885" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Can small local AI models shoulder a big portion of today’s AI workload—and do so efficiently? A new study by Saad-Falcon et al. tackles this question by introducing intelligence per watt (IPW) as a metric, defined as task accuracy per unit of power. The backdrop is an exploding demand for LLM inference that strains cloud data centers. Two trends make a case for local inference: open-source LLMs with ≤20B parameters approaching frontier-model performance, and increasingly powerful consumer hardware (e.g. Apple’s M4 chip) that can run these models at acceptable speeds.</p>
+<p>By measuring accuracy, energy, and latency on 1 million real queries across 20+ modern local LMs and various accelerators, the authors assess whether local devices can meaningfully offload work from centralized cloud servers. The bottom line is promising – efficiency, not just raw capability, could drive a paradigm shift from cloud-centric AI toward hybrid or even predominantly local AI inference.</p>
+<h3 id="their-method">Their method</h3>
+<p>In order to determine if Local AI models can answer queries, the researchers have selected 1M tasks from different datasets (WildChat, MMLU PRO...), covering chat, reasoning, expert knowledge, and economic breadth. 20 Open-weights models are selected including Qwen3, Gpt-oss, Gemma3, and compared against SOTA closed models (GPT-5, Gemini 2.5 PRO, Clause Sonnet 4.5). Answers are either graded with an LLM-as-a-judge evaluation or via exact match where ground truths exist. Accuracy and Perplexity per Watts are measured via an an <a href="https://github.com/HazyResearch/intelligence-per-watt">open-source benchmarking harness</a> including high-temporal resolution.</p>
+<h3 id="key-findings">Key Findings</h3>
+<p><strong>Local models can answer most questions.</strong> Small on-device LMs can correctly handle 88.7% of single-turn chat and reasoning queries. In fact, when each query is routed to the best-suited local model (out of a pool of 20), the local setup outperforms a cloud-only approach on 3 out of 4 benchmark tasks. Creative queries see &gt;90% accuracy, whereas highly technical domains are lower at ~68%, indicating some gaps remain. These results underscore that modern local models can now answer a majority of everyday users' queries.</p>
+<p><strong>The intelligence-per-watt of local AI systems has improved 5.3× over the last two years.</strong> This reflects a combination of better models and better chips – roughly a 3.1× gain from model improvements (architectures, training, distillation) and a 1.7× gain from hardware efficiency. Smaller models are getting smarter, and devices are getting more power-efficient, multiplying their combined impact. Figure 1 below illustrates the jump in IPW from 2023 to 2025, based on the best model-accelerator pair each year.</p>
+<p><img alt="Figure1 - Increase in Intelligence per Watt for Local LMs and Accelerators" class="img-large" src="../potm/2025/11/ipw/fig1.png" /></p>
+<p><strong>Cloud still has an efficiency edge.</strong> Despite the progress, today’s purpose-built datacenter accelerators remain 1.4×–2.3× more efficient (higher IPW) than consumer-grade chips when running the same model. The study found that a laptop-class Apple M4 Max delivered about 1.5× lower IPW than an enterprise NVIDIA GPU on identical model inference. This efficiency gap highlights room for improvement in local hardware. The authors note that it “justifies continued hardware specialization for local AI workloads” going forward.</p>
+<p><strong>Hybrid local-cloud inference saves energy.</strong> Perhaps the most practical finding is that a smart routing system can yield enormous resource savings. If an oracle router always chooses the smallest adequate local model for each query (and falls back to a larger cloud model only when needed), the analysis showed a ~80% reduction in energy consumption and similar drops in compute and cost, compared to using cloud-only LLMs. Even a more realistic router (e.g. one that guesses correctly 80% of the time) can cut total energy use by 60% without hurting accuracy. Given the current challenge in building AI inference capacity globally, shifting load to local devices is a compelling proposition.</p>
+<h3 id="limitations">Limitations</h3>
+<p>This paper is a good first step in figuring why and how local AI inference capabilities in devices should be prioritized. The systems in use are measured running fairly simple scenarios that may not reflect real-world usage.</p>
+<p>First, the evaluation focused on single-turn Q&amp;A and reasoning tasks, so it did not cover multi-turn dialogues or very specialized workflows (e.g. tool use, web browsing by an agent). There are many query types where local models might struggle or require larger contexts than a device can handle.</p>
+<p>Second, the impressive “local vs cloud” comparison stacks the deck in favor of local: the best-of-local ensemble drew from 20 models (ranging from 1B to 32B parameters), whereas the cloud baseline used only a few top-tier models. In practice, designing a very good local router and serving multiple models on-device is an unsolved engineering challenge.</p>
+<p>Finally, while local inference showed “interactive” latencies, the user experience of a hybrid system wasn’t deeply examined. Networking, model loading times, and other systems factors would affect real-world responsiveness in a local-plus-cloud deployment. Batch sizes have been kept to 1 for simplicity, which is not at all reflective of large inference systems. Those need to achieve very high utilization to be cost effective and hence resort to many optimisations around caching, continuous batching, speculative decoding and more.</p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>Intelligence per Watt is a timely metric that captures the real progress in making AI both smarter and leaner. This paper shows that a significant fraction of LLM queries could be served locally today, at a fraction of the energy cost, and that fraction is growing every year. For AI researchers and engineers, it’s a call to prioritize power-efficient model design and to co-design algorithms with hardware. For the industry, it hints at a future where personal devices handle much of the AI workload needs to be accounted for. Achieving that vision will require continued advances in both local models and silicon. The trajectory outlined here makes it look not only feasible, but perhaps inevitable.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2511.07885" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="int-vs-fp-a-comprehensive-study-of-fine-grained-low-bit-quantization-formats">INT v.s. FP: A comprehensive study of fine-grained low-bit quantization formats</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Mengzhao Chen, Meng Wu, Hui Jin, Zhihang Yuan, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+University of Hong Kong, ByteDance Seed, PicoHeart
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2510.25602" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="background_1">Background</h3>
+<p>Integer vs floating point formats has been, and still is, a long debate in the quantization machine learning literature. Historically, research work on neural network low-precision training has mainly focused on how to combine hardware available floating point formats (i.e. FP16, BF16, FP8) with techniques such as loss scaling and tensor scaling to get accurate model training. On the other hand, the (edge) inference literature has extensively covered integer quantization, usually with finer grained scaling resolution (e.g. channel scaling). The later choice motivated by the existence of native <code>int8</code> and <code>int16</code> vector instructions on numerous hardware platforms, including Arm CPUs on the edge, whereas FP8 hardware support is much more recent and limited [1].</p>
+<p>Latest low-precision literature, on training as well as inference, has converged towards the use of fine-grained block scaling formats, with block size 16 or 32. The later provide improved accuracy for machine learning models, while allowing to push towards 4-bits and below formats. In this work, the authors are providing a large overview of different integer and floating point block scaling formats, and how they perform in inference and training scenarios.</p>
+<h3 id="analysis">Analysis</h3>
+<p>The paper provides an in-depth analysis of quantization error, on theoretical Gaussian data as well as experimental training tensors. The quantization signal-to-noise ratio (QSNR) is defined as following:</p>
+<div>
+$$
+\text{QSNR} = -10\log_{10} \left( \frac{\lVert X - X_q\rVert_2^2}{\lVert X \rVert_2^2} \right)
+$$
+</div>
+
+<p>With block scaling quantization format, one key metric is the <strong>crest factor</strong>:</p>
+<div>
+$$
+\kappa = \frac{\max(|\textbf{X}|)}{\lVert \textbf{X} \rVert_2}
+$$
+</div>
+
+<p>i.e. comparing the peak value of a tensor to its <span class="arithmatex">\(L^2\)</span>-norm. Block scale quantization is usually done by renormalizing all values by the maximum in a block, meaning that if the later is an outlier, the other values will tend to be "squeezed" to the sub-normal range, or flushed to zero. As a consequence, the larger the crest factor is, the more quantization error will tend to be large for low-bits formats.</p>
+<p>A theoretical QSNR modelling is provided on Gaussian random data, showing that floating point quantization is showing better signal-to-noise ratio for large crest factor (the cut-off being around 2).</p>
+<p><img alt="Crest analysis of block formats on random Gaussian data." class="img-medium" src="../potm/2025/11/int-vs-fp/gaussian-crest-factor.png" /></p>
+<p>A similar analysis is done on experimental tensors (activations, weights and gradients):</p>
+<p><img alt="Crest analysis of block formats on LLM experimental tensors data. No Hadamard transform." class="img-medium" src="../potm/2025/11/int-vs-fp/tensor-crest-factor-no-hd.png" /></p>
+<p>It shows in particular that <code>int4</code> is competitive with <code>fp4</code> when associated with an FP8 E4M3 floating point scaling factor. Additionally, the combination with random Hadamard rotation on the every block leads to a substantial QSNR improvement on integer formats:</p>
+<p><img alt="Crest analysis of block formats on LLM experimental tensors data. With Hadamard transform." class="img-medium" src="../potm/2025/11/int-vs-fp/tensor-crest-factor-with-hd.png" /></p>
+<p>As observed on the x-axis, applying an Hadamard transform will tend to decrease the crest factor of block, as any large outlier will be "spread" over all values. As a consequence, in the 4-bits scenario, most blocks are moved in a crest range favorable to integer quantization.</p>
+<h3 id="experimental-results">Experimental results</h3>
+<p>The data analysis of the authors is combined with experimental results, on inference and training. On the inference side, a direct-cast comparison in done on a collection of models:</p>
+<p><img alt="Direct-cast inference analysis. With and without Hadamard transform." class="img-medium" src="../potm/2025/11/int-vs-fp/inference-direct-cast.png" /></p>
+<p>As argued by the authors, integer block formats match the accuracy of floating point formats when combined with Hadamard transforms. It would interesting to see if these results can be extended to quantization aware training, which is nowadays the standard for the optimal accuracy on quantized models.</p>
+<p>The authors also validate their approach on LLM pre-training. Training experiments are done on Llama1B and Llama3B models, using the Olmo2 dataset:</p>
+<p><img alt="LLM Llama 3B pre-training in MXIn8 and MXFP8." class="img-medium" src="../potm/2025/11/int-vs-fp/training-8bits.png" /></p>
+<p>As presented in other FP8 and FP4 pre-training papers [2,3], it would be interesting to extend these experimental pre-training runs beyond 100B tokens to validate the result. As seen in these works, using a different numerical precision may have an effect on the training loss curve only later in the training (i.e. after 200-300B tokens).</p>
+<h3 id="references">References</h3>
+<ol>
+<li><a href="https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/arm-a-profile-architecture-developments-2023">Arm v9.5A extension with FP8 integration</a></li>
+<li><a href="https://arxiv.org/abs/2505.19115">FP4 All the Way: Fully Quantized Training of LLMs</a></li>
+<li><a href="https://arxiv.org/pdf/2509.25149">Pretraining Large Language Models with NVFP4</a></li>
+<li><a href="https://arxiv.org/abs/2404.00456">QuaRot: Outlier-Free 4-Bit Inference in Rotated LLMs</a></li>
+</ol>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2510.25602" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

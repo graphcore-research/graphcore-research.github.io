@@ -1,0 +1,1150 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-09-08-potm/">
+      
+      
+        <link rel="prev" href="../2025-08-01-potm/">
+      
+      
+        <link rel="next" href="../2025-10-07-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>August Papers: Optimal Dataset Mixtures, Stable Molecule Generation, and Agentic Hypergraph RAG - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="August Papers: Optimal Dataset Mixtures, Stable Molecule Generation, and Agentic Hypergraph RAG - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-09-08-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-09-08-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="August Papers: Optimal Dataset Mixtures, Stable Molecule Generation, and Agentic Hypergraph RAG - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-09-08-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#admire-bayesopt-accelerated-data-mixture-re-weighting-for-language-models-with-bayesian-optimization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        August Papers: Optimal Dataset Mixtures, Stable Molecule Generation, and Agentic Hypergraph RAG
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#admire-bayesopt-accelerated-data-mixture-re-weighting-for-language-models-with-bayesian-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADMIRE-BayesOpt: Accelerated Data MIxture RE-weighting for Language Models with Bayesian Optimization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guiding-diffusion-models-with-reinforcement-learning-for-stable-molecule-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guiding Diffusion Models with Reinforcement Learning for Stable Molecule Generation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graph-r1-towards-agentic-graphrag-framework-via-end-to-end-reinforcement-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graph-R1: Towards Agentic GraphRAG Framework via End-to-end Reinforcement Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/michaelp.jpg" alt="Michael Pearce">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/michaelp/">Michael Pearce</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/yemanh.jpg" alt="Yeman Brhane Hagos">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/yemanh/">Yeman Brhane Hagos</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/kheerann.jpg" alt="Kheeran Naidu">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/kheerann/">Kheeran Naidu</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-09-08 00:00:00+00:00" class="md-ellipsis">September 8, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              15 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:active-learning" class="md-tag">active-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:dataset" class="md-tag">dataset</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:ligand" class="md-tag">ligand</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:molecule-generation" class="md-tag">molecule-generation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:optimisation" class="md-tag">optimisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:retrieval-augmented-generation" class="md-tag">retrieval-augmented-generation</a>
+      
+    
+  </nav>
+
+
+
+  <h1>August Papers: Optimal Dataset Mixtures, Stable Molecule Generation, and Agentic Hypergraph RAG</h1>
+
+<p>August, even with its heat waves and holidays, left no shortage of exciting research. Our top papers for this month are the following: 
+- <a href="#admire-bayesopt-accelerated-data-mixture-re-weighting-for-language-models-with-bayesian-optimization">ADMIRE-BayesOpt</a> that investigates how to weight different data sources when they are mixed to make a single training dataset where, using multi-Fidelity Bayesian Optimization, the search for the optimal mixture can be automated;
+- <a href="#guiding-diffusion-models-with-reinforcement-learning-for-stable-molecule-generation">Stable Molecule Generation</a> that uses a force-field based reward function to fine-tune pre-trained 3D molecule generation diffusion models with the goal of sampling physically stable and valid molecules; and
+- <a href="#graph-r1-towards-agentic-graphrag-framework-via-end-to-end-reinforcement-learning">Graph-R1</a> that takes an agentic RAG approach with a knowledge hypergraph to effectively represent and retrieve information from a corpus of documents.</p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="admire-bayesopt-accelerated-data-mixture-re-weighting-for-language-models-with-bayesian-optimization">ADMIRE-BayesOpt: Accelerated Data MIxture RE-weighting for Language Models with Bayesian Optimization</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Shengzhuang Chen, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Thomson Reuters Foundational Research, Imperial College London, University of West Virginia, Graphcore
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2508.11551" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<p>This is a Graphcore co-authored paper.</p>
+<h3 id="the-key-idea">The key idea</h3>
+<p>While model design and architectures have received a lot of attention, there has been comparatively less focus on dataset based optimizations. We have a large language model that we wish to finetune for some given benchmark and we have multiple training datasets, e.g. Wikipedia, Github, maths, etc. to finetune our model. Hypothetically, we could train using only one dataset we think is most appropriate, or we could train using a uniform mixture of all training sets. Realistically, we would not expect the ideal mixture to be so simple and as the number of datasets grows, e.g. 10 or more, manually tuning the data mixture becomes less feasible and finding an optimal mixture becomes exponentially harder. As the data mixture significantly affects performance, the risk of lost performance due to a sub optimal mixture becomes much more likely.</p>
+<p>In practice, one would use expert prior knowledge, and previous works have used a grid search over a range of mixtures, or training a small language model on a range of mixtures and using the best mixture on the small model to train one large language model.</p>
+<p>This work reframes the mixture optimization problem as a sequential iterative search: one may choose a data mixture, choose a model (small, medium, large), train and measure validation score, then choose the next mixture and model, train + validate, and repeat. In contrast with grid search or random search, determining each new experiment can be done with the hindsight of all past experiments, a search algorithm can focus on the most promising regions of mixture space.</p>
+<p>Motivated by the extensive hyperparameter and black box optimization literature, this paper proposes to use Multi-Fidelity Bayesian Optimization (MFBO) as the search algorithm. At each iteration the MFBO algorithm chooses the model and data mixture and at the end returns the best mixture for the large model.</p>
+<p>Further, the paper provides a dataset of training runs, each run consists of the data mixture, the model size and the validation scores and other metadata. Future work on data mixture optimization can use these runs to compare algorithms without the need for a large GPU compute cluster.</p>
+<p><img alt="Flow chart." src="../potm/2025/08/admire-bo/fig_1admire_bo.svg" /></p>
+<figcaption>Figure 1. The ADMIRE-BayesOpt loop.  Top left: each data mixture $\boldsymbol{\pi}$ is a vector of non-negative mixture weights that sum to unity $\sum_i \pi_i = 1$. Top right: each mixture weight $\boldsymbol{\pi}$ has a corresponding scalar validation performance $y$ and mixtures with scores are used as a training dataset for a Gaussian process regression model. The GP model provides a mean and uncertainty estimate of $y$ at new unseen mixture $\boldsymbol{\pi}$. The acquisition function quantifies the benefit of using  a mixture to train a model and measure validation score. Bottom: the acquisition value for a range of mixtures varies for each model size, the large model provides the most benefit but at the most cost. The purple point for medium model has the highest acquisition value, it is chosen for training and evaluation and added ot the GP dataset.  </figcaption>
+
+<h3 id="background">Background</h3>
+<p>While a Bayesian optimization tutorial is beyond the scope of this post, here is a quick introduction.</p>
+<p>Starting from a small set of evaluated mixtures, <span class="arithmatex">\(\{(\boldsymbol{\pi}_1,y_1),....,(\boldsymbol{\pi}_n, y_n)\}\)</span>, classical BO methods consist of two components: a Gaussian process regression model trained on the evaluated mixtures so far mapping a new mixture <span class="arithmatex">\(\boldsymbol{\pi}\)</span> to a prediction and uncertainty <span class="arithmatex">\(N(y ;\mu (\boldsymbol{\pi}), \sigma^2(\boldsymbol{\pi}))\)</span> and an acquisition function <span class="arithmatex">\(\alpha(\boldsymbol{\pi})\in\mathbb{R}\)</span> that at any given <span class="arithmatex">\(\boldsymbol{\pi}\)</span> uses the model to quantify the expected benefit of hypothetically training the model and measuring the validation objective <span class="arithmatex">\(y\)</span>. The acquisition function captures the exploration-exploitation trade-off and this work uses <a href="https://link.springer.com/article/10.1023/A:1008306431147">Expected Improvement</a> and <a href="https://arxiv.org/abs/1703.01968">Max Value Entropy Search</a>. The mixture with the highest acquisition value,</p>
+<div>
+$$
+\boldsymbol{\pi}_{n+1}=\arg\max \alpha(\boldsymbol{\pi}),
+$$
+</div>
+
+<p>is used to train a model and measure validation performance <span class="arithmatex">\(y_{n+1}\)</span>. The new point is added to the dataset for the GP model, the model is updated the algorithm repeats. </p>
+<p>Multi-Fidelity Bayesian Optimization augments the search space with a fidelity level, in this case a model size parameter, at each iteration the algorithm must determine a mixture and a model <span class="arithmatex">\((\boldsymbol{\pi}, m)\)</span>. The Gaussian process regression model must be designed to predict over the joint <span class="arithmatex">\((\boldsymbol{\pi}, m)\)</span> space as well as the acquisition function <span class="arithmatex">\(\alpha(\boldsymbol{\pi}, m)\)</span>. Each model size has a corresponding cost of evaluation, <span class="arithmatex">\(c_m\)</span> where the small model is cheaper than the large model and the acquisition function uses the cost the quantify the acquisition value per unit cost of training a given model with a given mixture, for a given mixture, a large model may cost twice the compute the train than a small model, yet it may provide 3 time the hypothetical benefit, then the large model will have higher acquisition function value and will be chosen for the next experiment.</p>
+<h3 id="experiments">Experiments</h3>
+<p>There are two benchmark datasets of pre-trained runs that can be used for comparing data mixture optimization algorithms
+- <a href="https://arxiv.org/abs/2101.00027"><strong>Pile</strong></a> is a dataset of English text for LLM training, this was used by the authors of the <a href="https://arxiv.org/abs/2407.01492">RegMix</a> data mixture optimization algorithm who provide a set of dataset of training results for 1M, 60M and 1B parameter language models with different mixtures.
+- <a href="https://arxiv.org/abs/2411.15124"><strong>Tülu</strong></a> is a collection post-training datasets, in this work the authors use this to train Qwen2.5-500M, Qwen2.5-3B, Qwen2.5-7B models with a variety of randomly generated mixtures and measured validation metrics.</p>
+<h4 id="zero-shot-transfer">Zero-Shot Transfer</h4>
+<p>The first set of experiments restricts the optimization algorithms to only use one model to evaluate a data mixture, e.g. use a small model to find the optimal data mixture, then for performance measurement, use the best mixture to train one large model and measure large model validation performance, transfer the optimal mixture from small to large in a "zero shot" fashion, without any large model training data. ADMIRE-BayesOpt out-performs non-sequential methods. Though when optimizing the mixture for a small model, the algorithms do not converge to the best large model mixture, there is a ceiling on how well zero-shot transfer can work.</p>
+<p><img alt="Results Zero Shot Pile." src="../potm/2025/08/admire-bo/admire_zero_PILE.png" />
+<img alt="Results Zero Shot Tulu." src="../potm/2025/08/admire-bo/admire_zero_tulu.png" /></p>
+<figcaption>Figure 2. Large model validation performance over time when optimizing mixture using a single model and transferring best single-model mixture for use on large model. For small models, (bottom row, middle row), the algorithms do not converge to the best large model mixture.</figcaption>
+
+<h4 id="multi-fidelity-optimization">Multi-Fidelity Optimization</h4>
+<p>The ceiling on zero-shot transfer can be removed by simply optimizing the mixture for just the large model. However this is the most computationally expensive and small models can act as cheap approximate proxy for the large model.
+In the second set of experiments, the optimization algorithm is free to choose a mixture and also choose from 1M, 60M, 1B models for Pile and 500M, 3B, 7B models for Tülu with varying cost, all with the goal of finding the best mixture for the large model. The Gaussian Process regression is used to predict the best mixture for the large model and the corresponding validation performance is reported. The optimization algorithm can now converge to the best large model mixture (red) with much less compute than using only the large model (blue).
+<img alt="Results Multi-fidelity" src="../potm/2025/08/admire-bo/admire_transfer.png" /></p>
+<figcaption>Figure 3. Large model validation performance over time when the data mixture optimizer can choose a mixture and a model size at each iteration (red) vs when it can only choose the large model (blue). </figcaption>
+
+<h3 id="takeaways">Takeaways</h3>
+<ul>
+<li>LLM performance is sensitive to training data mixture and should be a key consideration in model training</li>
+<li>Each model size has a different optimal data training mixture</li>
+<li>Using Multi-Fidelity Bayesian Optimization yields higher performing data mixtures within a given wall clock time than restricting to one model size.</li>
+</ul>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2508.11551" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="guiding-diffusion-models-with-reinforcement-learning-for-stable-molecule-generation">Guiding Diffusion Models with Reinforcement Learning for Stable Molecule Generation</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Zhijian Zhou, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Fudan University, Shanghai Innovation Institute, Shanghai Academy of Artificial Intelligence for Science
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2508.16521" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>The authors developed Reinforcement Learning with Physical Feedback (RLPF), a model for generating physically realistic 3D molecular structures. While diffusion models with equivariant neural networks capture molecular geometry, they often fail to ensure physical stability. RLPF addresses this issue by fine-tuning a pretrained model with proximal policy optimization. The key contribution is the use of force field based reward functions, which provides physical feedback to guide molecule generation towards energetically stable and valid conformations. Experiments on QM9 and GEOM-drug show that RLPF significantly improves stability, and generalizes across model backbones.</p>
+<h3 id="their-method">Their method</h3>
+<p>RLPF uses reward signals derived from force field-based metrics to fine-tune pretrained diffusion models to guide the generation of physically realistic and energetically stable molecules. Figure 1 shows the overall workflow of RLPF and it contains three main components:</p>
+<ol>
+<li>
+<p><strong>Trajectories sampling</strong><br />
+   Using the pre-trained model $p_{\theta_{\text{old}}} $ generate <span class="arithmatex">\(K\)</span> molecular trajectories by denoising latent variables over $ T $ timesteps. This process captures both the intermediate states $ z_t $ and the final molecular structure $z_0 = (x, h) $.  </p>
+</li>
+<li>
+<p><strong>Rewards calculation</strong><br />
+   The generated molecules <span class="arithmatex">\(z_0 = (x, h)\)</span> are evaluated using reward functions, extended tight binding (xTB) based force deviation and valency-based stability. These evaluations yield scalar rewards $ r(x, h) $.  </p>
+</li>
+<li>
+<p><strong>Fine-tune with RL</strong><br />
+   For each trajectory $ k $, the reward $ r(x^k, h^k) $ is normalized to obtain an advantage estimate $ \hat{A}^k_t $. The importance sampling ratio $ I^k_t(\theta) $ is computed using log-likelihood scores. Finally, a PPO-style clipped policy objective is optimized to update the model parameters $ \theta $.  </p>
+</li>
+</ol>
+<p><img alt="RLPF Workflow" src="../potm/2025/08/rlpf/workflow.png" /></p>
+<p>The molecule generation is formulated as MDP defined by the following components:</p>
+<ul>
+<li><strong>State</strong>: <span class="arithmatex">\(s_t = (z_t, t, c)\)</span>, where <span class="arithmatex">\(c\)</span> is the conditioning variable (if available), <span class="arithmatex">\(t\)</span> the timestep, and <span class="arithmatex">\(z_t = [x_t, h_t]\)</span> the latent at step <span class="arithmatex">\(t\)</span>. The <span class="arithmatex">\(x_t\)</span> and <span class="arithmatex">\(h_t\)</span> are atom <span class="arithmatex">\(3D\)</span> coordinate and atom type encoding, respectively. </li>
+<li><strong>Action</strong>: $ a_t = z_{t-1}$, corresponding to the output of the reverse diffusion step.  </li>
+<li><strong>Policy</strong>: <span class="arithmatex">\(\pi(a_t \mid s_t) = p_\theta(z_{t-1} \mid z_t, t, c)\)</span>, which is the diffusion backbone neural network parameterized by parameters <span class="arithmatex">\(\theta\)</span>.</li>
+<li><strong>Reward</strong>: $ R(s_t, a_t) = r(z_0, c) \;\; \text{if } t=0,\; \text{and } 0 \;\text{otherwise}$.  </li>
+</ul>
+<p>Generating a molecule consists a trajectory from step <span class="arithmatex">\(t=T\)</span> to <span class="arithmatex">\(t=0\)</span>, where the <span class="arithmatex">\(z_0\)</span> from the final diffusion step is the final denoised sample.  Suppose a trajectory <span class="arithmatex">\(\tau\)</span> denote a state-action sequence <span class="arithmatex">\(s_0, a_0, s_1, a_1, \ldots, s_T, a_T\)</span>. </p>
+<p>The total reward of the trajectory is given by $R(\tau) = \sum_{t=0}^{T} r(s_t, a_t) = r(s_0) $, since reward is only available at the last step only. </p>
+<p>The goal is to learn a policy, <span class="arithmatex">\(p_\theta\)</span>, that maximizes the expected reward over the trajectories with performance objective (<span class="arithmatex">\(J(\theta)\)</span>).</p>
+<div>
+ $$
+J(\theta) = \mathbb{E}_{\tau \sim p_{\theta}(.)}\left[ \;  R(\tau)\; \right] 
+= \sum_{\tau} p_{\theta}(\tau) R(\tau)
+$$
+</div>
+
+<p>The goal is to find <span class="arithmatex">\(\theta\)</span> that maximizes <span class="arithmatex">\(J(\theta)\)</span>:</p>
+<div>
+ $$
+\max_{\theta} J(\theta) 
+= \max_{\theta} \sum_{\tau} p_{\theta}(\tau) R(\tau)
+$$
+</div>
+
+<p>This aims to find a policy that assigns larger probabilities to trajectories that have high reward and lower probabilities to trajectories with lower reward. This is achieved using gradient based optimization</p>
+<div>
+$$
+\nabla_\theta J(\theta) =  \mathbb{E}_{\tau \sim p_{\theta}(.)} \left[ \nabla_\theta \log p_{\theta}(\tau) R(\tau) \right]
+$$
+</div>
+
+<p>For stability reason, the authors applied PPO-style surrogate objective defined below:</p>
+<div>
+$$
+\mathcal{L}^{\text{CLIP}}_{\text{RLPF}}(\theta) := \mathbb{E}_t \left[ \sum_{k=0}^K \min \left( I_t^k(\theta) \hat{A}_t^k, \text{clip}(I_t^k(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_t^k \right) \right]
+$$
+</div>
+
+<p>where <span class="arithmatex">\(p_{\theta old}\)</span> denotes the diffusion model before the current update.</p>
+<p>For each time step t and trajectory k, the importance sampling ratio (<span class="arithmatex">\(I_t^k(\theta)\)</span>) is defined as :</p>
+<div>
+$$
+I_t^k(\theta) := \frac{p_\theta(z_{t-1}^k \mid z_t^k)}{p_{\theta_{\text{old}}}(z_{t-1}^k \mid z_t^k)},
+$$
+</div>
+
+<p>The advantage estimate <span class="arithmatex">\(\hat{A}_t^k\)</span> is computed via standardization of the scalar reward:</p>
+<div>
+$$
+\hat{A}_t^k := \frac{r^k(x_t^k, h_t^k) - \mu}{\delta},
+$$
+</div>
+
+<p>where <span class="arithmatex">\(\mu\)</span> and <span class="arithmatex">\(\sigma\)</span> are the running mean and standard deviation of recent rewards across trajectories.</p>
+<p>The reward used to guide generation is the deviation of generated molecules from their equilibrium structure measured by root mean square deviation (RMSD) of atomic forces. These were computed using two methods: quantum mechanical calculations at the B3LYP/6-31G(2df,p) level of theory or the semi-empirical GFN2-xTB force field. </p>
+<h3 id="results">Results</h3>
+<p>RLPF was evaluated on QM9 and GEOM-drug datasets. RLPF fine-tuned models were compared with a range of state-of-the-art generative baselines, including EDM, EDM-BRIDGE, GEOLDM, EDN, GeoBFN, and UniGEM. Molecular quality metrics, such as atom stability, molecule stability, chemical validity, uniqueness, and novelty were used to compare the performance of the molecules</p>
+<p>As shown in Table 1, EDM fine-tuned with RLPF (EDM-RLPF) consistently improved the results of molecular metrics compared with the baseline EDM model on the QM9 dataset. While baseline EDM performance was inferior compared with the their baseline model, EDM-RLPF outperformed other baseline models in three out of four metrics used by the authors.  The baseline models were trained with configuration provided in the original papers.  Moreover, on GEOM-drug dataset, EDM-RLPF improved atom stability from <span class="arithmatex">\(81.3\%\)</span> to <span class="arithmatex">\(87.53\%\)</span> and increased validity from <span class="arithmatex">\(91.9\%\)</span> to <span class="arithmatex">\(99.20\%\)</span> compared with EDM model.</p>
+<p>During fine-tuning, the same pre-training data was used.  The number of denoising time steps <span class="arithmatex">\(T\)</span> is set to <span class="arithmatex">\(1000\)</span>, with <span class="arithmatex">\(K = 512\)</span> sampled trajectories per epoch and the model was fine-tuned using force deviation reward computed via DFT at the B3LYP/6-31G(2df,p) level. </p>
+<p><img alt=" Evaluation metrics for 3D molecular generation on QM9" src="../potm/2025/08/rlpf/table1.png" /></p>
+<figcaption></figcaption>
+
+<p>Furthermore, to evaluate genralizability of RLPF, the authors applied RLPF to other generative model backbones beyond EDM. As shown in the Table 2, RLPF consistently improves atom stability, molecule stability, and validity across all backbones.</p>
+<p><img alt="Evaluation metrics for 3D molecular generation on QM9 using EDM, GeoLDM, and UniGEM backbones." src="../potm/2025/08/rlpf/table3.png" /></p>
+<figcaption></figcaption>
+
+<p>Overall, RLPF could be flexibly integrated into different architectures and improves physical plausibility of generated molecules using physics inspired feedback during training.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2508.16521" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="graph-r1-towards-agentic-graphrag-framework-via-end-to-end-reinforcement-learning">Graph-R1: Towards Agentic GraphRAG Framework via End-to-end Reinforcement Learning</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Haoran Luo et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Beijing University of Posts and Telecommunications, Nanyang Technological University, National University of Singapore, Beijing Institute of Computer Technology and Application, Beijing Anzhen Hospital, Capital Medical University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2507.21892" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>The authors present an agentic approach for RAG where, in each step, an LLM-based agent is given the choice to either (1) retrieve more information for its context or (2) terminate and answer the query. Their LLM-based agent is fine-tuned from a pretrained LLM using an end-to-end reinforcement learning (RL) objective based on Group Relative Policy Optimization (GPRO) that rewards the agent for the format of the response and the quality of the response upon termination. Compared to previous work for agentic RAG (e.g., <a href="https://arxiv.org/abs/2503.05592">R1-Searcher</a> and <a href="https://arxiv.org/abs/2503.09516">Search-R1</a>), the key difference in their approach is in the retrieval step. They perform retrieval from a knowledge hypergraph that is constructed based on the underlying corpus of documents.</p>
+<h3 id="their-method_1">Their method</h3>
+<p><img alt="An illustration of Graph-R1." src="../potm/2025/08/graph-r1/method.png" /></p>
+<figcaption>Figure 1. An illustration of Graph-R1.</figcaption>
+
+<p><em>Hypergraph Construction.</em> They first use the corpus of documents <span class="arithmatex">\(K\)</span> to construct a knowledge hypergraph <span class="arithmatex">\(G = (V, E)\)</span> where, for each document <span class="arithmatex">\(d \in K\)</span>, they do the following:
+1. Extract relational facts <span class="arithmatex">\(\\{(e_i, V_{e_i})\\} \sim \pi_\text{ext}(d)\)</span> using an LLM-based extractor <span class="arithmatex">\(\pi_\text{ext}(d)\)</span>.
+2. For each fact <span class="arithmatex">\((e_i, V_{e_i})\)</span> extracted, add the hyperedge <span class="arithmatex">\(e_i\)</span> to <span class="arithmatex">\(E\)</span> and each of its corresponding entities <span class="arithmatex">\(v \in V_{e_i}\)</span> to <span class="arithmatex">\(V\)</span>.</p>
+<p><em>Hyperedge Retrieval.</em> Then, given any query <span class="arithmatex">\(q\)</span> and an embedding model <span class="arithmatex">\(\phi\)</span>, retrieving from the corpus of documents can be performed directly by retrieving hyperedges from the hypergraph <span class="arithmatex">\(G\)</span> as follows:
+1. Embed the query <span class="arithmatex">\(q\)</span> using <span class="arithmatex">\(\phi\)</span> to get the embedding vector <span class="arithmatex">\(\phi(q)\)</span>. Then, obtain the top-<span class="arithmatex">\(k_E\)</span> hyperedges <span class="arithmatex">\(F_E \subseteq E\)</span> whose embedding vectors using <span class="arithmatex">\(\phi\)</span> are most similar to <span class="arithmatex">\(\phi(q)\)</span>. This makes up the final set of hyperedges retrieved in this step.
+    <div>
+    $$
+    F_E = \text{argmax}<em V="V" _in="\in" v="v">{e \in E}^{k_E}{\text{sim}(\phi(e), \phi(q) )}
+    $$
+    </div>
+2. Extract the entities <span class="arithmatex">\(V_q\)</span> present in the query <span class="arithmatex">\(q\)</span> using an LLM-based extractor and embed them using <span class="arithmatex">\(\phi\)</span> to get a single embedding vector <span class="arithmatex">\(\phi(V_q)\)</span>. Then, obtain the top-<span class="arithmatex">\(k_V\)</span> entities <span class="arithmatex">\(R_V \subseteq V\)</span> whose embedding vectors using <span class="arithmatex">\(\phi\)</span> are most similar to <span class="arithmatex">\(\phi(V_q)\)</span>. Finally, all hyperedges that contain at least one entity in <span class="arithmatex">\(R_V\)</span> are added to the final set of hyperedges retrieved in this step.
+    <div>
+    $$
+    R_V = \text{argmax}</em>(\phi(v), \phi(V_q) )}
+    $$
+    $$
+    F_V = \bigcup_{v \in R_V} {e \in E | v \in V_{e} }
+    $$
+    </div>
+3. All the hyperedges in }^{k_V}{\text{sim<span class="arithmatex">\(E\)</span> are then scored by summing their reciprocal ranks w.r.t. the sets <span class="arithmatex">\(F_V\)</span> and <span class="arithmatex">\(F_E\)</span> where the reciprocal rank is <span class="arithmatex">\(0\)</span> if not present in the corresponding set. Then, using this score, only the top-<span class="arithmatex">\(k\)</span> hyperedges are kept for the final set <span class="arithmatex">\(F^*\)</span> of hyperedges retrieved based on the query <span class="arithmatex">\(q\)</span>.
+    <div>
+    $$
+    F^* = \text{argmax}_{e \in E}^{k}{\frac{1}{\text{rank}(e; F_E)} + \frac{1}{\text{rank}(e; F_V)}}
+    $$
+    </div></p>
+<p><em>Multi-Step Reasoning Format.</em> Given a query from the user, the LLM-based agent performs multi-step reasoning where, in each step, it starts with a thinking phase (within <code>&lt;thinking&gt;&lt;/thinking&gt;</code> tags) based on the previous context (initialised with the original query) that produces an action to either retrieve or terminate. Retrieving consists of generating an appropriate query (within <code>&lt;query&gt;&lt;/query&gt;</code> tags) that is used to retrieve further knowledge from the hypergraph (outlined above), which is then added to the LLMs context (within <code>&lt;knowledge&gt;&lt;/knowledge&gt;</code> tags). Terminating consists of generating the final answer (within <code>&lt;answer&gt;&lt;/answer&gt;</code> tags).</p>
+<p><em>Rewards for GRPO-based RL.</em> During the RL fine-tuning process, for each training question, the agent uses the current policy to generate <span class="arithmatex">\(N\)</span> possible multi-step reasoning trajectories. The policy is then updated using the <a href="https://arxiv.org/abs/2402.03300">GRPO framework</a> where each step of the trajectory is rewarded for adhering to the above response format and the final step (i.e., upon termination) is rewarded for returning the correct answer.
+In particular, given a <span class="arithmatex">\(T\)</span>-step reasoning trajectory, each appropriately formatted step is given a score of <span class="arithmatex">\(0.5\)</span> with an overall maximum of <span class="arithmatex">\(1.0\)</span>; and, conditioned on a maximum format score of <span class="arithmatex">\(1.0\)</span> with an outputted answer <span class="arithmatex">\(\textbf{ans}_o\)</span>, the answer reward is computed as the token-level F1 score w.r.t. the golden answer <span class="arithmatex">\(\textbf{ans}_g\)</span>. Finally, the score is the sum of both of these rewards subtract <span class="arithmatex">\(1\)</span>.</p>
+<div>
+$$
+R_\text{format} = \text{min}\{1.0, 0.5 \cdot \sum_{t=1}^T \textbf{I}(\text{step } t \text{ is well-formatted})\}
+$$
+</div>
+<div>
+$$
+R_\text{answer} = \textbf{I}(R_\text{format} = 1.0 ) \cdot \frac{2 \cdot |\text{tokens}(\text{ans}_o) \cap \text{tokens}(\text{ans}_g)|}{|\text{tokens}(\text{ans}_o)| + |\text{tokens}(\text{ans}_g)|}
+$$
+$$
+R_\text{final} = R_\text{format} + R_\text{answer} - 1.0
+$$
+</div>
+<p>where <span class="arithmatex">\(\textbf{I}(.)\)</span> is the indicator function.</p>
+<h3 id="experiments_1">Experiments</h3>
+<p>The authors compare the performance of Graph-R1 on several question-answer datasets using various Qwen2.5 models as the initial pretrained LLM for RL fine-tuning. See Table 2 below (taken from their paper) for the results of their experiments. </p>
+<p>In all experiments, they use <a href="https://arxiv.org/abs/2402.03216"><code>bge-large-en-v1.5</code></a> as the embedding model (i.e., <span class="arithmatex">\(\phi\)</span> mentioned above), and in all runs of Graph-R1 they use <code>gpt-4o-mini</code> for the LLM-based knowledge extractor (i.e., <span class="arithmatex">\(\pi_\text{ext}\)</span> mentioned above). </p>
+<p><img alt="Table 2. Experiments comparing Graph-R1 to other RAG methods." src="../potm/2025/08/graph-r1/experiments.png" /></p>
+<h3 id="conclusion">Conclusion</h3>
+<p>The authors show that representing the corpus of documents as a knowledge hypergraph increases the representability of the information in the corpus. Furthermore, through their agentic RAG approach, they show that the knowledge hypergraph allows for effective information retrieval in the form of hyperedges. On the other hand, the computational complexity of retrieval from the hypergraph grows linearly w.r.t. the number of hyperedges in the knowledge hypergraph, which is much larger than the number of documents in the corpus and could be inefficient for large corpora.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2507.21892" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

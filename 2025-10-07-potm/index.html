@@ -1,0 +1,1325 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-10-07-potm/">
+      
+      
+        <link rel="prev" href="../2025-09-08-potm/">
+      
+      
+        <link rel="next" href="../2025-11-04-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>September Papers: The L in ML Stands for LLMs - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="September Papers: The L in ML Stands for LLMs - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-10-07-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-10-07-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="September Papers: The L in ML Stands for LLMs - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-10-07-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#flowrl-matching-reward-distributions-for-llm-reasoning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        September Papers: The L in ML Stands for LLMs
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#flowrl-matching-reward-distributions-for-llm-reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FlowRL: Matching Reward Distributions for LLM Reasoning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metacognitive-reuse-turning-recurring-llm-reasoning-into-concise-behaviors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metacognitive Reuse: Turning Recurring LLM Reasoning Into Concise Behaviors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-block-decoding-is-a-language-model-inference-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set Block Decoding is a Language Model Inference Accelerator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soft-tokens-hard-truths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Soft Tokens, Hard Truths
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/samot.jpg" alt="Sam Olesker-Taylor">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/samot/">Sam Olesker-Taylor</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/dobrikg.jpg" alt="Dobrik Georgiev">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/dobrikg/">Dobrik Georgiev</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukehg.jpg" alt="Luke Hudlass-Galley">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukehg/">Luke Hudlass-Galley</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-10-07 00:00:00+00:00" class="md-ellipsis">October 7, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              18 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:rag" class="md-tag">RAG</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reasoning" class="md-tag">reasoning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:self-improvement" class="md-tag">self-improvement</a>
+      
+    
+  </nav>
+
+
+
+  <h1>September Papers: The L in ML Stands for LLMs</h1>
+
+<p>For September, the research team reviewed a whopping 22 papers! Needless to say, competition was fierce, and only four made the final cut for this month’s edition, which is LLM-themed:  </p>
+<ul>
+<li><a href="#flowrl-matching-reward-distributions-for-llm-reasoning">FlowRL</a> uses GFlowNets to train LLMs on full reward distributions, promoting diverse reasoning paths instead of just reward maximization.  </li>
+<li><a href="#soft-tokens-hard-truths">Soft Tokens, Hard Truths</a> proposes using continuous “soft” tokens with injected noise to enable reinforcement learning fine-tuning of LLM reasoning.  </li>
+<li><a href="#set-block-decoding-is-a-language-model-inference-accelerator">Set Block Decoding</a> accelerates LLM inference by generating multiple tokens in parallel using non-causal attention and iterative entropy-based sampling.  </li>
+<li><a href="#metacognitive-reuse-turning-recurring-llm-reasoning-into-concise-behaviors">Metacognitive Reuse</a> enables LLMs to extract and reuse concise reasoning “behaviors” to improve efficiency and reduce repeated computation.  </li>
+</ul>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="flowrl-matching-reward-distributions-for-llm-reasoning">FlowRL: Matching Reward Distributions for LLM Reasoning</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Xuekai Zhu, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Shanghai AI Laboratory
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2509.15207" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Reinforcement learning (RL) has become the dominant paradigm for fine-tuning LLMs to give them 'reasoning capabilities'. Recent reasoning models adopt <em>reward-maximising</em> methods (eg, PPO, GRPO or one of the many variants). These can over-optimise dominant reward signals, potentially neglecting less frequent but equally valid reasoning paths, thus reducing diversity.</p>
+<p><strong>FlowRL</strong> uses the framework of GFlowNets (<a href="https://jmlr.org/papers/v24/22-0364.html">2023</a>) to transform <em>scalar</em> rewards into a target <em>distribution</em>, using a learnable partition function, and minimises the (reverse) KL divergence between the policy and target distribution. More diverse generation is observed, with improved scores on certain benchmarks.</p>
+<p><img alt="Distribution matching vs reward maximisation" src="../potm/2025/09/flowrl/figure_1.png" /></p>
+<blockquote>
+<p>NB. It is worth pointing out that GFlowNets have been used in LLM fine-tuning in the past. Particularly, <em>Flow of Reasoning</em> (<a href="http://arxiv.org/abs/2406.05673">2025</a>) formulates multi-step LLM reasoning as a Markovian flow on a directed acyclic graph (DAG).</p>
+</blockquote>
+<h3 id="background">Background</h3>
+<p>RL plays a crucial role in post-training of LLMs. Training algorithms have progressed through several key stages: from REINFORCE (<a href="https://proceedings.neurips.cc/paper_files/paper/1999/file/464d828b85b0bed98e80ade0a5c43b0f-Paper.pdf">1999</a>), through TRPO (<a href="https://arxiv.org/abs/1502.05477">2015</a>) and PPO (<a href="https://arxiv.org/abs/1707.06347">2017</a>), to GRPO (<a href="https://arxiv.org/abs/2402.03300">2024</a>) and its variants. These all aim to maximise reward signals, potentially leading to model collapse. One of the key aspects of TRPO was to introduce a KL penalty to prevent this collapse. More recent adaptations include adjusting the clip ratio (DAPO, <a href="http://arxiv.org/abs/2503.14476">2025</a>) or resetting the reference model (ProRL, <a href="http://arxiv.org/abs/2505.24864">2025</a>), all with the objective of increasing diversity.</p>
+<p>The paper uses the machinery of <em>generative flow networks</em> (GFlowNets) introduced by Bengio et al (<a href="https://jmlr.org/papers/v24/22-0364.html">2023</a>). The following brief description is taken from §2. GFlowNets are a probabilistic framework for training stochastic policies to sample discrete, compositional objects (eg, graphs or sequences) in proportion to a given reward. The core principle (see Figure 2) is to balance forward and backward probability flows at each state, inspired by flow matching (Bengio et al, <a href="https://arxiv.org/abs/2106.04399">2021</a>).</p>
+<p><img alt="GFlowNets" src="../potm/2025/09/flowrl/figure_2.png" /></p>
+<h3 id="their-method">Their method</h3>
+<p>The paper introduces <strong>FlowRL</strong>, a policy optimisation algorithm designed to align the policy model with the <em>full reward distribution</em> encouraging mode coverage—rather than <em>reward maximisation</em> which tries to find the 'best' local mode. The core idea is to introduce a learnable partition function that converts scalar rewards into a target distribution; the objective is to then minimise the (reverse) KL divergence between the policy and this.</p>
+<p>This KL objective is based on the trajectory balance formulation from GFlowNets. Prior work on GFlowNets typically operated on short trajectories in small discrete spaces. To address challenges of long CoT (chain-of-thought) training, two key techniques are adjusted:</p>
+<ul>
+<li><em>length normalisation</em> to tackle gradient explosion in variable-length CoT reasoning;</li>
+<li><em>importance sampling</em> to correct for distribution mismatch between generated rollouts and the current policy.</li>
+</ul>
+<p>Both these arise frequently in other LLM post-training contexts but need to be adjusted to the GFlowNets set-up.</p>
+<h3 id="results">Results</h3>
+<p>FlowRL is compared with 'vanilla' RL algorithms: REINFORCE++ (<a href="http://arxiv.org/abs/2501.03262">2025/01</a>), PPO (<a href="https://arxiv.org/abs/1707.06347">2017/07</a>) and GRPO (<a href="https://arxiv.org/abs/2402.03300">2024/12</a>). The benchmarks are across maths and code domains, using both base and distilled LLMs of reasonable size: 32B and 7B, respectively. Consistent performance improvements are observed (see note below), as well as (perhaps, more importantly) increased diversity of generated reasoning paths—although, metrics on such are less precisely defined.</p>
+<p><img alt="Results on maths and code benchmarks, respectively" src="../potm/2025/09/flowrl/tables_1_2.png" /></p>
+<p><img alt="Diversity scores" src="../potm/2025/09/flowrl/figure_4.png" /></p>
+<blockquote>
+<p>NB. It must be pointed out that none of the more modern variants, such as DAPO (<a href="http://arxiv.org/abs/2503.14476">2025/03</a>), ProRL (<a href="http://arxiv.org/abs/2505.24864">2025/05</a>) or GSPO/GMPO (<a href="http://arxiv.org/abs/2507.18071">2025/07</a>/<a href="http://arxiv.org/abs/2507.20673">2025/07</a>) are compared. Many of these <em>explicitly</em> address lack of diversity. Little can be inferred regarding, say, FlowRL vs DAPO or ProRL.</p>
+</blockquote>
+<h3 id="takeaways">Takeaways</h3>
+<p>The paper introduces a new framework for LLM reasoning, and benchmarks it vs some modern, albeit vanilla, RL algorithms.</p>
+<ul>
+<li>
+<p><em>Positives.</em></p>
+<ul>
+<li>Mainstream LLM reasoning approaches are (highly?) unsatisfying, particularly the lack of diversity.</li>
+<li>The paper effectively proposes an alternative paradigm, using GFlowNets as a tool, and the diversity certainly improves, significantly in some cases.</li>
+</ul>
+</li>
+<li>
+<p><em>Negatives.</em></p>
+<ul>
+<li>The lack of discussion on the other recent (earlier) paper using GFlowNets (FoR, <a href="http://arxiv.org/abs/2406.05673">2024</a>) is disappointing from an academic standing.</li>
+<li>The lack of comparison with state-of-the-art RL training algorithms prohibits any real conclusion on whether GFlowNets are a better way to go than reward-maximisation.</li>
+</ul>
+</li>
+<li>
+<p><em>Conclusion</em>.</p>
+<ul>
+<li>Despite its shortcomings, this reviewer finds the paper very interesting, and could definitely serve as a foundation for further research.</li>
+<li>Replication studies, with better benchmarks, are highly encouraged.</li>
+</ul>
+</li>
+</ul>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2509.15207" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="metacognitive-reuse-turning-recurring-llm-reasoning-into-concise-behaviors">Metacognitive Reuse: Turning Recurring LLM Reasoning Into Concise Behaviors</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Aniket Didolkar, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta, Mila-Quebec AI Institute, Princeton University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2509.13237" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<!-- [200 words is a rough guide for the length of a summary. -->
+<!-- Feel free to go a fair bit over or under if needs be. -->
+<!-- The editor will fix any issues with images being rendered too wide/narrow etc. -->
+<!-- See README for how to view locally if you wish to (not required. Contact CB if this -->
+<!-- is broken for you.)] -->
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<blockquote>
+<p>"<em>Do not rediscover the wheel, if you have already done it once!</em>"</p>
+<p>-- paraphrased <strong>TL;DR</strong></p>
+</blockquote>
+<p>According to Didolkar et al., this is the key lesson we should teach LLMs. Why?
+The authors have observed that while rapid progress in the performance of
+Chain-of-Thought approaches has been made, this has also led to an
+effectiveness/efficiency decline. From where? Because <strong>the LLMs re-derive
+knowledge from scratch too often</strong>, resulting in less room for exploration and
+larger token output.</p>
+<p>The proposed remedy is <em>metacognitive reuse</em>. Instead of providing a set of
+facts/rules, we let the LLMs synthesise their own <em>behaviours</em>. These are
+concise pieces of knowledge, reusable across questions/datasets and models.</p>
+<p><img alt="Behaviour curation and application" src="../potm/2025/09/metacognitive-reuse/vis_abstract.png" /></p>
+<figcaption>
+<p><strong>Behaviour Curation Pipeline (left)</strong>: All the 3 stages of behaviour curation
+pipeline: <em>solution</em>, <em>reflection</em>, <em>extraction</em>. LLM A is referred to as the
+<tt>Metacognitive Strategist</tt>. <strong>Reasoning with behaviours (right; in
+gray)</strong>: The three proposed ways to utilise behaviours -- inference,
+self-improvement and supervised fine-tuning (SFT). LLM B and LLM C are a
+student and teacher LLMs respectively.</p>
+</figcaption>
+<p>Once synthesised, Didolkar et al. propose three ways to utilise extracted
+behaviours:
+* Behaviour-conditioned inference (BCI) -- the set of behaviours is pre-extracted
+  from a (different) strategist LLM.
+* Behaviour-guided self-improvement -- the set of behaviours is extracted as we
+  process questions/tasks from the same LLM.
+* Behaviour-conditioned supervised fine-tuning -- a Behaviour-conditioned
+  teacher model synthesises a training set of question/solution pairs, used to
+  fine tune the student model.</p>
+<h3 id="background_1">Background</h3>
+<p><a href="https://arxiv.org/abs/2201.11903">Chain-of-Thought</a> (CoT) prompting is a
+technique in prompt engineering for large language models. It encourages the
+LLM to break down complex reasoning tasks into a sequence of intermediate
+reasoning steps (a “chain”) before arriving at a final answer. This helps
+improve performance on multi-step problems (e.g. arithmetic, logic,
+commonsense) at the cost of outputting long reasoning traces (more output
+tokens = higher expenditure). Unfortunately, the chain might still be flawed.
+More enumerative <a href="https://arxiv.org/abs/2412.09078">beam-search-like
+approaches</a>, can resolve this, but the
+computation required is even higher.</p>
+<h3 id="their-method_1">Their method</h3>
+<p><strong>Behaviour curation</strong> &ensp; There is a lack of formal definition of
+behaviour. At the risk of repeating myself, authors define it <em>in the main
+text</em> as "a reusable skill---concise piece of knowledge---distilled from an
+LLM's chain of thought" (p.4). E.g.:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>behaviors_angle_sum: The sum of the interior angles of a triangle is 180 degrees. Use
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                     this property to find the missing angle when two angles are known.
+</span></code></pre></div>
+<p>The proposed extraction pipeline consists of three stages. The
+<tt>Metacognitive Strategist</tt> (DeepSeek-R1-Distill-Llama-70B) first
+generates a reasoning trace + a final answer. These are then used for the
+reflection prompt, which is also fed back to the same LLM, to allow it to
+filter out illogical chains and also generate new candidate behaviours. The
+<tt>Metacognitive Strategist</tt> is also used for the generation of the final
+set of behaviours, which are to be appended to the behaviour handbook.</p>
+<p>Out of the three prompts, perhaps the most insightful is the reflection prompt.
+Behaviour is defined there as "a note or skill", which "can be a strategy, a
+trick, or a technique", or "it can also be a general rule or a commonsense
+principle", and, most importantly, <strong>"is not a solution to the problem, but can
+be used to solve it"</strong>. Correctness analysis prompting aside, the authors
+explicitly require the model to consider how a behaviour "would have helped in
+reducing the answer length".</p>
+<p><strong>Behaviour usage<span class="arithmatex">\(\approx\)</span>RAG</strong> &ensp; A naive approach to behaviour
+conditioned inference (BCI) would be to simply make them part of the context.
+Such an approach, however, would bloat the number of input tokens and, as a
+result, have higher cost than CoT. The authors also note this: instead of
+feeding in all behaviours, for a question <span class="arithmatex">\(Q_i\)</span>, a subset of behaviours <span class="arithmatex">\(B_i\)</span>
+is retrieved and the solution <span class="arithmatex">\(S_i\)</span> is generated based on the <span class="arithmatex">\((B_i, Q_i)\)</span>
+pair. The retrieval function depends on the dataset -- topic-matching is used for
+MATH, FAISS top-40 cosine similarity lookup for AIME.</p>
+<p>When it comes to Behaviour-guided self-improvement, there is some confusion
+going on inside me. <span class="arithmatex">\(\S4.2\)</span> states:</p>
+<blockquote>
+<p>behaviours [...] are then fed back [...] to solve the same question <strong>or new
+questions</strong></p>
+</blockquote>
+<p>and that the
+implementation "closely follows that of BCI". In the experimental setup
+(<span class="arithmatex">\(\S5.2\)</span>), the text suggests that the approach is a behaviour-guided variant of
+the Critique-and-Revise baseline and that</p>
+<blockquote>
+<p>[...] reasoning traces are generated per question which are used [...] to
+curate a behaviour handbook <strong>for that question</strong></p>
+</blockquote>
+<p>The inline equation <span class="arithmatex">\(((B, Q),\rightarrow R_2)\)</span> (note the lack of subindexes)
+also suggest that there is no RAG-like lookup as in BCI, nor that the
+previously curated behaviours are used for the current or future questions.
+Whether this is indeed the case or is just a clarity issue with the writeup,
+only the authors can tell. (Open-sourcing the code to reproduce the experiments
+could also have answered my questions).</p>
+<p>As both of the above approaches use extra input tokens, the authors also
+present Behaviour-conditioned SFT (BC-SFT). The aim of BC-SFT is to
+"internalise" the set of behaviours in the weights of the model -- when
+answering any new questions, the fine-tuned model will not be conditioned on a
+behaviour handbook. It will be invoking those behaviours, based on its parameter
+weights. Importantly, to achieve that <strong>the student model is never
+conditioned on a handbook</strong>, neither during training, nor during inference.</p>
+<!-- Latex can be included in the standard way, either inline: $R=\sum _{t=0}^{\infty }\gamma ^{t}r_{t}$ -->
+
+<!-- Or as a block: -->
+
+<!-- $$ -->
+<!-- Q_{t+1}^{A}(s_{t},a_{t})=Q_{t}^{A}(s_{t},a_{t})+\alpha _{t}(s_{t},a_{t})\left(r_{t}+\gamma Q_{t}^{B}\left(s_{t+1},\mathop {\operatorname {arg~max} } _{a}Q_{t}^{A}(s_{t+1},a)\right)-Q_{t}^{A}(s_{t},a_{t})\right). -->
+<!-- $$ -->
+
+<!-- Code can also be included in the standard way: -->
+
+<!-- ``` -->
+<!-- import popart -->
+
+<!-- builder = popart.Builder() -->
+
+<!-- # Build a simple graph -->
+<!-- i1 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32])) -->
+<!-- i2 = builder.addInputTensor(popart.TensorInfo("FLOAT", [1, 2, 32, 32])) -->
+
+<!-- o = builder.aiOnnx.add([i1, i2]) -->
+<!-- ``` -->
+
+<h3 id="results_1">Results</h3>
+<p>The authors experiment on <a href="https://arxiv.org/abs/2103.03874">MATH</a> as well as
+both <a href="https://arxiv.org/abs/2503.21380v2">AIME</a> (2024, 2025) variants.
+Behaviour usage (conditioning/self-improvement/SFT) is performed on open-source
+reasoning LLMs -- DeepSeek-R1, which in the plots is referred to as
+<strong><tt>R1-Llama-70B</tt></strong> and Qwen. The <tt>Metacognitive Strategist</tt> model
+is always fixed to DeepSeek. For MATH, behaviours are synthesised from a
+subsample of it and for AIME -- from past iterations (2022, 20223) of the
+benchmark. In the plots that follow, while no standard deviations are reported
+(since we measure both accuracy and token usage, stds could look like an
+ellipse around each point), results are average across 80 seeds -- check paper
+for further technical details. Unless otherwise stated, the x-axis is the
+average number of tokens <strong>produced</strong> per solution and the y-axis is average
+accuracy. The different symbols are the enforced upper limit on number of
+output tokens.</p>
+<p><strong><em>N.B. #1</em></strong> Before we proceed to analyse the plots, please be aware
+the axis limits vary between plots, sometimes quite drastically (cf. SFT
+plots). I am aware the authors are trying to make a point, but do not vary
+limits... at least not within one figure... or at least without being
+explicit about it.</p>
+<p><strong><em>N.B. #2</em></strong> For the reader's entertainment, I have tried to be as independent
+as possible in my analysis, i.e. only copying plots, but not copy-pasting the
+authors' text.</p>
+<p><img alt="BCI MATH" src="../potm/2025/09/metacognitive-reuse/MATH_res.png" /></p>
+<figcaption> BCI performance on MATH </figcaption>
+<p><img alt="BCI AIME" src="../potm/2025/09/metacognitive-reuse/AIME_BCI_res.png" /></p>
+<figcaption> BCI performance on AIME-24 </figcaption>
+<p><img alt="BCI AIME" src="../potm/2025/09/metacognitive-reuse/AIME_25_BCI_res.png" /></p>
+<figcaption> BCI performance on AIME-25 </figcaption>
+
+<p>Starting with the BCI performance, there is a clear advantage, both in terms of
+tokens produced and accuracy on the MATH dataset. This advantage however is
+much smaller and <em>questionable, without standard deviations,</em> on both AIME
+variants, especially at lower token limits (2048 and 4096). At higher token
+limits, we do see more substantial improvements, particularly for BCI with
+DeepSeek. While concrete numbers would certainly have been appreciated, the
+reduction in output tokens for DeepSeek seemingly varies between 5% and 30%.
+Upon visual inspection, such reductions are much rarer for Qwen. In all cases,
+accuracy is preserved or improved (sometimes slight, sometimes substantial,
+hard to judge visually).</p>
+<p><img alt="BCSI AIME" src="../potm/2025/09/metacognitive-reuse/AIME_24_SI.png" /></p>
+<figcaption> Behaviour-guided Self-improvement on AIME-24. All LLMs used are DeepSeeks. </figcaption>
+
+<p>Again, for self-improvement, analysis of results can be split into two parts --
+for the 2048 token limit, behaviours hurt more than help as there is both an
+increase in tokens produced and a drop in accuracy. For larger limits, and
+especially the largest, behaviour-guided self-improvement can give 10% boost in
+the accuracy and 20% boost in Pass@16., but at the cost of threefold increase
+in the output tokens. Also note, that for this result, there is the ambiguity
+if the behaviour handbook is synthesised for each question individually or for
+the whole dataset.</p>
+<p><img alt="SFT AIME" src="../potm/2025/09/metacognitive-reuse/AIME_24_SFT.png" /></p>
+<figcaption>
+<p>BC-SFT on AIME-24. DeepSeek is the teacher model, each pane is a different
+student model. <tt><strong>Llama-3.1-8B</strong></tt> is not DeepSeek!</p>
+</figcaption>
+<p><img alt="SFT AIME" src="../potm/2025/09/metacognitive-reuse/AIME_25_SFT.png" /></p>
+<figcaption> BC-SFT on AIME-25. </figcaption>
+
+<p>When it comes to supervised fine tuning, the student model has to have a
+sufficient capacity in order to grok behaviours -- the 8B model's accuracy is
+limited to 5%. This conclusion is further reinforced from the fact that BC-SFT
+results for Qwen-2.5 32B and the lowest token limit often match/exceed accuracy
+of the 14B variant, across all limits. Newer model variants also benefit more
+from behaviour conditioning, than past iterations of the same architecture (cf.
+Qwen3 vs Qwen2.5). And while accuracy improvement to the baseline SFT can
+be threefold (which is actually 10%, note the scale!) and is observed across
+all token limits, reduction in the token count is still a larger token limit
+(8192) luxury. A table with concrete token counts is lacking in the paper, but
+I would estimate the reduction to be 10-15%.</p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>So, what score would the Reviewer #2 inside me give? Despite my initial hopes,
+I am leaning towards rejection. The idea of metacognitive-reuse seems novel and
+exciting enough for me, but the experiments execution is a bit flawed. The
+authors discuss the efficiency implications of having a larger input but:
+* Never state any end-to-end costs -- even with amortised computation and
+  cheaper rates on input, this is a necessary information (see below).
+* Never visualise how the behaviour handbook grows or analyse its redundancy --
+  out of the 1k subsampled MATH questions, the <tt>Metacognitive
+  Strategist</tt> extracted 785 behaviours (p. 7). For AIME, out of
+  16<span class="arithmatex">\(\times\)</span>60=960 reasoning traces -- 1457 behaviours (p. 7). On average, the
+  model finds a new pattern from almost every given question! In that case, in
+  a real world scenario, will we need to run the <tt>Strategist</tt> for every
+  question (requires 3 prompts; cache hits unlikely)?
+* Never compare to other, non-prompting, test-time compute scaling techniques,
+  such as <a href="https://arxiv.org/pdf/2507.06203">latent reasoning</a> -- if latent
+  reasoning is both cheaper/more accurate, then the above approach is
+  obsolete. I am not certain that this will be the case, but I call for a
+  comparison.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2509.13237" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="set-block-decoding-is-a-language-model-inference-accelerator">Set Block Decoding is a Language Model Inference Accelerator</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Itai Gat, Heli Ben-Hamu, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2509.04185" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>Set block decoding is a parallel sequence generation algorithm that accelerates token generation by producing multiple tokens simultaneously. The approach requires fine-tuning LLMs to support non-causal generation. Similar to discrete diffusion techniques, a block of <span class="arithmatex">\(k\)</span> (e.g. 16) tokens is initialized with special mask <code>&lt;m&gt;</code> tokens. Then through an iterative sampling process requiring at most <span class="arithmatex">\(k\)</span> steps, these mask tokens are progressively replaced with generated tokens.</p>
+<p><img alt="Set block decoding at inference time, with the context " src="../potm/2025/09/set-block-decoding/inference.png" />, then '<m> was <m> on', then 'model was trained on', before sampling the next block of 4, etc."&gt;</p>
+<figcaption>Figure 2b. Inference in blocks of $k=4$ tokens. Note that 1-4 tokens are accepted in each step, reducing the number of forward passes through the model compared with autoregressive generation.</figcaption>
+
+<h3 id="background_2">Background</h3>
+<p>Traditional autoregressive inference is both compute and more importantly memory bandwidth-intensive. To generate a sequence from an LLM trained to predict the next word, we first <em>prefill</em> the context, passing it through the model to generate the KV cache and first token. Then to <em>generate</em> the next <span class="arithmatex">\(N\)</span> tokens from a model of <span class="arithmatex">\(P\)</span> densely activated parameters, we must perform <span class="arithmatex">\(N\)</span> additional passes through the model, where each pass requires all <span class="arithmatex">\(P\)</span> parameters to be transferred from memory to the compute unit, executing at least <span class="arithmatex">\(P\)</span> multiply-accumulate operations.</p>
+<p>Many techniques aim to improve upon this autoregressive next-word-prediction baseline. These can be split into reducing the work per pass or reducing the number of passes (<span class="arithmatex">\(&lt; N\)</span>). This work fits into the second category, which also includes <a href="https://arxiv.org/abs/2302.01318">speculative sampling</a> and <a href="https://arxiv.org/abs/2506.13759">discrete diffusion</a>.</p>
+<h3 id="their-method_2">Their method</h3>
+<p>The authors train a model to predict independent distributions for future tokens. Given a block of <span class="arithmatex">\(k\)</span> tokens at indices <span class="arithmatex">\([t, t+k)\)</span>, partitioned into two sets: <span class="arithmatex">\(\mathcal{M}\)</span> corresponding to indices of unknown tokens and <span class="arithmatex">\(\mathcal{J}\)</span> corresponding to indices of known (already-sampled) tokens, model predicts <span class="arithmatex">\(p(x_{i \in \mathcal{M}} \mid x_{&lt;t}, x_{\mathcal{J}})\)</span>, where <span class="arithmatex">\(x\)</span> is the sequence of discrete tokens. Practically, this is achieved by applying a non-causal attention pattern over the <span class="arithmatex">\(k\)</span> indices in <span class="arithmatex">\(\mathcal{M} \cup \mathcal{J}\)</span> and using special mask tokens <code>&lt;m&gt;</code> at unknown token indices in <span class="arithmatex">\(\mathcal{M}\)</span>.</p>
+<p>Since the model predicts distributions for all unknown future tokens at every step, one must decide which subset to accept (sample) at that step. The authors accept tokens whose predictive distribution has entropy below a threshold <span class="arithmatex">\(\gamma\)</span>. If no distribution has entropy below <span class="arithmatex">\(\gamma\)</span>, they accept the single token with the lowest entropy. Thus, larger <span class="arithmatex">\(\gamma\)</span> means accepting more tokens per step, which is faster but potentially less accurate.</p>
+<p>Therefore, the inference procedure follows (see figure 2b, above):</p>
+<ol>
+<li>Query the model with the current prefix, followed by a non-causal sequence of <span class="arithmatex">\(k\)</span> <span class="arithmatex">\(\times\)</span> <code>&lt;m&gt;</code>.</li>
+<li>Replace each <code>&lt;m&gt;</code> token whose predictive distribution <span class="arithmatex">\(p(x_{i} \mid \ldots)\)</span> has entropy less than <span class="arithmatex">\(\gamma\)</span> with a sample from <span class="arithmatex">\(p(x_{i} \mid \ldots)\)</span>.</li>
+<li>If any <code>&lt;m&gt;</code> tokens remain, query the model with the current sequence and repeat from (2). Otherwise go to (1).</li>
+</ol>
+<p>To support queries of this form at inference time, the authors train the model on a mixture of a next-token prediction loss and masked-token prediction loss, where the masking rate is sampled uniformly in <span class="arithmatex">\([0, 1]\)</span> for each sequence.</p>
+<h3 id="results_2">Results</h3>
+<p><img alt="Table of results, where SBD shows a speedup of 3-3.8 times and mild accuracy degradation across various tasks." src="../potm/2025/09/set-block-decoding/results.png" /></p>
+<p>Results shown above, across various reasoning and chat benchmarks, demonstrate a mild accuracy degradation for set block decoding (SBD) versus the next token prediction (NTP) baseline, depending on the task. The speedup for <span class="arithmatex">\(\gamma_{\text{high}}\)</span> is larger than <span class="arithmatex">\(\gamma_{\text{low}}\)</span>, but it typically incurs a larger degradation in task accuracy. Speedup show in this plot corresponds to the reduction in the number of forward passes through the model, which is appropriate proxy for the performance of bandwidth-bound cases such as small-batch generation. This is supplemented by theoretical speedup analysis based on a roofline hardware model, but the paper lacks physical wall-clock speedup benchmarks.</p>
+<h3 id="takeaways_2">Takeaways</h3>
+<p>One possible concern is that the model may generate intermediate samples that look like <code>PREFIX &lt;m&gt; &lt;m&gt; TOKEN</code>, i.e. where there are two as-yet-unchosen tokens between the known <code>PREFIX</code> and sampled <code>TOKEN</code>. After committing to this, the sampling procedure cannot later decide to insert just one token—it can only progress by performing an <em>unmask-and-sample</em> action on the sequence, never by <em>insert</em> or <em>delete</em>. Discrete diffusion approaches such as <a href="https://arxiv.org/abs/2508.02193">seed diffusion</a> often have such capabilities. The ability to insert &amp; delete mean that the model does not have to commit to tokens appearing in precise relative positions, independent of the intervening tokens: an idea that seems hard to justify in the context of language modelling.</p>
+<p>Altogether, this is a promising technique for mitigating the autoregressive sequence generation bottleneck, as it is able to generate multiple tokens with a single forward pass through the model, doing so in a reasonably flexible manner thanks to the entropy heuristic. I'd be interested to see further evolutions of this and related methods.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2509.04185" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="soft-tokens-hard-truths">Soft Tokens, Hard Truths</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Natasha Butt et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta FAIR, New York University, University of Amsterdam
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2509.19170" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>Over the course of the last year, a number of works have investigated "latent reasoning",
+in which reasoning tokens are represented in some continuous latent space, rather than a 
+specific token in the language vocabulary. Many of these works require implementation
+schemes that are difficult to scale (such as <a href="https://arxiv.org/abs/2412.06769">Coconut</a>)
+or are training-free (such as <a href="https://arxiv.org/abs/2505.15778">Soft Thinking</a> and 
+<a href="https://arxiv.org/abs/2505.14827">Mixture of Inputs</a>). None of these approaches are suited
+for training with reinforcement learning approaches such as GRPO, which have become the
+leading post-training methods for improving reasoning performance.</p>
+<p>In <strong>Soft Tokens, Hard Truths</strong>, the authors propose a simple and scalable method to implement
+continuous thoughts which integrates with RL training schemes. They use this to explore
+different configurations of "soft" continuous tokens and "hard" sampled tokens in both
+training and inference. </p>
+<p><img alt="Soft Tokens schematic for generating with hard, soft, or fuzzy tokens" src="../potm/2025/09/soft-tokens-hard-truths/schematic.png" /></p>
+<figcaption>
+Figure 1. Hard, fuzzy and soft generation during CoT phase. In hard generation, at each time step, a discrete token $CoT_t$ is sampled from the probability vector $p_{t−1}$ and its embedding $h^0_{CoT1}$ is passed to the transformer, generating a sequence of discrete CoT tokens: $CoT_1, ..., CoT_T$ over time. In fuzzy and soft generation, at each time step, noise, $\epsilon_t$, is injected into the probability weighted mixture embedding, $h^t_0 = p_{t−1}E$, where E is the token embedding matrix. This noisy input embedding is passed to the transformer, generating a sequence of continuous noisy CoT embeddings: $\tilde{h}^0_{CoT_1}, ..., \tilde{h}^0_{CoT_T}$ over time. Additionally, for fuzzy generation, the temperature $\tau$ used in the CoT phase tends to $0$, such that the non-noisy embeddings $h_0$ reduce to embeddings of discrete tokens. We find that the combination of soft/fuzzy training and hard inference performs universally best, matching hard training at pass@1 and surpassing it at pass@$32$, indicating better preservation of diversity.
+</figcaption>
+
+<h3 id="their-method_3">Their method</h3>
+<p>One approach to obtain continuous tokens from a pre-trained LLMs is by using the final softmax from the previous forward pass. Instead of sampling from the probability distribution to determine the next token (which is subsequently fed into the model as the input in the next forward pass), the probability distribution can be used as weights to make a probability-weighted average of the input embeddings to create a "soft token". On the next forward pass, we can skip the
+initial embedding layer, and instead pass the soft token straight into the LLM. Works such as <a href="https://arxiv.org/abs/2505.15778">Soft Thinking</a> have found that pre-trained models are fairly robust to this sort of interpolation, and are able to obtain good task performance without any additional training.</p>
+<p>SOTA reinforcement learning approaches such as GRPO rely on generating several reasoning traces and answers, which are then used to determine <em>advantages</em> which provide the signal used for backpropagation. The challenge with soft tokens is that, because reasoning tokens are now no longer sampled (but rather deterministic interpolations of the input embedding space), there is no diversity across reasoning traces. This greatly limits the exploration that RL fine-tuning methods require. To address this, the authors propose injecting random noise on the input embeddings. This allows different rollouts to have different trajectories, greatly improving the exploration for RL to learn from.</p>
+<h3 id="results_3">Results</h3>
+<p>The authors considered chain-of-thought models with the following paradigms:</p>
+<ul>
+<li><em>For training</em>:   <ul>
+<li><strong>Hard tokens</strong>: the conventional LLM generation approach in which tokens from the vocabulary are sampled.</li>
+<li><strong>Soft tokens</strong>: using the output probability distribution to weight the input embeddings (softmax temperature = <span class="arithmatex">\(0.5\)</span>).</li>
+<li><strong>Fuzzy tokens</strong>: Similar to soft tokens, but with a softmax temperature <span class="arithmatex">\(0.0001\)</span>, which makes them very close to hard tokens, before adding Gaussian noise.</li>
+</ul>
+</li>
+<li><em>For inference</em>:   <ul>
+<li><strong>Hard Greedy</strong>: discrete tokens, CoT temperature <span class="arithmatex">\(\tau=0.0\)</span> at test time</li>
+<li><strong>Hard Sample</strong>: discrete tokens, CoT temperature <span class="arithmatex">\(\tau=1.0\)</span> at test time</li>
+<li><strong>Soft Greedy</strong>: Gaussian scale <span class="arithmatex">\(0.0\)</span>, CoT temperature <span class="arithmatex">\(\tau=0.5\)</span> at test time</li>
+<li><strong>Soft Sample</strong>: Gaussian scale <span class="arithmatex">\(\sigma=0.33 *\)</span> RMSNorm of embeddings, CoT temperature <span class="arithmatex">\(\tau=0.5\)</span> at test time</li>
+<li><strong>Fuzzy Greedy</strong>: Gaussian scale <span class="arithmatex">\(0.0\)</span>, CoT temperature <span class="arithmatex">\(\tau=0.0001\)</span> at test time</li>
+<li><strong>Fuzzy Sample</strong>: Gaussian scale <span class="arithmatex">\(\sigma=0.33 *\)</span> RMSNorm of embeddings, CoT temperature <span class="arithmatex">\(\tau=0.0001\)</span> at test time</li>
+</ul>
+</li>
+</ul>
+<p>Base models include Llama 3.2 3B Instruct, Llama 3.1 8B Instruct, and Qwen 2.5 3B Instruct, trained on math reasoning datasets GSM8K, MATH and DeepScaleR. Test performance was evaluated on GSM8K, OlympiadBench, and the MATH-500 subset of the MATH test set.</p>
+<p><img alt="GSM8K results" src="../potm/2025/09/soft-tokens-hard-truths/results-gsm8k.png" /></p>
+<p>The results found that, across datasets and models, the three training schemes were broadly comparable with evaluating pass@<span class="arithmatex">\(1\)</span> performance. However, when considering pass@<span class="arithmatex">\(32\)</span> performance, soft and fuzzy training attain a superior performance. They also find that soft and fuzzy training is better when inferring on out-of-distribution data. For inference, the authors found that hard inference attains the best performance in general, regardless of the training scheme.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Soft Tokens, Hard Truths introduces a framework for using SOTA RL algorithms in a continuous thought paradigm. Their results demonstrate the benefits of continuous thoughts during training, however the observation that sampling during inference is better is a somewhat surprising result; we will be keenly watching this space as the community better understands this behaviour, and continues to advance the field of latent reasoning.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2509.19170" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

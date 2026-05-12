@@ -1,0 +1,1166 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-04-06-potm/">
+      
+      
+        <link rel="prev" href="../2025-02-27-potm/">
+      
+      
+        <link rel="next" href="../2025-05-07-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>March Papers: De-Norming, Skill-Scaling, Over-Training and Drug-Generating - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="March Papers: De-Norming, Skill-Scaling, Over-Training and Drug-Generating - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-04-06-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-04-06-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="March Papers: De-Norming, Skill-Scaling, Over-Training and Drug-Generating - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-04-06-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#transformers-without-normalisation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        March Papers: De-Norming, Skill-Scaling, Over-Training and Drug-Generating
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#transformers-without-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformers without Normalisation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compute-optimal-scaling-of-skills-knowledge-vs-reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute Optimal Scaling of Skills: Knowledge vs Reasoning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overtrained-language-models-are-harder-to-fine-tune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overtrained Language Models Are Harder to Fine-Tune
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-domain-distribution-learning-for-de-novo-drug-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Domain Distribution Learning for De Novo Drug Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukep.jpg" alt="Luke Prince">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukep/">Luke Prince</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/albertoc.jpg" alt="Alberto Cattaneo">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/albertoc/">Alberto Cattaneo</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/yemanh.jpg" alt="Yeman Brhane Hagos">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/yemanh/">Yeman Brhane Hagos</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-04-06 00:00:00+00:00" class="md-ellipsis">April 6, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              16 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:gnns" class="md-tag">GNNs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:activation-functions" class="md-tag">activation-functions</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:drug-design" class="md-tag">drug-design</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:flow-matching" class="md-tag">flow-matching</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:normalisation" class="md-tag">normalisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:scaling-laws" class="md-tag">scaling-laws</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:transformers" class="md-tag">transformers</a>
+      
+    
+  </nav>
+
+
+
+  <h1>March Papers: De-Norming, Skill-Scaling, Over-Training and Drug-Generating</h1>
+
+<p>We've enjoyed March, bringing improving weather and many excellent ML papers to keep us busy. As usual, we're here to share summaries of four of our favourites.</p>
+<p>First, Meta share their work that successfully removes the need for <code>LayerNorm</code> in transformers, replacing them with a reduction-free <span class="arithmatex">\(\tanh\)</span> (<a href="#transformers-without-normalisation">de-norming</a>). This is followed by two papers on scaling - studying the different scaling laws for skill-based vs knowledge-based downstream tasks (<a href="#compute-optimal-scaling-of-skills-knowledge-vs-reasoning">skill-scaling</a>), and whether pretraining can go on too long, making downstream performance worse (<a href="#overtrained-language-models-are-harder-to-fine-tune">over-training</a>). Finally, EPFL share a flow-matching GNN model for generating small molecules for drug design (<a href="#multi-domain-distribution-learning-for-de-novo-drug-design">drug-generating</a>).</p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="transformers-without-normalisation">Transformers without Normalisation</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Jiachen Zhu et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+FAIR, Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2503.10622" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>In short, the authors looked at the functions learned by layer-norms in a variety of Transformer models and observed that they approximated tanh-like functions. From this observation they propose a <code>DynamicTanh</code> layer to replace layer normalisations and demonstrate capable variations on convnets, vision/speech transformers, and large language models.</p>
+<p><img alt="Activation mappings of layer-normalisation functions" src="../potm/2025/03/dynamic-tanh/FIG-Mappings.png" /></p>
+<h3 id="their-method">Their method</h3>
+<p>The authors push data through pretrained vision and speech transformers and show that input/output mappings (pre-affine transform) in later layers are non-linear, and have a distinct S-shape reminiscent of <span class="arithmatex">\(\tanh\)</span>.</p>
+<p>This non-linearity arises because layer-norm computes means and standard deviations on a per-token basis. As such the token-wise mapping through normalisation is linear. However, activation values along particular channels that are consistently large in absolute value increase the variance sufficiently such that affected tokens will have weaker slopes in their individual normalisations. Unaffected tokens have lower variance, and hence stronger slopes in their normalisation. The net effect is such that the extreme values produced across these channels are effectively soft-capped.</p>
+<p><img alt="Explanation of how tokenwise linear layer-norm funcions produce global tanh-like nonlinearity" src="../potm/2025/03/dynamic-tanh/FIG-Explain.png" /></p>
+<p>I found this result sufficiently unintuitive that I needed to write a small example <a href="https://github.com/graphcore-research/graphcore-research.github.io/blob/main/notebooks/2025-03-DynamicTanh.ipynb">IPython notebook</a> on synthetic data to grok this properly.</p>
+<p>This observation begs the question of whether inserting the tanh function in place of layer-norm can produce equally capable transformer models. As such the authors propose <code>DynamicTanh</code>: <span class="arithmatex">\(\textrm{DynT}(x; \alpha, \gamma, \beta) = \gamma * \tanh(\alpha x) + \beta\)</span>, where <span class="arithmatex">\(\alpha\)</span> is a learnable scalar and <span class="arithmatex">\(\gamma\)</span>, <span class="arithmatex">\(\beta\)</span> are affine parameters equivalent to those used by layer-norm.</p>
+<p><img alt="Dynamic tanh as a drop-in replacement for layer-norm" src="../potm/2025/03/dynamic-tanh/FIG-Schema.png" /></p>
+<h3 id="results">Results</h3>
+<p>The authors train a bunch of different models with various architectures (transformers, convnets, state-space), modalities (image, text, speech, DNA), and sizes in supervised and self-supervised settings.</p>
+<p>The main takeaway is that it kind of just works for smaller transformers, occasionally with a few tweaks needed to the training recipe to improve numerical stability (e.g., using Adam <span class="arithmatex">\(\beta_2 = 0.95\)</span>)</p>
+<p><img alt="Supervised training of vision transformers and convnets attains comparable performance with dynamic tanh" src="../potm/2025/03/dynamic-tanh/TBL-Vision-Supervised.png" /></p>
+<p><img alt="Self-supervised training of vision transformers and convnets attains comparable performance with dynamic tanh" src="../potm/2025/03/dynamic-tanh/TBL-Vision-Self-Supervised.png" /></p>
+<p><img alt="Training of image generating diffusion transformers attains comparable performance with dynamic tanh" src="../potm/2025/03/dynamic-tanh/TBL-Diffusion.png" /></p>
+<p><img alt="Training of large language models attains comparable performance with dynamic tanh" src="../potm/2025/03/dynamic-tanh/TBL-Language.png" /></p>
+<p><img alt="Training of speech transformers attains comparable performance with dynamic tanh" src="../potm/2025/03/dynamic-tanh/TBL-Speech.png" /></p>
+<p><img alt="Training of state space models on human genome data attains comparable performance with dynamic tanh" src="../potm/2025/03/dynamic-tanh/TBL-DNA.png" /></p>
+<p>Interestingly, <span class="arithmatex">\(\alpha\)</span> seems to follow the inverse standard deviation of activations throughout training, providing a global rescaling similar to batch-norm without needing to collect activation statistics.</p>
+<p><img alt="alpha tracks inverse standard deviation of activations throughout training" class="img-medium" src="../potm/2025/03/dynamic-tanh/FIG-Alpha.png" /></p>
+<p>Large language model training with <code>DynamicTanh</code> requires heavier tuning. Successful convergence of training depends on the initial value of <span class="arithmatex">\(\alpha\)</span> and appears to require different values for attention and non-attention layers. The initial value must also decrease with increased model width.</p>
+<p><img alt="Optimal alpha initial value depends on transformer layer type and model width" src="../potm/2025/03/dynamic-tanh/TBL-Alpha-Init-LLM.png" /></p>
+<h3 id="takeaways">Takeaways</h3>
+<p>The use of <span class="arithmatex">\(\tanh\)</span> in place of layer-norm is appealing given it throws away the need for expensive reductions required for computing activation statistics. As we move matrix multiplications down to lower and lower bit-widths, these reductions become relatively more expensive as part of training.</p>
+<p>The key caveat is that the lower cost of training large language models with <code>DynamicTanh</code> is lost when required to sweep two extra hyperparameters. A <span class="arithmatex">\(\mu\)</span>P-like hyperparameter transfer rule would be extremely helpful to mitigate this.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2503.10622" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="compute-optimal-scaling-of-skills-knowledge-vs-reasoning">Compute Optimal Scaling of Skills: Knowledge vs Reasoning</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Nicholas Roberts, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta (GenAI)
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2503.10061" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>The authors investigate the differences in optimal LLM parameter count, for a fixed training budget, when looking separately at knowledge-based skills and reasoning-based skills, rather than using Aggregate Performance  (e.g. validation loss) as it's usually done in scaling-laws papers. They show evidence that knowledge QA tasks are capacity-hungry, while reasoning (in the form of coding) tasks are data-hungry.</p>
+<p><img alt="The skill-dependent compute optimum vs the aggregate performance estimator compute optimum" src="../potm/2025/03/skill-scaling-laws/fig1.png" /></p>
+<figcaption>Figure 1. The skill-dependent compute optimal parameter count for knowledge (a) and code (b) skills (in red) compared to the APE CO (in black). In (c), the log-scale differences in parameter count between skill CO and APE CO are plotted. </figcaption>
+
+<h3 id="background">Background</h3>
+<p>When training a model, the compute budget (i.e., total number of FLOPs) can be increased by scaling either the model size or the amount of training data. In the case of LLMs, the FLOPs budget is typically estimated as <span class="arithmatex">\(B \approx 6pt\)</span>, where <span class="arithmatex">\(p\)</span> is the parameter count and <span class="arithmatex">\(t\)</span> is the number of training tokens. Scaling-laws aim at quantifying the Compute Optimal (CO) model size <span class="arithmatex">\(p\)</span> which minimizes the loss on a validation set, for a fixed training budget <span class="arithmatex">\(B\)</span>. This is done by first fitting IsoFLOP curves to the validation loss of models of different sizes but trained with the same compute budget, and then fitting a power law to the minima of these curves (as shown for instance in Figure 1).</p>
+<h3 id="method">Method</h3>
+<p>The authors consider a set of 19 common evaluation datasets for LLMs, dividing them into two groups: those quantifying knowledge skills (e.g., Trivia QA) and those quantifying code skills (e.g., HumanEval). They then infer the skill-dependent CO parameter count by looking separately at the validation loss on the two groups and comparing the resulting power laws with the one from the <a href="https://arxiv.org/pdf/2407.21783">LLama 3 herd paper</a>, which was fitted to an Aggregate Performance Estimator (APE). The models have sizes ranging from 40M to 8B parameters and are pretrained on a datamix comprising 58.4% documents that are high in factual knowledge, 19.9% documents containing code, with the remaining 21.7% not falling in any category. They go on to study how the skill-dependent CO varies when changing the proportion of relevant data in the training datamix, and whether the two COs can be aligned in this way.</p>
+<h3 id="results_1">Results</h3>
+<p>As shown in Figure 1, there is a difference between knowledge and code skills: the former prefers capacity over data, compared to the APE curve, while the latter is more data-hungry. The difference is more evident in lower compute regimes.</p>
+<p>To understand how much this difference is a consequence of the ratio of knowledge vs code documents used as training data, the authors train models with a fixed compute budget but change the relative proportions in the datamix. Unsurprisingly, increasing the amount of skill-dependent training data improves the performance on that specific skill, but - more notably - also the COs shift, towards being more capacity-hungry (Figure 2).</p>
+<p><img alt="CO shifts toward capacity when increasing the proportion of skill-relevant data in training datamix" src="../potm/2025/03/skill-scaling-laws/fig2.png" /></p>
+<figcaption>Figure 2. IsoFLOP curves ($B = 6 \times 10^{18}$) for various code and knowledge QA datamixes, showing a shift in CO parameter count. </figcaption>
+
+<p>However, even when correcting for the proportion of skill-relevant data, a fundamental difference between knowledge and code remains, with knowledge still being substantially more capacity-hungry (Figure 3). This can be explained by the fact that knowledge is much harder to compress than code.</p>
+<p><img alt="CO parameter count as a function of proportion of skill-relevant data" class="img-medium" src="../potm/2025/03/skill-scaling-laws/fig3.png" /></p>
+<figcaption>Figure 3. On average, knowledge-based tasks require more parameters than code, for the same proportion of skill-relevant data seen during pretraining. </figcaption>
+
+<p>Finally, the authors observe that, while it is possible in general to align the COs for the two skills when fixing a specific validation dataset, the optimal parameter count for the same skill varies massively (up to 30%, in low-budget regimes) across validation sets. This highlights the importance of choosing a validation set that adequately represents what the model should be able to capture.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2503.10061" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="overtrained-language-models-are-harder-to-fine-tune">Overtrained Language Models Are Harder to Fine-Tune</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Jacob Mitchell Springer, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Carnegie Mellon University, Stanford University, Harvard University, Princeton University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2503.19206" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>Current generations of LLMs are often "overtrained" on trillions of tokens since pretrained model performance continues to increase past the <a href="https://arxiv.org/abs/2203.15556" target="_blank">Chinchilla</a> point of optimal pretraining compute. We often assume that a better pretrained model would result in better task performance after fine-tuning, but this work challenges this assumption.</p>
+<p>In the headline results (below), the authors take OLMo-1B intermediate checkpoints and show that the best performance after instruction fine-tuning is achieved with the 2.3 trillion token checkpoint, and performance degrades after 3 trillion tokens.</p>
+<p><img alt="Two plots of average LLM benchmark performance (y) vs pretraining tokens (x), left: after pretraining, right: after instruction tuning. The left curve is monotonically increasing, while the right one dips down between 2.5 and 3 trillion pre-training tokens." class="img-medium" src="../potm/2025/03/overtrained-fine-tuning/fig1.png" /></p>
+<figcaption>Figure 1. Language models with extensive pre-training can exhibit catastrophic overtraining, where the performance of post-trained models degrades as the pre-training stage is extended.</figcaption>
+
+<h3 id="results-open-checkpoints">Results - open checkpoints</h3>
+<p>First, the authors show degradations with continued pretraining empirically using open LLM checkpoints (see Figure 1 above and Figure 2 below). The effect is more common in <em>Out Of Distribution</em> (OOD) tasks, which were not present in the fine-tuning protocol, in contrast to <em>In Distribution</em> (ID) tasks which were. If it were confined to OOD tasks, this would be catastrophic forgetting, but since it is present in ID tasks, the authors propose the term <strong>catastrophic overtraining</strong>. Since it worsens with continued pretraining, the models exhibit <em>progressive sensitivity</em> to modification.</p>
+<p><img alt="Multiple plots of downstream task performance against pretraining tokens, many of which show dips after 2-3 trillion tokens." src="../potm/2025/03/overtrained-fine-tuning/fig2.png" /></p>
+<figcaption>Figure 2. Extending pre-training can degrade performance after fine-tuning Anthropic-HH (left) and LLaVA (right).</figcaption>
+
+<h3 id="results-controlled-pretraining">Results - controlled pretraining</h3>
+<p>There is a confounding factor with the above results since intermediate checkpoints did not finish their learning rate decay schedule and this could cause the appearance of catastrophic overtraining. To control for this, the authors pretrain their own small LMs and observe catastrophic overtraining on some tasks, with RTE and TREC showing ID degradation with additional pretraining tokens.</p>
+<p><img alt="Multiple plots of downstream task performance against pretraining tokens, many of which show dips after 2-3 trillion tokens." src="../potm/2025/03/overtrained-fine-tuning/fig6.png" /></p>
+<figcaption>Figure 6. Catastrophic overtraining after hyperparameter tuning: extending pre-training can lead to the eventual degradation of the C4 OOD perplexity (top) and ID perplexity (fine-tuning task; bottom), even after hyperparameter tuning.</figcaption>
+
+<h3 id="results-theory">Results - theory</h3>
+<p>Finally, the authors provide a theoretical insight into the effect. For a simplified model, they show that random perturbations inserted after pretraining runs of increasing duration will degrade pretraining loss monotonically with duration. The core idea is that the model becomes more sensitive to small singular values in the mapping that is being learnt, over training. This increased sensitivity leads to degradation when the model parameters are perturbed. Then they show a similar result when fine-tuning on a misaligned task. These results directly concern catastrophic forgetting, since the fine-tuning task causes degradation in the original task. The authors argue that pretraining capabilities are important after fine-tuning and therefore these results are indicative of catastrophic overtraining too.</p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>Catastrophic overtraining is an interesting idea, perhaps related to recent results showing that continued pretraining can reduce performance after quantisation (<a href="https://arxiv.org/abs/2411.04330">Kumar et al.</a>). There is mounting evidence of progressive sensitivity — models trained for longer are more sensitive to modification. It isn't yet clear if it is practical to work around this sensitivity with careful fine-tuning (e.g. regularisation, as mentioned in this work) and if this can result in a better outcome than shorter pretraining.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2503.19206" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="multi-domain-distribution-learning-for-de-novo-drug-design">Multi-Domain Distribution Learning for De Novo Drug Design</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Arne Schneuing, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+EPFL, VantAI, University of Oxford, Aithyra
+</div>
+<div class="potm-meta">
+<a href="https://openreview.net/forum?id=g3VCIM94ke" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>The authors developed a conditional generative model for structure-based drug design that integrates continuous flow matching and discrete Markov bridges to learn the distribution of the chemical, geometric, and physical aspects of protein-binding ligands. In addition to learning the distribution, the model outputs uncertainty estimates that detect out-of-distribution (OOD) samples and correlate with molecular properties. Generative models are generally optimized to learn the distribution of the training dataset. However, in practice, we are often interested in generating molecules with specific desired properties rather than sampling from the entire distribution. To enable the model to sample from regions with the desired metrics, the authors proposed a Direct Preference Optimization (DPO)-like preference alignment approach, which improves the quality of generated molecules for specific targeted metrics.</p>
+<h3 id="background_1">Background</h3>
+<p>Small molecules are the most common class of drugs, accounting for about <span class="arithmatex">\(85\%\)</span> of FDA-approved drugs. Developing these drugs is costly and time-consuming, which has sparked interest in computational tools to accelerate the design of small molecules at lower costs.</p>
+<p>Traditional computational drug design methods focus on improving specific metrics such as binding affinity or synthesizability. While these approaches are effective at optimizing a single metric, they may come at the expense of others. Recently, generative models have emerged as promising methods to learn "drug-like patterns" from training data. These models are trained to capture the underlying distribution of the training data, but they are not optimized for specific metrics. As a result, the quality of the sampled molecules may be compromised. Therefore, there is a need for a model that captures the multifaceted properties of drugs while still generating molecules with excellent metric evaluations. DRUGFLOW is a generative model, and the authors have developed a preference alignment strategy to improve the quality of generated molecules, thus combining the strengths of both approaches.</p>
+<h3 id="their-method_1">Their method</h3>
+<p><img alt="DRUGFLOW Workflow" src="../potm/2025/03/drugflow/drugflow-figure.png" /></p>
+<figcaption></figcaption>
+
+<p>DRUGFLOW is a conditional probabilistic model that learns ligand atom coordinates (<span class="arithmatex">\(x_{t}\)</span>), atom types (<span class="arithmatex">\(h_{t}\)</span>), bond types (<span class="arithmatex">\(e_{t}\)</span>), and uncertainty estimates at the atom level (<span class="arithmatex">\(\hat{\sigma}_{\text{tot}}\)</span>), as shown in Figure 1. The generative process is conditioned on a fixed protein backbone. The model operates on continuous features (atom coordinates) and discrete features (atom types and bond types). The continuous features are learned using flow matching and sampled from a Gaussian prior distribution, as shown on the left-hand side of Figure 1. The discrete features are learned using a Markov bridge model and sampled from a categorical prior distribution. The authors also developed FLEXFLOW, an extension of DRUGFLOW, which also learns continuous side-chain angles of the protein backbone, but we will not discuss it here.</p>
+<h4 id="representation-of-ligands-and-protein-binding">Representation of ligands and protein binding</h4>
+<p>The model operates on a molecular graph represented as <span class="arithmatex">\(\mathcal{G} = (\mathcal{z}, \mathcal{e})\)</span>, where <span class="arithmatex">\(\mathcal{z}\)</span> is a set of nodes and <span class="arithmatex">\(\mathcal{e}\)</span> is the set of edges. Nodes are represented by <span class="arithmatex">\(\mathcal{z} = [\mathcal{x}, \mathcal{h}]\)</span>, with 3D geometric coordinates <span class="arithmatex">\(x \in \mathbb{R}^{3N}\)</span> and features <span class="arithmatex">\(h \in \mathbb{R}^{dN}\)</span>, where <span class="arithmatex">\(\mathcal{N}\)</span> is the number of atoms.</p>
+<ul>
+<li>
+<p><strong>Ligand representation:</strong> Ligands are represented by atoms as nodes, bonds as edges, and atom types as node features (one-hot encoded).</p>
+</li>
+<li>
+<p><strong>Protein representation:</strong> Amino acids in the protein backbone are represented by the central carbon atom (<span class="arithmatex">\(C_{\alpha}\)</span>) of the backbone of the amino acid. The protein is represented as nodes of (<span class="arithmatex">\(C_{\alpha}\)</span>) and edges between (<span class="arithmatex">\(C_{\alpha}\)</span>) atoms. Edges between amino acids (<span class="arithmatex">\(C_{\alpha}\)</span>) are constructed using a predefined cutoff distance of 10 angstroms. Here, node features include one-hot encoded amino acid types and a vector representation of its atoms.</p>
+</li>
+<li>
+<p>Edges are also created between ligand atoms and protein (<span class="arithmatex">\(C_{\alpha}\)</span>) atoms using a predefined cutoff distance of 10 angstroms.</p>
+</li>
+</ul>
+<h4 id="continuous-flow-matching-and-uncertainty-estimation">Continuous flow matching and uncertainty estimation</h4>
+<p>The continuous atom coordinates were learnt using Independent-coupling Conditional Flow Matching (ICFM) and considering a Gaussian conditional probability path defined by</p>
+<div>
+ $$
+ p_t(x|x_1) = \mathcal{N}(x|\mu_t(x_1), \sigma_t(x_1)^2 I)
+ $$
+ </div>
+
+<p>with the flow path</p>
+<div>
+ $$\mu_t(x_1) = t x_1 + (1 - t) x_0, \quad \sigma_t(x_1) = \sigma
+ $$
+ </div>
+
+<p>to model the flow for ligand coordinates. This results in a constant velocity vector field</p>
+<div>
+$$\dot{x}_t = \frac{x_1 - x_t}{1 - t} = x_1 - x_0$$
+</div>
+
+<p>The goal of flow matching is to regress from the prior distribution (Gaussian noise) to a desired distribution (the training data distribution). Assuming that the flow matching regression error is normally distributed with standard deviation <span class="arithmatex">\(\sigma_\theta\)</span>, the loss function that maximizes the likelihood of the true vector field under this uncertainty assumption can be written as:</p>
+<div>
+$$
+L_{\text{FM-OOD}} = \mathbb{E}_{t, q(x_1), p(x_0)} \left[ \frac{d}{2} \log \sigma_\theta^2(x_t, t) + \frac{1}{2 \sigma_\theta^2(x_t, t)} \| v_\theta(x_t, t) - \dot{x}_t \|^2 + \frac{\lambda}{2} \left| \sigma_\theta^2(x_t, t) - 1 \right|^2 \right]
+$$
+</div>
+
+<p>where <span class="arithmatex">\(v_\theta(x_t, t) \in \mathbb{R}^d\)</span> and <span class="arithmatex">\(\sigma_\theta(x_t, t) \in \mathbb{R}\)</span> are two output heads of the neural network, and <span class="arithmatex">\(\dot{x}_t\)</span> is the ground-truth conditional vector field.</p>
+<p>The vector field (<span class="arithmatex">\({v_\theta(x_t, t)}\)</span>) learned using graph neural network  operates on ligand and protein representation. The graph neural network uses Geometric Vector Perceptrons (GVP) to ensure equivariance to global rotation and translation. As shown in Figure 1, the model generates a per-atom uncertainty score in addition to the vector field for flow matching at every sampling step. The total per-atom uncertainty estimate is calculated as the sum of the uncertainties of the particular atom along the flow matching path as defined below:</p>
+<div>
+$$
+\hat{\sigma}_{\text{tot}} = \int_0^1 \sigma_\theta^2(x_t, t) \, dt
+$$
+</div>
+
+<p>Atom types and bonds are learned using Markov bridge models, but we will not discuss these here for brevity.</p>
+<h4 id="alignment">Alignment</h4>
+<p>In real-world applications, for example, when developing a drug to treat a given disease, we are interested in ligands with particular chemical and physical properties. If molecules with such or similar properties were underrepresented in the training set, they would be in the tail of the learned distribution and are less likely to be sampled during generation. To address this challenge, the authors proposed an alignment strategy inspired by Direct Preference Optimization (DPO), commonly used in large language models.</p>
+<p>To perform preference alignment, the authors trained a new model <span class="arithmatex">\(\phi\)</span> and used a fixed reference (pre-trained DRUGFLOW) model <span class="arithmatex">\(\theta\)</span> for comparison. Only <span class="arithmatex">\(\phi\)</span> is optimized during training. For each data point <span class="arithmatex">\(\mathcal{c}\)</span>, losses were computed for winning and losing samples: <span class="arithmatex">\(L_c^w(\phi)\)</span> and <span class="arithmatex">\(L_c^l(\phi)\)</span>, where <span class="arithmatex">\(L_c^w(\phi) := L_c(x^w, \phi)\)</span> and <span class="arithmatex">\(L_c^l(\phi) := L_c(x^l, \phi)\)</span>. These include the flow matching loss for coordinates and Markov bridge losses for atom and bond types. The same losses are also computed for the reference model <span class="arithmatex">\(\theta\)</span> for comparison.</p>
+<p>The multi-domain preference alignment (MDPA) loss is defined as:</p>
+<div>
+$$
+L_{\text{MDPA}}(\phi) = - \log \sigma \left( - \beta_t \sum_c \lambda_c (\Delta_w^c - \Delta_l^c) \right) + \lambda_w L^w(\phi) + \lambda_l L^l(\phi)
+$$
+</div>
+
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\phi\)</span>: The new model being trained.</li>
+<li><span class="arithmatex">\(\theta\)</span>: The fixed reference model.</li>
+<li><span class="arithmatex">\(L_c^w(\phi)\)</span>, <span class="arithmatex">\(L_c^l(\phi)\)</span>: Losses for winning and losing samples in domain <span class="arithmatex">\(c\)</span>.</li>
+<li><span class="arithmatex">\(\Delta_w^c = L_c^w(\phi) - L_c^w(\theta)\)</span>, <span class="arithmatex">\(\Delta_l^c = L_c^l(\phi) - L_c^l(\theta)\)</span>: Per-domain improvements over the reference model.</li>
+<li><span class="arithmatex">\(\lambda_c\)</span>: Weight for domain <span class="arithmatex">\(c\)</span>.</li>
+<li><span class="arithmatex">\(\lambda_w\)</span>, <span class="arithmatex">\(\lambda_l\)</span>: Regularization weights for total winning and losing losses.</li>
+<li><span class="arithmatex">\(\beta_t\)</span>: Temperature or scaling factor.</li>
+<li><span class="arithmatex">\(\sigma\)</span>: Sigmoid function.</li>
+</ul>
+<p>Regularization is applied through <span class="arithmatex">\(L_w(\phi)\)</span> and <span class="arithmatex">\(L_l(\phi)\)</span>, which aggregate losses across domains for winning and losing samples, respectively.</p>
+<h3 id="results_2">Results</h3>
+<p>The authors evaluated the performance of the model in terms of learning the training data distribution and absolute metrics. The model's ability to learn the distribution of the training data was assessed by measuring the proximity of the distribution of chemical property metrics in generated molecules to that of the training data.</p>
+<p>As shown in Table 1 of the paper, DRUGFLOW outperformed other models in approximating the training data distribution based on metrics measuring the chemical and structural properties of 3D molecules. However, in terms of absolute metric values, the baseline models outperformed DRUGFLOW.</p>
+<p><img alt="Metrics evaluation" src="../potm/2025/03/drugflow/metric_distance.png" /></p>
+<figcaption></figcaption>
+
+<p>During sampling, the model generates the molecular structure along with an uncertainty estimate. The uncertainty estimate detects out-of-distribution samples. As shown in Figure 2B, samples near the tail of the distribution had higher uncertainty compared to those around the mode. Uncertainty estimation also showed a negative correlation with binding affinity and a positive correlation with both the size of the generated molecules and structural clashes, as shown in Figures 2C,D below.</p>
+<p><img alt="Uncertainty estimate" src="../potm/2025/03/drugflow/uncertainty.png" /></p>
+<figcaption></figcaption>
+
+<p>The authors conducted preference alignment for drug-likeness (QED), synthetic accessibility (SA), vina efficiency score, and rapid elimination of swill (REOS) filters. To train the preference-aligned model:</p>
+<ul>
+<li>Generate multiple molecules using a reference (pre-trained DRUGFLOW model) with the same conditioning protein</li>
+<li>Score the molecules for the metric of interest</li>
+<li>Identify winning and losing pairs</li>
+<li>Perform preference alignment</li>
+</ul>
+<p>In addition to preference-aligned models, the authors fine-tuned the pre-trained DRUGFLOW model using only the winning samples and compared their performance. As shown in Figure 4 of the paper (also shown below), the 3D molecules generated by the preference-aligned model exhibited superior chemical properties and binding affinity to the target protein compared to the training set, as well as molecules generated by the reference and fine-tuned models.</p>
+<p><img alt="Model alignment" src="../potm/2025/03/drugflow/alignment.png" /></p>
+<figcaption></figcaption>
+
+<h3 id="takeaways_2">Takeaways</h3>
+<p>Generative models are trained to learn the distribution of training data, and during sampling or inference, the generated samples reflect this distribution. To use these models for practical applications where we are interested in molecules with specific chemical and physical properties, it is important to consider the representation of molecules with similar features in the training set. Our molecules of interest might lie in the tails of the learned distribution, making them less likely to be sampled. The authors of DRUGFLOW have shown aligning the model using a preference dataset could improve the quality of the generated molecules.</p>
+<p>...</p>
+<div class="potm-footer-link">
+See <a href="https://openreview.net/forum?id=g3VCIM94ke" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

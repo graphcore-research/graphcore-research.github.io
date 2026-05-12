@@ -1,0 +1,1175 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-11-04-potm/">
+      
+      
+        <link rel="prev" href="../2025-10-07-potm/">
+      
+      
+        <link rel="next" href="../2025-11-05-the-role-of-graph-topology/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>October Papers: Fast and Smart Language Models - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="October Papers: Fast and Smart Language Models - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-11-04-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-11-04-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="October Papers: Fast and Smart Language Models - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-11-04-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#learning-grouped-lattice-vector-quantizers-for-low-bit-llm-compression" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        October Papers: Fast and Smart Language Models
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-grouped-lattice-vector-quantizers-for-low-bit-llm-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planned-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Planned Diffusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rethinking-thinking-tokens-llms-as-improvement-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rethinking Thinking Tokens: LLMs as Improvement Operators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-structure-doesnt-help-llms-do-not-read-text-attributed-graphs-as-effectively-as-we-expected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Structure Doesn’t Help: LLMs Do Not Read Text-Attributed Graphs as Effectively as We Expected
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/douglaso.jpg" alt="Douglas Orr">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/douglaso/">Douglas Orr</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Benoit Gaujac">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/benoitg/">Benoit Gaujac</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/samot.jpg" alt="Sam Olesker-Taylor">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/samot/">Sam Olesker-Taylor</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/kheerann.jpg" alt="Kheeran Naidu">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/kheerann/">Kheeran Naidu</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-11-04 00:00:00+00:00" class="md-ellipsis">November 4, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              12 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:gnns" class="md-tag">GNNs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:graph-learning" class="md-tag">graph-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantisation" class="md-tag">quantisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reasoning" class="md-tag">reasoning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement-learning</a>
+      
+    
+  </nav>
+
+
+
+  <h1>October Papers: Fast and Smart Language Models</h1>
+
+<p>October was packed with insights into making language models faster and smarter. We reviewed four of our favorite papers for you in detail:</p>
+<ul>
+<li>First up, <a href="#learning-grouped-lattice-vector-quantizers-for-low-bit-llm-compression">Grouped Lattice Vector Quantisation</a> introduces a novel technique for a fine-grained post-training quantisation of LLMs, retaining good performance even at low bit widths.</li>
+<li><a href="#planned-diffusion">Planned Diffusion</a> combines autoregressive planning with text diffusion, achieving low-latency text generation.</li>
+<li><a href="#rethinking-thinking-tokens-llms-as-improvement-operators">Rethinking Thinking</a> addresses the problem of long reasoning chains by distilling intermediate results into a bounded workspace for faster answers.</li>
+<li>Finally, <a href="#when-structure-doesnt-help-llms-do-not-read-text-attributed-graphs-as-effectively-as-we-expected">When Structure Doesn’t Help</a> compares techniques for encoding graphs for consumption by LLMs with surprising results.</li>
+</ul>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="learning-grouped-lattice-vector-quantizers-for-low-bit-llm-compression">Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Xi Zhang, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Nanyang Technological University, Alibaba Group, Southwest Jiaotong University
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2510.20984" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>The paper introduces grouped lattice vector quantisation (GLVQ), a weight quantisation technique that splits weight tensors into groups, selects a bit width for each group based on a local importance score, compresses their range using a <em>companding</em> nonlinearity, then splits groups into vectors, before rounding to a lattice. The companding function and lattice basis matrix both are trained with a short run on calibration data. This is illustrated below.</p>
+<p><img alt="Four-step GLVQ framework: from the LLM weight matrix, 1) divide into groups, 2) allocate bit-width to each group based on salience, 3) apply elementwise group-specific companding functions and 4) encode by rounding to a lattice." class="img-large" src="../potm/2025/10/grouped-lattice/fig1.png" /></p>
+<h3 id="their-method-dequantisation">Their method - dequantisation</h3>
+<p>The dequantisation procedure for a single group of weights starts from low-bit integer indices, reshaped into a matrix multiply (to resolve the point on the lattice) followed by an elementwise nonlinearity (inverse-companding).</p>
+<p>I.e. the following pseudocode (using concrete shapes for clarity) for a single vector within a group:</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Given:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#   w_indices:   int{b}[8]      (e.g. int2; b is shared over a group of [4096, 128] weights)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#   lattice_G:   float[8, 8]    (shared over the group)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">#   mu:          float          (shared over the group)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#   compand_inv: (float, float) -&gt; float</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">w_tilde</span> <span class="o">=</span> <span class="n">lattice_G</span> <span class="o">@</span> <span class="n">w_indices</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">compand_inv</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">w_tilde</span><span class="p">]</span>
+</span></code></pre></div>
+<h3 id="their-method-quantisation">Their method - quantisation</h3>
+<p>The quantisation procedure follows four steps:</p>
+<p><strong>1. Weight Groups</strong> First, divide each weight tensor into large groups (e.g. size <span class="arithmatex">\(4096 \times 128\)</span>) - these groups will be quantised independently, sharing quantiser parameters within each group, and trading off flexibility against overhead.</p>
+<p><strong>2. Salience-determined bit allocation</strong> Based on activations from calibration data, choose bit-widths per weight group to minimise the local objective <span class="arithmatex">\(D_{\text{KL}}(\mathrm{Softmax}(W x) \,\|\|\, \mathrm{Softmax}(\hat{W}x))\)</span>, where <span class="arithmatex">\(W\)</span> is the original weight, quantised to <span class="arithmatex">\(\hat{W}\)</span> and <span class="arithmatex">\(x\)</span> is a calibration input. E.g. if the <em>average</em> bit width target is 2 bits/param, more sensitive groups might be allocated 3 bits/param, and less sensitive groups 1 bit/param.</p>
+<p><strong>3. Companding</strong> Since the quantiser in the following step is linear, it is helpful to first compress the range of weights. Use a <em>companding function</em> (elementwise nonlinearity), defined as:</p>
+<div>
+$$
+F(x) = \text{sign}(x) \frac{\ln(1 + \mu \lvert x \rvert)}{\ln(1 + \mu)}
+$$
+</div>
+
+<p>where <span class="arithmatex">\(\mu &gt; 0\)</span> is a learned parameter per group. For example, for various <span class="arithmatex">\(\mu\)</span> values, the companding function looks like this:</p>
+<p><img alt="Plot of companding function for various mu values, showing increasing nonlinearity as mu increases." class="img-small" src="../potm/2025/10/grouped-lattice/companding.png" /></p>
+<p><strong>4. Lattice vector quantisation</strong> Finally, split each group into vectors (e.g. size 8), and quantise each vector by rounding to the (approximate) nearest point on a learned lattice. The lattice is defined by a basis matrix <span class="arithmatex">\(G\)</span> (size <span class="arithmatex">\(8 \times 8\)</span> in this example) as <span class="arithmatex">\(\\{Gz \| z\in \text{int}\\{b\\}^8\\}\)</span>, which is trained using an alternating scheme: first fixing <span class="arithmatex">\(G\)</span> and optimising the integer indices using the Babai closest-vector algorithm, then fixing the integer indices and optimising <span class="arithmatex">\(G\)</span> with gradient descent.</p>
+<p>Putting everything together, the quantisation procedure for a group of weights follows:</p>
+<p><img alt="Algorithm panel for GLVQ, showing the four steps of the quantisation process." class="img-large" src="../potm/2025/10/grouped-lattice/algorithm.png" /></p>
+<h3 id="results">Results</h3>
+<p>A comparison with other post-training quantisation methods on Llama 2 show competitive results at 2-4 bits/param:</p>
+<p><img alt="Downstream task results grid for GLVQ against baselines, on Llama 2." src="../potm/2025/10/grouped-lattice/results.png" /></p>
+<p>Performance benchmarks also show the memory bandwidth achieved for GLVQ dequantisation before matrix-vector product, as well as overall tok/s benchmarks:</p>
+<p><img alt="Table of performance benchmarks for GLVQ dequantisation, versus baselines." class="img-large" src="../potm/2025/10/grouped-lattice/performance.png" /></p>
+<p>The results are also supported by an ablation of each aspect described in the method section, as well as for more fine-grained design decisions. We omit this here for brevity, although they are a valuable part of the paper.</p>
+<h3 id="takeaways">Takeaways</h3>
+<p>I really liked this technique and paper — the results seem strong and the performance analysis and ablation are thorough. Like many post-training quantisation papers, which use <em>global</em> calibration data from a forward pass through the model, and <em>local</em> gradient-based optimisation, I would be interested to confirm that this is significantly cheaper than quantisation-aware training, so would like to see PTQ compared against QAT in papers like this.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2510.20984" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="planned-diffusion">Planned Diffusion</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Daniel Israel, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+University of California, Los Angeles, MIT CSAIL, Google
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2510.18087" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Planned diffusion introduces a hybrid approach combining the strengths of autoregressive and diffusion models.
+First, the model autoregressively generates a plan, breaking the task into semantically independent spans.
+Second, the model generates these spans in parallel via discrete diffusion.</p>
+<p><img alt="Example of the different stages of planned diffusion." src="../potm/2025/10/planned-diffusion/description.png" /></p>
+<h3 id="method">Method</h3>
+<p>In the first stage, the model sequentially generates a plan <span class="arithmatex">\(z = (z_1, z_2, \ldots, z_N)\)</span> given an initial context <span class="arithmatex">\(c\)</span> (user prompt or any previously generated tokens).
+It specifies a set of <span class="arithmatex">\(b(z)\)</span> semantically independent spans as well as the length of each span <span class="arithmatex">\(l_k(z)\)</span>, <span class="arithmatex">\(k \in {1, \ldots, b(z)}\)</span>.
+During the diffusion phase, the sequences <span class="arithmatex">\(x(k)\)</span> corresponding to each span <span class="arithmatex">\(k \in {1, \ldots, b(z)}\)</span> with <span class="arithmatex">\(|x(k)| = l_k(z)\)</span> are generated in parallel.
+The full joint distribution given context <span class="arithmatex">\(c\)</span> is defined as</p>
+<div>
+
+$$p_{PD}(x, z \mid c) = p_{AR}(z \mid c) p_{D}(x \mid z, c) = p_{AR}(z \mid c) \prod_{k=1}^{b(z)} p_{D}(x(k) \mid z, c),$$
+
+</div>
+
+<p>where <span class="arithmatex">\(x = \bigcup_{k=1}^{b(z)} x(k)\)</span>, and <span class="arithmatex">\(p_{AR}\)</span> and <span class="arithmatex">\(p_{D}\)</span> denote, respectively, the auto-regressive distribution of the planning stage, respectively the distribution of the discrete diffusion model in the diffusion stage.</p>
+<p><img alt="Planned diffusion pseudo-code." src="../potm/2025/10/planned-diffusion/algo.png" /></p>
+<h4 id="training-and-special-attention-masking">Training and special attention masking</h4>
+<p>The training loss combines an autoregressive loss and a discrete diffusion loss.
+More specifically, given a sequence <span class="arithmatex">\(Y\)</span> decomposed into sets of planning tokens <span class="arithmatex">\(Z\)</span> and content tokens <span class="arithmatex">\(X\)</span>, such that <span class="arithmatex">\(Y = Z \cup X\)</span>, and a model <span class="arithmatex">\(f_\theta\)</span> parameterized by <span class="arithmatex">\(\theta\)</span> with masking function <span class="arithmatex">\(M_i\)</span>, the overall loss is defined as:</p>
+<div>
+
+$$\mathcal{L}(\theta) =
+\underset{\underset{t \sim U(0,1)}{Y \sim \mathcal{D}}}{\mathbb{E}}
+\frac{1}{|\mathcal{Y}|}
+\sum_{y_i \in \mathcal{Y}} \Big[
+\mathbb{1}(y_i \in Z), CE\big(f_{\theta(y_{\lt i}, i)}, y_i\big)
+    •   \frac{1}{t}, \mathbb{1}(y_i \in X), CE\big(f_{\theta(M_i(Y_t), i)}, y_i\big)
+\Big]
+$$
+
+</div>
+
+<p>where <span class="arithmatex">\(Y_t = X_t \cup Z\)</span> and <span class="arithmatex">\(X_t\)</span> denotes the noised sequence under the discrete diffusion process.
+The first term in the sum corresponds to the autoregressive loss, while the second term corresponds to the diffusion loss.</p>
+<p><img alt="Masking function of the planned diffusion." src="../potm/2025/10/planned-diffusion/attention_mask.png" /></p>
+<h4 id="data">Data</h4>
+<p>A synthetic data curation pipeline produces training data annotated with planning control tags, using Gemini to label the SlimOrca instruction-finetuning dataset.</p>
+<h4 id="inference">Inference</h4>
+<p>Several techniques are used to improve sampling performance and efficiency: variable-length denoising, where the number of denoising steps depends on the length of the longest span; KV caching; and entropy-ordered unmasking.</p>
+<h3 id="results_1">Results</h3>
+<p>The base model is first pre-trained autoregressively and then further pre-trained with a diffusion objective. It is subsequently fine-tuned on the synthetic dataset using four decoding strategies: autoregressive, diffusion, Fast-dLLM, and Planned Diffusion.
+Planned Diffusion demonstrates promising improvements by establishing a new latency–quality Pareto frontier, achieving up to ~1.8× faster decoding compared to standard autoregressive generation, and continues to improve with additional training, whereas the autoregressive baseline plateaus. However, these gains come at the cost of a small decline in LC win rate, reflecting a minor trade-off in instruction-following quality for reduced latency.</p>
+<p><img alt="Main results." src="../potm/2025/10/planned-diffusion/results.png" /></p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2510.18087" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="rethinking-thinking-tokens-llms-as-improvement-operators">Rethinking Thinking Tokens: LLMs as Improvement Operators</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Madaan, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Meta, UCL, Mila, Anthropic, Princeton
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2510.01123" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The Key Idea</h3>
+<p>Training LLMs to <em>reason</em> incentivises them to output their <em>chain of thought</em> (CoT). Amongst other things, this allows them to explore different strategies, and backtrack if needed. The performance gains are undeniable, but they come at a <em>significant</em> cost: their CoTs are typically <em>very long</em>, inflating the context length perhaps an order of magnitude. Not only is this expensive, but, perhaps more importantly, it increases answer latency.</p>
+<p>The current paper addresses the inflated context by viewing the thinking process as an <em>improvement operator</em>: it is given a <em>bounded</em> workspace, which it uses to refine its current answer.</p>
+<p>Their <em>Parallel-Distill-Refine</em> (PDR) approach, detailed below, permits parallelised access to the workspace, reducing latency issues; they term the non-parallelised version <em>Sequential Refinement</em> (SR).</p>
+<p>The authors measure accuracy vs <em>sequential budget</em>, which is a proxy for latency.</p>
+<p><img alt="Accuracy vs Sequential Budget" src="../potm/2025/10/rethinking-thinking/figure_1.png" /></p>
+<h3 id="background">Background</h3>
+<p>The standard approach to scaling LLMs to solve harder problems is to give them a greater inference budget: they think for longer and longer, exploring different solution strategies. This is highly unsatisfying due to the quadratic scaling of compute with context length. LLMs may even struggle to 'find' the correct information inside their long reasoning traces—if it even exists.</p>
+<p><em>Latent reasoning</em>, in which non-language 'tokens' are used, is often employed to address this: these tokens are supposed to be more 'expressive' than tokens representing natural language, meaning fewer are needed. The current paper takes a very different approach, giving the LLM a <em>bounded workspace</em> to suggest new ideas.</p>
+<h3 id="their-method">Their Method</h3>
+<p>The primary tool introduced is <em>Parallel-Distill-Refine</em> (PDR). For multiple rounds, PDR performs the following steps with the output of each round seeding the next:</p>
+<ol>
+<li>Generate <span class="arithmatex">\(M \ge 1\)</span> diverse drafts in parallel.</li>
+<li>Distil them into a <em>bounded</em> workspace: e.g., summarise or pick the top-<span class="arithmatex">\(k\)</span> drafts.</li>
+<li>Refine answer conditional on this workspace.</li>
+</ol>
+<p>The overall structure is outlined in Figure 2(a) below. There are various options for "distil", as outlined in Figure 2(b). If no parallelisation is utilised (i.e., <span class="arithmatex">\(M = 1\)</span>), PDR becomes <em>Sequential-Refine</em> (SR).</p>
+<p><img alt="Parallel-Distill-Refine overview" src="../potm/2025/10/rethinking-thinking/figure_2.png" /></p>
+<p>More informally, instead of using long chains of thought, solutions within the allowed budget are generated, and then a bounded, round-wise summary/report is written out. The next phase starts with <em>only this summary</em> (and the question), and uses a new available workspace for fresh generations. Importantly, the workspace <em>is not</em> persistent across rounds, instead resetting. Thus, iterating the process enables long 'thinking', but with a bounded context size.</p>
+<p>Importantly, whilst <em>total compute</em> is affected by the number of drafts generated in parallel, <em>latency</em> isn't. Performance results are measured against the <em>sequential thinking budget</em> <span class="arithmatex">\(B_\textsf{seq}\)</span> (latency proxy: sum of tokens along accepted path) as well as the total budget <span class="arithmatex">\(B_\textsf{total}\)</span> (sum of all tokens).</p>
+<h3 id="results_2">Results</h3>
+<p>The main result of the paper is shown in Figure 3 below. It compares the performances at matched <em>sequential</em> thinking budget <span class="arithmatex">\(B_\textsf{seq}\)</span>. The figure is given first, then key aspects are summarised in a table below.</p>
+<p><img alt="Results on AIME 2024" src="../potm/2025/10/rethinking-thinking/figure_3.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Budget</th>
+<th>CoT</th>
+<th>PDR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Gemini 2.5</em></td>
+<td>16k</td>
+<td>76.0</td>
+<td>81.2 (+5.2)</td>
+</tr>
+<tr>
+<td></td>
+<td>24k</td>
+<td>81.2</td>
+<td>83.8 (+2.6)</td>
+</tr>
+<tr>
+<td><em>GPT o3 mini</em></td>
+<td>16k</td>
+<td>77.7</td>
+<td>84.6 (+6.9)</td>
+</tr>
+<tr>
+<td></td>
+<td>24k</td>
+<td>77.5</td>
+<td>86.5 (+9.0)</td>
+</tr>
+</tbody>
+</table>
+<p>Overall, the improvement is more significant on GPT 3 than Gemini 2.5, although Gemini 2.5 starts from a higher baseline. A 9 percentage-point improvement at 24k budget for GPT o3 is impressive, but it should be noted that GPT o3 at 24k actually performs worse than at 16k. In general, there are serious diminishing returns on increasing the sequential budget, even sometimes negative, suggesting noisy samples.</p>
+<p>The results on AIME 2025 (Figure 9 in their appendix, not repeated here) show similar trends, albeit arguably with a greater benefit from increasing the sequential budget.</p>
+<p>Unfortunately, no particularly satisfactory plots are given using the <em>total</em> budget. Figures 4 and 10 give some indication, but the CoT models are always given far less total budget. This is natural since they have no inherent parallelisation. Still, <em>some</em> information can be gleaned from these.</p>
+<p>Other experiments include comparing distillation methods and varying the architecture for a given <em>total</em> budget—e.g., 'deep &amp; narrow' (generate few in parallel and repeat many times) versus 'shallow and wide' (generate many in parallel and repeat few times).</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2510.01123" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="when-structure-doesnt-help-llms-do-not-read-text-attributed-graphs-as-effectively-as-we-expected">When Structure Doesn’t Help: LLMs Do Not Read Text-Attributed Graphs as Effectively as We Expected</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Haotian Xu, Yuning You, Tengfei Ma
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Stony Brook University, The Chinese University of Hong Kong
+</div>
+<div class="potm-meta">
+<a href="https://openreview.net/forum?id=ijQTdlHJze" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>The authors take a systematic study into understanding the effectiveness of strategies to encode text-attributed graphs (TAGs) for using in LLMs. To that end, they compare standard approaches to LLM-based graph learning: they provide as input to the LLM a description of the task and the graph structure, encoded using either a GNN, an MLP or a template-based method. See Figure 1 for an illustration of the pipeline. </p>
+<p><img alt="Figure 1. A high-level overview of LLM-based graph learning. The left shows examples of the graph structures that are represented. The middle illustrates both template-based and generic GNN-based methods. The right outlines the pipeline to align the graph" src="../potm/2025/10/structure-does-not-help/figure_3.png" /></p>
+<figcaption>Figure 1. A high-level overview of LLM-based graph learning. The left shows examples of the graph structures that are represented. The middle illustrates both template-based and generic GNN-based methods. The right outlines the pipeline to align the graph's structure into LLMs.</figcaption>
+
+<p>In particular, the following is an example of a prompt used for the task of node classification on the Cora dataset:</p>
+<blockquote>Given a node-centered graph: < graph >, each node represents a paper, we need to
+classify the center node into 7 classes: Case Based, Genetic Algorithms, Neural Networks,
+Probabilistic Methods, Reinforcement Learning, Rule Learning, Theory, please tell me which
+class the center node belongs to?</blockquote>
+
+<!-- ### Background
+Graph learning offers methods for modeling relational and structural data 
+LLM-based graph learning methods such as LLaGA and GraphToken have recently been developed to tackle the 
+Maybe write about LLaGA and GraphToken if time allows... -->
+
+<h3 id="their-method-and-results">Their method and results</h3>
+<p>The authors consider the graph-based tasks of node classification, link prediction and molecular property prediction. While node classification and link prediction on TAGs are often assisted by node descriptions, molecular property predictions rely more on the intrinsic graph structure of the molecular graph.</p>
+<p>To evaluate these tasks, the authors consider two key LLM-based graph learning techniques: 
+1. generic graph learning with GNNs using the <a href="https://arxiv.org/abs/2402.05862">GraphToken</a> framework, and 
+2. templated graph learning with <a href="https://arxiv.org/abs/2402.08170">LLaGA</a>.</p>
+<h4 id="generic-graph-learning">Generic graph learning</h4>
+<p>The authors use the GraphToken framework as the basis for generic structural encoding via GNNs, which follows the pipeline outlined in Figure 1. They consider several GNN backbones with this framework -- the Graph Convolutional Network (GCN), the Graph Attention Network (GAT), and the Graph Isomorphic Network (GIN) -- and compare them to a simple MLP in lieu of the GNN in this framework.
+Their results, presented in Table 1, show that for encoding a graph to use in an LLM, the message passing protocols of GNNs do not provide a significant improvement over a simple MLP that only incorporates the graph's node textual descriptions.</p>
+<p><img alt="Figure 1. Tables evaluating the effectiveness of message passing in GNNs compared to a simple MLP baseline. GNNs are at best marginally better for node classification, link prediction, and molecular property prediction." src="../potm/2025/10/structure-does-not-help/figure_1.png" /></p>
+<figcaption>Table 1. These tables evaluate the effectiveness of message passing in GNNs compared to a simple MLP baseline in the LLM-based graph learning pipeline. <bold>Best</bold> results are bolded and <underline>second best</underline> results are underlined.</figcaption>
+
+<h4 id="templated-graph-learning">Templated graph learning</h4>
+<p>The authors use LLaGA's framework as the basis for templated structural encoding via <a href="https://arxiv.org/abs/2012.09699">Laplacian positional embeddings</a>, which also follows the pipeline outlined in Figure 1. They compare LLaGA's Neighborhood Detail (ND) template, which captures the local structure of each node as a sequence of nodes (full structural representation), with two different baselines: (a) Hop Neighbor (HN), which is a random subset of k-hop neighbors from each node to form the sequence of nodes (limited structural representation), and (b) Center Only (CO), which only uses the description of each node (no structural representation). Their results, presented in Table 2, show that the carefully curated sequence of nodes of ND underperforms on both node classification and link prediction (note that the results for molecular property prediction are not given).</p>
+<p><img alt="Figure 2. A table evaluating the effectiveness template-based graph learning with full (ND), limited (HN), and no (CO) graph structure representation. Full graph structure underperforms for both node classification and link prediction." src="../potm/2025/10/structure-does-not-help/figure_2.png" /></p>
+<figcaption>Table 2. This table evaluates the effectiveness of templated graph learning using full (ND), limited (HN), and no (CO) graph structure representation in the LLM-based graph learning pipeline. <bold>Best</bold> results are bolded.</figcaption>
+
+<h3 id="conclusion">Conclusion</h3>
+<p>In this blog post, we have reviewed a subset of results presented by the authors (do check out their paper for other results). These results show that for node classification, link prediction, and molecular property prediction, providing an LLM with the encoding of only the node textual descriptions has comparable results (and better in some cases) to providing it with the encoding of the graph structure using known methods. This highlights the already good performance of LLMs for graph learning tasks on TAGs, but raises the question of the effectiveness of current methods for encoding graph structure for LLM-based graph learning.</p>
+<div class="potm-footer-link">
+See <a href="https://openreview.net/forum?id=ijQTdlHJze" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

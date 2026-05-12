@@ -1,0 +1,922 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-07-17-sparq/">
+      
+      
+        <link rel="prev" href="../2024-06-28-potm/">
+      
+      
+        <link rel="next" href="../2024-08-01-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Sparser llamas run faster — speed up LLM inference with SparQ Attention - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sparser llamas run faster — speed up LLM inference with SparQ Attention - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-07-17-sparq.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-07-17-sparq/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Sparser llamas run faster — speed up LLM inference with SparQ Attention - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-07-17-sparq.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#approximating-attention" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        Sparser llamas run faster — speed up LLM inference with SparQ Attention
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#approximating-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approximating Attention
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sparq-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SparQ Attention
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experimental Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmarking-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarking Attention
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukehg.jpg" alt="Luke Hudlass-Galley">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukehg/">Luke Hudlass-Galley</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-07-17 00:00:00+00:00" class="md-ellipsis">July 17, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/articles/">Articles</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              10 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+
+  <h1>Sparser llamas run faster — speed up LLM inference with SparQ Attention</h1>
+
+<p><img alt="A low-poly llama moving quickly on a running track with lightning bolts" class="img-medium" src="../2024/07-sparq/sparser-llamas.png" /></p>
+<p>When ChatGPT launched in 2022, it became evident how powerful the Transformer architecture, when trained on large corpora of text, is for handling natural language processing tasks. The performance of these Large Language Models (LLMs) has been attributed to the in-context learning capabilities that emerge with large-scale training.</p>
+<!-- more -->
+
+<p>In-context learning enables the model to use arbitrary textual information – such as instructions, examples, and documents – embedded in the prompt to understand and perform the task at hand. Rather than requiring task-specific fine-tuning, LLMs can dynamically handle a wide variety of input tasks at inference-time based on the user-provided context.</p>
+<p>To leverage the benefits of in-context learning, there has been demand for LLMs to support increasingly long input sequences. Language models typically employ a Key-Value (KV) cache to store each token’s corresponding vectors to prevent recomputing them for each autoregressive generation step. However, for long sequences, performance is bottlenecked by how fast the hardware can retrieve the KV cache – which scales linearly with sequence length and batch size – from memory. This, in turn, limits the speed at which tokens can be generated – a key usability metric for LLMs.</p>
+<p>We can see this behaviour when examining how an LLM would spend its time (assuming peak A100 performance) generating a single token:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Llama 2 7B, A100 latency</th>
+<th style="text-align: center;"><span class="arithmatex">\(S\)</span> = 1024</th>
+<th style="text-align: center;"><span class="arithmatex">\(S\)</span> = 128k</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">KV cache data transfer</td>
+<td style="text-align: center;">0.3ms (3.8%)</td>
+<td style="text-align: center;">43.0ms (82.9%)</td>
+</tr>
+<tr>
+<td style="text-align: right;">Attention compute</td>
+<td style="text-align: center;">0.0ms (0.0%)</td>
+<td style="text-align: center;">0.2ms (0.4%)</td>
+</tr>
+<tr>
+<td style="text-align: right;">Parameter data transfer</td>
+<td style="text-align: center;">8.6ms (95.7%)</td>
+<td style="text-align: center;">8.6ms (16.6%)</td>
+</tr>
+<tr>
+<td style="text-align: right;">Non-attention compute</td>
+<td style="text-align: center;">0.0ms (0.5%)</td>
+<td style="text-align: center;">0.0ms (0.1%)</td>
+</tr>
+<tr>
+<td style="text-align: right;">Total</td>
+<td style="text-align: center;">8.9ms</td>
+<td style="text-align: center;">51.8ms</td>
+</tr>
+</tbody>
+</table>
+<p>We also observe empirically how attention dominates the overall generation time as sequence length scales:</p>
+<p><img alt="Proportion of time spent in attention" class="img-medium" src="../2024/07-sparq/time-in-attention.png" /></p>
+<p>As we can see, not only does the time to generate a token scale with sequence length, the proportion of time that is spent fetching the KV cache grows to dominate all other data transfer and compute. This is because, despite hardware developments such as High-Bandwidth Memory (HBM), LLM inference is bandwidth-bound on modern AI accelerators.</p>
+<p>Given how costly it is to transfer the entire KV cache each generation step, we ask <strong><em>is it possible to sparsely fetch data from the KV cache while approximating true attention?</em></strong></p>
+<h2 id="approximating-attention">Approximating Attention</h2>
+<p>To sparsely fetch data from the KV cache, we need to understand what parts of the KV cache are most influential when performing the attention operation. Let’s consider the attention equation:</p>
+<div>
+$$\boldsymbol{y} = \mathrm{softmax}(\frac{\boldsymbol{q}\boldsymbol{K}^\top}{\sqrt{d_h}})\boldsymbol{V}$$
+</div>
+
+<p>the <span class="arithmatex">\(\mathrm{softmax}\)</span> operation defines the attention scores which, for each token in a sequence length <span class="arithmatex">\(S\)</span>, outputs a number between 0 and 1, such that the sum of all attention scores across <span class="arithmatex">\(S\)</span> equals 1. Tokens that correspond to higher scores are more influential than tokens that correspond to lower scores. We observe that relatively few tokens are needed to reasonably approximate the output. For example, if we consider the sum of the top 32 attention scores across all layers and heads of a Llama 2 7B model (over many samples), we see the following distribution:</p>
+<p><img alt="Attention score sparsity" class="img-small" src="../2024/07-sparq/attention-score-sparsity.png" /></p>
+<p>The distribution shows that in most settings, most of the attention score mass is comprised of just a fraction of the tokens (32 tokens in sequences between 1k-2k). This means that other tokens will have attention scores close to 0, and therefore have little bearing on the overall attention output.</p>
+<p>We can exploit the sparsity seen in the scores to help reduce the data transfer associated with attention – after we’ve loaded the key cache onto the accelerator and calculated the attention scores, we can identify the top-<span class="arithmatex">\(k\)</span> (where <span class="arithmatex">\(k\)</span> is a user-defined hyperparameter) largest scores, and then fetch only the value cache elements that are associated with the top-<span class="arithmatex">\(k\)</span> scores. Assuming <span class="arithmatex">\(k\)</span> is much smaller than the sequence length, this can significantly reduce the amount of the value cache is transferred onto chip. This approach is sometimes called Top-<span class="arithmatex">\(k\)</span> Sparse Attention and has been investigated in works such as <a href="https://arxiv.org/abs/2303.06865">Sheng et al., 2023</a> and <a href="https://arxiv.org/abs/2106.06899">Gupta et al., 2021</a>.</p>
+<p>This approach to reduce attention data transfer is limited by the fact that the entire key cache must be fetched to calculate the attention scores. This means that overall KV cache data transfer can never be reduced by 50% or more. While this is a good saving, we could still be transferring a huge amount of data during each generative step. To overcome this, we need to identify a way of reducing the amount key cache data that is also transferred.</p>
+<p>In a similar way we used properties of sparsity in the attention scores to reduce data transfer, we can identify and exploit other sparse structures within the attention tensors. Let us consider how attention scores are calculated, for a query vector <span class="arithmatex">\(\boldsymbol{q} \in \mathbb{R}^{1 \times d_h}\)</span> and the <span class="arithmatex">\(i\)</span>th key vector in the sequence <span class="arithmatex">\(\boldsymbol{k}_i \in \mathbb{R}^{1 \times d_h}\)</span> (where <span class="arithmatex">\(d_h\)</span> is the head dimension):</p>
+<div>
+$$s_i = \boldsymbol{q}\boldsymbol{k}_i^\top = q_1k_{i1} + q_2k_{i2} + \cdots + q_{d_h}k_{id_h}$$
+</div>
+
+<p>The attention score is simply the dot product between the query and the given key vector. Note that if an element of the query is zero, then regardless of the value of the corresponding key element, the attention score remains the same – there is no need to fetch this key element. This suggests that one could approximate attention by only loading elements of the key which correspond with large magnitude elements of the query.</p>
+<p>If we examine the incoming query vectors, we observe that their distributions are heavy-tailed, with many elements close to zero and a small number of elements having large magnitudes (results shown for many samples over all heads and layers of Llama 2 7B):</p>
+<p><img alt="Query sparsity" class="img-small" src="../2024/07-sparq/query-sparsity.png" /></p>
+<p>These empirical statistics suggest that one can approximate attention scores by considering the top-<span class="arithmatex">\(r\)</span> (where <span class="arithmatex">\(r\)</span> is another user-defined hyperparameter) elements of the incoming query vector, and only loading the corresponding <span class="arithmatex">\(r\)</span> element of the key cache – reducing the data transfer associated with the key cache.</p>
+<p>By combining both approaches, we can reduce the data transfer of the whole KV cache. We call our method <strong>SparQ Attention</strong>, which we outline below.</p>
+<h2 id="sparq-attention">SparQ Attention</h2>
+<p><img alt="SparQ Attention algorithm schematic" class="img-medium" src="../2024/07-sparq/schematic.png" /></p>
+<p>The SparQ Attention method can be seen in the diagram above. There are three key steps to the algorithm:</p>
+<ul>
+<li><strong>Step 1</strong>: First, identify the top-<span class="arithmatex">\(r\)</span> largest magnitude elements of the query vector. Fetch the corresponding elements from the key cache and use them to calculate approximate attention scores.</li>
+<li><strong>Step 2</strong>: Using these approximate attention scores, find the top-<span class="arithmatex">\(k\)</span> largest scores and fetch the corresponding tokens from both the key cache and value cache. Calculate the output of the attention operation, using the top-<span class="arithmatex">\(k\)</span> keys and values.</li>
+<li><strong>Step 3</strong>: Calculate the estimated total score <span class="arithmatex">\(\alpha\)</span> assigned to the top-<span class="arithmatex">\(k\)</span> positions using the approximate attention scores. We use this attention score to interpolate between the attention output calculated in <strong>Step 2</strong>, and a mean value vector, <span class="arithmatex">\(\bar{\boldsymbol{v}}\)</span>. This step can often improve task performance, but is not the focus of this post – please read the paper <a href="https://arxiv.org/abs/2312.04985">here</a> to find out more about this step.</li>
+</ul>
+<p>For a sequence length <span class="arithmatex">\(S\)</span>, head dimension <span class="arithmatex">\(d_h\)</span>, and hyperparameters <span class="arithmatex">\(r\)</span> and <span class="arithmatex">\(k\)</span>, the number of KV cache elements transferred for a single attention head forward-pass with SparQ is given by</p>
+<div>
+$$\mathcal{M}_\text{SparQ} = Sr + 2kd_h + 4d_h$$
+</div>
+
+<p>On the other hand, for conventional "dense" attention, the number of scalar elements transferred is</p>
+<div>
+$$\mathcal{M}_\text{Dense} = 2Sd_h + 2d_h$$
+</div>
+
+<p>By varying <span class="arithmatex">\(r\)</span> and <span class="arithmatex">\(k\)</span>, we can tune the data transfer compression ratio</p>
+<div>
+$$\mathcal{M}_\text{SparQ} / \mathcal{M}_\text{Dense}$$
+</div>
+
+<p>trading-off approximation accuracy for token generation speed-up.</p>
+<p>SparQ Attention can also accommodate models that use Grouped Query Attention (GQA) - in which multiple queries share the same KV cache – by adapting the first step to sum the magnitudes of the queries within each group before calculating the top-r components. Although the third step of SparQ Attention can also be employed with GQA models such as Llama 3 and Mistral, we found empirically that they performed better when this step is omitted.</p>
+<h2 id="experimental-results">Experimental Results</h2>
+<p>We examined how SparQ Attention performs over numerous relevant long-sequence tasks, evaluating performance on question answering, summarisation, perplexity and text repetition. For this, we adapted standard downstream tasks and datasets to generate examples of sequence lengths between 1k-2k tokens, the details of which can be seen in the paper. To evaluate how SparQ Attention compares against other techniques which sparsely access or iteratively remove data from the cache, we also ran experiments with <a href="https://arxiv.org/abs/2306.14048">H<span class="arithmatex">\(_2\)</span>O</a>, <a href="https://arxiv.org/abs/2308.16137">LM-Infinite</a> and a variant of <a href="https://arxiv.org/abs/2303.06865">FlexGen</a>.</p>
+<p><img alt="Experimental results across all main models and tasks" src="../2024/07-sparq/results.png" /></p>
+<p>Our experimental setup consists of measuring task performance as the amount of attention transfer is decreased (as determined by <span class="arithmatex">\(k\)</span> and <span class="arithmatex">\(r\)</span> in the case of SparQ). We considered a range of publicly available LLMs, including Llama 2 and 3, Mistral, Gemma and Pythia (not shown above). Please refer to Appendix A of the <a href="https://arxiv.org/abs/2312.04985">paper</a> for full results.</p>
+<p>The results show that as compression is increased and the amount of data transferred is reduced, SparQ Attention is robust across all tasks and models tested. Generally, we find that we can achieve up to 8<span class="arithmatex">\(\times\)</span> compression with little to no loss in task performance. H<span class="arithmatex">\(_2\)</span>O can attain good performance on some tasks such as TriviaQA and WikiText-103, but tasks including SQuAD and Text Repetition can be more challenging and degradation occurs. LM-Infinite performance degrades across all tasks, demonstrating that the tasks do not permit the trivial solution of discarding the long input sequence.</p>
+<p>One aspect of SparQ that makes it particularly capable is that no data in the KV cache is deleted – it is simply not all accessed at every iteration. This has the benefit, over methods such as H<span class="arithmatex">\(_2\)</span>O (an eviction approach with iteratively deletes items from the cache), of retaining good performance on tasks that require information retrieval. A common benchmark used to evaluate this is <a href="https://towardsdatascience.com/the-needle-in-a-haystack-test-a94974c1ad38">Needle in a Haystack</a>, in which a <em>text needle</em> is inserted into the sequence at various depths, and the model is prompted to retrieve information from the needle.</p>
+<p><img alt="Needle in a haystack results across standard and sparse attention techniques" class="img-medium" src="../2024/07-sparq/needle-in-a-haystack.png" /></p>
+<p>In the figure above, for various sequence lengths and needle inserted into various depths within the sequence, blue indicates that the model was accurately able to retrieve information, and red indicates otherwise. As can be seen, SparQ Attention attains performance very close to its dense counterpart, and vastly outperforms other sparse attention techniques.</p>
+<h2 id="benchmarking-attention">Benchmarking Attention</h2>
+<p>The results seen so far demonstrate that SparQ Attention can attain excellent task performance, even under high compression rates. These results use a theoretical cost model of the total memory transfers (number of scalar elements transferred to and from memory per token), allowing us to evaluate SparQ Attention independently of hardware setup and number formats used. To validate our method works well in practice, we performed a set of microbenchmarks of an attention operation in isolation.</p>
+<p><img alt="Microbenchmark resutls on the attention operation" class="img-medium" src="../2024/07-sparq/benchmarking.png" /></p>
+<p>We benchmarked different SparQ implementations, with the primary differences between implementations being the library (PyTorch vs Triton) and whether we store two copies of the key cache, one in a <span class="arithmatex">\(d_h\)</span>-contiguous layout and one in a <span class="arithmatex">\(S\)</span>-contiguous layout (which allows for efficient gathers on either axis). These microbenchmarks, ran on A100 (40GB) with batch size 64, find that even for modest sequence lengths, SparQ Attention can speed up the token generation time.</p>
+<h2 id="summary">Summary</h2>
+<p>In this work, we have presented SparQ Attention, a novel technique for unlocking faster inference for pre-trained LLMs. Our proposed technique modifies the attention mechanism to access only the relevant tokens from the KV cache at every generation step, leading to considerable data transfer savings. This is particularly beneficial in long sequence length regimes, where inference speed is often bottlenecked by memory transfers rather than computation.</p>
+<p>Our method also highlights the advantages of maintaining the full KV cache in memory for task performance by comparing SparQ Attention to other popular strategies which discard information from the input sequence. These alternative approaches rely on heuristics or predefined policies to determine which items in the KV cache to remove, which may not generalise across the wide range of applications LLMs are used for. We show that SparQ Attention is robust across numerous tasks and models, making it a viable technique for reducing inference times in unseen settings.</p>
+<hr />
+<p><strong>Read The SparQ Attention paper:</strong> <a href="https://arxiv.org/abs/2312.04985">arxiv.org/abs/2312.04985</a></p>
+<p>This work was carried out by Luka Ribar, Ivan Chelombiev, Luke Hudlass-Galley, Charlie Blake, Carlo Luschi and Douglas Orr. Check out our <a href="https://icml.cc/virtual/2024/poster/34162">poster</a> at ICML 2024 (poster #511, Wednesday 24th July at 10:30AM).</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

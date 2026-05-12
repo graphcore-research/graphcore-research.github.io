@@ -1,0 +1,1234 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-01-31-potm/">
+      
+      
+        <link rel="prev" href="../2024-12-30-llama-vision/">
+      
+      
+        <link rel="next" href="../2025-02-27-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>January Papers: More Like "Reas-anuary Papers" - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="January Papers: More Like "Reas-anuary Papers" - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-01-31-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-01-31-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="January Papers: More Like "Reas-anuary Papers" - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-01-31-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#titans-learning-to-memorize-at-test-time" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        January Papers: More Like "Reas-anuary Papers"
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#titans-learning-to-memorize-at-test-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Titans: Learning to Memorize at Test Time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evolving-deeper-llm-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evolving Deeper LLM Thinking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transformer-squared-self-adaptive-llms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformer-Squared: Self-Adaptive LLMs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deepseek-v3-deepseek-r1-technical-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DeepSeek-V3 &amp; DeepSeek-R1 Technical Reports
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Alex Cunha">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/alexc/">Alex Cunha</a>
+                        
+                      </strong>
+                      <br>
+                      ML Engineer
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukar.jpg" alt="Luka Ribar">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukar/">Luka Ribar</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Paul Balança">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/paulb/">Paul Balança</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Alexandre Payot">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/alexp/">Alexandre Payot</a>
+                        
+                      </strong>
+                      <br>
+                      ML Engineer
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-01-31 00:00:00+00:00" class="md-ellipsis">January 31, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              15 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:inference" class="md-tag">inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:long-context" class="md-tag">long-context</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:memory" class="md-tag">memory</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantisation" class="md-tag">quantisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reasoning" class="md-tag">reasoning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement learning</a>
+      
+    
+  </nav>
+
+
+
+  <h1>January Papers: More Like "Reas-anuary Papers"</h1>
+
+<p>New year, new Papers of the Month!
+Kicking off 2025, it's apparent that reasoning and test-time compute are the hot topics on the block, with
+much research investigating how to best use these new methods to improve LLM capabilities.</p>
+<p>We start with <strong>Titans</strong>, which introduces a memory module to architectures that can be updated during inference. This results
+in a hybrid between attention mechanisms and recurrent models, and unlocks the ability to handle really long sequence lengths.</p>
+<p><strong>Evolving Deeper LLM Thinking</strong> explores evolutionary search strategies to scale test-time compute, outperforming other
+inference strategies in natural language planning tasks.</p>
+<p><strong>Transformer-Squared</strong> is a novel approach that adapts LLMs for new tasks by selectively adjusting the singular components of their
+weight matrices, helping broaden LLMs' abilities to handle diverse tasks with fewer parameters and greater efficiency.</p>
+<p>Finally, we look at two recent models from DeepSeek; <strong>DeepSeek-V3</strong> and <strong>DeepSeek-R1</strong>. Given this double-release is packed with
+so much information, today we'll only cover the high-level details on the innovations described in the papers and their impact on
+efficiency and model performance — we will release a new blog post soon with a deep-dive into DeepSeek's recent publications.</p>
+<p><em>We hope you enjoy these month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="titans-learning-to-memorize-at-test-time">Titans: Learning to Memorize at Test Time</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Ali Behrouz, Peilin Zhong and Vahab Mirrokni
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google Research
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2501.00663" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Traditional sequence models, such as Transformers and recurrent neural networks (RNNs), struggle with effectively handling long-term dependencies. Transformers face computational inefficiencies due to their quadratic complexity in attention mechanisms, while RNNs compress historical data into fixed-size states, often leading to information loss. These limitations hinder models from retaining and utilising past information efficiently, especially in tasks requiring long-range memory.</p>
+<p>The authors of Titans: Learning to Memorize at Test Time aim to address this challenge by developing a novel memory-augmented architecture that dynamically learns what to store and forget during inference, enhancing both scalability and accuracy in long-sequence tasks. The long-term memory module can be integrated with attention in three different variants proposed in the paper.</p>
+<p><img alt="Titans Memory As Context variant." class="img-large" src="../potm/2025/01/titans/mac.png" /></p>
+<figcaption>Figure 1. Titans Memory As Context variant.</figcaption>
+
+<p><img alt="Titans Memory As Gate variant." class="img-large" src="../potm/2025/01/titans/mag.png" /></p>
+<figcaption>Figure 2. Titans Memory As Gate variant.</figcaption>
+
+<p><img alt="Titans Memory As Layer variant." class="img-large" src="../potm/2025/01/titans/mal.png" /></p>
+<figcaption>Figure 3. Titans Memory As Layer variant.</figcaption>
+
+<p>To evaluate their approach, the authors conducted experiments across diverse tasks, including language modeling, common-sense reasoning, genomics, and time series analysis.Titans outperformed traditional Transformers and modern recurrent models, particularly in scenarios requiring long-term memory. Notably, in 'needle in a haystack' tasks where models must retrieve specific information from long sequences, Titans demonstrated superior accuracy, even with context windows exceeding 2 million tokens. The results highlight the model’s ability to dynamically store and recall relevant information, making it a promising advancement in sequence modeling.</p>
+<h3 id="background">Background</h3>
+<p>The authors focus on kernel based linear attention where the softmax in standard attention implementations is replaced by a kernel function such that <span class="arithmatex">\(\phi(x, y) = \phi(x)\phi(y)\)</span>, which allows linear attention to be written as:</p>
+<div>
+$$
+y_i = \sum_{j=1}^i \frac{\phi(Q_{i}^T K_j)}{\sum_{l=1}^i \phi(Q_{i}^T K_l)}V_j = \sum_{j=1}^i \frac{\phi(Q_i)^T \phi(K_j)}{\sum_{l=1}^i \phi(Q_{i})^T \phi(K_l)}V_j = \frac{\phi(Q_i)^T \sum_{j=1}^i\phi(K_j)V_j}{\phi(Q_{i})^T \sum_{l=1}^i \phi(K_l)}
+$$
+</div>
+
+<p>Choosing the kernel as the identity function, linear attention can be seen in a recurrent format that resembles a write operation <span class="arithmatex">\(f(M_{t-1}, x_t)\)</span> followed by a read operation <span class="arithmatex">\(g(M_t, x_t)\)</span> to retrieve information from the updated memory module:</p>
+<div>
+$$
+M_t = M_{t-1} + K_t^T V_t = f(M_{t-1}, x_t) \\
+y_t = Q_t M_t = g(M_t, x_t)
+$$
+</div>
+
+<h3 id="their-method">Their method</h3>
+<p>This work draws inspiration from human memory systems, introducing a long-term memory module that enables the model to retain and retrieve information over extended sequences. Instead of treating memory as a static component, the approach dynamically updates it based on the importance of new information, ensuring that relevant details are stored while less useful ones fade over time. The memory architecture itself is implemented using simple MLPs, making it computationally efficient while still allowing for flexible and expressive updates.</p>
+<ul>
+<li><strong>Surprise-based updates</strong>: Memory is updated based on surprise, measured as the gradient of the loss function with respect to the input. This ensures that unexpected or highly informative inputs are prioritised for storage.</li>
+<li><strong>Past surprise</strong>: To better capture important information that comes after a surprising moment, a momentum term incorporates past surprise, allowing updates to reflect longer-term patterns rather than just momentary novelty.</li>
+<li><strong>Forgetting mechanism</strong>: A gating mechanism controls how information is forgotten, gradually removing less relevant or outdated details while preserving crucial knowledge.</li>
+<li><strong>Persistent memory</strong>: In addition to long-term memory, the model includes persistent memory, which stores task-specific knowledge that remains relatively static over time, ensuring that important information is retained across different sequences and tasks.</li>
+</ul>
+<p>Beyond the development of the Long-term Memory Module (LMM) above, the paper introduces a persistent memory in the form of a set of learnable but input-independent parameters that capture task-related information. The persistent memory is concatenated to an input sequence.</p>
+<p>Titans approach concludes by presenting three different variants to incorporate the above with attention:</p>
+<ul>
+<li><strong>Memory As Context (MAC)</strong>: where the memory is used to enhance the input sequence to attention. The output of attention is also used to update the memory.</li>
+<li><strong>Memory As Gate (MAG)</strong>: where memory is used as a gating mechanism to the output of attention. Memory is update only with the input sequence.</li>
+<li><strong>Memory As Layer (MAL)</strong>: where memory is used to compress the input sequence, before attention is applied.</li>
+</ul>
+<p>The above approaches can be visualised in Figure 1-3.</p>
+<h3 id="results">Results</h3>
+<p>The authors tested their model on tasks like language modeling, common-sense reasoning, genomics, and time series analysis. In these experiments, Titans outperformed traditional Transformers and RNNs, particularly in tasks that require long-term memory. For example, it handled long-context sequences better, retaining crucial information over extended periods.</p>
+<p>Titans also excelled in "needle-in-haystack" tasks, retrieving rare information from long sequences with context windows larger than 2 million tokens. These results highlight the model’s ability to scale efficiently and manage memory dynamically for complex tasks. For detailed results in each of these experiments, we encourage readers to refer to the paper.</p>
+<p>Instead we highlight the ablation study of the paper. Starting with the Long-term Memory Module (LMM) as the base model, they evaluated the effect of removing or modifying key elements one component at a time. The results demonstrated that each component made a substantial contribution to the model’s effectiveness. Notably, the largest improvements came from incorporating weight decay, the momentum term, and convolution operations, while persistent memory also played a significant role. These findings underscore the importance of these mechanisms in enabling the model to effectively manage long-range dependencies.</p>
+<p>The authors also compared the three architectural variants of Titans—MAC, MAG, and MAL—across language modeling, common-sense reasoning, and long-context needle in a haystack tasks. MAC and MAG showed comparable performance in language modeling and common-sense reasoning tasks. However, MAC outperformed the others significantly on the long-context NIAH task. Both MAC and MAG also surpassed MAL in all tasks.</p>
+<p><img alt="Titans ablation study results." class="img-medium" src="../potm/2025/01/titans/ablation.png" /></p>
+<figcaption>Figure 4. Titans ablation study results.</figcaption>
+
+<p>To conclude, the authors mention that the Titans code, implemented in PyTorch and JAX, will be released soon, which is an exciting prospect for the research community eager to explore and build upon their work.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2501.00663" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="evolving-deeper-llm-thinking">Evolving Deeper LLM Thinking</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Kuang-Huei Lee, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google DeepMind
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2501.09891" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Large language models are becoming increasingly more capable; however, they can still struggle to tackle tasks requiring reasoning, even with additional chain-of-thought and few-shot prompting. Scaling inference-time compute in order to enable language models to robustly solve more complex tasks has thus become a very active topic of research. In this paper, the authors utilize an evolutionary algorithm approach to search for the best model response. They show how this approach performs favorably against other commonly used inference strategies, such as "best-of-N" and sequential revision.</p>
+<p><img alt="Schematic showing the evolutionary search strategy operating in natural language space." src="../potm/2025/01/evolving-deeper-llm/fig-schematic.png" /></p>
+<figcaption>Figure 1. The "Mind Evolution" approach to finding the best model response.</figcaption>
+
+<h3 id="their-method_1">Their method</h3>
+<p><strong>Evolutionary search</strong></p>
+<p>Their method follows the basic principles of a genetic algorithm search — an initial random population of candidates is evolved into a higher-quality population through the following steps:</p>
+<p>1) <strong>Fitness</strong> of each candidate is evaluated based on task performance.</p>
+<p>2) <strong>Selection</strong>: Candidates are stochastically chosen for reproduction, informed by their fitness.</p>
+<p>3) <strong>Crossover</strong>: Chosen "parent" candidates are combined in order to find the best combinations of useful features.</p>
+<p>4) <strong>Mutation</strong>: Candidates are randomly modified in order to induce exploration.</p>
+<p>As the candidates with higher fitness are more likely to be selected, the average fitness tends to increase after each generation. In addition, the total population can be divided into smaller sub-populations (<strong>islands</strong>) which evolve independently, until either a <em>migration</em> event (members are stochastically moved between islands), or a <em>reset</em> event happens (low-fitness islands are substituted with a strong selection from other islands).</p>
+<p><strong>Mind Evolution</strong></p>
+<p><img alt="Figure illustrating the Refinement through Critical Conversation process for refining the model response." class="img-large" src="../potm/2025/01/evolving-deeper-llm/fig-critical-conversation.png" /></p>
+<figcaption>Figure 2. Refinement through Critical Conversation.</figcaption>
+
+<p>Figure 1 shows their proposed "Mind Evolution" approach, following the evolutionary search principles:
+* The initial population is created by generating the <span class="arithmatex">\(N_{covs}\)</span> model responses in parallel. In addition, each response is sequentially revised <span class="arithmatex">\(N_{seq} - 1\)</span> times, giving in total <span class="arithmatex">\(N_{covs} \times N_{seq}\)</span> initial solutions forming the starting population.
+* In order to generate a fitness score for each solution, the task needs to have an associated evaluation function, so that each response is parsed and scored. Additionally, a textual feedback based on the evaluation is also generated which the LLM can then use to improve its subsequent answer. This is done through the "Refinement through Critical Conversation" (Figure 2): after the output of the evaluation, the LLM first takes the role of a "critic" that processes the feedback and gives new instructions, and then the "author", refining the initial answer based on the feedback.
+* Selection is performed by randomly sampling parents from a probability distribution over all candidate solutions. The distribution is generated by applying a softmax transformation to the fitness scores, so that good solutions are selected with higher probability.
+* Finally, crossover and mutation are performed by passing the combined parent solutions and their scores to the "critic", and letting the LLM generate a new answer using the combined prompt. This answer can then be further sequentially revised as well. Note that the process of selection and crossover follows the "island" model, where several subpopulations evolve independently (with occasional mixing through migrations and resets).</p>
+<h3 id="results_1">Results</h3>
+<p><img alt="Four figures showing the success rate of different response-search methods, evaluated on planning and encoding tasks." src="../potm/2025/01/evolving-deeper-llm/fig-results.png" /></p>
+<figcaption>Figure 3. Results for Travel Planner, Natural Plan, and StegPoet tasks.</figcaption>
+
+<p>The method was evaluated on the Gemini 1.5 Flash model, comparing the "Mind Evolution" approach to the following baselines:
+* 1-pass: Solution is generated using a single forward pass through the model.
+* Best-of-N: Independent solutions are generated in parallel.
+* Sequential revision: Several (10 here) initial solutions are generated in parallel, and then sequentially revised independently.</p>
+<p>All of the methods are run until either the correct solution is found, or until a maximum of turns is hit. The methods are evaluated on different planning tasks: TravelPlanner, Natural Plan (Trip Planning) and Natural Plan (Meeting Planning). In addition, the authors added a new task (StegPoet) where a "hidden message" needs to be encoded within the model response.</p>
+<p>Overall, their approach outperforms the baselines, showing particular effectiveness at higher task difficulties. Based on the API costs of running Gemini, it has comparable requirements to the "best-of-N" approach, and significantly lower costs to the sequential revision method.</p>
+<h3 id="takeaways">Takeaways</h3>
+<p>As more efforts are being put into scaling inference-time compute in order to improve the reasoning capabilities of LLMs, this paper shows that applying evolutionary search principles to optimize the model response can lead to significant performance boosts. The current approach is however limited to tasks where solutions can be programmatically evaluated and scored, and further results on a wider variety tasks (such as mathematical reasoning) could provide more insight into the capabilities of the approach.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2501.09891" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="transformer-squared-self-adaptive-llms">Transformer-Squared: Self-Adaptive LLMs</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Qi Sun, Edoardo Cetin, Yujin Tang
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Sakana AI
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2501.06252" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>The Transformer² paper introduces a new approach to making large language models (LLMs) more self-adaptive, adjusting singular values of weight matrices depending on the task. For that purpose, a two-pass mechanism is used: it first classifies the task, and then applies a specialized "expert" vector in the SVD decomposition of weights. This approach achieves better accuracy compared to classic LoRA fine-tuning, will using significantly fewer parameters.</p>
+<h3 id="background_1">Background</h3>
+<p>Traditional adaptative LLMs methods such as LoRA (low rank adaptation) and MoEs (mixture of experts) have shown how LLMs can adapt to very diverse tasks. Nevertheless, these two approaches have major drawbacks: MoEs have a dynamic task routing system, but usually require to be incorporated in the model architecture from pre-training, hence leading to costly training. LoRAs can be fine-tuned on top of an existing pre-trained model, but lack the self-adaptive aspect. Additionally, the number of parameters used in LoRA quickly increases with the number of tasks, as each requires a completely new adapter.</p>
+<h3 id="method">Method</h3>
+<p><img alt="Transformer-squared training and inference modes." class="img-large" src="../potm/2025/01/transformer-squared/transformer2_arch1.png" /></p>
+<p>The main innovation introduced by Transformer² is Singular Value Fine-tuning (SVF): fine-tuning models in the singular values space of weight matrices. Compared to LoRA, this approach dramatically reduces the additional parameter count, while enabling composability between expert vectors (in LoRA multiple adaptors are not sharing the same linear space). Additionally, the low-dimensionality of this approach allows to directly used reinforcement learning instead of supervised fine-tuning.</p>
+<h3 id="results_2">Results</h3>
+<p><img alt="Transformer-squared self-adaptation on unseen tasks." class="img-large" src="../potm/2025/01/transformer-squared/transformer2_results.png" /></p>
+<p>In Transformer², inference is done in two passes: first an analysis for the task at the end, leading to the selection of an expert vector (or a linear combination of them), and the a second classic inference pass using the selected vector. In this work, the authors implement and evaluate three different adaptation strategies, trading off simplicity and task performance: a direct prompt-based selection, a selection based on a classification expert vector, and finally a few-shot adaptation strategy using a linear combination of all expert vectors.</p>
+<p>As presented in the result table above, Transformer² achieves similar or improved accuracy on unseen tasks (especially Humaneval and ARC-challenge), showing improved adaptability compared to LoRA fine-tuning.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2501.06252" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="deepseek-v3-deepseek-r1-technical-reports">DeepSeek-V3 &amp; DeepSeek-R1 Technical Reports</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+DeepSeek-AI
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+DeepSeek-AI
+</div>
+<div class="potm-meta">
+<a href="https://github.com/deepseek-ai/DeepSeek-V3" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<p>With their V3 and R1 models, DeepSeek sets a new state-of-the-art in open-weight models and trades benchmark to benchmark with the best models from Anthropic, Google and OpenAI.
+The technical reports give detailed accounts of the architecture of the model, the trade-offs that led to it, and the efficient implementation that enabled their final training run to take a headline-grabbing $5.5M of GPU hours.</p>
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>DeepSeek's success comes from improvements along three complementary axes: FLOP efficiency of the model, curation of training data, and (re-)discovery of effective reinforcement learning for LLMs.</p>
+<p>DeepSeek's efficiency is the result of excellent engineering and incremental improvements to their fine-grained mixture of expert (MoE) architecture. Their innovations are geared towards making that architecture run efficiently on their hardware and learn effectively.</p>
+<p>R1 aims to tackle the reasoning problem through a different lens than most other research in the space; they consider
+reinforcement learning as the primary strategy of learning how to reason, where the thought tokens are simply an environment
+for the algorithm to learn how to navigate to get to the correct answer.</p>
+<p>While the reports are thorough, some elements are notable by their absence: the team does not share scaling laws (as done in the <a href="https://arxiv.org/abs/2407.21783">"Llama 3 herd of models" report</a>), and is unspecific about the dataset curation (as in the <a href="https://arxiv.org/abs/2412.08905">Phi-4 technical report</a>).</p>
+<h3 id="v3-method">V3 method</h3>
+<p>In the table below we cover the architectural innovations, implementation optimisations, and the ablations that are in the DeepSeek-V3 technical report.
+V3 is a 671 billion parameter "fine-grained" Mixture of Expert (MoE); it uses 8 routed experts per token out of 256 available, with 1 shared expert, it uses multi-head latent attention (MLA) with 128 heads. It was trained on 2048 Nvidia H800 GPUs in about 2 months.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Impact on Efficiency</th>
+      <th>Impact on Model</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+      <b>Mixed precision FP8 micro-scaled training</b>
+      </td>
+      <td>
+      Does matrix multiplication with FP8 tensors scaled in blocks (N<sub>c</sub> × N<sub>c</sub>) or vectors (N<sub>c</sub>), very similar to the micro-scaling (MX) formats available in Blackwell GPUs. The "trick" is to accumulate inside the blocks of 128 in FP8 and apply the scale and accumulate between blocks in FP32. The authors share a huge amount of interesting detail on this topic!
+      </td>
+      <td>
+      Theoretically: 2x FLOPs available, 1/2 communication, 1/2 memory usage (capacity and BW).
+      If memory was the limit, this might be what enabled them to train such a big model.
+      </td>
+      <td>
+      Remarkably, None. Loss curves in the Appendix show it, but it took a lot of work to get there.
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <b>Multi-token Prediction</b>
+      </td>
+      <td>
+      The MTP module is made of a transformer block combined with the main model's embeddings and output layers. It is trained with the main model to predict an extra token from the last transformer layer's output and the input sequence shifted one to the right.
+      </td>
+      <td>
+      In training: ~2% increase in compute. In inference: x1.8 increase in throughput using the module as a speculative decoder
+      (predicts 1 extra token per forward pass with 85% accuracy).
+      </td>
+      <td>
+      Ablations show an average 2% improvement across benchmarks (extremes: -1%, +8%).
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <b>DualPipe</b>
+      </td>
+      <td>
+      A pipeline parallel scheduling scheme with duplicated shards which has a very small pipeline bubble and allows perfect overlapping of communication and compute.
+      </td>
+      <td>
+      Perfect computation/communication overlap... at the cost of
+      15% of the GPU's compute used for communication (20/134 SMs).
+      </td>
+      <td>
+      None
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <b>Loss free load balancing of experts</b>
+      </td>
+      <td>
+      In the top-K operation used to select experts, add a bias which reflects the load of that expert in the previous batches. This bias term evolves during training but is not trained by the optimiser and does not go into the calculation of the expert output.
+      </td>
+      <td>
+      Keeps even loads across experts and makes expert parallelism efficient. DeepSeek uses 64-way expert parallelism.
+      </td>
+      <td>
+      Ablations show ~1.5% benchmark improvement, experts specialise more on discernible topics.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--
+Removed will be for the deep-dive.
+- name: DeepSeekMoE
+- **description:** A "fine-grained" mixture of expert: for each token v3 chooses 8 experts among 256, and adds 1 shared expert through which all tokens are processed. These MoE layers replace the Feed-Forward Networks in all but the first 3 layers.
+- **impact on efficiency:** 1/10 th FLOPs per token.
+- impact on model performance: unknown - would need an ablation on the same dataset with a dense transformer.
+-->
+
+<p>The improvements described here do not amount to the "order of magnitude performance improvement" that caused a stock market panic. So where is this performance coming from? Is it hidden or fake?</p>
+<p>No! It's the natural consequence of successfully scaling up DeepSeek's "fine-grained" Mixture of Expert and Multi-head Latent Attention (MLA) that the DeepSeek-LLM and DeepSeek-V2 papers shared in early and mid-2024.
+We will unpack how all those innovations work and stack up against the other heavyweight of open models, Llama 3-405B, in a follow-up blog post.</p>
+<h3 id="r1-method">R1 method</h3>
+<p>The <a href="https://arxiv.org/abs/2501.12948">DeepSeek-R1 paper</a> introduces several different models based on different training regimes,
+but the two we will primarily focus on are DeepSeek-R1-Zero and DeepSeek-R1.</p>
+<p>With R1-Zero, the authors began with a pre-trained DeepSeek-V3-Base model, and used <em>Group Relative Policy Optimization</em> as the
+reinforcement learning algorithm. The RL algorithm is trained to maximise accuracy and
+generate in a suitable format.
+By training in this fashion, DeepSeek were able to train a reasoning model without requiring any supervised fine-tuning (SFT). Without
+requiring supervised datasets that feature reasoning steps, this approach is potentially much more scalable than other common SFT
+approaches.</p>
+<p>One potential drawback the authors found with R1-Zero is that the model's thoughts would suffer from poor readability and language
+mixing. They address this in R1 by initially doing a small about of SFT with "cold-start" data, which helps to encourage the model
+to generate interpreatable reasoning steps. They then training using RL like with R1-Zero, before then creating a new SFT dataset
+upon this RL-trained checkpoint. This dataset can then be used to do further fine-tuning.</p>
+<p><img alt="Comparison between DeepSeek-R1 and other representative models." class="img-large" src="../potm/2025/01/deepseek/r1-results.png" /></p>
+<figcaption>Comparison between DeepSeek-R1 and other representative models.</figcaption>
+
+<p>The authors also compared how RL training a smaller model compares with distilling from a larger RL-trained model, and
+found that distillation can yield far better results (although this does require having a larger, more capable reasoning
+model to distill from).</p>
+<p><img alt="Comparison of distilled and RL Models on Reasoning-Related Benchmarks." class="img-large" src="../potm/2025/01/deepseek/r1-distill.png" /></p>
+<figcaption>Comparison of distilled and RL Models on Reasoning-Related Benchmarks.</figcaption>
+
+<h3 id="takeaways_1">Takeaways</h3>
+<p>This success does not come out of nowhere!
+It is the logical continuation of the work that DeepSeek has published throughout 2024. They have been vying with Meta's Llama family of models for the best open weight model for a year.
+The efficiency of the training pipeline is a superb achievement of engineering, and it is fantastic to have another organisation publish what works at scale and what is needed to push the frontier.</p>
+<div class="potm-footer-link">
+See <a href="https://github.com/deepseek-ai/DeepSeek-V3" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

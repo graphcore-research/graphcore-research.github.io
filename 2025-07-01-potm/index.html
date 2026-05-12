@@ -1,0 +1,1082 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2025-07-01-potm/">
+      
+      
+        <link rel="prev" href="../2025-06-11-cube-root-formats/">
+      
+      
+        <link rel="next" href="../2025-08-01-potm/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>June Papers: Gradient Norms, LLM Reasoning and Video Generation - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="June Papers: Gradient Norms, LLM Reasoning and Video Generation - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2025-07-01-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2025-07-01-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="June Papers: Gradient Norms, LLM Reasoning and Video Generation - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2025-07-01-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#why-gradients-rapidly-increase-near-the-end-of-training" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        June Papers: Gradient Norms, LLM Reasoning and Video Generation
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-gradients-rapidly-increase-near-the-end-of-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Gradients Rapidly Increase Near the End of Training
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prorl-prolonged-reinforcement-learning-expands-reasoning-boundaries-in-large-language-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProRL: Prolonged Reinforcement Learning Expands Reasoning Boundaries in Large Language Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoregressive-adversarial-post-training-for-real-time-interactive-video-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Callum McLean">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/callumm/">Callum McLean</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/samot.jpg" alt="Sam Olesker-Taylor">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/samot/">Sam Olesker-Taylor</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/michaelp.jpg" alt="Michael Pearce">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/michaelp/">Michael Pearce</a>
+                        
+                      </strong>
+                      <br>
+                      Research Scientist
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-07-01 00:00:00+00:00" class="md-ellipsis">July 1, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              10 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:diffusion" class="md-tag">diffusion</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-inference" class="md-tag">efficient-inference</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:image-generation" class="md-tag">image-generation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reasoning" class="md-tag">reasoning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:reinforcement-learning" class="md-tag">reinforcement-learning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:training-dynamics" class="md-tag">training-dynamics</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:video-generation" class="md-tag">video-generation</a>
+      
+    
+  </nav>
+
+
+
+  <h1>June Papers: Gradient Norms, LLM Reasoning and Video Generation</h1>
+
+<p>This June not only brought us very hot and sunny days (at least here in the UK), but also an excellent selection of new and exciting ML research! Out of the many good candidates, this month we selected three papers, covering quite a lot of different ground.</p>
+<p>In the first paper, <a href="#why-gradients-rapidly-increase-near-the-end-of-training">Why Gradients Rapidly Increase Near the End of Training</a>, a researcher from FAIR explores the puzzling phenomenon of increasing gradient magnitudes during training, offering an elegant mathematical explanation and a simple remedy.</p>
+<p>Next, in <a href="#prorl-prolonged-reinforcement-learning-expands-reasoning-boundaries-in-large-language-models">ProRL</a>, NVIDIA researchers dive into the evolving topic of large language model reasoning, showing how prolonged reinforcement learning can indeed introduce novel reasoning abilities.</p>
+<p>Finally, we look at <a href="#autoregressive-adversarial-post-training-for-real-time-interactive-video-generation">AAPT</a>, a fresh approach from the ByteDance Seed team that turns pre-trained offline diffusion models into real-time video generators via adversarial post-training.</p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="why-gradients-rapidly-increase-near-the-end-of-training">Why Gradients Rapidly Increase Near the End of Training</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Aaron Defazio
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+FAIR at Meta
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2506.02285" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>When training machine learning models in low precision, it is important to ensure that none of the values in the computations overflow the range of the format you are using, lest the process crash. Even if all of the values are kept in the representable range, the training may perform better if the values stay in the region with the best signal-to-noise ratio for a given floating-point format. For this reason, it is ideal that the norms of the activations, gradients and weights stay within a certain range throughout training.</p>
+<p>However, it has been observed that in some long training runs the norm of the gradient vector increases rapidly towards the end of training. For example, in the training run in Figure 1, the norm of the gradient vector roughly doubles towards the end of training.</p>
+<p>The paper shows that this is due to the interaction between weight decay, normalisation layers, and the learning rate schedule, proposing a simple correction to fix this undesired behaviour.</p>
+<p><img alt="A graph showing the gradient norm for an LLM training run over time. After 125B tokens, the gradient norm increases to roughly twice of what it was before." src="../potm/2025/06/gradients-rapidly-increase/figure-1.png" /></p>
+<h3 id="theory">Theory</h3>
+<p>We can see why the gradient norm increases by considering the steady state dynamics of a single layer of the model. In particular, we consider linear layers that are immediately followed by a normalisation operation such as RMSNorm or LayerNorm. The key property that these layers have is that their gradients are orthogonal to their weights, that is, their dot product is 0. We denote the weights of a given layer at timestep <span class="arithmatex">\(t\)</span> by <span class="arithmatex">\(x_t\)</span>, its gradient by <span class="arithmatex">\(g_t\)</span>, the learning rate at this point in the schedule by <span class="arithmatex">\(\gamma_t\)</span>, and the weight decay by <span class="arithmatex">\(\lambda\)</span>. By considering a single SGD step with weight decay, we have:</p>
+<div>
+$$ x_t = x_t - \gamma_t g_t - \gamma_t \lambda x_t $$
+$$ x_t = (1 - \lambda \gamma_t) x_t - \gamma_t g_t $$
+$$ \left\| x_t \right\| ^2 = (1 - \lambda \gamma_t)^2 \left\| x_t \right\| ^2 + \gamma_t ^ 2 \left\| g_t \right\| ^2 $$
+$$ (2 \lambda \gamma_t - \lambda^2 \gamma_t^2) \left\| x_t \right\| ^2 = \gamma_t^2 \left\| g_t \right\| ^2 $$
+</div>
+
+<p>Further assuming that $ \lambda^2 \gamma_t^2 \ll 2 \lambda \gamma_t$ and that this term can be ignored, we have:</p>
+<div>
+$$ 2 \lambda \gamma_t \left\| x_t \right\| ^2 = \gamma_t^2 \left\| g_t \right\| ^2 $$
+$$ \frac{\left\| g_t \right\|}{\left\| x_t \right\|} = \sqrt{\frac{2 \lambda}{\gamma_t}} $$
+</div>
+
+<p>In a typical learning-rate schedule, the learning rate is decayed to 0 or to a small fraction of the maximum learning rate, so we expect the ratio $ \left| g_t \right| / \left| x_t \right| $ to increase rapidly towards the end of training. A similar argument, though a more approximate one, gives a similar result for Adam.</p>
+<p>This behaviour can be seen clearly in a training run for ImageNet with SGD.</p>
+<p><img alt="A graph of the ratio between the gradient norm and the weight norm for each layer in an ImageNet training run. The ratios all converge to the theoretical steady state" src="../potm/2025/06/gradients-rapidly-increase/figure-2.png" /></p>
+<p>This issue can be addressed by making the weight decay proportional to the learning rate in accordance with the learning rate schedule.</p>
+<div>
+$$ \hat{\lambda}_t = \frac{\lambda \gamma}{\gamma_{\text{max}}} $$
+</div>
+
+<p>Then we have:</p>
+<div>
+$$ \frac{\left\| g_t \right\|}{\left\| x_t \right\|} = \sqrt{\frac{2 \lambda}{\gamma_{\text{max}}}} $$
+</div>
+
+<h3 id="practice">Practice</h3>
+<p>This is a lovely theoretical result, but many modern LLM architectures (e.g., Llama) don't actually have many linear layers immediately followed by normalisation.
+Instead, normalisation is typically applied after adding the input to the previous layer (i.e. after the residual connection).
+The argument might still hold water anyway: almost all pairs of vectors in very high-dimensional Euclidean space are nearly orthogonal, so one may argue that it is still 
+fine to neglect the $ \left\langle x_t, g_t \right\rangle $ term.</p>
+<p>The paper shows that applying this correction to pretraining a Llama model with AdamW (calling the resulting optimisation algorithm AdamC) stabilises the norms of the 
+gradients and the weights, as well as giving a lower loss throughout training.</p>
+<p><img alt="Three graphs for a Llama training run using the paper" src="../potm/2025/06/gradients-rapidly-increase/figure-4.png" /></p>
+<p>In conclusion, this method is a promising way to control the norms of the gradients throughout training, and may be a key component of low-precision model training in the future.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2506.02285" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="prorl-prolonged-reinforcement-learning-expands-reasoning-boundaries-in-large-language-models">ProRL: Prolonged Reinforcement Learning Expands Reasoning Boundaries in Large Language Models</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Mingjie Liu, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+NVIDIA
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2505.24864" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Reinforcement learning (RL) has had a resurgence in LLMs with application to reasoning models. However, contention remains regarding whether RL <em>expands</em> capabilities or simply amplifies high-reward outputs <em>already learned</em>. In <em>ProRL</em>, the authors from NVIDIA argue for the former. They find examples in which RL-trained models outperform even pass@<em>k</em> evaluations with large <em>k</em>—i.e., when the original model is given many attempts. This is achieved via <em>prolonged</em> RL training, suggesting that RL training scales effectively with increased compute.</p>
+<p><img alt="Figure showing benefits of prolonged reiforcement learning" src="../potm/2025/06/prorl/figure_1.png" /></p>
+<p>The model weights are released to support further research: <a href="https://huggingface.co/nvidia/Nemotron-Research-Reasoning-Qwen-1.5B"><code>https://huggingface.co/nvidia/Nemotron-Research-Reasoning-Qwen-1.5B</code></a>.</p>
+<h3 id="background">Background</h3>
+<p>Recent reasoning-focused LLMs, like OpenAI-o1/o3 or DeepSeek-R1, require significant inference-time compute, often driven by long chain-of-thought (CoT) strategies. RL is proposed to improve the inherent reasoning abilities, instead of simply throwing more compute. The authors posit that negative conclusions from prior attempts stem from methodological limitations, rather than fundamental RL ones:</p>
+<ol>
+<li>Overreliance on specialised domains (e.g., maths) where models are often overtrained during pre- and post-training phases, restricting the potential for exploration.</li>
+<li>Premature termination of RL training before models can explore and develop, typically no more than hundreds of steps.</li>
+</ol>
+<h3 id="their-method">Their method</h3>
+<p>The authors introduce <em>ProRL</em> to address these constraints. It enables extended RL training across diverse tasks, which they hypothesise is crucial for generalisation. With this, they develop <em>Nemotron-Research-Reasoning-Qwen-1.5B</em>, which the authors argue is the best performing 1.5B reasoning model. It significantly outperforms its base, <em>DeepSeek-R1-1.5B</em>, and matches or even surpasses <em>DeepSeek-R1-7B</em> across a diverse range of benchmarks.</p>
+<p>Group Relative Policy Optimisation (GRPO) is utilised, with a couple of variations addressing entropy collapse and instability via a KL penalty and periodic resetting.</p>
+<h3 id="results">Results</h3>
+<p>The base model, from which the prolonged RL training is initiated, is <em>DeepSeek-R1-1.5B</em>. They find significant improvement over the baseline, and even compete with the 7B version:</p>
+<blockquote>
+<p>+15.7% on maths; +14.4% on code; +25.9% on STEM, +22.0% on instruction following; +54.8% on text-based logic puzzles from Reasoning Gym.</p>
+</blockquote>
+<p>It also surpasses the maths- and code-specialised baselines <em>DeepScaleR</em> and <em>DeepCoder</em> by +4.6% and +6.5%, respectively. Full details are given in the evaluation table below.</p>
+<p><img alt="Table showing evaluation results of ProRL" src="../potm/2025/06/prorl/tables.png" /></p>
+<p>This demonstrates the value in their prolonged training; see Figure 1 above. It does not however address <em>generalisation</em>. To this end, the model is evaluated on three <em>out-of-distribution</em> benchmarks: <em>acre</em>, <em>boxnet</em> and <em>game_of_life_halting</em>: it performs very well on all of these, far exceeding even the 7B version.</p>
+<p>Their study finds that the effectiveness of RL in <em>improving reasoning</em> (measured by pass@128) is strongly influenced by the initial capability. Specifically, when the model already performs well, little is gained; when it initially performs poorly (even completely failing), a marked increase can be observed.</p>
+<p><img alt="Figure showing the relative improvements of ProRL vs. initial model capability" src="../potm/2025/06/prorl/figure_3.png" /></p>
+<figcaption>Figure 3. Left: ProRL expands a model's reasoning boundary most effectively on tasks where the base model initially struggles. Right: Tasks with minimal gains post-RL highlighted in a circle tend to have a lower creativity index, indicating higher overlap with pretraining data.</figcaption>
+
+<h3 id="takeaways">Takeaways</h3>
+<p>The paper provides compelling evidence that RL truly can expand LLM's reasoning <em>abilities</em>, not just improve their extraction. This is achieved by incorporating KL penalties and periodic reference-policy resets during an extended RL training period. It culminated in a state-of-the-art 1.5B reasoning model which performs well on several benchmarks, indicating its generalist properties.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2505.24864" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="autoregressive-adversarial-post-training-for-real-time-interactive-video-generation">Autoregressive Adversarial Post-Training for Real-Time Interactive Video Generation</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Shanchuan Lin, et. al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+ByteDance Seed
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2506.09350" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<p>Real-time interactive video generation requires (1) low latency (ideally frame generation requires a single model evaluation) and (2) the model can only use past frames to generate the current frame (autoregressive generation).</p>
+<p>Meanwhile, there exist many models that generate video offline, without real time user input. For example, diffusion models have shown great results in image generation, and naturally, by stacking a fixed number of frames of a video together, e.g. 24fps x 5s = 120 frames, one may train a diffusion model that generates all the frames together. Effectively the temporal dimension becomes just another arbitrary axis in the generated data tensor.</p>
+<p>However, diffusion models require multiple denoising steps, which introduces latency. In the case of video, if all frames are generated simultaneously, early video frames are generated together with later ones, effectively allowing them to "see the future".</p>
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>This work proposes a new method to convert an offline, expensive video diffusion model into a real-time interactive model. While not the first to do so, the authors use a GAN-style generator and discriminator pair and claim to achieve:
+- <strong>lower latency</strong>: 0.16s per frame
+- <strong>lower compute</strong>: 736×416 at 24FPS on a single H100, 1280×720 on 8 x H100
+- <strong>longer video length</strong>: up to 1440 frames, 60s at 24fps</p>
+<p><img alt="Figure showing generated video frames from the AAPT model for one-minute, 1440-frame, VBench-12V generation" src="../potm/2025/06/aapt/examples_AAPT.png" /></p>
+<h3 id="background_1">Background</h3>
+<p>A video may be represented as a tensor <span class="arithmatex">\(X\)</span> with shape <span class="arithmatex">\((T, C, H, W)\)</span>: this is first passed through a pretrained 3D VAE yielding <span class="arithmatex">\(X'\)</span> with smaller shape <span class="arithmatex">\((T', C', H', W')\)</span>, where each latent time step equates to four real frames. Subsequent modelling happens in the latent space and at inference time each latent frame may be decoded in real time.</p>
+<p>A Video Diffusion transformer model takes 3 inputs:
+- text token embeddings
+- tokenised noisy video <span class="arithmatex">\(X'\)</span>
+- diffusion timestep <span class="arithmatex">\(t\)</span></p>
+<p>and passes this information through transformer layers that include full bidirectional attention over video time steps (past frames attend to future frames) and the output is a tensor of the same shape as <span class="arithmatex">\(X'\)</span> that may be a denoised image or just the noise component of the input.</p>
+<h3 id="their-method_1">Their method</h3>
+<p>Given a video diffusion model the following recipe can be applied:</p>
+<ol>
+<li>
+<p><strong>Make the model autoregressive:</strong>
+replace <em>bidirectional</em> attention with <em>causal</em> attention, i.e., each frame can only attend to the text tokens and past frame tokens. This enables the use of KV caching, speeding up inference.</p>
+</li>
+<li>
+<p><strong>Add previous frame as input:</strong>
+the model input for a single (noisy) frame <span class="arithmatex">\((1, C', H', W')\)</span> is augmented with the (clean) previous frame through channel concatentation <span class="arithmatex">\((1, 2C', H', W')\)</span> — the model is "denoising" the previous frame to the next one.</p>
+</li>
+<li>
+<p><strong>Diffusion adaptation:</strong>
+after making the above changes, one must train the modified architecture using <em>teacher forcing</em>: true frames are used as input to predict true next frame (similar to the standard transformer decoder training).</p>
+</li>
+<li>
+<p><strong>Consistency distillation:</strong>
+the model is trained to predict the final denoised imaged in one-shot, reproducing the result of running multiple denoising steps.</p>
+</li>
+<li>
+<p><strong>Make a discriminator:</strong>
+the discriminator is a new model that uses the same causal architecture as the generator, except that the prediction for each frame is a single logit initialised from the generator after the adaptation in step 3.</p>
+</li>
+<li>
+<p><strong>Train adversarially:</strong>
+the recent R3GAN objective aims to remove the need for the many ad-hoc tricks that GAN methods used to require and is used here to train the generator and discriminator. The generator uses <em>student forcing</em>: starting from one true initial frame, it autoregressively generates each new frame using its own generated previous frame. This reflects inference time usage and significantly reduces error accumulation enabling longer video generation.</p>
+</li>
+</ol>
+<p><img alt="Figure showing the generator and discriminator architectures for AAPT in a GAN-like framework." src="../potm/2025/06/aapt/GAN.png" /></p>
+<h3 id="results_1">Results</h3>
+<p>The authors take an 8B-parameter pretrained Video Diffusion Transformer model, from which an 8B generator and 8B discriminator are constructed and trained. The main paper contains metrics on VBench-Competition (the qualitative results are shown here).</p>
+<h4 id="qualitative-comparison-to-baselines">Qualitative Comparison to Baselines</h4>
+<p>The authors argue that the student forcing and adversarial training specifically enable longer video generation, which is why baseline methods struggle to generate longer video beyond their training data. However AAPT (bottom) which has a discriminator that can judge any 10 second window of a 60-second video enables the generator to produce longer videos.</p>
+<p><img alt="Figure showing a qualitative comparison of generated frames on one-minute, 1440-frame, VBench-12V generation " src="../potm/2025/06/aapt/examples_baselines.png" /></p>
+<h4 id="human-poses">Human Poses</h4>
+<p>Given an initial frame and a user input sequence of human body poses, create a video of a person moving in real time.</p>
+<p><img alt="Figure showing pose-conditioned human video generation" src="../potm/2025/06/aapt/pose_no_caption.png" /></p>
+<h4 id="camera-control">Camera Control</h4>
+<p>Given an initial frame and a user input sequence of camera orientations, generate a video of what the camera would see as it moves.</p>
+<p><img alt="Figure showing camera-controlled world exploration task" src="../potm/2025/06/aapt/camera_no_caption.png" /></p>
+<h3 id="takeaways_1">Takeaways</h3>
+<ul>
+<li>Pre-trained offline diffusion models can be converted to online video generators.</li>
+<li>GANs are not dead! Adversarial training can really work and enables longer video generation.</li>
+</ul>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2506.09350" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>

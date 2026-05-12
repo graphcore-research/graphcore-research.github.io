@@ -1,0 +1,1210 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://graphcore-research.github.io/2024-03-30-potm/">
+      
+      
+        <link rel="prev" href="../2024-02-29-potm/">
+      
+      
+        <link rel="next" href="../2024-04-24-gemma/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>March Papers: Low-Rank Galore & 1.58-Bit Weights - Graphcore Research</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-QCZ6T9KWHQ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-QCZ6T9KWHQ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-QCZ6T9KWHQ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="March Papers: Low-Rank Galore & 1.58-Bit Weights - Graphcore Research" />
+<meta property="og:image" content="https://graphcore-research.github.io/assets/images/social/2024-03-30-potm.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://graphcore-research.github.io/2024-03-30-potm/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="March Papers: Low-Rank Galore & 1.58-Bit Weights - Graphcore Research" />
+<meta property="twitter:image" content="https://graphcore-research.github.io/assets/images/social/2024-03-30-potm.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#galore-memory-efficient-llm-training-by-gradient-low-rank-projection" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+
+<header class="md-header md-header--shadow" data-md-component="header">
+    <nav class="md-header__inner md-grid" aria-label="Header">
+        <a href=".." title="Graphcore Research"
+            class="md-header__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        <label class="md-header__button md-icon" for="__drawer">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <div class="md-header__title" data-md-component="header-title">
+            <div class="md-header__ellipsis">
+                <div class="md-header__topic">
+                    <span class="md-ellipsis">
+                        Graphcore Research
+                    </span>
+                </div>
+                <div class="md-header__topic" data-md-component="header-topic">
+                    <span class="md-ellipsis">
+                        
+                        March Papers: Low-Rank Galore & 1.58-Bit Weights
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+        
+        
+        <a class="md-header__button header-custom" href="/">Blog</a><a class="md-header__button header-custom" href="/publications/">Our Papers</a><a class="md-header__button header-custom" href="/about/">About Us</a>
+        
+        
+        <label class="md-header__button md-icon" for="__search">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        
+        
+    </nav>
+    
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+    <label class="md-nav__title" for="__drawer">
+        <a href=".." title="Graphcore Research"
+            class="md-nav__button md-logo" aria-label="Graphcore Research" data-md-component="logo">
+            
+  <img src="../img/gc-symbol-white.png" alt="logo">
+
+        </a>
+        Graphcore Research
+    </label>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Articles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/category/papers-of-the-month/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ↳ Papers of the Month
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Us
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+        
+        
+        
+    </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#galore-memory-efficient-llm-training-by-gradient-low-rank-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-era-of-1-bit-llms-all-large-language-models-are-in-158-bits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dipaco-distributed-path-composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiPaCo: Distributed Path Composition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#massive-activations-in-large-language-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Massive Activations in Large Language Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#g-retriever-retrieval-augmented-generation-for-textual-graph-understanding-and-question-answering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        G-Retriever: Retrieval-Augmented Generation for Textual Graph Understanding and Question Answering
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href=".." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Paul Balança">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/paulb/">Paul Balança</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/lukep.jpg" alt="Luke Prince">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/lukep/">Luke Prince</a>
+                        
+                      </strong>
+                      <br>
+                      Research Team Lead
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/_default.jpg" alt="Charlie Blake">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/charlieb/">Charlie Blake</a>
+                        
+                      </strong>
+                      <br>
+                      Research Engineer
+                    </span>
+                  </div>
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../img/authors/danielj.jpg" alt="Daniel Justus">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="../author/danielj/">Daniel Justus</a>
+                        
+                      </strong>
+                      <br>
+                      Research Lead
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-03-30 00:00:00+00:00" class="md-ellipsis">March 30, 2024</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/papers-of-the-month/">Papers of the Month</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              13 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+              <ul class="md-post__meta md-nav__list">
+                <li class="md-nav__item md-nav__item--section">
+                  <div class="md-post__title">
+                    <span class="md-ellipsis">
+                      See also
+                    </span>
+                  </div>
+                  <nav class="md-nav">
+                    <ul class="md-nav__list">
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-11-1-bit-wonder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-bit Wonderful Weights for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-03-03-potm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    February Papers: Thinking Depth, Latent Actions, Quantization and Riemannian Flows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                        
+                        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-02-20-ultrag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                      
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:gnns" class="md-tag">GNNs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:llms" class="md-tag">LLMs</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:distributed-training" class="md-tag">distributed-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:efficient-training" class="md-tag">efficient-training</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:fine-tuning" class="md-tag">fine-tuning</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:local-updates" class="md-tag">local-updates</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:mixture-of-experts" class="md-tag">mixture-of-experts</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:quantisation" class="md-tag">quantisation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:retrieval-augmented-generation" class="md-tag">retrieval-augmented-generation</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:training-dynamics" class="md-tag">training-dynamics</a>
+      
+    
+      
+      
+      
+      
+        <a href="../tags/#tag:transformers" class="md-tag">transformers</a>
+      
+    
+  </nav>
+
+
+
+  <h1>March Papers: Low-Rank Galore & 1.58-Bit Weights</h1>
+
+<p>March was a fruitful month for AI research, with plenty of papers for us to choose from. A trend in the work we've selected is the pushing of previously published methods to their limits, in new creative ways.</p>
+<p>We start with GaLore, similar to the popular <a href="https://arxiv.org/abs/2106.09685">LoRA</a> method for cheap fine-tuning, but introducing a low-rank approximation to the <em>gradients</em> instead of weights. It turns out this is particularly effective for pre-training.</p>
+<p>Our second paper declares "The Era of 1-bit LLMs", showing that the previously published BitNet model can be tweaked for LLM training, such that weights can be rounded to either -1, 0 or 1. This is much stronger quantisation than most people thought possible. We also cover the DiPaCo paper, which demonstrates a method for scaling distributed MoE training, potentially to systems of such scale that they have to be distributed across datacentres.</p>
+<p>Investigating a phenomenon that occurs as LLMs get larger, the Massive Activations paper brings valuable insight into why the numerics of LLMs tend to explode for certain tokens/hidden dimensions. We conclude with the G-Retriever paper, which provides a method for applying <a href="https://arxiv.org/abs/2005.11401">retrieval augmented generation (RAG)</a> to textual graphs — something valuable in real-world applications where graph structures are commonplace.</p>
+<!-- more -->
+
+<p><em>We hope you enjoy this month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+<hr />
+<h2 id="galore-memory-efficient-llm-training-by-gradient-low-rank-projection">GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Jiawei Zhao et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Caltech, Meta, University of Texas Austin
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2403.03507" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea">The key idea</h3>
+<p>Training and fine-tuning Large Language Models (LLMs) on consumer accelerated hardware has been a challenge due to significant memory requirements as model size increased. As a consequence, a large literature has emerged around low-rank approximation of model weights, including the well-known <a href="https://arxiv.org/abs/2106.09685">LoRA</a> method. This work proposes a low-rank approximation of gradients instead of weights, leading to similar memory savings while improving accuracy in pre-training applications.</p>
+<p><img alt="" class="img-large" src="../potm/2024/03/galore/galore-memory.png" /></p>
+<h3 id="background">Background</h3>
+<p>The well-known Low-Rank Adaptation (LoRA) method reparameterizes a weight matrix <span class="arithmatex">\(W\)</span> by using a low-rank projection:</p>
+<div>
+$$
+W = W_0 + BA
+$$
+</div>
+
+<p>where <span class="arithmatex">\(W_0\in R^{m \times n}\)</span> are (usually) frozen pre-training weights, <span class="arithmatex">\(A\in R^{m \times r}\)</span> and <span class="arithmatex">\(B\in R^{r \times n}\)</span> are trainable low-rank adaptors. Since <span class="arithmatex">\(r\)</span> is chosen much smaller than <span class="arithmatex">\(m\)</span> and <span class="arithmatex">\(n\)</span>, the use of LoRA reduces massively memory usage, opening the door to fine-tuning of LLMs on consumer hardware.</p>
+<h3 id="their-method">Their method</h3>
+<p>The authors of GaLore propose to apply low-rank approximation to the gradients instead of weights, reducing memory usage similarly to LoRA as well as opening the door to pretraining on consumer hardware. The authors prove that the gradients become low-rank during training, with a slowly evolving projection subspace.</p>
+<p>In this algorithm, the model is left unchanged, but the training loop is modified as following:</p>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">for</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">grad</span> <span class="o">=</span> <span class="n">weight</span><span class="o">.</span><span class="n">grad</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="c1"># original space -&gt; compact space</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">lor_grad</span> <span class="o">=</span> <span class="n">project</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="c1"># update by Adam, Adafactor, etc.</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">lor_update</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">lor_grad</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="c1"># compact space -&gt; original space</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">update</span> <span class="o">=</span> <span class="n">project_back</span><span class="p">(</span><span class="n">lor_update</span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">update</span>
+</span></code></pre></div>
+where <code>project</code> and <code>project_back</code> are defined as:</p>
+<div>
+$$
+\text{project}(G_t) = P_t^T G_t Q_t \quad\text{and}\quad \text{project_back}(\tilde{G_t}) = P_t G_t Q_t^T
+$$
+</div>
+
+<p>Similarly to LoRA, the projection space rank <span class="arithmatex">\(r\)</span> is chosen much smaller than <span class="arithmatex">\(m\)</span> and <span class="arithmatex">\(n\)</span>, leading to reduced memory usage on gradients and optimizer state. Matrices <span class="arithmatex">\(P_t\)</span> and <span class="arithmatex">\(Q_t\)</span> are estimated via a Singular Value Decomposition (SVD) on the full rank gradient <span class="arithmatex">\(G_t\)</span>, and are updated every ~50-1000 training iterations (accuracy being fairly stable within this interval).</p>
+<h3 id="results">Results</h3>
+<p>On fine-tuning tasks, GaLore and LoRA achieve close accuracy and memory consumption.</p>
+<p><img alt="" src="../potm/2024/03/galore/galore-finetuning.png" /></p>
+<p>Additionally, GaLore shows much better performance on LLaMA pretraining compared to LoRA and ReLoRA, while using significantly less memory. Interestingly, for pre-training, the subspace rank <span class="arithmatex">\(r\)</span> can be seen as an hyperparameter trading-off memory and compute budgets (i.e. a smaller rank requires more iterations to achieve similar accuracy).</p>
+<p><img alt="" class="img-large" src="../potm/2024/03/galore/galore-pretraining.png" /></p>
+<h3 id="takeaways">Takeaways</h3>
+<p>GaLore offers a compelling and accurate alternative to LoRA for memory efficient LLM pre-training and fine-tuning, with the main advantage of being an off-the-shelf pure optimizer algorithm. As mentioned by the authors, an interesting extension of this work would be to investigate how to integrate quantization, in the vein of <a href="https://arxiv.org/abs/2305.14314">QLoRA</a>, to push further model size on customer hardware.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2403.03507" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="the-era-of-1-bit-llms-all-large-language-models-are-in-158-bits">The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Shuming Ma, Hongyu Wang et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Microsoft Asia
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2402.17764" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_1">The key idea</h3>
+<p>Training and inference of large language models when quantising weights to {-1, 0, 1} and activations to int8 during forward pass matrix multiplications performs similarly to FP16.</p>
+<p><img alt="High level scheme for 1.58-Bit LLMs." src="../potm/2024/03/tritnet/FIG-Scheme.png" /></p>
+<h3 id="their-method_1">Their method</h3>
+<p>Master weights are stored in higher precision (e.g., FP16). With ZeRO-offloading, the memory overhead of these weights can be partly discounted and quantised weights can be computed once across gradient accumulation steps.</p>
+<p>In the forward pass, linear layer weights are quantised to {-1, 0, 1} by normalising with the absolute mean, rounding to the nearest integer and clipping values outside this range. Activations are quantised to <code>int8</code> by bucketing values with a simple absolute max rule.</p>
+<p>Straight-through-estimators are used to compute gradients and are accumulated in FP16.</p>
+<p>By restricting weight values to {-1, 0, 1}, matrix multiplications can be computed with cheap integer addition/subtraction instructions only, and without any need for expensive floating point fused multiply-accumulate (FMAC) instructions. In practice, the authors still use FP16 FMAC instructions in their implementation, perhaps to avoid costly casts and the need to compute non-matmul operations in higher precision.</p>
+<h3 id="results_1">Results</h3>
+<p>Comparing against FP16 Llama 3B pretrained on 100B tokens shows minimal change in validation perplexity and downstream task accuracy</p>
+<p><img alt="Comparison of 1.58-Bit LLM to FP16 Llama." class="img-large" src="../potm/2024/03/tritnet/TBL-ppl-acc.png" /></p>
+<p>Even more impressively, 1.58-Bit LLM exceeds the performance StableLM-3B when reproducing training recipe on 2 trillion tokens.</p>
+<p><img alt="Comparison of 1.58-Bit LLM to StableLM on 2T tokens." src="../potm/2024/03/tritnet/TBL-2T-pretraining.png" /></p>
+<p>The authors also show latency and throughput improvements for LLM inference, mainly due to far smaller memory footprint of weights (1.58 bits per element) and KV-cache (8 bits per element). This is somewhat hard to compare since post-training quantisation to 2-bits can work really well but isn't considered in this work.</p>
+<p><img alt="Faster inference with 1.58-bit LLMs." src="../potm/2024/03/tritnet/FIGTBL-Inference.png" /></p>
+<h3 id="takeaways_1">Takeaways</h3>
+<p>At first glance, this is a "too good to be true" type result. However, some of these results have since been <a href="https://twitter.com/NousResearch/status/1773923241268003052?t=yrH9C9AbOYjANqoWjivDWg&amp;s=19">independently reproduced</a>. It goes to show that matrix multiplications can be approximated with even looser bounds than is standard, while still producing smooth enough gradient signals for updating master weights.</p>
+<p>The authors propose that new hardware could or should be designed to exploit the power-efficiency, theoretical speedup and memory savings of training without floating point multiply-accumulate units. This is a tantalising proposition, but should not be totally discounted against the cost of accumulators, reductions, casts, and elementwise functions in the design of specialised hardware.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2402.17764" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="dipaco-distributed-path-composition">DiPaCo: Distributed Path Composition</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Arthur Douillard, Qixuan Feng, Andrei A. Rusu, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+Google DeepMind
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2403.10616" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_2">The key idea</h3>
+<p>If the bottleneck to scaling training is communication rather than FLOPs, a recipe that blends together mixture-of-experts models and local optimisation to create a more modular model sort of works.</p>
+<p><img alt="DiPaCo offers a recipe for training with resources distributed across low bandwidth channels" class="img-medium" src="../potm/2024/03/distributed-path-composition/FIG-Scheme.png" /></p>
+<figcaption>A modular network distributed across many regions, where each path is optimised for different tasks or modalities. Shared components between paths are synchronised infrequently.</figcaption>
+
+<h3 id="background_1">Background</h3>
+<p>In the near-ish future, we may saturate the number of FLOPs a single datacentre can churn out   largely due to energy requirements to power a datacentre.</p>
+<p>If model training requires scaling beyond this saturation point across multiple datacentres, developers will meet a cliff in the bandwidth supported for communicating between datacentres.</p>
+<p>In this scenario, the key bottleneck to scaling throughput is no longer FLOPs, but communication volume across this low-bandwidth channel between datacentres.</p>
+<p>This paper introduces a recipe for training models under this constraint.</p>
+<h3 id="their-method_2">Their method</h3>
+<p><img alt="Sharding strategy for DiPaCo" src="../potm/2024/03/distributed-path-composition/FIG-Paths.png" /></p>
+<ol>
+<li>Shard dataset across workers ahead-of-time using k-means cluster assignments of embeddings from first 32 tokens of the sequence.</li>
+<li>Initialise and shard a base model into modules width- and depth-wise (modules and levels respectively)</li>
+<li>Assign end-to-end path through modules to each worker. Ideally all paths should be assigned, but this is unrealistic with large number of shards as <span class="arithmatex">\(\textrm{\#paths} = \prod_i^{\textrm{\#levels}}\textrm{\#modules}_i\)</span>. This results in some modules being assigned to multiple paths.</li>
+<li>Locally optimise each path for a <span class="arithmatex">\(\tau\)</span> training steps.</li>
+<li>Average module updates across paths to estimate global gradient and globally optimise</li>
+<li>Repeat 4. and 5 for <span class="arithmatex">\(T\)</span> steps.</li>
+</ol>
+<h3 id="results_2">Results</h3>
+<p>Across experiments, the authors consider models with paths comprising of 150M parameters, with each path comprised of two levels and choosing one of up to 16 modules. They argue that this results in two fair baselines to compare to:</p>
+<ol>
+<li>A 150M parameter dense model (parameter-equivalent per path)</li>
+<li>A 1.3B parameter dense model, since the base sharded models comprises up to 16 * 150M / 2 = 1.2B parameters</li>
+</ol>
+<p>Trying a bunch of different configurations, DiPaCo lies somewhere between these two extremes. Crucially it looks as if dense training is needed early in training and that additional expressivity is needed, so some modules appear in only a single path.</p>
+<p><img alt="Validation perplexity curves" src="../potm/2024/03/distributed-path-composition/FIG-PPL.png" /></p>
+<p>They argue that the remaining performance gap can be closed by re-sharding the dataset across workers every 64 tokens during inference. This would surely mean KV caches would need to be recomputed for each re-shard, so this is unlikely to be workable in practice.</p>
+<p><img alt="Resharding datasets closes perplexity gap" class="img-small" src="../potm/2024/03/distributed-path-composition/TBL-Eval.png" /></p>
+<h3 id="takeaways_2">Takeaways</h3>
+<p>An interesting proof-of-concept for how large-scale distributed training may look in future based on the assumption that the cost of communication outweighs the cost of compute. However, this approach may be somewhat premature given advances in long distance networking lowering the cost of communication sufficiently that dense training at large enough scales is feasible.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2403.10616" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="massive-activations-in-large-language-models">Massive Activations in Large Language Models</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Mingjie Sun, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+CMU, Meta & Bosch
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2402.17762" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_3">The key idea</h3>
+<p>All LLMs exhibit very large activation values after a few layers — a major challenge for LLM quantisation. This paper shows why: massive activations are the transformer's way of attempting to add a fixed bias term in the self-attention operation. The authors also demonstrate a neat solution based on this analysis.</p>
+<h3 id="background_2">Background</h3>
+<p>Papers like <a href="https://arxiv.org/abs/2208.07339">LLM.int8()</a> and <a href="https://arxiv.org/abs/2211.10438">SmoothQuant</a> previously studied a similar problem with large activation values appearing, termed <em>outlier features</em>. The authors claim that massive activations are a slightly different phenomenon though:</p>
+<blockquote>
+<p>Conceptually, a massive activation is a scalar value, determined jointly by the sequence and feature dimensions; in contrast, an outlier feature is a vector, corresponding to activations at all tokens.</p>
+</blockquote>
+<p>It's not entirely clear whether these two phenomena are linked. Specifically, in this paper they focus on activations after the residual-add operation.</p>
+<p>Massive activations are very rare (0.01% for Llama2-7B) and appear in specific dimensions for particular tokens.</p>
+<p><img alt="Figure 1: Activation Magnitudes (z-axis) in LLaMA2-7B. x and y axes are sequence and feature dimensions. For this specific model, we observe that activations with massive magnitudes appear in two fixed feature dimensions (1415, 2533), and two types of tokens—the starting token, and the first period (.) or newline token (\n)." src="../potm/2024/03/massive-activations/figure_1.png" /></p>
+<h3 id="their-method_3">Their method</h3>
+<p>The authors first observe that a set of massive activations often have very similar values to each other. In fact, setting them to a fixed mean value doesn't degrade performance, but setting them to zero does.</p>
+<p>Through a series of steps this leads them to the observation that the massive activations are acting as a fixed attention bias. The mechanism for this is as follows:</p>
+<ol>
+<li>Massive activations hit the LayerNorm, causing the token-vectors containing them to shrink to the scale of regular token-vectors. Massive-activation tokens now look like one-another: sparse and spiky.</li>
+<li>These representations are then projected into Q, K and V. The massive activations are gone, but those tokens that had them now all have similar representations.</li>
+<li>As the resulting V terms for these tokens now all look the same, this has the effect of adding a constant bias vector to each attention output.</li>
+</ol>
+<p><img alt="Figure 7: Figure 7: Activation trajectory starting from input hidden states to query, key and value states." src="../potm/2024/03/massive-activations/figure_7.png" /></p>
+<p>The key observation here is that the transformer has essentially learned a "hack" to add this bias to the attention output, as it's not present in the original transformer. From this an improved method is derived: add additional trained parameters <span class="arithmatex">\(\mathbf{k'}, \mathbf{v'} \in \mathcal{R}^d\)</span> as an explicit <strong>attention bias</strong> for each head:</p>
+<p><img alt="Equation 3: adding explicit attention biases to the attention operation." class="img-medium" src="../potm/2024/03/massive-activations/equation_3.png" /></p>
+<h3 id="results_3">Results</h3>
+<p>They train three GPT-2 models: a regular one, one with a <a href="https://arxiv.org/abs/2309.17453">sink token</a>, and one with their new attention bias. Each reaches the same performance, but the latter no-longer has massive activations.</p>
+<p><img alt="Figure 9: Massive activations disappear when training GPT-2 with explicit attention bias." src="../potm/2024/03/massive-activations/figure_9.png" /></p>
+<p>Similar conclusions are reached for vision transformers, where it's also shown that the recently proposed <a href="https://arxiv.org/abs/2309.16588">register tokens</a> serve a similar role to attention biases.</p>
+<p>It's worth noting here that although activation magnitudes have dropped, some are still over 100. It would be valuable to see work that investigates these medium-scale activations.</p>
+<h3 id="takeaways_3">Takeaways</h3>
+<p>This kind of work investigating transformer internals is really valuable. Although massive activations don't directly harm performance, their presence has significant side-effects.</p>
+<p>The most obvious of these is quantisation, where they can force us to use more bits than necessary to represent these outlier values. More generally, our ability to innovate in model design may be limited by the need for architectures that can accommodate learning these attention biases (explicitly or implicitly). Understanding this mechanism gives us the potential to build better and more efficient models.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2402.17762" target="_blank">the paper</a> for more.
+</div>
+
+<hr />
+<h2 id="g-retriever-retrieval-augmented-generation-for-textual-graph-understanding-and-question-answering">G-Retriever: Retrieval-Augmented Generation for Textual Graph Understanding and Question Answering</h2>
+<div class="potm-meta-row">
+<div class="potm-meta">
+<i class="fas fa-people-group potm-meta-icon" aria-hidden="true"></i>
+Xiaoxin He, et al.
+</div>
+<div class="potm-meta">
+<i class="fas fa-building-columns potm-meta-icon" aria-hidden="true"></i>
+National University of Singapore
+</div>
+<div class="potm-meta">
+<a href="https://arxiv.org/abs/2402.07630" target="_blank"><i class="fas fa-file-lines potm-meta-icon" aria-hidden="true"></i>Full paper</a>
+</div>
+</div>
+
+<h3 id="the-key-idea_4">The key idea</h3>
+<p>From business transactions to knowledge graphs, vast amounts of real-world data possess a graph structure. As large language models arise as a major way for humans to interact with data it is of critical importance to enhance their capabilities of understanding graphs.</p>
+<p>G-Retriever extends the concept of <a href="https://arxiv.org/abs/2005.11401">retrieval augmented generation (RAG)</a> to textual graphs and enables LLM users to ask questions about a graph.</p>
+<p><img alt="Examples of G-Retriever responding to different graph-related queries." src="../potm/2024/03/g-retriever/G-Retriever_Fig1.png" /></p>
+<figcaption><i>Examples of G-Retriever responding to different graph-related queries.</i></figcaption>
+
+<h3 id="background_3">Background</h3>
+<p>RAG has firmly established itself as key method for LLMs to retrieve information from a corpus of documents and thereby improve factual correctness and interpretability. Similar to traditional RAG, the first step for retrieving information from graphs is to identify relevant bits within the graph. In a second step, the retrieved data has to be made digestible by the LLM. For both steps, a range of methods has been employed over the last years, so far with no clear winner.</p>
+<h3 id="their-method_4">Their method</h3>
+<p><img alt="Overview of the steps G-Retriever uses for performing RAG over a graph." src="../potm/2024/03/g-retriever/G-Retriever_Fig3.png" /></p>
+<figcaption><i>Overview of the steps G-Retriever uses for performing RAG over a graph.</i></figcaption>
+
+<p>The authors propose a four-step method for performing RAG over a graph <span class="arithmatex">\(G = (V,E)\)</span> with vertices <span class="arithmatex">\(V\)</span> and edges <span class="arithmatex">\(E\)</span>:</p>
+<p><strong>1. Indexing</strong> of all nodes and edges in <span class="arithmatex">\(G\)</span> using embedding vectors generated by a frozen language model <span class="arithmatex">\(\textrm{LM}\)</span>.</p>
+<p><strong>2. Retrieval</strong> of most relevant nodes and edges for a give query by performing a k-nearest neighbour search between the query embedding as generated by <span class="arithmatex">\(\textrm{LM}\)</span> and the stored node and edge embeddings.</p>
+<p><strong>3. Subgraph Construction</strong> to identify a subgraph of <span class="arithmatex">\(G\)</span> that maximises the relevant information content while filtering out nodes and edges that have no value for the given query. The authors formulate this as a variant of the <strong>Prize Collection Steiner Tree (PCST)</strong> problem that, given a graph with a value assigned to nodes and a cost assigned to edges, aims at finding a subgraph that maximizes profit.</p>
+<p>By adding a prize for edges the information carried by relevant edges is considered as well:</p>
+<div>
+$$
+    \mathop{\operatorname{argmax}}_{S \subseteq G \textrm{ connected}} \sum_{n\in V_S}\underbrace{\textrm{prize}(n)}_\textrm{node value} + \sum_{e\in E_S}\underbrace{(\textrm{prize}(e) - c)}_{\substack{\textrm{edge value less a}\\ \textrm{constant edge cost}}}
+$$
+</div>
+
+<p>where</p>
+<div>
+$$
+    prize(x) =
+    \begin{cases}
+        k - i, &\textrm{if x is the i-th of top-k nodes (edges)}\\
+        0, &\textrm{else}
+    \end{cases}
+$$
+</div>
+
+<p>is the value of the top-k nodes and edges based on their ranking.</p>
+<p><strong>4. Text Generation</strong> that uses both, a representation of the subgraph as plain text which is concatenated to the query and a learned embedding of the graph generated by a GNN which is concatenated to the embedded sequence.</p>
+<h3 id="results_4">Results</h3>
+<p>The authors use the pretrained 7 billion parameter LLama2 as LLM to compare three model configurations across different datasets:
+* Prompting a frozen LLM with the textual representation of the subgraph ("Inference-Only").
+* Comparing task-specific <a href="https://arxiv.org/abs/2104.08691">prompt tuning</a> to prompting with the learned graph embedding. In both cases the LLM receives the plain text representation of the subgraph.
+* Fine-tuning the LLM to the specific tasks using <a href="https://arxiv.org/abs/2106.09685">Low Rank Adaptation (LoRA)</a> with and without using the subgraph embeddings.</p>
+<p><img alt="Performance comparison of G-Retriever across ExplaGraphs, SceneGraphs, and WebQSP datasets" class="img-large" src="../potm/2024/03/g-retriever/G-Retriever_Tab3.png" /></p>
+<p>The results show that with a frozen LLM, G-Retriever achieves results comparable to the fine-tuned models and significantly outperforms the prompt tuning case.</p>
+<p>Finally, an ablation study demonstrates the importance of both, the textualised and the embedded subgraph.</p>
+<p><img alt="Ablation study on the WebQSP dataset." class="img-small" src="../potm/2024/03/g-retriever/G-Retriever_Tab6.png" /></p>
+<h3 id="takeaways_4">Takeaways</h3>
+<p>G-Retriever shows strong results for retrieving information from graphs to augment LLMs. In particular, the interpretation of the subgraph generation as PCST problem and the simultaneous use of textual and GNN-embedded graph attributes appear to benefit model accuracy.</p>
+<p>It is, however, hard to compare these results to other approaches that integrate LLMs with GNNs as the field still lacks widely accepted benchmarks for comparing graph retrieval methods. Moreover, it can be expected that the impact of these methods on inference throughput and latency will become increasingly important.</p>
+<div class="potm-footer-link">
+See <a href="https://arxiv.org/abs/2402.07630" target="_blank">the paper</a> for more.
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+    
+    <div class="md-copyright__highlight">
+        © 2026 Graphcore Research
+    </div>
+    <a class="cookie-consent" href="#__consent">Change cookie settings</a>
+    
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/GCResearchTeam" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.graphcore.ai/graphcore-research-newsletter-1" target="_blank" rel="noopener" title="www.graphcore.ai" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/graphcore-research" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+
+<h4></h4>
+<p>This website stores a cookie on your computer to enable google analytics by default. If you decline this information will not be stored. All data is anonymized and will not be shared.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+      <button type="reset" class="md-button md-button--primary">Reject</button>
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../hiring_banner.js"></script>
+      
+    
+  </body>
+</html>
