@@ -6,6 +6,7 @@ dependencies = [
     "nbconvert",
     "mkdocs",
     "mkdocs-material[imaging]",
+    "mkdocs-rss-plugin",
 ]
 
 [tool.setuptools]
