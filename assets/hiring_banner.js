@@ -1,8 +1,8 @@
 const _banner_config = {
   enabled: true,
   text: "Graphcore Research is hiring",
-  link: "https://grnh.se/26flvuyo2us",
-  label: "hiring-2026-02",
+  link: "https://grnh.se/dej2d7p12us",
+  label: "hiring-2026-05",
   expiry_ms: 14 * 24 * 60 * 60 * 1000,
 };
 
