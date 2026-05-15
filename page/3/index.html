@@ -396,6 +396,60 @@
       <nav class="md-post__authors md-typeset">
         
           <span class="md-author">
+            <img src="../../img/authors/lukar.jpg" alt="Luka Ribar">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-12-30 00:00:00+00:00">December 30, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              17 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="december-papers-spend-your-flops-wisely"><a class="toclink" href="../../2024-12-30-potm/">December Papers: Spend Your FLOPs Wisely</a></h2>
+<p>Welcome to Papers of the Month — Graphcore Research's effort to bring you our pick of the most interesting ML papers.
+In December we noted a collection of papers which took innovative approaches to allocating compute (FLOPs) to input data.</p>
+<p>We start with the Byte Latent Transformer. This modifies the standard transformer to operate on <em>patches</em>, which comprise a variable number of input bytes, as determined by an entropy metric. The consequence of this is that compute is dynamically allocated towards "harder input data". This has some similarities with the Concept Model architecture, which also uses a flexible intermediate representation. The model performs autoregressive sentence generation in this modality-agnostic space, rather than token space. </p>
+<p>The Memory Layers architecture allows extra parameters to be added to a model without increasing FLOPs. Decoupling these resources gives model designers more control (e.g. for co-design, to fit their hardware resources) and potentially facilitates more effective models in general.</p>
+<p>Finally, the Phi-4 paper presents a rather different FLOPs angle: spending compute in the data-generation process to create higher quality data, leading to "student" models that (in some domains) out-perform their "teachers".</p>
+<p><em>We hope you enjoy these month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-12-30-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
             <img src="../../img/authors/lukep.jpg" alt="Luke Prince">
           </span>
         
@@ -855,56 +909,6 @@ AI algorithms and AI-aware hardware developments will continue to be critical to
     
       <nav class="md-post__action">
         <a href="../../2024-08-01-potm/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="../../img/authors/lukehg.jpg" alt="Luke Hudlass-Galley">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2024-07-17 00:00:00+00:00">July 17, 2024</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              10 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="sparser-llamas-run-faster-speed-up-llm-inference-with-sparq-attention"><a class="toclink" href="../../2024-07-17-sparq/">Sparser llamas run faster — speed up LLM inference with SparQ Attention</a></h2>
-<p><img alt="A low-poly llama moving quickly on a running track with lightning bolts" class="img-medium" src="../../2024/07-sparq/sparser-llamas.png" /></p>
-<p>When ChatGPT launched in 2022, it became evident how powerful the Transformer architecture, when trained on large corpora of text, is for handling natural language processing tasks. The performance of these Large Language Models (LLMs) has been attributed to the in-context learning capabilities that emerge with large-scale training.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../2024-07-17-sparq/">
           Continue reading
         </a>
       </nav>

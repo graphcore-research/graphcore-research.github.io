@@ -396,6 +396,58 @@
       <nav class="md-post__authors md-typeset">
         
           <span class="md-author">
+            <img src="../../img/authors/michaelp.jpg" alt="Michael Pearce">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2025-09-08 00:00:00+00:00">September 8, 2025</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              15 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="august-papers-optimal-dataset-mixtures-stable-molecule-generation-and-agentic-hypergraph-rag"><a class="toclink" href="../../2025-09-08-potm/">August Papers: Optimal Dataset Mixtures, Stable Molecule Generation, and Agentic Hypergraph RAG</a></h2>
+<p>August, even with its heat waves and holidays, left no shortage of exciting research. Our top papers for this month are the following: 
+- <a href="../../2025-09-08-potm/#admire-bayesopt-accelerated-data-mixture-re-weighting-for-language-models-with-bayesian-optimization">ADMIRE-BayesOpt</a> that investigates how to weight different data sources when they are mixed to make a single training dataset where, using multi-Fidelity Bayesian Optimization, the search for the optimal mixture can be automated;
+- <a href="../../2025-09-08-potm/#guiding-diffusion-models-with-reinforcement-learning-for-stable-molecule-generation">Stable Molecule Generation</a> that uses a force-field based reward function to fine-tune pre-trained 3D molecule generation diffusion models with the goal of sampling physically stable and valid molecules; and
+- <a href="../../2025-09-08-potm/#graph-r1-towards-agentic-graphrag-framework-via-end-to-end-reinforcement-learning">Graph-R1</a> that takes an agentic RAG approach with a knowledge hypergraph to effectively represent and retrieve information from a corpus of documents.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2025-09-08-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
             <img src="../../img/authors/tomca.jpg" alt="Tom Cashman">
           </span>
         
@@ -860,60 +912,6 @@ efficiency and model performance — we will release a new blog post soon with a
     
       <nav class="md-post__action">
         <a href="../../2024-12-30-llama-vision/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="../../img/authors/lukar.jpg" alt="Luka Ribar">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2024-12-30 00:00:00+00:00">December 30, 2024</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              17 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="december-papers-spend-your-flops-wisely"><a class="toclink" href="../../2024-12-30-potm/">December Papers: Spend Your FLOPs Wisely</a></h2>
-<p>Welcome to Papers of the Month — Graphcore Research's effort to bring you our pick of the most interesting ML papers.
-In December we noted a collection of papers which took innovative approaches to allocating compute (FLOPs) to input data.</p>
-<p>We start with the Byte Latent Transformer. This modifies the standard transformer to operate on <em>patches</em>, which comprise a variable number of input bytes, as determined by an entropy metric. The consequence of this is that compute is dynamically allocated towards "harder input data". This has some similarities with the Concept Model architecture, which also uses a flexible intermediate representation. The model performs autoregressive sentence generation in this modality-agnostic space, rather than token space. </p>
-<p>The Memory Layers architecture allows extra parameters to be added to a model without increasing FLOPs. Decoupling these resources gives model designers more control (e.g. for co-design, to fit their hardware resources) and potentially facilitates more effective models in general.</p>
-<p>Finally, the Phi-4 paper presents a rather different FLOPs angle: spending compute in the data-generation process to create higher quality data, leading to "student" models that (in some domains) out-perform their "teachers".</p>
-<p><em>We hope you enjoy these month's papers as much as we did! If you have thoughts or questions, please reach out to us at <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../2024-12-30-potm/">
           Continue reading
         </a>
       </nav>
