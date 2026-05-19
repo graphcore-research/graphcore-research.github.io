@@ -8,6 +8,7 @@ This site is built using [MkDocs](https://www.mkdocs.org/) with the [Material fo
 
 ```sh
 uv sync
+echo 'export NO_MKDOCS_2_WARNING=1' >> .venv/bin/activate
 source .venv/bin/activate
 
 # Start a dev server with autoreload, filtered to a specific post
