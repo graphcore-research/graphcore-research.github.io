@@ -31,6 +31,35 @@ papers:
       #   abstract: ""
       #   published: ""
 
+  2026:
+    conference:
+
+      - title: "1-Bit Wonder: Improving QAT Performance in the Low-Bit Regime through K-Means Quantization"
+        url: https://arxiv.org/abs/2602.15563
+        date: 2026-02-17
+        area: [low-precision]
+        authors: "Sohir Maskey, Constantin Eichenberg, Johannes Messner, Douglas Orr"
+        abstract: "Quantization-aware training (QAT) is an effective method to drastically reduce the memory footprint of LLMs while keeping performance degradation at an acceptable level. However, the optimal choice of quantization format and bit-width presents a challenge in practice. The full design space of quantization is not fully explored in the context of QAT, and the precise trade-off between quantization and downstream performance is poorly understood, as comparisons often rely solely on perplexity-based evaluations. In this work, we address these shortcomings with an empirical study of QAT in the low-bit regime. We show that k-means based weight quantization outperforms integer formats and can be implemented efficiently on standard hardware. Furthermore, we find that, under a fixed inference memory budget, the best performance on generative downstream tasks is achieved with 1-bit quantized weights."
+        published: "Proceedings of the 43rd International Conference on Machine Learning"
+
+    workshop:
+
+      - title: "How to Train Your HRM"
+        url: https://openreview.net/pdf?id=vlh0YAVdkF
+        date: 2026-03-02
+        area: [general-ml]
+        authors: "Sam Olesker-Taylor, Erika Aranas, Michael Pearce, Luke Hudlass-Galley"
+        abstract: "Hierarchical Reasoning Models (HRMs) are a recently proposed model architecture for solving complex reasoning tasks such as the Abstract and Reasoning Corpus (ARC-AGI) challenge: the objective is to learn an underlying transformation, demonstrated by example input-output pairs. The HRM learns transformations via supervised learning on the demonstration pairs. Each task involves an entirely new transformation, necessitating test-time training on the evaluation tasks. We investigate training curricula for HRMs to compensate for limited test-time compute, focused on three stages: offline pre-training on available training data; test-time fine-tuning on evaluation tasks; test-time, per-task `overfitting', in which a specialized model is trained for each task. Our results suggest that pre-training can offer early gains, which may not persist, and that fine-tuning on all tasks (training and evaluation) is optimal. The majority of test-time compute should be spent on fine-tuning, rather than overfitting—typically 2:1 or more."
+        published: "ICLR'26 Workshop on Latent & Implicit Thinking"
+
+      - title: "UltRAG: a Universal Simple Scalable Recipe for Knowledge Graph RAG"
+        url: https://arxiv.org/abs/2603.28773
+        date: 2026-01-28
+        area: [gnns]
+        authors: "Dobrik Georgiev, Kheeran Naidu, Alberto Cattaneo, Federico Monti, Carlo Luschi, Daniel Justus"
+        abstract: "Large language models (LLMs) frequently generate confident yet factually incorrect content when used for language generation (a phenomenon often known as hallucination). Retrieval augmented generation (RAG) tries to reduce factual errors by identifying information in a knowledge corpus and putting it in the context window of the model. While this approach is well-established for document-structured data, it is non-trivial to adapt it for Knowledge Graphs (KGs), especially for queries that require multi-node/multi-hop reasoning on graphs. We introduce ULTRAG, a general framework for retrieving information from Knowledge Graphs that shifts away from classical RAG. By endowing LLMs with off-the-shelf neural query executing modules, we highlight how readily available language models can achieve state-of-the-art results on Knowledge Graph Question Answering (KGQA) tasks without any retraining of the LLM or executor involved. In our experiments, ULTRAG achieves better performance when compared to state-of-the-art KG-RAG solutions, and it enables language models to interface with Wikidata-scale graphs (116M entities, 1.6B relations) at comparable or lower costs."
+        published: "ICLR'26 Workshop on Memory for LLM-Based Agentic Systems"
+
   2025:
     conference:
 
