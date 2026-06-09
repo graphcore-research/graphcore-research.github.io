@@ -34,13 +34,21 @@ papers:
   2026:
     conference:
 
+      - title: "Novel Aspects of IEEE SA P3109 Arithmetic Formats for Machine Learning"
+        url: https://arxiv.org/abs/2606.04028
+        date: 2026-06-29
+        area: [low-precision]
+        authors: "Andrew Fitzgibbon, Christoph M. Wintersteiger, Jeffrey Sarnoff"
+        abstract: "The IEEE P3109 draft standard defines a parameterized family of binary floating-point formats and associated operations, with a focus on facilitating machine learning. These formats allow efficient and consistent representation of values in a small number of bits. The defined formats are parameterized over width and precision in bits, signedness, and the presence of infinities. Operations are defined by decoding floating-point values to the set of closed extended reals: the reals augmented with positive and negative infinity and NaN (Not a Number). Explicit treatment of NaN and infinite operands ensures that only real arithmetic is invoked in operation definitions. Extensive rounding and saturation modes are defined; stochastic rounding is included. Operations are exception-free, accelerating throughput, with exceptional situations communicated through return values, e.g., NaN. Operations on blocks of values sharing a common scale factor are defined in terms of the underlying operations in a uniform manner. System vendors may describe approximate implementations via a novel scale-invariant measure, akin to units in the last place, called kappa-approximation. Standard function definitions and various other properties are mechanically verified and generated using formal specifications."
+        published: "Proceedings of ARITH 2026, the 33rd IEEE International Symposium on Computer Arithmetic"
+
       - title: "1-Bit Wonder: Improving QAT Performance in the Low-Bit Regime through K-Means Quantization"
         url: https://arxiv.org/abs/2602.15563
         date: 2026-02-17
         area: [low-precision]
         authors: "Sohir Maskey, Constantin Eichenberg, Johannes Messner, Douglas Orr"
         abstract: "Quantization-aware training (QAT) is an effective method to drastically reduce the memory footprint of LLMs while keeping performance degradation at an acceptable level. However, the optimal choice of quantization format and bit-width presents a challenge in practice. The full design space of quantization is not fully explored in the context of QAT, and the precise trade-off between quantization and downstream performance is poorly understood, as comparisons often rely solely on perplexity-based evaluations. In this work, we address these shortcomings with an empirical study of QAT in the low-bit regime. We show that k-means based weight quantization outperforms integer formats and can be implemented efficiently on standard hardware. Furthermore, we find that, under a fixed inference memory budget, the best performance on generative downstream tasks is achieved with 1-bit quantized weights."
-        published: "Proceedings of the 43rd International Conference on Machine Learning"
+        published: "Proceedings of ICML 2026, the 43rd International Conference on Machine Learning"
 
     workshop:
 
@@ -77,7 +85,7 @@ papers:
         area: [general-ml]
         authors: "Johanna Vielhaben, Dilyara Bareeva, Jim Berend, Wojciech Samek, Nils Strodthoff"
         abstract: "Vision transformers (ViTs) can be trained using various learning paradigms, from fully supervised to self-supervised. Diverse training protocols often result in significantly different feature spaces, which are usually compared through alignment analysis. However, current alignment measures quantify this relationship in terms of a single scalar value, obscuring the distinctions between common and unique features in pairs of representations that share the same scalar alignment. We address this limitation by combining alignment analysis with concept discovery, which enables a breakdown of alignment into single concepts encoded in feature space. This fine-grained comparison reveals both universal and unique concepts across different representations, as well as the internal structure of concepts within each of them. Our methodological contributions address two key prerequisites for concept-based alignment: 1) For a description of the representation in terms of concepts that faithfully capture the geometry of the feature space, we define concepts as the most general structure they can possibly form - arbitrary manifolds, allowing hidden features to be described by their proximity to these manifolds. 2) To measure distances between concept proximity scores of two representations, we use a generalized Rand index and partition it for alignment between pairs of concepts. We confirm the superiority of our novel concept definition for alignment analysis over existing linear baselines in a sanity check. The concept-based alignment analysis of representations from four different ViTs reveals that increased supervision correlates with a reduction in the semantic structure of learned representations."
-        published: "Proceedings of the 39th Conference on Neural Information Processing Systems"
+        published: "Proceedings of NeurIPS 2025, the 39th Conference on Neural Information Processing Systems"
 
       - title: "On Stochastic Rounding with Few Random Bits"
         url: https://arxiv.org/abs/2504.20634
@@ -85,7 +93,7 @@ papers:
         area: [low-precision]
         authors: "Andrew Fitzgibbon, Stephen Felix"
         abstract: "Large-scale numerical computations make increasing use of low-precision (LP) floating point formats and mixed precision arithmetic, which can be enhanced by the technique of stochastic rounding (SR), that is, rounding an intermediate high-precision value up or down randomly as a function of the value's distance to the two rounding candidates. Stochastic rounding requires, in addition to the high-precision input value, a source of random bits. As the provision of high-quality random bits is an additional computational cost, it is of interest to require as few bits as possible while maintaining the desirable properties of SR in a given computation, or computational domain. This paper examines a number of possible implementations of few-bit stochastic rounding (FBSR), and shows how several natural implementations can introduce sometimes significant bias into the rounding process, which are not present in the case of infinite-bit, infinite-precision examinations of these implementations. The paper explores the impact of these biases in machine learning examples, and hence opens another class of configuration parameters of which practitioners should be aware when developing or adopting low-precision floating point. Code is available at https://github.com/graphcore-research/arith25-stochastic-rounding."
-        published: "Proceedings of the 32nd IEEE International Symposium on Computer Arithmetic"
+        published: "Proceedings of ARITH 2025, the 32nd IEEE International Symposium on Computer Arithmetic"
 
       - title: "u-µP: The Unit-Scaled Maximal Update Parametrization"
         url: https://arxiv.org/abs/2407.17465
@@ -93,7 +101,7 @@ papers:
         area: [low-precision]
         authors: "Charlie Blake, Constantin Eichenberg, Josef Dean, Lukas Balles, Luke Y. Prince, Björn Deiseroth, Andres Felipe Cruz-Salinas, Carlo Luschi, Samuel Weinbach, Douglas Orr"
         abstract: "The Maximal Update Parametrization (μP) aims to make the optimal hyperparameters (HPs) of a model independent of its size, allowing them to be swept using a cheap proxy model rather than the full-size target model. We present a new scheme, u-μP, which improves upon μP by combining it with Unit Scaling, a method for designing models that makes them easy to train in low-precision. The two techniques have a natural affinity: μP ensures that the scale of activations is independent of model size, and Unit Scaling ensures that activations, weights and gradients begin training with a scale of one. This synthesis opens the door to a simpler scheme, whose default values are near-optimal. This in turn facilitates a more efficient sweeping strategy, with u-μP models reaching a lower loss than comparable μP models and working out-of-the-box in FP8."
-        published: "Proceedings of the 13th International Conference on Learning Representations (Spotlight)"
+        published: "Proceedings of ICLR 2025, the 13th International Conference on Learning Representations (Spotlight)"
 
     workshop:
 
@@ -154,7 +162,7 @@ papers:
         area: [sparsity]
         authors: "Luka Ribar, Ivan Chelombiev, Luke Hudlass-Galley, Charlie Blake, Carlo Luschi, Douglas Orr"
         abstract: "The computational difficulties of large language model (LLM) inference remain a significant obstacle to their widespread deployment. The need for many applications to support long input sequences and process them in large batches typically causes token-generation to be bottlenecked by data transfer. For this reason, we introduce SparQ Attention, a technique for increasing the inference throughput of LLMs by utilising memory bandwidth more efficiently within the attention layers, through selective fetching of the cached history. Our proposed technique can be applied directly to off-the-shelf LLMs during inference, without requiring any modification to the pre-training setup or additional fine-tuning. We show that SparQ Attention brings up to 8x savings in attention data transfers without substantial drops in accuracy, by evaluating Llama 2 and 3, Mistral, Gemma and Pythia models on a wide range of downstream tasks."
-        published: "Proceedings of the 41st International Conference on Machine Learning"
+        published: "Proceedings of ICML 2023, the 41st International Conference on Machine Learning"
 
       - title: "Towards Foundational Models for Molecular Learning on Large-Scale Multi-Task Datasets"
         url: https://arxiv.org/abs/2310.04292
@@ -162,7 +170,7 @@ papers:
         area: [gnns]
         authors: "Dominique Beaini, Shenyang Huang, Joao Alex Cunha, Zhiyi Li, Gabriela Moisescu-Pareja, Oleksandr Dymov, Samuel Maddrell-Mander, Callum McLean, Frederik Wenkel, Luis Müller, Jama Hussein Mohamud, Ali Parviz, Michael Craig, Michał Koziarski, Jiarui Lu, Zhaocheng Zhu, Cristian Gabellini, Kerstin Klaser, Josef Dean, Cas Wognum, Maciej Sypetkowski, Guillaume Rabusseau, Reihaneh Rabbany, Jian Tang, Christopher Morris, Ioannis Koutis, Mirco Ravanelli, Guy Wolf, Prudencio Tossou, Hadrien Mary, Therence Bois, Andrew Fitzgibbon, Błażej Banaszewski, Chad Martin, Dominic Masters"
         abstract: "Recently, pre-trained foundation models have enabled significant advancements in multiple fields. In molecular machine learning, however, where datasets are often hand-curated, and hence typically small, the lack of datasets with labeled features, and codebases to manage those datasets, has hindered the development of foundation models. In this work, we present seven novel datasets categorized by size into three distinct categories: ToyMix, LargeMix and UltraLarge. These datasets push the boundaries in both the scale and the diversity of supervised labels for molecular learning. They cover nearly 100 million molecules and over 3000 sparsely defined tasks, totaling more than 13 billion individual labels of both quantum and biological nature. In comparison, our datasets contain 300 times more data points than the widely used OGB-LSC PCQM4Mv2 dataset, and 13 times more than the quantum-only QM1B dataset. In addition, to support the development of foundational models based on our proposed datasets, we present the Graphium graph machine learning library which simplifies the process of building and training molecular machine learning models for multi-task and multi-level molecular datasets. Finally, we present a range of baseline results as a starting point of multi-task and multi-level training on these datasets. Empirically, we observe that performance on low-resource biological datasets show improvement by also training on large amounts of quantum data. This indicates that there may be potential in multi-task and multi-level training of a foundation model and fine-tuning it to resource-constrained downstream tasks."
-        published: "Proceedings of the 12th International Conference on Learning Representations"
+        published: "Proceedings of ICLR 2023, the 12th International Conference on Learning Representations"
 
     workshop:
 
@@ -215,7 +223,7 @@ papers:
         area: [physics]
         authors: "Alexander Mathiasen, Hatem Helal, Kerstin Klaser, Paul Balanca, Josef Dean, Carlo Luschi, Dominique Beaini, Andrew Fitzgibbon, Dominic Masters"
         abstract: "The emergence of foundation models in Computer Vision and Natural Language Processing have resulted in immense progress on downstream tasks. This progress was enabled by datasets with billions of training examples. Similar benefits are yet to be unlocked for quantum chemistry, where the potential of deep learning is constrained by comparatively small datasets with 100k to 20M training examples. These datasets are limited in size because the labels are computed using the accurate (but computationally demanding) predictions of Density Functional Theory (DFT). Notably, prior DFT datasets were created using CPU supercomputers without leveraging hardware acceleration. In this paper, we take a first step towards utilising hardware accelerators by introducing the data generator PySCFIPU using Intelligence Processing Units (IPUs). This allowed us to create the dataset QM1B with one billion training examples containing 9-11 heavy atoms. We demonstrate that a simple baseline neural network (SchNet 9M) improves its performance by simply increasing the amount of training data without additional inductive biases. To encourage future researchers to use QM1B responsibly, we highlight several limitations of QM1B and emphasise the low-resolution of our DFT options, which also serves as motivation for even larger, more accurate datasets. Code and dataset are available on Github: http://github.com/graphcore-research/pyscf-ipu"
-        published: "Proceedings of the 37th Conference on Neural Information Processing Systems, Datasets and Benchmarks track"
+        published: "Proceedings of NeurIPS 2023, the 37th Conference on Neural Information Processing Systems"
 
       - title: "Towards Neural Path Tracing in SRAM"
         url: https://arxiv.org/abs/2305.20061
@@ -231,7 +239,7 @@ papers:
         area: [low-precision]
         authors: "Charlie Blake, Douglas Orr, Carlo Luschi"
         abstract: "We present unit scaling, a paradigm for designing deep learning models that simplifies the use of low-precision number formats. Training in FP16 or the recently proposed FP8 formats offers substantial efficiency gains, but can lack sufficient range for out-of-the-box training. Unit scaling addresses this by introducing a principled approach to model numerics: seeking unit variance of all weights, activations and gradients at initialisation. Unlike alternative methods, this approach neither requires multiple training runs to find a suitable scale nor has significant computational overhead. We demonstrate the efficacy of unit scaling across a range of models and optimisers. We further show that existing models can be adapted to be unit-scaled, training BERT-Large in FP16 and then FP8 with no degradation in accuracy."
-        published: "Proceedings of the 40th International Conference on Machine Learning"
+        published: "Proceedings of ICML 2023, the 40th International Conference on Machine Learning"
 
       - title: "GPS++: Reviving the Art of Message Passing for Molecular Property Prediction"
         url: https://arxiv.org/abs/2302.02947
@@ -339,7 +347,7 @@ papers:
         area: [general-ml]
         authors: "Antoine Labatie, Dominic Masters, Zach Eaton-Rosen, Carlo Luschi"
         abstract: "We investigate the reasons for the performance degradation incurred with batch-independent normalization. We find that the prototypical techniques of layer normalization and instance normalization both induce the appearance of failure modes in the neural network's pre-activations: (i) layer normalization induces a collapse towards channel-wise constant functions; (ii) instance normalization induces a lack of variability in instance statistics, symptomatic of an alteration of the expressivity. To alleviate failure mode (i) without aggravating failure mode (ii), we introduce the technique \"Proxy Normalization\" that normalizes post-activations using a proxy distribution. When combined with layer normalization or group normalization, this batch-independent normalization emulates batch normalization's behavior and consistently matches or exceeds its performance."
-        published: "Proceedings of the 35th Conference on Neural Information Processing Systems"
+        published: "Proceedings of NeurIPS 2021, the 35th Conference on Neural Information Processing Systems"
 
     workshop:
 
