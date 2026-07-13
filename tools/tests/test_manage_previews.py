@@ -22,6 +22,7 @@ class ManagePreviewsTest(unittest.TestCase):
             )
             (site / "style.css").write_text("body { background: url('/img/bg.png') }")
             (site / "app.js").write_text(
+                'const DATA_URL = "/data/index.json"; '
                 'fetch("/api/data.json"); new Worker("/worker.js");'
             )
             (site / "unchanged.js").write_text('const separator = "/";')
@@ -57,6 +58,10 @@ class ManagePreviewsTest(unittest.TestCase):
             )
             self.assertIn(
                 'fetch("/pr-preview/pr-42/api/data.json")',
+                (preview / "app.js").read_text(),
+            )
+            self.assertIn(
+                'DATA_URL = "/pr-preview/pr-42/data/index.json"',
                 (preview / "app.js").read_text(),
             )
             self.assertIn(

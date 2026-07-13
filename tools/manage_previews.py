@@ -61,7 +61,8 @@ def rewrite_preview_urls(site_dir: Path, preview_prefix: str) -> None:
                 rewritten,
             )
             rewritten = re.sub(
-                rf"(\b(?:const|let|var)\s+target\s*=\s*[\"']){path_pattern}",
+                rf"(\b(?:const|let|var)\s+(?:target|DATA_URL)"
+                rf"\s*=\s*[\"']){path_pattern}",
                 rf"\1{preview_prefix}/",
                 rewritten,
             )
