@@ -88,7 +88,7 @@ The draft repo supports on-demand PR previews via PR comments:
 
 - comment `/preview` on a PR to publish a preview
 
-The workflow posts the exact preview URL back to the PR. Previews expire after 30 days when a later deployment runs. Note that the preview will be visible on the internet, so make sure you are ready to preview, and have checked for any secrets before you do it.
+The workflow posts the exact preview URL back to the PR, then rebuilds it on later pushes to the PR branch. Previews expire after 30 days when a later deployment runs. Note that the preview will be visible on the internet, so make sure you are ready to preview, and have checked for any secrets before you do it.
 
 ### POTM
 

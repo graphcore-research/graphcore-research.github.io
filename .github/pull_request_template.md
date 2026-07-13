@@ -2,7 +2,7 @@
 
 ---
 
-_Note: after opening the PR, comment `/preview` to publish a public preview. The workflow will reply with the preview URL, and the preview will expire after 30 days when a later deployment runs. Please check for secrets before publishing a preview._
+_Note: after opening the PR, comment `/preview` to publish a public preview. The workflow will reply with the preview URL and rebuild it on later pushes. The preview expires after 30 days when a later deployment runs. Please check for secrets before publishing a preview._
 
 ## Blog Post Checklist (delete if not required)
 
