@@ -170,7 +170,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      issues: write
+      pull-requests: write
     concurrency:
       group: gh-pages
       cancel-in-progress: false
