@@ -197,14 +197,13 @@ jobs:
 
       - name: Update previews
         env:
-          PREVIEW_URL: ${{ needs.prepare-preview.outputs.preview_url }}
           PR_NUMBER: ${{ github.event.issue.number }}
         run: |
           set -euo pipefail
 
           python source/tools/manage_previews.py deploy \
             "gh-pages/${PREVIEW_ROOT}" "$PR_NUMBER" preview-site \
-            "$PREVIEW_URL" "${PREVIEW_MAX_AGE_DAYS}"
+            "/${PREVIEW_ROOT}/pr-${PR_NUMBER}" "${PREVIEW_MAX_AGE_DAYS}"
 
           cd gh-pages
           git add --all "${PREVIEW_ROOT}"

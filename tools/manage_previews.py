@@ -3,7 +3,6 @@ import shutil
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import urlsplit
 
 
 def rewrite_preview_urls(site_dir: Path, preview_prefix: str) -> None:
@@ -107,12 +106,12 @@ def deploy_preview(
 if __name__ == "__main__":
     now = datetime.now(timezone.utc)
     match sys.argv[1:]:
-        case ["deploy", preview_root, pr_number, site_dir, preview_url, max_age_days]:
+        case ["deploy", preview_root, pr_number, site_dir, preview_prefix, max_age_days]:
             deploy_preview(
                 Path(preview_root),
                 pr_number,
                 Path(site_dir),
-                urlsplit(preview_url).path.rstrip("/"),
+                preview_prefix,
                 int(max_age_days),
                 now,
             )
@@ -120,6 +119,6 @@ if __name__ == "__main__":
             prune_previews(Path(preview_root), int(max_age_days), now)
         case _:
             raise SystemExit(
-                "usage: manage_previews.py deploy ROOT PR SITE URL DAYS | "
+                "usage: manage_previews.py deploy ROOT PR SITE PREFIX DAYS | "
                 "prune ROOT DAYS"
             )
