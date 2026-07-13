@@ -2,11 +2,11 @@
 
 ---
 
-_Note: after opening the PR, comment `/preview` to publish a public preview and `/unpreview` to remove it. The workflow will reply with the preview URL. Please check for secrets before publishing a preview._
+_Note: after opening the PR, comment `/preview` to publish a public preview. The workflow will reply with the preview URL, and the preview will expire after 30 days when a later deployment runs. Please check for secrets before publishing a preview._
 
 ## Blog Post Checklist (delete if not required)
 
-- [ ] Make sure it looks ok on a local server with `./dev.sh` OR preview with `/preview` and check the URL in the PR comment; remember to `/unpreview` when done
+- [ ] Make sure it looks ok on a local server with `./dev.sh` OR preview with `/preview` and check the URL in the PR comment
 - [ ] Check required frontmatter, including `slug`
 - [ ] Check tags are aligned with existing tags at https://graphcore-research.github.io/tags/
 - [ ] Check for image alt text

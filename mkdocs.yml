@@ -1,6 +1,6 @@
 site_name: Graphcore Research
 copyright: Graphcore Research
-site_url: https://graphcore-research.github.io
+site_url: !ENV [SITE_URL, "https://graphcore-research.github.io"]
 
 nav:
   - Blog: index.md
