@@ -223,4 +223,6 @@ jobs:
           set -euo pipefail
 
           gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" \
-            --body "Preview published: ${PREVIEW_URL} (expires after ${PREVIEW_MAX_AGE_DAYS} days)."
+            --body "Preview published: ${PREVIEW_URL} (expires after ${PREVIEW_MAX_AGE_DAYS} days).
+
+          Note: Preview URL rewriting may miss some absolute resource links (if they work in local builds, you're probably OK)."
