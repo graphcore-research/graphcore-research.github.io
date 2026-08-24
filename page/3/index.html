@@ -396,6 +396,57 @@
       <nav class="md-post__authors md-typeset">
         
           <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-12-30 00:00:00+00:00">December 30, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              10 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="llama-32-vision-a-deep-dive"><a class="toclink" href="../../2024-12-30-llama-vision/">Llama 3.2 Vision — A Deep Dive</a></h2>
+<p>Vision-Language Models (VLMs) allow LLMs to "see", but how do they work? In this post, we'll walk through the model changes needed to turn an LLM into a VLM for inference. To understand the LLM starting point, please see <a href="/posts/2024/04-gemma/gemma.md">A transformer walk-through with Gemma</a>, as we shall assume that content here.</p>
+<p><strong>Problem</strong> — Text generation, <em>conditioned on an image</em>: take an RGB image (below) and a short string prompt <em>"What colour shirt is the person to the left of the laptop wearing?"</em>, then use an already-trained VLM (<a href="https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct">Llama-3.2-11B-Vision-Instruct</a> by Meta) to generate an answer to the prompt.</p>
+<p><img alt="Image of four people looking at a laptop" class="img-large" src="../../2024/12-llama-vision/image.png" /></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-12-30-llama-vision/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
             <img src="../../img/authors/lukar.jpg" alt="Luka Ribar">
           </span>
         
@@ -863,60 +914,6 @@ AI algorithms and AI-aware hardware developments will continue to be critical to
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2024-08-01 00:00:00+00:00">August 1, 2024</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              13 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="july-papers-all-about-scaling"><a class="toclink" href="../../2024-08-01-potm/">July Papers: All About Scaling</a></h2>
-<p>Scaling continues to be a super hot topic of research and our selection of papers for this month all tackle different angles of how to scale models efficiently.</p>
-<p>The first paper we cover builds upon the work of muP to give a guide of how we can transfer hyperparameters optimised on small models to the large models we care about, especially as transformer width increases.</p>
-<p>Our second chosen paper looks at scaling mixture of expert transformers along the expert dimension. They design an efficient routing strategy that allows them to push the expert number to the extreme for a more compute optimal configuration. </p>
-<p>The third paper we discuss addresses the lack of scaling laws for vocabulary parameters in LLMs. They first validate that there exists an optimal vocab size for a given compute budget and then empirically fit power laws to show that vocab parameters should be scaled differently to the other parameters of the model. </p>
-<p>Finally, our fourth paper answers the question of whether using long context lengths or retrieval augmented generation is better for scaling in-context learning and if a combination of the two could lead to more efficient inference.</p>
-<p><em>I hope you enjoy these as much as we did. If you have thoughts or questions, keep the conversation going <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../2024-08-01-potm/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
       
         
           
@@ -924,7 +921,7 @@ AI algorithms and AI-aware hardware developments will continue to be critical to
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <a class="md-pagination__link" href="../2/">2</a> <span class="md-pagination__current">3</span> <a class="md-pagination__link" href="../4/">4</a>
+  <a class="md-pagination__link" href="../..">1</a> <a class="md-pagination__link" href="../2/">2</a> <span class="md-pagination__current">3</span> <a class="md-pagination__link" href="../4/">4</a> <a class="md-pagination__link" href="../5/">5</a>
 </nav>
         
       

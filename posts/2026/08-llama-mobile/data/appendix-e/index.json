@@ -1,0 +1,80 @@
+{
+  "slides": [
+    {
+      "task": "VQAv2",
+      "key": "vqa",
+      "question_id": "258996007",
+      "question": "How many computers?",
+      "answers": "['4', '4', '6', '4', '5', '4', '5', '5', '5', '5']",
+      "image": "/2026/08-llama-mobile/data/appendix-e/vqa.jpg",
+      "image_alt": "A photo of a desk with several desktop monitors and laptops.",
+      "bf16": {
+        "label": "BF16",
+        "metrics": "accuracy=1, accuracy_relaxed=1",
+        "output": "5"
+      },
+      "s3d8": {
+        "label": "S3D8",
+        "metrics": "accuracy=1, accuracy_relaxed=1",
+        "output": "4"
+      }
+    },
+    {
+      "task": "ChartQA",
+      "key": "chartqa",
+      "question_id": "513",
+      "question": "What is the average of all the bars?",
+      "answers": "35",
+      "image": "/2026/08-llama-mobile/data/appendix-e/chartqa.jpg",
+      "image_alt": "A bar chart titled Adequacy of minimum income benefits with three bars labeled 19.0, 39.0, and 47.0.",
+      "bf16": {
+        "label": "BF16",
+        "metrics": "accuracy=1, accuracy_relaxed=1",
+        "output": "To calculate the average of the given bars, the following steps are taken:\n\n* Add up the values of all the bars: 19.0, 39.0, and 47.0.\n* Calculate the sum: 19.0 + 39.0 + 47.0 = 105.0\n* Divide the sum by the number of bars: 105.0 / 3 = 35.0\n\n*Answer*: 35.0"
+      },
+      "s3d8": {
+        "label": "S3D8",
+        "metrics": "accuracy=1, accuracy_relaxed=1",
+        "output": "To find the average of all the bars, we need to add up the values of all the bars and then divide by the total number of bars.\n\nThe values of the bars are: 19.0, 39.0, and 47.0.\n\nFirst, let's add up these values: 19.0 + 39.0 + 47.0 = 105.0\n\nNext, we divide this sum by the total number of bars, which is 3: 105.0 / 3 = 35.0\n\nTherefore, the average of all the bars is 35.0.\n\nFINAL ANSWER: 35.0"
+      }
+    },
+    {
+      "task": "DocVQA",
+      "key": "docvqa",
+      "question_id": "62541",
+      "question": "What type of report is this?",
+      "answers": "['Preliminary']",
+      "image": "/2026/08-llama-mobile/data/appendix-e/docvqa.jpg",
+      "image_alt": "A scanned report cover titled Northeast Brazil Nutrition Survey, March-May 1963, marked Preliminary.",
+      "bf16": {
+        "label": "BF16",
+        "metrics": "accuracy_relaxed=1, anls=0",
+        "output": "This is a preliminary report."
+      },
+      "s3d8": {
+        "label": "S3D8",
+        "metrics": "accuracy_relaxed=0, anls=0",
+        "output": "Nutrition survey."
+      }
+    },
+    {
+      "task": "AI2D",
+      "key": "ai2d",
+      "question_id": "2511",
+      "question": "Which of these is used for locomotion or support?\n\nOptions:\n1) Antenna\n2) Abdomen\n3) Leg\n4) Head",
+      "answers": "3) Leg",
+      "image": "/2026/08-llama-mobile/data/appendix-e/ai2d.jpg",
+      "image_alt": "A labeled insect diagram showing compound eye, thorax, leg, abdomen, antenna, head, wing, and haltere.",
+      "bf16": {
+        "label": "BF16",
+        "metrics": "accuracy=1, accuracy_relaxed=1",
+        "output": "To determine which part is used for locomotion or support, we need to consider the functions of each option. The abdomen is primarily involved in digestion and storage of food, the head contains the brain and sensory organs, and the antenna is used for sensing the environment. However, the leg is directly involved in movement and support.\n\n**Correct option: 3) Leg**"
+      },
+      "s3d8": {
+        "label": "S3D8",
+        "metrics": "accuracy=1, accuracy_relaxed=1",
+        "output": "To determine which part of the insect is used for locomotion or support, we need to consider the functions of each option provided.\n\n*   **Antenna**: The antenna is used for sensing the environment and detecting pheromones, not for locomotion or support.\n*   **Abdomen**: The abdomen is the body part that contains the digestive system, reproductive organs, and muscles used for movement. It is not directly involved in locomotion or support.\n*   **Legs**: Insects use their legs for walking, running, jumping, and grasping. This makes legs a crucial part of their locomotion system.\n*   **Head**: The head contains the brain, eyes, mouthparts, and other sensory organs. While it plays a role in the overall function of the insect, it is not directly involved in locomotion or support.\n\nGiven the information above, the correct answer is:\n\n**FINAL ANSWER: 3) Leg**"
+      }
+    }
+  ]
+}

@@ -396,6 +396,60 @@
       <nav class="md-post__authors md-typeset">
         
           <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2024-08-01 00:00:00+00:00">August 1, 2024</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              13 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="july-papers-all-about-scaling"><a class="toclink" href="../../2024-08-01-potm/">July Papers: All About Scaling</a></h2>
+<p>Scaling continues to be a super hot topic of research and our selection of papers for this month all tackle different angles of how to scale models efficiently.</p>
+<p>The first paper we cover builds upon the work of muP to give a guide of how we can transfer hyperparameters optimised on small models to the large models we care about, especially as transformer width increases.</p>
+<p>Our second chosen paper looks at scaling mixture of expert transformers along the expert dimension. They design an efficient routing strategy that allows them to push the expert number to the extreme for a more compute optimal configuration. </p>
+<p>The third paper we discuss addresses the lack of scaling laws for vocabulary parameters in LLMs. They first validate that there exists an optimal vocab size for a given compute budget and then empirically fit power laws to show that vocab parameters should be scaled differently to the other parameters of the model. </p>
+<p>Finally, our fourth paper answers the question of whether using long context lengths or retrieval augmented generation is better for scaling in-context learning and if a combination of the two could lead to more efficient inference.</p>
+<p><em>I hope you enjoy these as much as we did. If you have thoughts or questions, keep the conversation going <a href="https://x.com/GCResearchTeam">@GCResearchTeam</a>.</em></p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2024-08-01-potm/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
             <img src="../../img/authors/lukehg.jpg" alt="Luke Hudlass-Galley">
           </span>
         
@@ -862,56 +916,6 @@ How useful this will be in practice remains to be seen.</p>
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2023-10-18 00:00:00+00:00">October 18, 2023</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              4 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="almost-scaled-dot-product-attention"><a class="toclink" href="../../2023-10-18-almost-scaled/">Almost-scaled dot-product attention</a></h2>
-<p>TL;DR: <em>Scaled dot product attention isn't properly scaled, and that's a good thing!</em></p>
-<p>Notebook: <em><a href="https://github.com/graphcore-research/unit-scaling/tree/main/analysis/almost_scaled_dot_product_attention/almost_scaled_dot_product_attention.ipynb">almost-scaled dot-product attention</a></em></p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../2023-10-18-almost-scaled/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
       
         
           
@@ -919,7 +923,7 @@ How useful this will be in practice remains to be seen.</p>
 
 
 <nav class="md-pagination">
-  <a class="md-pagination__link" href="../..">1</a> <a class="md-pagination__link" href="../2/">2</a> <a class="md-pagination__link" href="../3/">3</a> <span class="md-pagination__current">4</span>
+  <a class="md-pagination__link" href="../..">1</a> <a class="md-pagination__link" href="../2/">2</a> <a class="md-pagination__link" href="../3/">3</a> <span class="md-pagination__current">4</span> <a class="md-pagination__link" href="../5/">5</a>
 </nav>
         
       

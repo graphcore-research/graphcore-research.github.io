@@ -398,6 +398,60 @@
       <nav class="md-post__authors md-typeset">
         
           <span class="md-author">
+            <img src="img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-08-24 00:00:00+00:00">August 24, 2026</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              18 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="11-billion-parameters-on-a-phone"><a class="toclink" href="2026-08-24-llama-mobile/">11 billion parameters on a phone</a></h2>
+<p class="post-subtitle">Achieving 2.7 bits/parameter using our S3D8 format and QAT recipe</p>
+
+<p><em>"Let's put Llama-3.2-11B-Vision-Instruct on a phone."</em></p>
+<p>That meant fitting an 11B-parameter vision-language model into a 4 GB budget: under 3 bits/parameter, with minimal format-decoding overhead and without access to the original training data for our fine-tuning.</p>
+<p>So we developed a new quantised weight format called S3D8, designed specifically for Arm phone CPUs, and a QAT recipe that samples prompts, uses the teacher to generate responses, then fine-tunes the quantised weights with a distillation loss. The result is a 3.7 GB model that runs on an Android phone 😅.</p>
+<p>This post is an interactive walkthrough of the format, training recipe and results that support our paper, <a href="https://arxiv.org/abs/2608.21134">Llama-Mobile: Efficient 2.7-bit Quantization of VLMs</a>, coauthored with Jeevan Bhoot at Arm. We hope it's a fun ride!</p>
+
+    
+      <nav class="md-post__action">
+        <a href="2026-08-24-llama-mobile/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
             <img src="img/authors/awf.jpg" alt="Andrew Fitzgibbon">
           </span>
         
@@ -888,61 +942,6 @@ But have you ever wondered how to make query execution work for knowledge graph 
   </div>
 </article>
       
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="img/authors/samot.jpg" alt="Sam Olesker-Taylor">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-07 00:00:00+00:00">October 7, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="category/papers-of-the-month/" class="md-meta__link">Papers of the Month</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              18 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="september-papers-the-l-in-ml-stands-for-llms"><a class="toclink" href="2025-10-07-potm/">September Papers: The L in ML Stands for LLMs</a></h2>
-<p>For September, the research team reviewed a whopping 22 papers! Needless to say, competition was fierce, and only four made the final cut for this month’s edition, which is LLM-themed:  </p>
-<ul>
-<li><a href="2025-10-07-potm/#flowrl-matching-reward-distributions-for-llm-reasoning">FlowRL</a> uses GFlowNets to train LLMs on full reward distributions, promoting diverse reasoning paths instead of just reward maximization.  </li>
-<li><a href="2025-10-07-potm/#soft-tokens-hard-truths">Soft Tokens, Hard Truths</a> proposes using continuous “soft” tokens with injected noise to enable reinforcement learning fine-tuning of LLM reasoning.  </li>
-<li><a href="2025-10-07-potm/#set-block-decoding-is-a-language-model-inference-accelerator">Set Block Decoding</a> accelerates LLM inference by generating multiple tokens in parallel using non-causal attention and iterative entropy-based sampling.  </li>
-<li><a href="2025-10-07-potm/#metacognitive-reuse-turning-recurring-llm-reasoning-into-concise-behaviors">Metacognitive Reuse</a> enables LLMs to extract and reuse concise reasoning “behaviors” to improve efficiency and reduce repeated computation.  </li>
-</ul>
-
-    
-      <nav class="md-post__action">
-        <a href="2025-10-07-potm/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
       
         
           
@@ -950,7 +949,7 @@ But have you ever wondered how to make query execution work for knowledge graph 
 
 
 <nav class="md-pagination">
-  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="page/2/">2</a> <a class="md-pagination__link" href="page/3/">3</a> <a class="md-pagination__link" href="page/4/">4</a>
+  <span class="md-pagination__current">1</span> <a class="md-pagination__link" href="page/2/">2</a> <a class="md-pagination__link" href="page/3/">3</a> <span class="md-pagination__dots">..</span> <a class="md-pagination__link" href="page/5/">5</a>
 </nav>
         
       

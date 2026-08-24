@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://graphcore-research.github.io/author/douglaso/">
       
       
-        <link rel="prev" href="../awf/">
+        <link rel="prev" href="../../about/">
       
       
-        <link rel="next" href="../lukehg/">
+        <link rel="next" href="../lukar/">
       
       
         
@@ -415,6 +415,60 @@
 
 <h2 id="posts">Posts</h2>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-08-24 00:00:00+00:00">August 24, 2026</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              18 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="11-billion-parameters-on-a-phone"><a class="toclink" href="../../2026-08-24-llama-mobile/">11 billion parameters on a phone</a></h2>
+<p class="post-subtitle">Achieving 2.7 bits/parameter using our S3D8 format and QAT recipe</p>
+
+<p><em>"Let's put Llama-3.2-11B-Vision-Instruct on a phone."</em></p>
+<p>That meant fitting an 11B-parameter vision-language model into a 4 GB budget: under 3 bits/parameter, with minimal format-decoding overhead and without access to the original training data for our fine-tuning.</p>
+<p>So we developed a new quantised weight format called S3D8, designed specifically for Arm phone CPUs, and a QAT recipe that samples prompts, uses the teacher to generate responses, then fine-tunes the quantised weights with a distillation loss. The result is a 3.7 GB model that runs on an Android phone 😅.</p>
+<p>This post is an interactive walkthrough of the format, training recipe and results that support our paper, <a href="https://arxiv.org/abs/2608.21134">Llama-Mobile: Efficient 2.7-bit Quantization of VLMs</a>, coauthored with Jeevan Bhoot at Arm. We hope it's a fun ride!</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../../2026-08-24-llama-mobile/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -895,55 +949,6 @@ In December we noted a collection of papers which took innovative approaches to 
     
       <nav class="md-post__action">
         <a href="../../2024-09-30-potm/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="../../img/authors/douglaso.jpg" alt="Douglas Orr">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2024-08-16 00:00:00+00:00">August 16, 2024</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../../category/articles/" class="md-meta__link">Articles</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              5 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="scale-preserving-nonlinearities-for-u-p"><a class="toclink" href="../../2024-08-16-how-to-scale/">Scale-preserving nonlinearities for u-μP</a></h2>
-<p>My colleagues and I always get excited when, every once in a while, deep learning research throws up a fun little maths problem. Our recent work on <a href="https://arxiv.org/abs/2407.17465">u-μP</a> does just this, and in a reasonably systematic way, since we need to work out how to compensate for changes in scale (standard deviation) through deep learning ops. In this post and the <a href="https://github.com/graphcore-research/unit-scaling/blob/main/examples/how_to_scale_op.ipynb">accompanying notebook</a>, we explore this problem.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../../2024-08-16-how-to-scale/">
           Continue reading
         </a>
       </nav>
