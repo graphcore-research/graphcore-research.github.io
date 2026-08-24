@@ -204,6 +204,12 @@ html {
   cursor: pointer;
 }
 
+@media print {
+  .hiring-banner-wrap {
+    display: none;
+  }
+}
+
 /* Footer */
 
 .md-footer {
