@@ -6,4 +6,4 @@
 
 Render `mkdocs build --strict` to separate temporary directories before and
 after `uv lock --upgrade`, then compare the outputs and report substantive
-changes.
+changes. Also report package version updates.
