@@ -65,6 +65,58 @@ html {
   background-color: #ddd !important;
 }
 
+/* Subtitle */
+
+.md-typeset .post-subtitle {
+  margin-top: -0.8rem;
+  margin-bottom: 1.5rem;
+  color: #777;
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+.md-typeset h1+.post-subtitle {
+  margin-top: -1.7rem;
+}
+
+/* Plain <details> blocks */
+
+.md-typeset details:not(.admonition) {
+  margin: 1.25rem 0;
+  color: #555;
+  background-color: #faf8f9;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-left: 0.18rem solid rgba(255, 109, 129, 0.65);
+  border-radius: 0.2rem;
+  box-shadow: none;
+}
+
+.md-typeset details:not(.admonition)>summary {
+  min-height: 0;
+  padding: 0.65rem 0.9rem 0.65rem 2rem;
+  color: #444;
+  background-color: transparent;
+  font-weight: 500;
+}
+
+.md-typeset details:not(.admonition)>summary::before {
+  background-color: var(--md-primary-fg-color);
+}
+
+.md-typeset details:not(.admonition)>summary::after {
+  color: #666;
+  background-color: #666;
+}
+
+.md-typeset details:not(.admonition)> :not(summary) {
+  margin-left: 0.9rem;
+  margin-right: 0.9rem;
+}
+
+.md-typeset details:not(.admonition)> :last-child {
+  margin-bottom: 0.9rem;
+}
+
 /* Nav & Header */
 
 .md-nav {
@@ -192,6 +244,23 @@ html {
 
 .md-typeset img.img-large {
   max-width: 600px;
+}
+
+.md-typeset figcaption {
+  margin: 0.45em auto 1em;
+  max-width: 100%;
+  color: #666;
+  font-size: 0.8em;
+  font-style: normal;
+  text-align: left;
+}
+
+.md-typeset figure .md-typeset__scrollwrap:has(+ figcaption) {
+  margin-bottom: 0;
+}
+
+.md-typeset figure .md-typeset__scrollwrap:has(+ figcaption) .md-typeset__table {
+  margin-bottom: 0;
 }
 
 /* Cookies consent */
@@ -448,4 +517,26 @@ html {
   color: #666;
   margin-top: 0;
   margin-left: 0.15em;
+}
+
+/* <aside class="note"> */
+
+.md-typeset aside.note {
+  margin: 0.9rem 0;
+  padding: 0.35rem 0.6rem;
+  color: #777;
+  background-color: #f7f7f7;
+  border-left: 0.12rem solid #ccc;
+  border-radius: 0.2rem;
+  font-size: 0.85em;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.md-typeset aside.note> :first-child {
+  margin-top: 0;
+}
+
+.md-typeset aside.note> :last-child {
+  margin-bottom: 0;
 }
