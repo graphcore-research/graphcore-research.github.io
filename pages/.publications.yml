@@ -61,7 +61,7 @@ papers:
     workshop:
 
       - title: "Latent-Context Distillation: Recovering Chain-of-Thought Effect with Latent Thoughts"
-        url:
+        url: https://openreview.net/forum?id=mU41s0zmOn
         date:
         area: [general-ml]
         authors: "Sam Olesker-Taylor, Madeleine Dwyer, Erika Aranas, Luka Ribar, Michael Pearce, Luke Hudlass-Galley"
