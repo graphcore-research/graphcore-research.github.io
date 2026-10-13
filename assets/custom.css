@@ -400,7 +400,7 @@ html {
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.paper-entry-link:hover {
+a.paper-entry-link:hover {
   color: #000 !important;
   background-color: #fff0f4;
   text-decoration: none;

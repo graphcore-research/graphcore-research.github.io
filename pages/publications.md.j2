@@ -76,12 +76,13 @@ window.addEventListener("load", () => {
 {% set year_papers = year_conference + year_workshop %}
 {% for paper in year_papers %}
 <div class="paper-entry">
-<a href="{{ paper.url }}" target="_blank" class="paper-entry-link" data-paper-areas="{{ paper.area | default([]) | join(',') }}" data-paper-year="{{ year }}">
+{% set entry_tag = 'a' if paper.url else 'div' %}
+<{{ entry_tag }} {% if paper.url %} href="{{ paper.url }}" target="_blank"{% endif %} class="paper-entry-link" data-paper-areas="{{ paper.area | default([]) | join(',') }}" data-paper-year="{{ year }}">
 <h3 class="title">{% if paper.icon %}<i class="fas {{ paper.icon }}"></i>{% endif %} {{ paper.title }}</h3>
 <div class="abstract" data-search-exclude>{{ paper.abstract }}</div>
 <div class="authors" data-search-exclude>{{ paper.authors }}</div>
 <div class="published" data-search-exclude>{{ paper.published }}</div>
-</a>
+</{{ entry_tag }}>
 </div>
 {% endfor %}
 {% endfor %}

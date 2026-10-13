@@ -1,8 +1,8 @@
 # To add a paper, prepend to the list, keeping it in reverse-chronological order.
 #
 # Note:
-#  - url       -- arXiv abstract URL https://arxiv.org/abs/<...>
-#  - date      -- first uploaded to arXiv (this can disagree with the (published) "year" it's under)
+#  - url       -- arXiv abstract https://arxiv.org/abs/<...> or OpenReview URL; blank if unavailable
+#  - date      -- first uploaded to arXiv (this can disagree with the (published) "year" it's under); blank if unknown
 #  - area      -- see "areas"
 #  - published -- please copy existing examples for workshops, conferences, etc.
 #  - icon      -- optional fontawesome icon
@@ -34,6 +34,14 @@ papers:
   2026:
     conference:
 
+      - title: "Monroe: A Molecular Foundation Model for In-Context Probabilistic Inference"
+        url: https://arxiv.org/abs/2608.18982
+        date: 2026-08-19
+        area: [gnns]
+        authors: "Blazej Banaszewski, Andrew Fitzgibbon"
+        abstract: "Bioassay activity prediction is often data-limited because drug-discovery datasets rely on time-consuming and expensive wet-lab experiments for data generation and evaluation. This challenge has inspired recent research into molecular foundation models (MFMs), which aim to encode general-purpose chemical knowledge into molecular representations that generalize well in data-constrained scenarios. This paper presents Monroe, a new MFM with several innovations over the existing state of the art: increased scale allowing pre-training on over 81 million molecules from the PM6 quantum chemistry dataset; improved graph representation of stereochemistry; improved training losses including conformer denoising and embedding decorrelation; improved multi-task learning; and the use of a prior-data-fitted model (TabPFN) for downstream in-context prediction. Our evaluations use a principled pairwise comparison framework that measures statistically significant performance differences. Across established Polaris benchmarks, Monroe matches or exceeds existing MFMs, while on activity cliff benchmarks, designed to assess utility for molecular discovery, it achieves significant improvements over prior methods. Finally, ablation and transfer experiments show that PFN-based downstream predictors also substantially improve two leading existing models, MiniMol and CheMeleon, yielding new state-of-the-art variants we call MiniMol_PFN and CheMeleon_PFN, suggesting that our downstream adaptation strategy generalizes beyond Monroe. Source code is at https://github.com/blazejba/monroe."
+        published: "Proceedings of NeurIPS 2026, the 40th Conference on Neural Information Processing Systems"
+
       - title: "Novel Aspects of IEEE SA P3109 Arithmetic Formats for Machine Learning"
         url: https://arxiv.org/abs/2606.04028
         date: 2026-06-29
@@ -52,13 +60,53 @@ papers:
 
     workshop:
 
+      - title: "Latent-Context Distillation: Recovering Chain-of-Thought Effect with Latent Thoughts"
+        url:
+        date:
+        area: [general-ml]
+        authors: "Sam Olesker-Taylor, Madeleine Dwyer, Erika Aranas, Luka Ribar, Michael Pearce, Luke Hudlass-Galley"
+        abstract: "Reasoning traces, such as from chain-of-thought (CoT), improve the performance of LLMs on tasks which require reasoning, but substantially increase the number of tokens used, driving up inference cost and context use. The trace is then discarded: its value lies not in itself, but in its effect on the distribution over final answers. A short latent context offers an appealing alternative. The existing latent-reasoning literature focuses on generating latent reasoning, whether through fine-tuning or training-free methods; performance is mixed at best. None asks the fundamental question: does latent reasoning exist? We run a feasibility study to answer this question: we use a frozen LLM and, per question, optimise a (short) latent context—the only trained parameters—to minimise the KL divergence between the student and teacher answer distributions. The results are positive: we establish the existence of latent thoughts which recover much of the CoT-induced performance. On MATH-Hard (Qwen3-8B), a single latent thought recovers 56% of the CoT-induced accuracy gap; using 128 latent thoughts leaves the student accuracy indistinguishable from the teacher. On HumanEval+ (Qwen3-1.7B), recovery plateaus near 90%."
+        published: "NeurIPS'26 Workshop on Linguistic Principles for Foundation Models"
+
+      - title: "HSWA: Hierarchical Sliding Window Attention"
+        url: https://openreview.net/forum?id=7fTS2tdloK
+        date:
+        area: [general-ml, sparsity]
+        authors: "Kheeran K. Naidu, Alberto Cattaneo, Robert Hu, Dobrik Georgiev, Carlo Luschi, Federico Monti"
+        abstract: "The standard attention mechanism is the cornerstone of modern language models. Despite the widespread popularity of this specific formulation, letting each token in a sequence attend to all the surrounding ones results in both a complexity that is quadratic in the sequence length and KV-caches that grow linearly for auto-regressive generation (which can become problematic in the presence of long context). To address these two challenges, sliding window attention layers, where a given token is allowed to attend to at most K surrounding ones, are often used as a lightweight alternative to standard attention layers. While more efficient, these layers come at the cost of limiting the model’s receptive field, which can result in decreased performance on downstream tasks. In this paper, we introduce Hierarchical Sliding Window Attention (HSWA), a new form of self-attention that uses special anchor tokens to achieve a receptive field that is exponential with respect to the the number of layers, while maintaining (i) per token complexity and (ii) KV-cache size that scales logarithmically in the sequence length. Experimental evaluation on RULER highlights the effectiveness of our model, which appears as a trade-off in both efficiency and performance between dense and sliding window attention."
+        published: "NeurIPS'26 Workshop AXIOM: Foundations of Efficient Deep Learning"
+
+      - title: "Placing the Bottleneck: Spatial Latent Scene Representations for World Models"
+        url:
+        date:
+        area: [graphics, general-ml]
+        authors: "Maciej Lewandowski, Michael Pearce, Tsun-Yi Yang, Tom Cashman"
+        abstract: "Reliable and useful models of the physical world must preserve geometric structure as they generate observations across viewpoints. We explore scene representations that can integrate observations and be queried repeatedly under new viewpoints to give geometrically consistent predictions. Highway Novel View Synthesis architectures preserve observation-derived features and their camera provenance, achieving strong reconstruction quality, but their representation and decoder-visible context grow with the number of observations. Fixed bottlenecks instead compress observations into a bounded, target-independent scene memory, making them attractive as compact and reusable world representations, but often at a cost in reconstruction quality. We investigate whether this performance gap between highway and bottleneck approaches is caused only by information compression, or also by the loss of an explicit geometric relation between the scene representation and the renderer. In a scaled-down bottleneck SVSM experiment, increasing the number of unstructured scene tokens produces only modest gains and does not close the gap to a separately trained highway reference. We then propose a spatially placed variant of a SceneTok-style bottleneck architecture in which each latent slot is assigned a 3D region. A shared, parameter-free relation between patch-centre rays and latent cells guides both context-to-memory writes and memory-to-target reads. On the CLEVR-TR dataset, spatial placement makes additional memory capacity substantially more useful; in the larger model with K = 500 scene tokens, spatial placement improves mean-scene PSNR by 3.65 dB, averaged over three matched training seeds. The resulting memory supports localized scene edits: masking geometry-selected groups of cells produces spatially concentrated changes in the rendered scene, giving the latent memory a spatially interpretable structure. We validate this approach on MultiShapeNet, and find that the spatial variant improves all six matched model-scale and memory-capacity configurations by 0.70–1.08 dB. Together, these results suggest that the effectiveness of compact scene memory depends not only on capacity (i.e. how much information it can store), but also on whether the scene representation and renderer share a stable geometric relation."
+        published: "NeurIPS'26 Workshop on World Models in Physical AI"
+
+      - title: "Multi-Objective Alignment of a 3D Ligand Flow Model with Flow-GRPO"
+        url:
+        date:
+        area: [gnns]
+        authors: "Yeman Brhane Hagos, Johanna Vielhaben, Benoit Gaujac, Alberto Cattaneo, Alicja Maksymiuk, Andrew Fitzgibbon, Carlo Luschi, Daniel Justus"
+        abstract: "Structure-based drug design aims to generate small molecules that bind favorably within a specific three-dimensional protein pocket. However, existing generative models primarily reproduce their training distributions rather than directly optimizing downstream objectives such as binding affinity, synthetic accessibility, drug-likeness, and physical plausibility. We adapt Flow-GRPO to FLOWR.ROOT, a state-of-the-art pocket-conditioned 3D ligand generative model, enabling online post-training with black-box molecular rewards. We find that penalizing invalid rollouts preserves RDKit-valid molecule yield, whereas excluding them from the objective can cause validity collapse. Optimizing either Vina affinity or synthetic accessibility in isolation improves the target metric but degrades the other. In contrast, jointly optimizing these objectives with varying reward weights produces a family of configurations that improve both objectives relative to the pretrained model. A balanced configuration improves the pose-optimized Vina score from −7.73 to −8.22 kcal/mol and normalized SA from 0.70 to 0.72, while also increasing QED and maintaining PoseBusters validity. Without further training, the SPINDR fine-tuned models exhibit similar trade-offs on the CrossDocked2020 dataset and achieve up to 93% PoseBusters validity, the highest among the evaluated CrossDocked2020-trained generative baselines. However, these gains are accompanied by some degradation in local bond geometry. Our results demonstrate that Flow-GRPO can balance multiple molecular objectives and transfer improvements across benchmark datasets."
+        published: "NeurIPS'26 Workshop on AI for Drug Discovery: Bridging the Translation Gap; NeurIPS'26 Workshop on Agentic Systems for Molecular Sciences"
+
+      - title: "How to reward invalid molecules? Objective design for molecular reward alignment"
+        url:
+        date:
+        area: [gnns]
+        authors: "Johanna Vielhaben, Benoit Gaujac, Yeman Brhane Hagos, Alberto Cattaneo, Andrew Fitzgibbon, Carlo Luschi, Daniel Justus"
+        abstract: "Diffusion and flow-matching models can generate 3D molecules conditioned on protein pockets, but their training objectives do not directly optimize molecular properties relevant to practitioners. Online reward alignment can shift the generative distribution toward molecules with better properties, but because rewards are often defined only for chemically valid molecules, its objective must specify how invalid outputs are handled. We adapt a recently proposed method for negative aware finetuning to the continuous coordinates and categorical outputs of a pocket-conditioned molecular generator and study how invalid samples should enter its objective. We first show that excluding invalid molecules from training improves the target property among the remaining valid molecules, while chemical validity collapses. We then introduce a validity-aware reward that includes all generated samples and jointly rewards the target property and chemical validity. On the SPINDR test set, this improves QED from 0.48 to 0.73, SA from 0.67 to 0.93, and score-only Vina from −7.35 to −9.54 kcal/mol, while avoiding the severe chemical-validity collapse observed when invalid samples are excluded. Our results show that explicitly handling invalid molecules is important for online reward alignment of molecular generators."
+        published: "NeurIPS'26 Workshop on AI for Drug Discovery: Bridging the Translation Gap; NeurIPS'26 Workshop on Agentic Systems for Molecular Sciences"
+
       - title: "Llama-Mobile: Efficient 2.7-Bit Quantization of VLMs"
         url: https://arxiv.org/abs/2608.21134
         date: 2026-08-21
         area: [low-precision]
         authors: "Luka Ribar, Jeevan Bhoot, Douglas Orr"
         abstract: "Deploying vision-language models (VLMs) on mobile devices is challenging due to their significant memory and compute requirements. We present a framework for quantizing VLMs for efficient inference on resource-constrained hardware. Our approach combines a quantization pipeline that uses the model itself to generate training data and does not require access to the training setup, with a novel 2.7-bit-per-parameter format supporting efficient execution on Arm CPUs. We validate our approach by compressing the Llama 3.2 11B Vision Instruct model to 3.7 GB with 8-bit activations, preserving strong performance on a set of standard visual question answering tasks."
-        published: "arXiv preprint"
+        published: "NeurIPS'26 Workshop on On-Device Intelligence: Foundation Models under Real-World Constraints; NeurIPS'26 Workshop on Deployable Small Foundation Models"
 
       - title: "How to Train Your HRM"
         url: https://openreview.net/pdf?id=vlh0YAVdkF
