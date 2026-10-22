@@ -87,6 +87,7 @@ jobs:
             ! -name "${PREVIEW_ROOT}" \
             -exec rm -rf {} +
           cp -a site/. gh-pages/
+          touch gh-pages/.nojekyll
           python tools/manage_previews.py \
             prune "gh-pages/${PREVIEW_ROOT}" "${PREVIEW_MAX_AGE_DAYS}"
 
